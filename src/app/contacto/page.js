@@ -45,150 +45,151 @@ export default function ContactoPage() {
   };
 
   return (
-    <div className="section" style={{ minHeight: "80vh" }}>
-      <div className="container" style={{ maxWidth: "960px" }}>
+    <div className="bg-[#000B1A] text-white min-h-screen pt-48 pb-32">
+      <div className="container mx-auto px-4 max-w-6xl">
         <div ref={liveRegionRef} aria-live="polite" className="sr-only" role="status" />
 
-        <div style={{ textAlign: "center", marginBottom: "48px" }}>
-          <h1 className="section-title" style={{ textAlign: "center" }}>Contacto</h1>
-          <p className="section-subtitle" style={{ margin: "0 auto" }}>
-            ¿Tenés alguna consulta? Escribinos y te responderemos a la brevedad.
+        <header className="text-center mb-20">
+          <div className="inline-flex items-center gap-3 bg-[#36b37e]/10 text-[#36b37e] px-4 py-1.5 rounded font-black text-[10px] tracking-widest mb-8 uppercase border border-[#36b37e]/20">
+            <Mail size={14} />
+            HABLEMOS
+          </div>
+          <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tighter uppercase leading-none text-white">
+            Contacto
+          </h1>
+          <p className="text-xl text-white/50 max-w-2xl mx-auto leading-relaxed font-medium">
+            ¿Tenés alguna consulta o querés sumarte a la Liga? Escribinos y transformemos juntos realidades.
           </p>
-        </div>
+        </header>
 
         {submitResult && (
           <div
             role="alert"
-            style={{
-              padding: "16px 20px",
-              borderRadius: "var(--radius-md)",
-              marginBottom: "24px",
-              background: "var(--color-success-bg)",
-              border: "2px solid var(--color-success)",
-              display: "flex",
-              alignItems: "center",
-              gap: "12px",
-            }}
+            className="flex items-center gap-4 bg-[#36b37e]/10 border-2 border-[#36b37e] text-[#36b37e] p-6 rounded-2xl mb-12 shadow-[0_0_30px_rgba(54,179,126,0.2)]"
           >
-            <CheckCircle2 size={20} style={{ color: "var(--color-success)" }} aria-hidden="true" />
-            <p style={{ fontWeight: 600, color: "var(--color-success)" }}>{submitResult.message}</p>
+            <CheckCircle2 size={24} aria-hidden="true" />
+            <p className="font-extrabold text-lg">{submitResult.message}</p>
           </div>
         )}
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "32px" }}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           {/* Contact Form */}
-          <div className="card card-elevated" style={{ padding: "32px" }}>
-            <h2 style={{ fontSize: "1.2rem", fontWeight: 700, marginBottom: "24px", display: "flex", alignItems: "center", gap: "8px" }}>
-              <Send size={20} aria-hidden="true" style={{ color: "var(--color-primary)" }} />
+          <div className="bg-white/[0.02] border border-white/5 p-10 md:p-12 rounded-[40px] shadow-2xl relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#36b37e]/5 rounded-full -mr-32 -mt-32 blur-3xl group-hover:bg-[#36b37e]/10 transition-all duration-700" />
+            
+            <h2 className="text-2xl font-black mb-10 flex items-center gap-4 text-white uppercase tracking-tighter relative z-10">
+              <div className="w-10 h-10 bg-[#36b37e] rounded-xl flex items-center justify-center text-white shadow-lg shadow-[#36b37e]/30">
+                <Send size={20} aria-hidden="true" />
+              </div>
               Envianos un mensaje
             </h2>
 
-            <form onSubmit={handleSubmit} noValidate>
-              <div className="form-group">
-                <label htmlFor="contact-name" className="form-label form-label-required">Nombre</label>
-                <input
-                  id="contact-name"
-                  type="text"
-                  className={`form-input ${errors.name ? "form-input-error" : ""}`}
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  aria-invalid={!!errors.name}
-                  aria-describedby={errors.name ? "err-c-name" : undefined}
-                  placeholder="Tu nombre"
-                />
-                {errors.name && <span id="err-c-name" className="form-error" role="alert">{errors.name}</span>}
+            <form onSubmit={handleSubmit} noValidate className="space-y-6 relative z-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="contact-name" className="block text-[10px] font-black text-white/40 uppercase tracking-widest mb-2 ml-1">Nombre</label>
+                  <input
+                    id="contact-name"
+                    type="text"
+                    className={`w-full bg-white/[0.05] border-2 ${errors.name ? "border-red-500" : "border-white/5"} rounded-2xl p-4 text-white font-bold focus:border-[#36b37e] focus:bg-white/[0.08] transition-all outline-none`}
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    aria-invalid={!!errors.name}
+                    placeholder="Tu nombre completo"
+                  />
+                  {errors.name && <span className="text-[10px] text-red-400 font-black mt-2 block ml-1 uppercase">{errors.name}</span>}
+                </div>
+
+                <div>
+                  <label htmlFor="contact-email" className="block text-[10px] font-black text-white/40 uppercase tracking-widest mb-2 ml-1">Email</label>
+                  <input
+                    id="contact-email"
+                    type="email"
+                    className={`w-full bg-white/[0.05] border-2 ${errors.email ? "border-red-500" : "border-white/5"} rounded-2xl p-4 text-white font-bold focus:border-[#36b37e] focus:bg-white/[0.08] transition-all outline-none`}
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    aria-invalid={!!errors.email}
+                    placeholder="tu@email.com"
+                  />
+                  {errors.email && <span className="text-[10px] text-red-400 font-black mt-2 block ml-1 uppercase">{errors.email}</span>}
+                </div>
               </div>
 
-              <div className="form-group">
-                <label htmlFor="contact-email" className="form-label form-label-required">Email</label>
-                <input
-                  id="contact-email"
-                  type="email"
-                  className={`form-input ${errors.email ? "form-input-error" : ""}`}
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  aria-invalid={!!errors.email}
-                  aria-describedby={errors.email ? "err-c-email" : undefined}
-                  placeholder="tu@email.com"
-                />
-                {errors.email && <span id="err-c-email" className="form-error" role="alert">{errors.email}</span>}
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="contact-subject" className="form-label form-label-required">Asunto</label>
+              <div>
+                <label htmlFor="contact-subject" className="block text-[10px] font-black text-white/40 uppercase tracking-widest mb-2 ml-1">Asunto</label>
                 <input
                   id="contact-subject"
                   type="text"
-                  className={`form-input ${errors.subject ? "form-input-error" : ""}`}
+                  className={`w-full bg-white/[0.05] border-2 ${errors.subject ? "border-red-500" : "border-white/5"} rounded-2xl p-4 text-white font-bold focus:border-[#36b37e] focus:bg-white/[0.08] transition-all outline-none`}
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                   aria-invalid={!!errors.subject}
-                  aria-describedby={errors.subject ? "err-c-subject" : undefined}
-                  placeholder="Asunto de tu mensaje"
+                  placeholder="¿Sobre qué querés consultarnos?"
                 />
-                {errors.subject && <span id="err-c-subject" className="form-error" role="alert">{errors.subject}</span>}
+                {errors.subject && <span className="text-[10px] text-red-400 font-black mt-2 block ml-1 uppercase">{errors.subject}</span>}
               </div>
 
-              <div className="form-group">
-                <label htmlFor="contact-message" className="form-label form-label-required">Mensaje</label>
+              <div>
+                <label htmlFor="contact-message" className="block text-[10px] font-black text-white/40 uppercase tracking-widest mb-2 ml-1">Mensaje</label>
                 <textarea
                   id="contact-message"
                   rows={5}
-                  className={`form-input ${errors.message ? "form-input-error" : ""}`}
+                  className={`w-full bg-white/[0.05] border-2 ${errors.message ? "border-red-500" : "border-white/5"} rounded-2xl p-4 text-white font-bold focus:border-[#36b37e] focus:bg-white/[0.08] transition-all outline-none resize-none`}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   aria-invalid={!!errors.message}
-                  aria-describedby={errors.message ? "err-c-msg" : undefined}
-                  placeholder="Escribí tu consulta..."
-                  style={{ resize: "vertical" }}
+                  placeholder="Escribí tu mensaje aquí..."
                 />
-                {errors.message && <span id="err-c-msg" className="form-error" role="alert">{errors.message}</span>}
+                {errors.message && <span className="text-[10px] text-red-400 font-black mt-2 block ml-1 uppercase">{errors.message}</span>}
               </div>
 
-              <button type="submit" className="btn btn-primary" style={{ width: "100%" }}>
-                <Send size={18} aria-hidden="true" />
+              <button 
+                type="submit" 
+                className="w-full bg-white text-black font-black py-5 rounded-2xl flex items-center justify-center gap-3 transition-all hover:bg-[#36b37e] hover:text-white hover:shadow-[0_0_30px_rgba(54,179,126,0.3)] hover:scale-[1.02] active:scale-[0.98] uppercase tracking-widest text-xs"
+              >
+                <Send size={18} />
                 Enviar mensaje
               </button>
             </form>
           </div>
 
-          {/* Contact Info */}
-          <div>
-            <div className="card card-elevated" style={{ padding: "32px", marginBottom: "16px" }}>
-              <h2 style={{ fontSize: "1.2rem", fontWeight: 700, marginBottom: "24px" }}>
+          {/* Contact Info Side */}
+          <div className="space-y-8">
+            <div className="bg-white/[0.03] border border-white/5 p-10 rounded-[40px] shadow-xl">
+              <h2 className="text-2xl font-black mb-8 text-white uppercase tracking-tighter">
                 Información de contacto
               </h2>
 
-              <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-                <div style={{ display: "flex", gap: "12px", alignItems: "flex-start" }}>
-                  <div style={{ padding: "10px", borderRadius: "var(--radius-sm)", background: "var(--color-field-green)", color: "var(--color-primary)" }}>
-                    <Mail size={20} aria-hidden="true" />
+              <div className="space-y-8">
+                <div className="flex gap-6 items-start group">
+                  <div className="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-[#36b37e] transition-all group-hover:bg-[#36b37e] group-hover:text-white">
+                    <Mail size={24} />
                   </div>
                   <div>
-                    <p style={{ fontWeight: 600, marginBottom: "2px" }}>Email</p>
-                    <a href="mailto:info@granjaandar.org.ar" style={{ color: "var(--color-primary)", textDecoration: "none" }}>
+                    <p className="text-[10px] font-black text-white/40 uppercase tracking-widest mb-1">Email Oficial</p>
+                    <a href="mailto:info@granjaandar.org.ar" className="text-xl font-bold text-white hover:text-[#36b37e] transition-colors leading-none">
                       info@granjaandar.org.ar
                     </a>
                   </div>
                 </div>
 
-                <div style={{ display: "flex", gap: "12px", alignItems: "flex-start" }}>
-                  <div style={{ padding: "10px", borderRadius: "var(--radius-sm)", background: "var(--color-field-green)", color: "var(--color-primary)" }}>
-                    <MapPin size={20} aria-hidden="true" />
+                <div className="flex gap-6 items-start group">
+                  <div className="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-[#36b37e] transition-all group-hover:bg-[#36b37e] group-hover:text-white">
+                    <MapPin size={24} />
                   </div>
                   <div>
-                    <p style={{ fontWeight: 600, marginBottom: "2px" }}>Ubicación</p>
-                    <p style={{ color: "var(--color-text-muted)" }}>Moreno, Buenos Aires, Argentina</p>
+                    <p className="text-[10px] font-black text-white/40 uppercase tracking-widest mb-1">Ubicación</p>
+                    <p className="text-xl font-bold text-white leading-tight">Moreno, Buenos Aires, Argentina</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="card card-elevated" style={{ padding: "32px" }}>
-              <h2 style={{ fontSize: "1.2rem", fontWeight: 700, marginBottom: "16px" }}>
+            <div className="bg-gradient-to-br from-[#001A3D] to-[#000B1A] border border-white/5 p-10 rounded-[40px] shadow-xl relative overflow-hidden group">
+              <h2 className="text-2xl font-black mb-8 text-white uppercase tracking-tighter relative z-10">
                 Redes sociales
               </h2>
-              <div style={{ display: "flex", gap: "12px" }}>
+              <div className="flex gap-4 relative z-10">
                 {[
                   { href: "https://www.facebook.com/ligadefutbolinclusiva", Icon: Facebook, label: "Facebook" },
                   { href: "https://twitter.com/futbolinclusivo", Icon: Twitter, label: "Twitter" },
@@ -199,34 +200,15 @@ export default function ContactoPage() {
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`${label} de Fútbol Inclusivo`}
-                    style={{
-                      width: "48px",
-                      height: "48px",
-                      borderRadius: "50%",
-                      background: "var(--color-field-green)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "var(--color-primary)",
-                      transition: "all var(--transition-fast)",
-                    }}
+                    className="w-16 h-16 bg-white/[0.05] border border-white/10 rounded-2xl flex items-center justify-center text-white transition-all hover:bg-[#36b37e] hover:border-[#36b37e] hover:scale-110 active:scale-90"
                   >
-                    <Icon size={22} aria-hidden="true" />
+                    <Icon size={28} />
                   </a>
                 ))}
               </div>
             </div>
           </div>
         </div>
-
-        <style jsx>{`
-          @media (max-width: 768px) {
-            div[style*="grid-template-columns: 1fr 1fr"] {
-              grid-template-columns: 1fr !important;
-            }
-          }
-        `}</style>
       </div>
     </div>
   );

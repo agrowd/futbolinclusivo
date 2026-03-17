@@ -1,134 +1,137 @@
-import { GraduationCap, MapPin, Users, Target, BookOpen } from "lucide-react";
+import { GraduationCap, MapPin, Users, Target, BookOpen, ChevronRight } from "lucide-react";
 import FadeIn from "@/components/ui/FadeIn";
 
 export const metadata = {
-  title: "Escuela de Fútbol Inclusivo - Programas",
+  title: "EFI - Premium Experience",
   description: "Propuesta deportiva formativa de la Asociación Civil Andar para niños y jóvenes.",
 };
 
 export default function Escuela() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <section className="bg-primary text-white py-16 px-4 md:px-8">
-        <div className="max-w-4xl mx-auto text-center">
-            <GraduationCap className="w-16 h-16 mx-auto mb-6 text-white" aria-hidden="true" />
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Escuela de Fútbol Inclusivo</h1>
-            <p className="text-xl opacity-90 leading-relaxed font-light">
-               Formando valores a través de la metodología Fútbol 3 y Fútbol Inclusivo
-            </p>
+    <div style={{ background: "#000B1A", color: "#fff", minHeight: "100vh" }}>
+      {/* Hero Section */}
+      <section style={{ 
+        background: "linear-gradient(to bottom, #001A3D, #000B1A)", 
+        padding: "100px 0 60px",
+        borderBottom: "1px solid rgba(255,255,255,0.05)"
+      }}>
+        <div className="container" style={{ textAlign: "center" }}>
+          <div style={{ 
+            display: "inline-flex", 
+            background: "rgba(0,141,77,0.1)", 
+            color: "var(--color-primary-light)",
+            padding: "8px 16px", 
+            borderRadius: "4px", 
+            marginBottom: "24px", 
+            fontSize: "0.75rem", 
+            fontWeight: 800, 
+            letterSpacing: "2px" 
+          }}>
+            FORMACIÓN INTEGRAL
+          </div>
+          <h1 style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", fontWeight: 900, marginBottom: "24px", letterSpacing: "-1.5px" }}>Escuela de Fútbol Inclusivo</h1>
+          <p style={{ fontSize: "1.2rem", color: "rgba(255,255,255,0.6)", maxWidth: "800px", margin: "0 auto", lineHeight: 1.6 }}>
+            Formando valores a través de la metodología Fútbol 3 y Fútbol Inclusivo para niños y jóvenes.
+          </p>
         </div>
       </section>
 
-      <section className="py-16 px-4 md:px-8 bg-white text-text">
-        <div className="max-w-4xl mx-auto space-y-16">
+      {/* Main Content */}
+      <section className="section" style={{ padding: "80px 0" }}>
+        <div className="container" style={{ maxWidth: "1000px" }}>
           
-          <FadeIn>
-            <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-secondary border-l-4 border-primary pl-4 flex items-center gap-3">
-                <BookOpen className="w-8 h-8 text-primary" aria-hidden="true" />
-                Fundamentación
-              </h2>
-              <div className="prose max-w-none text-lg text-text-muted leading-relaxed space-y-4">
-                 <p>El proyecto de Escuela de Fútbol Inclusivo (EFI) se propone enfrentar principalmente la falta de oportunidades para el desarrollo de prácticas deportivas inclusivas, para el desarrollo de la mismo se cuenta con el involucramiento de la comunidad en la habilitación de espacios acordes a prácticas deportivas en espacios de calidad.</p>
-                 <p>Los participantes que asisten a la (EFI) provienen de comunidades vulnerables, de escuelas especiales y comunes de los barrios de la localidad de Moreno, siendo este distrito uno de los más pobres del conurbano Bonaerense. Muchos de estos niños y niñas requieren de asistencia para la interpretación de los entrenamientos para el Juego en sus tres componentes (acuerdos – partido – reflexión) a través del lenguaje de señas, muchos de los niños y niñas requieren de la adaptación de los contenidos de los componentes del juego a través de lenguaje sencillo.</p>
-                 <p>El uso de instalaciones adaptadas, accesibles y de calidad, permite a los niños y niñas desarrollar habilidades de la vida diaria tales como los hábitos saludables de higiene, participar en un entorno amigable y la utilización de los elementos para el entrenamiento y para las practicas del fútbol.</p>
-                 <p>Con estímulos semanales que mejoran su condición física y el acceso a las relaciones sociales e interpersonales promoviendo el fortalecimiento de su autoestima, capacidad de tomar decisiones, capacidad de escucha y ser parte de un equipo y compartirlo con amigos</p>
-              </div>
-              
-              <div className="bg-gray-50 p-6 rounded-xl border border-gray-100 mt-6">
-                  <h3 className="text-xl font-bold text-secondary mb-4 flex items-center gap-2">
-                      <Target className="w-5 h-5 text-accent-orange" aria-hidden="true"/>
-                      Los objetivos centrales de la EFI son:
-                  </h3>
-                  <ul className="space-y-3 ms-6 text-lg text-text-muted list-disc marker:text-primary">
-                      <li>Acercar a la población de personas con y sin discapacidad de entre 6 y 18 años la metodología del fútbol inclusivo como un espacio de inclusión y encuentro a través del deporte para desarrollar y potenciar sus talentos.</li>
-                      <li>Desarrollar a través del entrenamiento sistemático una preparación adecuada física y en valores, que respeta la diversidad como potencial humano.</li>
-                      <li>Concientizar acerca de la importancia de la generación de espacios comunitarias abiertos e inclusivos, donde se encuentren y compartan actividades personas con y sin discapacidad, con los apoyos y ajustes razonables necesarios para una verdadera inclusión.</li>
-                  </ul>
-              </div>
-            </div>
-          </FadeIn>
-
-          <FadeIn delay={0.1}>
-            <div className="space-y-6 pt-8 border-t border-gray-100">
-               <h2 className="text-3xl font-bold text-secondary border-l-4 border-accent-blue pl-4">
-                Metodología
-              </h2>
-              <div className="prose max-w-none text-lg text-text-muted leading-relaxed space-y-4">
-                 <p>La Escuela de Fútbol Inclusivo es una iniciativa innovadora de inclusión en nuestro país que permite la participación activa de niños y niñas con y sin discapacidad, familias, docentes y comunidad en el juego del fútbol, promoviendo el desarrollo y la unificación de tres metodologías: Fútbol 3, Fútbol Inclusivo y Fútbol Base. Dicha práctica se resume fundamentado los siguientes componentes:</p>
-                 <ul className="space-y-4 list-none pl-0">
-                    <li className="bg-blue-50/50 p-4 rounded-lg border border-blue-100">
-                      <strong className="text-accent-blue block text-xl mb-1">LOS ACUERDOS:</strong>
-                      es el espacio en el que se promueve la autodeterminación en la toma de decisiones el desarrollo de las relaciones interpersonales en la construcción de relaciones sociales positivas, la capacidad de escucha y empatía.
-                    </li>
-                    <li className="bg-orange-50/50 p-4 rounded-lg border border-orange-100">
-                      <strong className="text-accent-orange block text-xl mb-1">EL PARTIDO:</strong>
-                      permite poner en evidencia su bienestar físico y poniendo a prueba sus habilidades, liberar endorfinas experimentando sentimientos de bienestar, canalizando sentimientos negativos y stress, desafiando su mejora dia a dia tanto en lo deportivo como en el desarrollo de hábitos saludables de la vida diaria, de higiene personal, alimentación saludable y entrenamiento sistemático.
-                    </li>
-                    <li className="bg-green-50/50 p-4 rounded-lg border border-green-100">
-                      <strong className="text-primary block text-xl mb-1">LA REFLEXIÓN:</strong>
-                      es la herramienta facilitadora de los procesos de autoconocimiento, respeto por la opinión de los demás, capacidad de resiliencia transformando experiencias negativas en positivas. Este es el espacio en el cual los derechos y los procesos de Inclusión le permiten a todos ser escuchados, considerados iguales y de esta forma sentirse miembro y parte.
-                    </li>
-                 </ul>
-                 <p>Estas tres instancias inspiradas en la metodología del fútbol 3 promueven la inclusión de las personas y el valor de la palabra, su desarrollo personal, el conocimiento, promoción y ejercicios de sus derechos, promueve la toma de decisiones y las mejores elecciones, sentirse parte de un equipo y miembro activo y participativo en la toma de decisiones y considerado igual .</p>
-                 <p>Esta metodología se complementa con la metodología de Futbol Inclusivo, impulsada por Andar que ha desarrollado incorporando, a la metodología de Futbol 3, las herramientas de "testeo de habilidades individuales y colectivas" la interpretación en lenguaje de señas y la metodología de enseñanza a niños de 6 a 12 años desarrollada por la FIFA el fútbol base adaptándolo a lenguaje sencillo.</p>
-              </div>
-            </div>
-          </FadeIn>
-
-          <FadeIn delay={0.2}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 pt-8 border-t border-gray-100">
-              
-              <div className="space-y-6">
-                  <h2 className="text-2xl font-bold text-secondary border-l-4 border-accent-orange pl-4 flex items-center gap-2">
-                   <MapPin className="w-6 h-6 text-accent-orange" aria-hidden="true" />
-                   Desarrollo
-                  </h2>
-                  <div className="prose max-w-none text-lg text-text-muted leading-relaxed space-y-4">
-                      <div>
-                          <strong className="text-secondary block">¿Dónde se desarrollan las actividades?</strong>
-                          Las actividades se desarrollan en el complejo deportivo Las Leñas Club, ubicado en Bartolomé Mitre esquina Remedios de Escalada, Moreno.
-                      </div>
-                       <div>
-                          <strong className="text-secondary block">¿Horarios?</strong>
-                          Martes y jueves en doble turno:<br/>
-                          Mañana: de 10:00hs a 12:00hs.<br/>
-                          Tarde: de 14:00hs a 16:00hs.
-                      </div>
-                       <div>
-                          <strong className="text-secondary block">¿Quiénes pueden participar?</strong>
-                          Pueden participar todos los niños y niñas con y sin discapacidad entre los 6 y 18 años de edad de nuestra localidad de Moreno.
-                      </div>
-                       <div>
-                          <strong className="text-secondary block">¿Hay planillas de inscripción?</strong>
-                          Para sumarse a la EFI pueden descargar la planilla de inscripción que consta de información del participante y un segmento de aptitud física mediante nuestro portal.
-                      </div>
+          <div style={{ display: "grid", gap: "80px" }}>
+            
+            <FadeIn>
+              <div style={{ background: "rgba(255,255,255,0.02)", padding: "50px", borderRadius: "20px", border: "1px solid rgba(255,255,255,0.05)" }}>
+                <h2 style={{ fontSize: "2rem", fontWeight: 900, color: "var(--color-primary-light)", marginBottom: "30px", textTransform: "uppercase", letterSpacing: "-1px" }}>
+                  <BookOpen size={28} style={{ display: "inline-block", marginRight: "10px", verticalAlign: "middle" }} /> FUNDAMENTACIÓN
+                </h2>
+                <div style={{ display: "grid", gap: "24px", fontSize: "1.1rem", lineHeight: 1.7, color: "rgba(255,255,255,0.7)" }}>
+                  <p>Involucramos a la comunidad en la habilitación de espacios acordes a prácticas deportivas de calidad, enfrentando la falta de oportunidades para el desarrollo inclusivo.</p>
+                  <p>Trabajamos con niños y niñas provenientes de comunidades vulnerables de Moreno, utilizando lenguaje de señas y adaptaciones pedagógicas para garantizar que todos comprendan y disfruten del juego.</p>
+                  <div style={{ background: "rgba(255,255,255,0.03)", padding: "30px", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.05)" }}>
+                    <h4 style={{ color: "#fff", fontWeight: 800, marginBottom: "15px" }}>OBJETIVOS CENTRALES</h4>
+                    <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: "10px" }}>
+                      <li style={{ display: "flex", gap: "12px" }}>
+                        <Target size={20} color="var(--color-primary-light)" />
+                        <span>Potenciar los talentos de personas con y sin discapacidad entre 6 y 18 años.</span>
+                      </li>
+                      <li style={{ display: "flex", gap: "12px" }}>
+                        <Target size={20} color="var(--color-primary-light)" />
+                        <span>Respetar la diversidad como potencial humano en cada entrenamiento.</span>
+                      </li>
+                      <li style={{ display: "flex", gap: "12px" }}>
+                        <Target size={20} color="var(--color-primary-light)" />
+                        <span>Generar espacios abiertos con los apoyos necesarios para una inclusión real.</span>
+                      </li>
+                    </ul>
                   </div>
+                </div>
               </div>
+            </FadeIn>
 
-              <div className="space-y-6">
-                   <h2 className="text-2xl font-bold text-secondary border-l-4 border-primary pl-4 flex items-center gap-2">
-                   <Users className="w-6 h-6 text-primary" aria-hidden="true" />
-                   Organizaciones
-                  </h2>
-                  <div className="prose max-w-none text-lg text-text-muted leading-relaxed">
-                      <p className="mb-4">Participan las escuelas especiales de Moreno:</p>
-                      <ul className="space-y-2 list-disc ms-6 font-medium text-secondary marker:text-primary">
-                          <li>Escuela 501</li>
-                          <li>Escuela 502</li>
-                          <li>Escuela 503</li>
-                          <li>Escuela 504</li>
-                          <li>Escuela 506</li>
-                          <li>C.F.L. N°1</li>
-                      </ul>
+            <FadeIn delay={0.1}>
+              <div>
+                <h2 style={{ fontSize: "2.2rem", fontWeight: 900, marginBottom: "40px", textAlign: "center", textTransform: "uppercase" }}>LA METODOLOGÍA DEL JUEGO</h2>
+                <div style={{ display: "grid", gap: "24px" }}>
+                  <div style={{ background: "rgba(41,128,185,0.05)", border: "1px solid rgba(41,128,185,0.1)", padding: "40px", borderRadius: "16px" }}>
+                    <h3 style={{ color: "#2980B9", fontSize: "1.5rem", fontWeight: 900, marginBottom: "15px" }}>LOS ACUERDOS</h3>
+                    <p style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.6 }}>Promovemos la autodeterminación y la construcción de relaciones sociales positivas. Es el momento de escuchar y empatizar antes de entrar a la cancha.</p>
                   </div>
+                  <div style={{ background: "rgba(230,126,34,0.05)", border: "1px solid rgba(230,126,34,0.1)", padding: "40px", borderRadius: "16px" }}>
+                    <h3 style={{ color: "#E67E22", fontSize: "1.5rem", fontWeight: 900, marginBottom: "15px" }}>EL PARTIDO</h3>
+                    <p style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.6 }}>Ponemos a prueba habilidades y liberamos endorfinas. Desafiamos la mejora diaria en lo deportivo y en hábitos saludables de vida.</p>
+                  </div>
+                  <div style={{ background: "rgba(0,141,77,0.05)", border: "1px solid rgba(0,141,77,0.1)", padding: "40px", borderRadius: "16px" }}>
+                    <h3 style={{ color: "var(--color-primary-light)", fontSize: "1.5rem", fontWeight: 900, marginBottom: "15px" }}>LA REFLEXIÓN</h3>
+                    <p style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.6 }}>Transformamos experiencias en aprendizaje. Un espacio donde todos son iguales y cada opinión es escuchada y respetada.</p>
+                  </div>
+                </div>
               </div>
+            </FadeIn>
 
-            </div>
-          </FadeIn>
+            <FadeIn delay={0.2}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+                <div>
+                  <h3 style={{ fontSize: "1.6rem", fontWeight: 900, marginBottom: "24px", color: "var(--color-primary-light)" }}>DATOS DE INTERÉS</h3>
+                  <div style={{ display: "grid", gap: "20px", color: "rgba(255,255,255,0.5)" }}>
+                    <div>
+                      <strong style={{ color: "#fff", display: "block", marginBottom: "5px" }}>UBICACIÓN:</strong>
+                      <div style={{ display: "flex", gap: "10px" }}>
+                        <MapPin size={18} color="var(--color-primary-light)" />
+                        <span>Las Leñas Club, Bartolomé Mitre y Remedios de Escalada, Moreno.</span>
+                      </div>
+                    </div>
+                    <div>
+                      <strong style={{ color: "#fff", display: "block", marginBottom: "5px" }}>HORARIOS:</strong>
+                      <span>Martes y Jueves (Turnos Mañana y Tarde).</span>
+                    </div>
+                    <div>
+                      <strong style={{ color: "#fff", display: "block", marginBottom: "5px" }}>PARTICIPACIÓN:</strong>
+                      <span>Niños/as de 6 a 18 años con y sin discapacidad.</span>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                   <h3 style={{ fontSize: "1.6rem", fontWeight: 900, marginBottom: "24px", color: "#E67E22" }}>ESCUELAS QUE PARTICIPAN</h3>
+                   <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gridTemplateColumns: "1fr 1fr", gap: "15px" }}>
+                     {["Escuela 501", "Escuela 502", "Escuela 503", "Escuela 504", "Escuela 506", "C.F.L. N°1"].map(esc => (
+                       <li key={esc} style={{ display: "flex", gap: "10px", alignItems: "center", color: "rgba(255,255,255,0.6)" }}>
+                         <div style={{ width: "6px", height: "6px", background: "#E67E22", borderRadius: "50%" }}></div>
+                         {esc}
+                       </li>
+                     ))}
+                   </ul>
+                </div>
+              </div>
+            </FadeIn>
+
+          </div>
 
         </div>
       </section>
+
     </div>
   );
 }

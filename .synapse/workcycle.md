@@ -35,6 +35,27 @@
 - Players embebidos en Team schema (no referencia)
 - File upload local para MVP
 
+### FASE 17 - Auditoría y Pulido Final (2026-03-14)
+- [x] Fix: Await `params` in `Novedades` (Next 16 support)
+- [x] Fix: Alineación milimétrica de calendario en `Canchas`
+- [x] Fix: Contraste de slots de tiempo y títulos globales
+- [x] Fix: Links rotos en `Footer` y `Multimedia`
+- [x] Mejora: Filtro dinámico en `ClubStrip` para integración estética
+
+### Decisiones tomadas:
+- Await for dynamic params in App Router (Next 15+ convention)
+- Aspect-ratio unificado en grillas de reserva para evitar jitter
+
+### FASE 18 - Refinamiento de Navegación y Activos de Marca (2026-03-14)
+- [x] Fix: Home Page Runtime Crash (`next.config.mjs` unauthorized hosts)
+- [x] Fix: Logos Rotos en `ClubStrip` (Proxy `images.weserv.nl` + Wikimedia SVGs)
+- [x] Fix: Visibilidad de Logos `Aliados` (Filter `brightness-0 invert` + Opacity 0.6)
+- [x] Mejora: Menú Hamburger oculto en Desktop (`lg:hidden` en Header)
+- [x] Mejora: Espaciado Hero Expansivo (180px top padding) en todas las subpáginas
+
+### Decisiones tomadas:
+- Proxy centralizado vía `weserv.nl` para assets externos.
+- Padding expansivo (180px) estandarizado en Hubs.
+
 ### Próximo paso:
-- Interacción en la UI para la funcionalidad de Canchas
-- Revisión general del cliente
+- Validación final con el usuario.

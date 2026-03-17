@@ -52,7 +52,7 @@ export default function SumatePage() {
   return (
     <div className="page-container">
       {/* Hero Section */}
-      <section className="bg-primary text-white py-16 md:py-24" style={{ background: "var(--color-primary-dark)", color: "#fff", padding: "80px 0" }}>
+      <section className="bg-primary text-white py-16 md:py-24" style={{ background: "var(--color-primary-dark)", color: "#fff", padding: "180px 0 100px" }}>
         <div className="container text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6" style={{ fontSize: "3rem", fontWeight: 800, marginBottom: "24px" }}>
             Se parte del cambio

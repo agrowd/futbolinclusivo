@@ -25,7 +25,7 @@ src/
 │       ├── inscripcion/   # POST tournament registration
 │       └── reservas/      # POST reservation + GET availability
 ├── components/
-│   └── layout/            # Header, Footer, SkipLink
+│   └── layout/            # Header, Footer, ClubStrip, Sidebar components
 └── lib/
     ├── mongodb.js         # DB connection singleton
     └── schemas/           # Mongoose schemas (Team, Player, Reservation)
@@ -34,6 +34,7 @@ src/
 ## Módulos Funcionales
 1. **Inscripción a Torneos** — Formulario multi-step (3 pasos) con ARIA
 2. **Alquiler de Canchas** — Calendario interactivo con prevención de overbooking
-3. **Páginas informativas** — Nosotros, Contacto, Novedades
+3. **Páginas informativas** — Nosotros, Contacto, Novedades (Rediseño Premium Hybrid)
+4. **Navegación Híbrida** — Top ClubStrip + Aside Sidebar táctico
 
 ## Estado: MVP funcional

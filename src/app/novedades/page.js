@@ -41,66 +41,56 @@ const news = [
 
 export default function NovedadesPage() {
   return (
-    <div className="section" style={{ minHeight: "80vh" }}>
-      <div className="container" style={{ maxWidth: "860px" }}>
-        <div style={{ textAlign: "center", marginBottom: "48px" }}>
-          <h1 className="section-title" style={{ textAlign: "center" }}>
-            <Newspaper size={28} aria-hidden="true" style={{ verticalAlign: "middle", marginRight: "8px", color: "var(--color-primary)" }} />
+    <div className="bg-[#000B1A] text-white min-h-screen pt-48 pb-32">
+      <div className="container mx-auto px-4 max-w-4xl">
+        <header className="text-center mb-20">
+          <div className="inline-flex items-center gap-3 bg-[#36b37e]/10 text-[#36b37e] px-4 py-1.5 rounded font-black text-[10px] tracking-widest mb-8 uppercase border border-[#36b37e]/20">
+            <Newspaper size={14} />
+            ACTUALIDAD
+          </div>
+          <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tighter uppercase leading-none">
             Novedades
           </h1>
-          <p className="section-subtitle" style={{ margin: "0 auto" }}>
-            Las últimas noticias de la Liga de Fútbol Inclusiva y la Asociación Civil Andar.
+          <p className="text-xl text-white/50 max-w-2xl mx-auto leading-relaxed font-medium">
+            Las últimas noticias y sucesos de la Liga de Fútbol Inclusiva y la Asociación Civil Andar.
           </p>
-        </div>
+        </header>
 
-        <div role="feed" aria-label="Novedades recientes" style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+        <div role="feed" className="grid gap-6">
           {news.map(({ date, title, excerpt, href }, i) => (
             <Link
               key={i}
               href={href}
-              className="card card-elevated"
-              style={{
-                padding: "24px 28px",
-                display: "flex",
-                gap: "20px",
-                alignItems: "flex-start",
-                textDecoration: "none"
-              }}
+              className="group relative bg-white/[0.02] border border-white/5 p-8 md:p-10 rounded-3xl transition-all hover:bg-white/[0.05] hover:border-white/10 hover:-translate-y-1 shadow-2xl overflow-hidden"
               aria-labelledby={`news-${i}`}
             >
-              <div
-                style={{
-                  padding: "12px",
-                  borderRadius: "var(--radius-sm)",
-                  background: "var(--color-field-green)",
-                  color: "var(--color-primary)",
-                  flexShrink: 0,
-                }}
-                aria-hidden="true"
-              >
-                <Trophy size={24} />
-              </div>
-              <div style={{ flex: 1 }}>
-                <time
-                  style={{
-                    fontSize: "0.8rem",
-                    color: "var(--color-primary)",
-                    fontWeight: 700,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.05em",
-                  }}
-                >
-                  {date}
-                </time>
-                <h2 id={`news-${i}`} style={{ fontSize: "1.15rem", fontWeight: 700, margin: "6px 0 8px", color: "var(--color-secondary)" }}>
-                  {title}
-                </h2>
-                <p style={{ color: "var(--color-text-muted)", lineHeight: 1.7, fontSize: "0.95rem" }}>
-                  {excerpt}
-                </p>
-                <span style={{ display: "inline-flex", alignItems: "center", gap: "6px", color: "var(--color-primary)", fontWeight: 700, fontSize: "0.9rem", marginTop: "12px" }}>
-                   Leer artículo completo <ArrowRight size={16} />
-                </span>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#36b37e]/5 rounded-full -mr-16 -mt-16 blur-3xl group-hover:bg-[#36b37e]/10 transition-all duration-700" />
+              
+              <div className="flex flex-col md:flex-row gap-8 items-start relative z-10">
+                <div className="w-16 h-16 shrink-0 bg-[#36b37e] rounded-2xl flex items-center justify-center text-white shadow-lg shadow-[#36b37e]/20 group-hover:rotate-6 transition-transform">
+                  <Trophy size={32} />
+                </div>
+                
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-3">
+                    <Calendar size={14} className="text-[#36b37e]" />
+                    <time className="text-[10px] font-black text-[#36b37e] uppercase tracking-widest">
+                      {date}
+                    </time>
+                  </div>
+                  <h2 
+                    id={`news-${i}`} 
+                    className="text-2xl md:text-3xl font-black mb-4 group-hover:text-[#36b37e] transition-colors tracking-tight uppercase leading-tight"
+                  >
+                    {title}
+                  </h2>
+                  <p className="text-white/50 text-base md:text-lg leading-relaxed mb-6 font-medium">
+                    {excerpt}
+                  </p>
+                  <div className="inline-flex items-center gap-2 text-white font-black text-xs tracking-widest uppercase border-b-2 border-white/10 pb-1 group-hover:border-[#36b37e] group-hover:text-[#36b37e] transition-all">
+                    Leer más <ArrowRight size={16} />
+                  </div>
+                </div>
               </div>
             </Link>
           ))}

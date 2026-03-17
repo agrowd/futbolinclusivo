@@ -66,8 +66,9 @@ const blogPosts = {
   }
 };
 
-export function generateMetadata({ params }) {
-  const post = blogPosts[params.slug];
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const post = blogPosts[slug];
   if (!post) {
     return { title: "Post no encontrado" };
   }
@@ -77,8 +78,9 @@ export function generateMetadata({ params }) {
   };
 }
 
-export default function BlogPostPage({ params }) {
-  const post = blogPosts[params.slug];
+export default async function BlogPostPage({ params }) {
+  const { slug } = await params;
+  const post = blogPosts[slug];
 
   if (!post) {
     notFound();

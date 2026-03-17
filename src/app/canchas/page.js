@@ -305,6 +305,10 @@ export default function CanchasPage() {
                     fontSize: "0.8rem",
                     color: "var(--color-text-muted)",
                     padding: "8px 0",
+                    aspectRatio: "1",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center"
                   }}
                   aria-hidden="true"
                 >

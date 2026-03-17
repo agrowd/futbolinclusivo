@@ -11,3 +11,7 @@
 | D-07 | **aria-live="polite" para lista dinámica** | Screen readers anuncian cambios sin recargar la web | 🔒 LOCKED |
 | D-08 | **Green primario oscurecido a #007A3D** | Original #008d4d no cumplía ratio 4.5:1 en fondo blanco | 🔒 LOCKED |
 | D-09 | **File upload local (no Cloudinary/S3)** | MVP simplificado. Producción requiere servicio externo | 🟢 ACTIVE |
+| D-10 | **Rediseño Híbrido Premium (LaLiga/Copa)** | Estética premium con paleta profunda (#000B1A) y navegación híbrida | 🔒 LOCKED |
+| D-11 | **Eliminación Total de `styled-jsx`** | Refactorización a Tailwind pureza para evitar crashes en build de App Router | 🔒 LOCKED |
+| D-12 | **Uso de `images.weserv.nl` como Proxy** | Bypass de bloqueos ORB/CORS del navegador para logos externos y S3 | 🔒 LOCKED |
+| D-13 | **Espaciado Hero Expansivo (180px)** | Estandarización de `padding-top` en subpáginas para estética Premium | 🔒 LOCKED |

@@ -5,250 +5,327 @@ import {
   Users,
   Calendar,
   Heart,
-  Globe,
-  GraduationCap,
+  Newspaper,
+  Zap,
+  Star,
+  PlayCircle,
+  Image as ImageIcon,
+  UserPlus,
   ArrowRight,
+  ChevronRight,
 } from "lucide-react";
 
 export const metadata = {
-  title: "Fútbol Inclusivo — Liga de Fútbol para personas con y sin discapacidad",
+  title: "Fútbol Inclusivo — Premium Hybrid Experience",
 };
+
+const actionButtons = [
+  { label: "NOTICIAS", icon: Newspaper, href: "/novedades", color: "#008D4D" },
+  { label: "ÚLTIMO", icon: Zap, href: "/novedades", color: "#001A3D" },
+  { label: "FIGURAS", icon: Star, href: "/institucional/comision", color: "#001A3D" },
+  { label: "VIDEOS", icon: PlayCircle, href: "/multimedia", color: "#001A3D" },
+  { label: "FOTOS", icon: ImageIcon, href: "/multimedia", color: "#001A3D" },
+  { label: "INSCRIPCIÓN", icon: UserPlus, href: "/inscripcion", color: "#E67E22" },
+];
 
 const recentNews = [
   {
-    title: "Nace Andar FC",
+    title: "Nace Andar FC: Un nuevo horizonte para el fútbol inclusivo",
     date: "29 Jun 2022",
     image: "https://futbolinclusivo.org.ar/app/uploads/2022/07/MG_3241-Copiar-960x600.jpg",
-    link: "/novedades"
+    category: "INSTITUCIONAL"
   },
   {
-    title: "Ceremonia de Apertura 2024",
+    title: "Ceremonia de Apertura 2024: Más de 1000 sueños en marcha",
     date: "10 Mar 2024",
     image: "https://futbolinclusivo.org.ar/app/uploads/2021/12/FUTBOL-111221-89-Copiar-960x600.jpg",
-    link: "/novedades"
+    category: "LIGA BA"
   },
   {
-    title: "TORNEO DE VERANO “AFA SOMOS TODXS”",
+    title: "AFA SOMOS TODXS: El torneo de verano que rompe barreras",
     date: "16 Feb 2024",
     image: "https://futbolinclusivo.org.ar/app/uploads/2024/02/WhatsApp-Image-2024-02-16-at-15.15.10-960x584.jpeg",
-    link: "/novedades"
-  },
-  {
-    title: "Nuevo Complejo “Fútbol por la Inclusión”",
-    date: "16 Jul 2022",
-    image: "https://futbolinclusivo.org.ar/app/uploads/2022/06/WhatsApp-Image-2022-06-29-at-7.08.44-PM-480x360.jpeg",
-    link: "/novedades"
+    category: "LIGA NACIONAL"
   }
 ];
 
 const aliados = [
-  {
-    name: "FIFA Foundation",
-    logo: "https://futbolinclusivo.org.ar/app/uploads/2020/12/LOGO-FIFA-FOUNDATION-A-VERSUS-1-e1708534832778.png"
-  },
-  {
-    name: "Common Goal",
-    logo: "https://futbolinclusivo.org.ar/app/uploads/2018/04/COMMON-GOAL-IMAGEN2.png"
-  },
-  {
-    name: "UEFA Foundation for Children",
-    logo: "https://futbolinclusivo.org.ar/app/uploads/2018/06/logo-uefa-foundation2.png"
-  },
-  {
-    name: "AFA",
-    logo: "https://futbolinclusivo.org.ar/app/uploads/2024/02/Argentine_Football_Association_logo.svg_-e1708534772981.png"
-  }
+  { name: "FIFA Foundation", logo: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/commons/a/aa/FIFA_logo_without_slogan.svg&n=-1" },
+  { name: "Common Goal", logo: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/commons/8/84/Logo_Common_Goal.svg&n=-1" },
+  { name: "UEFA Foundation", logo: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/commons/e/ef/Uefa_logo.svg&n=-1" },
+  { name: "AFA", logo: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/commons/c/c4/Afa_gold_logo24.svg&n=-1" }
 ];
 
 export default function HomePage() {
   return (
-    <>
-      {/* ===== HERO SECTION ===== */}
-      <section className="hero" aria-labelledby="hero-heading" style={{
-        backgroundImage: "linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), url('https://futbolinclusivo.org.ar/app/uploads/2018/12/MG_0325.jpg')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        padding: "120px 0",
-        color: "#fff"
-      }}>
-        <div className="container" style={{ position: "relative", zIndex: 2 }}>
-          <div className="hero-content" style={{ maxWidth: "800px" }}>
-            <h1 id="hero-heading" style={{ fontSize: "3rem", fontWeight: 800, marginBottom: "24px" }}>
-              Creando valores a través del <span>deporte...</span>
+    <div className="bg-[#000B1A] text-white min-h-screen">
+      
+      {/* ===== HERO SECTION (LaLiga Inspired) ===== */}
+      <section className="relative h-[85vh] flex items-center overflow-hidden">
+        <div className="absolute inset-0 z-[1]">
+          <Image 
+            src="https://futbolinclusivo.org.ar/app/uploads/2018/12/MG_0325.jpg"
+            alt="Fútbol Inclusivo Hero"
+            fill
+            className="object-cover opacity-50"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#000B1A] via-[#000B1A]/20 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#000B1A] to-transparent" />
+        </div>
+
+        <div className="container mx-auto px-4 relative z-[2]">
+          <div className="max-w-3xl">
+            <div className="inline-block px-6 py-2 bg-[#36b37e] rounded-full font-black text-[10px] tracking-[2px] mb-8 shadow-[0_5px_20px_rgba(54,179,126,0.3)] border border-white/20 uppercase">
+              DESDE 1998
+            </div>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-[0.9] tracking-tighter">
+              EL FÚTBOL ES <br/>
+              <span className="text-[#36b37e] drop-shadow-[0_0_10px_rgba(54,179,126,0.2)]">PARA TODOS.</span>
             </h1>
-            <p style={{ fontSize: "1.2rem", lineHeight: 1.6, marginBottom: "32px", color: "rgba(255,255,255,0.9)" }}>
-              La Liga de Fútbol Inclusiva es un evento sistemático de fútbol para personas con y sin discapacidad creado por la Asociación Civil Andar.
-              <br/><br/>
-              El mismo se desarrolla desde el año 1998, en la ciudad de Moreno (Argentina) y se replica en diferentes puntos del país y de Latinoamérica. A través del fútbol se trabajan valores, se equiparan oportunidades y se construye una sociedad más inclusiva.
+            <p className="text-lg md:text-xl leading-relaxed text-white/70 mb-16 max-w-xl">
+              Equiparamos oportunidades y construimos una sociedad más inclusiva a través del deporte más lindo del mundo.
             </p>
-            <div className="hero-actions" style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
-              <Link href="/inscripcion" className="btn btn-lg" style={{ background: "#fff", color: "var(--color-primary-dark)", fontWeight: 700 }}>
-                CAMINO A LYON
+            <div className="flex flex-wrap gap-5">
+              <Link 
+                href="/inscripcion" 
+                className="bg-white text-black font-black px-14 py-6 rounded-2xl transition-all hover:bg-[#36b37e] hover:text-white hover:scale-105 active:scale-95 shadow-2xl uppercase text-[12px] tracking-[4px] border-4 border-white"
+              >
+                INSCRIBIR EQUIPO
               </Link>
-              <a href="https://donaronline.org/asociacion-civil-andar/suma-tu-apoyo-al-futbol-inclusivo" target="_blank" rel="noopener noreferrer" className="btn btn-lg" style={{ background: "rgba(255,255,255,0.1)", color: "#fff", border: "2px solid rgba(255,255,255,0.3)" }}>
-                SUMÁ TU APOYO
-              </a>
+              <Link 
+                href="/institucional" 
+                className="bg-white/10 text-white font-black px-14 py-6 rounded-2xl border-4 border-white/20 transition-all hover:bg-white/20 active:scale-95 backdrop-blur-xl uppercase text-[12px] tracking-[4px]"
+              >
+                CONOCENOS
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ===== CONTENT SECTION ===== */}
-      <section className="section" style={{ padding: "64px 0" }}>
-        <div className="container">
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "32px" }}>
+      {/* ===== ACTION GRID (Copa Argentina Inspired) ===== */}
+      <section className="-mt-[55px] relative z-20 px-6 mb-48">
+        <div className="container mx-auto max-w-7xl">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-px bg-white/10 border-2 border-white/10 rounded-2xl overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.6)]">
+            {actionButtons.map((btn, idx) => (
+              <Link 
+                key={idx} 
+                href={btn.href}
+                style={{ backgroundColor: btn.color }}
+                className="group p-16 flex flex-col items-center justify-center gap-6 transition-all hover:bg-white/[0.03] active:scale-95"
+              >
+                <div className="w-12 h-12 flex items-center justify-center bg-white/10 rounded-full transition-transform group-hover:scale-110">
+                  <btn.icon size={24} className="text-white" />
+                </div>
+                <span className="text-white font-extrabold text-[10px] tracking-widest">{btn.label}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== RECENT NEWS & RESULTS ===== */}
+      <section className="py-48">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_350px] gap-16">
             
             {/* LATEST NEWS */}
-            <div style={{ gridColumn: "span 2" }}>
-              <h2 style={{ marginBottom: "24px", color: "var(--color-primary-dark)", fontSize: "2rem" }}>Novedades</h2>
-              
-              <div style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-                gap: "24px"
-              }}>
-                {recentNews.map((news, index) => (
-                  <div key={index} style={{
-                    borderRadius: "12px",
-                    overflow: "hidden",
-                    boxShadow: "var(--shadow-md)",
-                    background: "#fff",
-                    transition: "transform 0.3s ease",
-                    ":hover": { transform: "translateY(-5px)" }
-                  }}>
-                    <div style={{ position: "relative", height: "200px" }}>
+            <div className="space-y-10">
+              <div className="flex justify-between items-end border-b border-white/5 pb-6">
+                <h2 className="text-3xl md:text-4xl font-black tracking-tighter">ÚLTIMAS NOVEDADES</h2>
+                <Link href="/novedades" className="text-[#36b37e] font-bold text-xs flex items-center gap-2 hover:gap-4 transition-all uppercase tracking-widest">
+                  VER TODAS <ArrowRight size={16} />
+                </Link>
+              </div>
+
+              <div className="grid gap-16">
+                {recentNews.map((news, idx) => (
+                  <Link href="/novedades" key={idx} className="group flex flex-col md:flex-row gap-8 bg-white/[0.02] rounded-3xl overflow-hidden border border-white/5 transition-all hover:bg-white/[0.05] hover:border-white/20 shadow-lg p-3 md:p-4">
+                    <div className="relative w-full md:w-80 h-64 shrink-0 overflow-hidden rounded-2xl">
                       <Image 
                         src={news.image} 
-                        alt={news.title}
-                        fill
-                        style={{ objectFit: "cover" }}
+                        alt={news.title} 
+                        fill 
+                        className="object-cover transition-transform duration-500 group-hover:scale-110" 
                       />
-                      <div style={{
-                        position: "absolute",
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        padding: "40px 16px 16px",
-                        background: "linear-gradient(to top, rgba(0,0,0,0.8), transparent)",
-                        color: "#fff"
-                      }}>
-                        <h3 style={{ fontSize: "1.1rem", margin: 0, lineHeight: 1.3 }}>{news.title}</h3>
-                      </div>
                     </div>
-                    <div style={{ padding: "16px", display: "flex", justifyContent: "space-between", alignItems: "center", borderTop: "1px solid #eee" }}>
-                      <span style={{ fontSize: "0.9rem", color: "#666", display: "flex", alignItems: "center", gap: "6px" }}>
-                        <Calendar size={14} /> {news.date}
-                      </span>
-                      <Link href={news.link} style={{
-                        background: "var(--color-primary)",
-                        color: "#fff",
-                        padding: "6px 16px",
-                        borderRadius: "4px",
-                        fontSize: "0.85rem",
-                        textDecoration: "none",
-                        fontWeight: "bold"
-                      }}>
-                        LEER NOTA
-                      </Link>
+                    <div className="p-10 md:p-12 flex flex-col justify-center">
+                      <span className="text-[#36b37e] font-black text-[12px] tracking-[5px] uppercase mb-6">{news.category}</span>
+                      <h3 className="text-white text-3xl md:text-4xl font-black leading-tight group-hover:text-[#36b37e] transition-colors">{news.title}</h3>
+                      <p className="text-white/40 text-base mt-8 font-bold flex items-center gap-3">
+                        <Calendar size={16} /> {news.date}
+                      </p>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>
 
-            {/* COUNTDOWN & FINALS */}
-            <div>
-              <div style={{
-                background: "var(--color-primary-dark)",
-                color: "#fff",
-                borderRadius: "12px",
-                overflow: "hidden",
-                boxShadow: "var(--shadow-md)",
-                marginBottom: "32px"
-              }}>
-                <div style={{ background: "var(--color-primary)", padding: "16px", textAlign: "center" }}>
-                  <h3 style={{ margin: 0, fontSize: "1.2rem" }}>FINALES Y PREMIACION 2025</h3>
-                  <p style={{ margin: "4px 0 0", color: "var(--color-primary-light)", fontSize: "0.9rem" }}>6 Dic 2025</p>
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between", padding: "24px 16px", background: "#fff", color: "var(--color-text)" }}>
-                  <div style={{ textAlign: "center", flex: 1 }}>
-                    <div style={{ fontSize: "2.5rem", fontWeight: 800, lineHeight: 1 }}>00</div>
-                    <div style={{ fontSize: "0.75rem", textTransform: "uppercase", color: "#666", marginTop: "8px" }}>Días</div>
-                  </div>
-                  <div style={{ width: "1px", background: "#eee" }}></div>
-                  <div style={{ textAlign: "center", flex: 1 }}>
-                    <div style={{ fontSize: "2.5rem", fontWeight: 800, lineHeight: 1 }}>00</div>
-                    <div style={{ fontSize: "0.75rem", textTransform: "uppercase", color: "#666", marginTop: "8px" }}>Horas</div>
-                  </div>
-                  <div style={{ width: "1px", background: "#eee" }}></div>
-                  <div style={{ textAlign: "center", flex: 1 }}>
-                    <div style={{ fontSize: "2.5rem", fontWeight: 800, lineHeight: 1 }}>00</div>
-                    <div style={{ fontSize: "0.75rem", textTransform: "uppercase", color: "#666", marginTop: "8px" }}>Minutos</div>
-                  </div>
+            {/* SIDEBAR: NEXT MATCHES / COUNTDOWN */}
+            <div className="space-y-16">
+              {/* COUNTDOWN */}
+              <div className="bg-gradient-to-br from-[#004d26] to-[#002D16] rounded-3xl p-12 text-center shadow-2xl relative overflow-hidden group border border-white/5">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-150 duration-700" />
+                <Trophy size={56} className="text-white/20 mx-auto mb-6" />
+                <h3 className="font-black text-3xl mb-2 tracking-tight">FINALES 2025</h3>
+                <p className="text-white/60 text-[11px] font-black tracking-[4px] uppercase mb-8">6 DE DICIEMBRE</p>
+                <div className="flex justify-center gap-6">
+                  {[ {v: "00", l: "DÍAS"}, {v: "00", l: "HRS"}, {v: "00", l: "MIN"} ].map((t, i) => (
+                    <div key={i} className="flex-1">
+                      <div className="text-4xl font-black mb-1">{t.v}</div>
+                      <div className="text-[10px] font-black opacity-40 tracking-[2px]">{t.l}</div>
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              {/* PAST RESULTS */}
-              <div style={{
-                background: "#fff",
-                borderRadius: "12px",
-                overflow: "hidden",
-                boxShadow: "var(--shadow-md)",
-                border: "1px solid #eee"
-              }}>
-                <div style={{ background: "var(--color-primary)", padding: "16px", display: "flex", justifyContent: "space-between", alignItems: "center", color: "#fff" }}>
-                  <h3 style={{ margin: 0, fontSize: "1.1rem" }}>Finales 2017</h3>
-                  <span style={{ fontSize: "0.9rem", background: "rgba(255,255,255,0.2)", padding: "4px 12px", borderRadius: "100px" }}>Zona A</span>
-                </div>
+              {/* RECENT MATCHES */}
+              <div className="bg-[#001229] rounded-3xl p-10 border border-white/5 shadow-xl">
+                <h3 className="text-sm font-black mb-8 flex items-center gap-4 tracking-[4px] uppercase">
+                  <Calendar size={20} className="text-[#36b37e]" />
+                  PARTIDOS RECIENTES
+                </h3>
                 
-                <div style={{ padding: "0" }}>
-                  <div style={{ background: "#f8f9fa", padding: "8px 16px", fontSize: "0.85rem", fontWeight: "bold", color: "#555", borderBottom: "1px solid #eee" }}>Partido Final</div>
-                  <div style={{ padding: "12px 16px", display: "flex", justifyContent: "space-between", borderBottom: "1px solid #eee" }}>
-                    <span>C.E.F. 123 A</span>
-                    <strong>2</strong>
-                  </div>
-                  <div style={{ padding: "12px 16px", display: "flex", justifyContent: "space-between", borderBottom: "1px solid #eee" }}>
-                    <span>CEDIMA</span>
-                    <strong>0</strong>
-                  </div>
-
-                  <div style={{ background: "#f8f9fa", padding: "8px 16px", fontSize: "0.85rem", fontWeight: "bold", color: "#555", borderBottom: "1px solid #eee", borderTop: "1px solid #eee" }}>Partido 3er Puesto</div>
-                  <div style={{ padding: "12px 16px", display: "flex", justifyContent: "space-between", borderBottom: "1px solid #eee" }}>
-                    <span>Andar A</span>
-                    <strong>2</strong>
-                  </div>
-                  <div style={{ padding: "12px 16px", display: "flex", justifyContent: "space-between" }}>
-                    <span>P.D.I. Los Pibes del Defe</span>
-                    <strong>1</strong>
-                  </div>
+                <div className="grid gap-6">
+                  {[
+                    { t1: "Andar A", t2: "CEF 123", s1: 2, s2: 0 },
+                    { t1: "Boca", t2: "San Lorenzo", s1: 1, s2: 1 },
+                  ].map((match, i) => (
+                    <div key={i} className="bg-white rounded-3xl p-8 flex flex-col sm:flex-row items-center justify-between text-black shadow-2xl border border-black/5 hover:scale-[1.02] transition-transform gap-6">
+                      <div className="flex-1 text-center sm:text-right font-black text-[14px] uppercase tracking-tight w-full">{match.t1}</div>
+                      <div className="bg-gray-100 px-10 py-5 rounded-2xl font-black text-2xl flex gap-6 shadow-inner shrink-0">
+                        <span>{match.s1}</span>
+                        <span className="opacity-20 font-light">-</span>
+                        <span>{match.s2}</span>
+                      </div>
+                      <div className="flex-1 text-center sm:text-left font-black text-[14px] uppercase tracking-tight w-full">{match.t2}</div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
-            
+
+          </div>
+        </div>
+      </section>
+
+      {/* ===== COMPETENCIA SECTION (Restored Horizontal Premium) ===== */}
+      <section className="bg-[#000B1A] border-y border-white/5 relative overflow-hidden" style={{ paddingTop: '160px', paddingBottom: '160px' }}>
+        {/* Subtle Decorative Background */}
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 opacity-[0.03] select-none pointer-events-none whitespace-nowrap hidden lg:block">
+          <span className="text-[180px] font-black uppercase tracking-tighter text-white">Competencia</span>
+        </div>
+
+        <div className="container mx-auto px-6 max-w-7xl relative z-10">
+          <div className="text-center" style={{ marginBottom: '96px' }}>
+            <h2 className="text-4xl md:text-6xl font-black tracking-tighter mb-8 uppercase text-white">Competencia</h2>
+            <div className="w-32 h-1.5 bg-[#36b37e] mx-auto rounded-full shadow-[0_0_20px_rgba(54,179,126,0.3)]" />
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            {/* FIXTURE */}
+            <div 
+              className="bg-[#001229] border border-white/10 rounded-[40px] shadow-2xl flex flex-col group hover:border-[#36b37e]/30 transition-all duration-500 overflow-hidden p-10 sm:p-12 md:p-14 lg:p-16"
+            >
+              <div className="flex items-center gap-6 mb-12">
+                <div className="w-14 h-14 bg-[#36b37e]/10 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110">
+                  <Calendar className="text-[#36b37e]" size={32} />
+                </div>
+                <h3 className="text-2xl font-black tracking-widest uppercase text-white">Fixture</h3>
+              </div>
+              
+              <div className="flex-1 flex flex-col gap-10 mb-12">
+                <p className="text-white/60 text-lg leading-relaxed">Consulta todos los partidos, horarios y sedes de la próxima fecha en todas las categorías.</p>
+                <div className="p-10 bg-white/5 rounded-3xl border border-white/10 text-center shadow-inner mt-auto">
+                  <span className="text-[12px] font-black tracking-[4px] text-[#36b37e] block mb-6 uppercase">Próxima Fecha</span>
+                  <p className="font-black text-3xl text-white mb-2">Fecha 12 - Liga BA</p>
+                  <p className="text-base text-white/40 font-bold uppercase tracking-wider">Sábado 15 de Mayo</p>
+                </div>
+              </div>
+
+              <Link href="/canchas" className="w-full bg-white/5 hover:bg-[#36b37e] text-white font-black py-7 rounded-2xl text-center transition-all border border-white/10 uppercase text-[12px] tracking-[4px] hover:shadow-2xl hover:-translate-y-1">
+                VER FIXTURE COMPLETO
+              </Link>
+            </div>
+
+            {/* GOLEADORES */}
+            <div 
+              className="bg-[#001229] border border-white/10 rounded-[40px] shadow-2xl flex flex-col group hover:border-[#36b37e]/30 transition-all duration-500 overflow-hidden p-10 sm:p-12 md:p-14 lg:p-16"
+            >
+              <div className="flex items-center gap-6 mb-12">
+                <div className="w-14 h-14 bg-[#36b37e]/10 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110">
+                  <Trophy className="text-[#36b37e]" size={32} />
+                </div>
+                <h3 className="text-2xl font-black tracking-widest uppercase text-white">Goleadores</h3>
+              </div>
+
+              <div className="flex-1 flex flex-col gap-6 mb-12">
+                {[
+                  { name: "Juan Pérez", team: "Andar A", goals: 12 },
+                  { name: "S. Gómez", team: "CEF 123", goals: 10 },
+                  { name: "R. Díaz", team: "San Lorenzo", goals: 9 },
+                ].map((p, i) => (
+                  <div key={i} className="flex justify-between items-center p-8 bg-white/[0.03] rounded-3xl border border-white/5 hover:bg-white/[0.06] transition-all duration-500">
+                    <div className="flex items-center gap-8">
+                      <span className="text-[#36b37e] text-3xl font-black italic opacity-50">{i+1}</span>
+                      <div>
+                        <p className="font-black text-xl uppercase leading-tight text-white mb-2">{p.name}</p>
+                        <p className="text-[11px] text-white/40 font-bold uppercase tracking-widest">{p.team}</p>
+                      </div>
+                    </div>
+                    <span className="bg-[#36b37e] text-white font-black px-10 py-4 rounded-2xl text-xl shadow-[0_10px_20px_rgba(54,179,126,0.3)]">{p.goals}</span>
+                  </div>
+                ))}
+              </div>
+
+              <Link href="/novedades" className="w-full bg-white/5 hover:bg-[#36b37e] text-white font-black py-7 rounded-2xl text-center transition-all border border-white/10 uppercase text-[12px] tracking-[4px] hover:shadow-2xl hover:-translate-y-1">
+                TABLA COMPLETA
+              </Link>
+            </div>
+
+            {/* PARTICIPÁ (Highlight Card) */}
+            <div 
+              className="bg-gradient-to-br from-[#36b37e] to-[#1a5e42] rounded-[40px] shadow-2xl flex flex-col relative overflow-hidden group p-10 sm:p-12 md:p-14 lg:p-16"
+            >
+              <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-black/10 rounded-full group-hover:scale-150 transition-transform duration-700 blur-2xl" />
+              
+              <div className="flex items-center gap-6 mb-12 relative z-10">
+                <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center">
+                  <Star className="text-white" size={32} />
+                </div>
+                <h3 className="text-2xl font-black tracking-widest uppercase text-white">Participá</h3>
+              </div>
+
+              <div className="flex-1 flex flex-col gap-10 mb-12 relative z-10">
+                <p className="text-white text-3xl font-black leading-tight mb-2">Sumate a la liga más grande del país. Inscribí a tu equipo o vení a disfrutar de las finales.</p>
+                <div className="bg-black/20 p-10 rounded-[35px] backdrop-blur-sm border border-white/10 mt-auto">
+                  <span className="text-[12px] font-black tracking-[4px] text-white/60 block mb-6 uppercase">Entradas</span>
+                  <p className="font-black text-4xl text-white mb-4">Finales 2025</p>
+                  <p className="text-base text-white/70 font-bold uppercase tracking-widest">Próximamente</p>
+                </div>
+              </div>
+
+              <Link href="/inscripcion" className="w-full bg-white text-black font-black py-8 rounded-2xl text-center transition-all hover:bg-gray-100 hover:shadow-2xl uppercase text-[13px] tracking-[6px] relative z-10 active:scale-95 hover:-translate-y-1">
+                INSCRIBITE AHORA
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
       {/* ===== ALIADOS SECTION ===== */}
-      <section style={{ padding: "64px 0", background: "#f8f9fa" }}>
-        <div className="container" style={{ textAlign: "center" }}>
-          <h2 style={{ fontSize: "1.2rem", color: "#666", textTransform: "uppercase", letterSpacing: "2px", marginBottom: "40px" }}>Aliados</h2>
-          
-          <div style={{ 
-            display: "flex", 
-            justifyContent: "center", 
-            alignItems: "center", 
-            gap: "48px",
-            flexWrap: "wrap"
-          }}>
-            {aliados.map((aliado, index) => (
-              <div key={index} style={{ position: "relative", width: "150px", height: "80px" }}>
+      <section className="py-48 border-t border-white/5 bg-[#000814]">
+        <div className="container mx-auto px-4">
+          <h2 className="text-[12px] text-white/40 font-black tracking-[6px] uppercase text-center mb-20">PARTNERS GLOBALES</h2>
+          <div className="flex justify-center gap-24 md:gap-48 flex-wrap items-center">
+            {aliados.map((a, i) => (
+              <div key={i} className="relative w-28 md:w-40 h-16 transition-all duration-500 hover:scale-110 group cursor-pointer">
                 <Image 
-                  src={aliado.logo} 
-                  alt={`Logo ${aliado.name}`}
-                  fill
-                  className="aliado-logo"
-                  style={{ objectFit: "contain" }}
+                  src={a.logo} 
+                  alt={a.name} 
+                  fill 
+                  className="object-contain opacity-60 grayscale brightness-0 invert select-none pointer-events-none group-hover:opacity-100 group-hover:grayscale-0 group-hover:brightness-100 group-hover:invert-0 transition-all duration-500" 
                 />
               </div>
             ))}
@@ -256,34 +333,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== CTA SECTION ===== */}
-      <section className="section" aria-labelledby="cta-heading" style={{ background: "var(--color-primary-dark)", color: "#fff", padding: "80px 0" }}>
-        <div className="container" style={{ textAlign: "center" }}>
-          <h2 id="cta-heading" className="section-title" style={{ textAlign: "center", color: "#fff", marginBottom: "16px" }}>
-            ¿Querés ser parte?
-          </h2>
-          <p className="section-subtitle" style={{ margin: "0 auto 40px", color: "rgba(255,255,255,0.9)", maxWidth: "600px" }}>
-            Sumate como voluntario, inscribí a tu equipo en la liga, o apoyá con
-            una donación. Cada aporte construye una sociedad más inclusiva.
-          </p>
-          <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/inscripcion" className="btn btn-lg" style={{ background: "var(--color-accent-orange)", color: "#fff" }}>
-              <Users size={20} aria-hidden="true" />
-              Inscribir equipo
-            </Link>
-            <a
-              href="https://donaronline.org/asociacion-civil-andar/suma-tu-apoyo-al-futbol-inclusivo"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-lg"
-              style={{ background: "#fff", color: "var(--color-primary-dark)" }}
-            >
-              <Heart size={20} aria-hidden="true" />
-              Donar ahora
-            </a>
-          </div>
-        </div>
-      </section>
-    </>
+    </div>
   );
 }

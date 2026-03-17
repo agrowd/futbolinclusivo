@@ -4,115 +4,130 @@ import Image from "next/image";
 import FadeIn from "@/components/ui/FadeIn";
 
 export const metadata = {
-  title: "Festival Latinoamericano de Fútbol 3",
+  title: "Festival LATAM - Premium Experience",
   description: "Encuentro internacional de organizaciones promovido por la Asociación Civil Andar.",
 };
 
 const orgLatam = [
-  { country: "Brasil", orgs: [{ n: "Fundação Eprocad", p: "Promueve la formación integral de niños y adolescentes después de la escuela.", img: "https://futbolinclusivo.org.ar/app/uploads/2017/10/02-logo-eprocad.jpg" }, { n: "A Instituto Fazer Acontecer", p: "Mediante actividades educativas orientadas al deporte ayudan a familias jóvenes.", img: "https://futbolinclusivo.org.ar/app/uploads/2017/10/03-logo-fazer-acontecer.jpg" }, { n: "Instituto Formação", p: "Compromiso con el desarrollo sostenible de las regiones maranhenses.", img: "https://futbolinclusivo.org.ar/app/uploads/2017/10/04-logo-formacao.jpg" }] },
-  { country: "Chile", orgs: [{ n: "Fundacion Educere", p: "Proporciona programas educativos y liderazgo juvenil en Santiago.", img: "https://futbolinclusivo.org.ar/app/uploads/2017/10/05-logo-educere.jpg" }, { n: "Futbol Más", p: "Objetivo de promover la resiliencia y la felicidad en niñas, niños y adolescentes.", img: "https://futbolinclusivo.org.ar/app/uploads/2017/10/06-logo-futbol-mas.jpg" }] },
-  { country: "Colombia", orgs: [{ n: "Fundación Tiempo De Juego", p: "Habilidades para la vida a través de actividades deportivas, culturales.", img: "https://futbolinclusivo.org.ar/app/uploads/2017/10/07-logo-tiempo-de-juego.jpg" }, { n: "Futbol Con Corazón", p: "Busca reducir situaciones riesgosas promoviendo respeto y solidaridad.", img: "https://futbolinclusivo.org.ar/app/uploads/2017/10/08-logo-futbol-con-corazon.jpg" }] },
-  { country: "Cuba", orgs: [{ n: "Camaquito", p: "Organización suiza que apoya a los niños y adolescentes cubanos.", img: "https://futbolinclusivo.org.ar/app/uploads/2017/10/09-logo-camaquito.jpg" }] },
-  { country: "Costa Rica / El Salvador", orgs: [{ n: "Organización Juvenil Recrearte", p: "Promueve el desarrollo físico, motriz y emocional de niños.", img: "https://futbolinclusivo.org.ar/app/uploads/2017/10/10-logo-recrearte.jpg" }, { n: "Seprojoven", p: "Promueve activamente procesos participativos en el desarrollo personal.", img: "https://futbolinclusivo.org.ar/app/uploads/2017/10/11-logo-sepro-joven.jpg" }] },
-  { country: "Ecuador", orgs: [{ n: "FUDELA", p: "A GANAR ofrece capacitación integral y desarrollo de habilidades.", img: "https://futbolinclusivo.org.ar/app/uploads/2017/10/12-logo-fudela.jpg" }] },
-  { country: "Perú", orgs: [{ n: "Asociación Civil Los Pioneros", p: "Promueve cambios positivos en Callao usando el fútbol desde 1978.", img: "https://futbolinclusivo.org.ar/app/uploads/2017/10/13-logo-los-pioneros.jpg" }, { n: "Asociación Civil Wara", p: "Fortalece capacidades que contribuye a la construcción de una sociedad justa.", img: "https://futbolinclusivo.org.ar/app/uploads/2017/10/14-logo-wara.jpg" }, { n: "CEDEC", p: "Implementa programas educativos y de desarrollo humano integral.", img: "https://futbolinclusivo.org.ar/app/uploads/2017/10/15-logo-cedec-peru.jpg" }] },
-  { country: "Uruguay", orgs: [{ n: "Gurises Unidos", p: "Protege y promueve los derechos de los niños desfavorecidos.", img: "https://futbolinclusivo.org.ar/app/uploads/2017/10/16-logo-gurises-unidos.jpg" }] },
+  { country: "Brasil", color: "#27AE60", orgs: [{ n: "Fundação Eprocad", p: "Formación integral de niños y adolescentes.", img: "https://futbolinclusivo.org.ar/app/uploads/2017/10/02-logo-eprocad.jpg" }, { n: "I. Fazer Acontecer", p: "Actividades educativas orientadas al deporte.", img: "https://futbolinclusivo.org.ar/app/uploads/2017/10/03-logo-fazer-acontecer.jpg" }, { n: "Instituto Formação", p: "Desarrollo sostenible regional.", img: "https://futbolinclusivo.org.ar/app/uploads/2017/10/04-logo-formacao.jpg" }] },
+  { country: "Chile", color: "#C0392B", orgs: [{ n: "Fundacion Educere", p: "Programas educativos y liderazgo juvenil.", img: "https://futbolinclusivo.org.ar/app/uploads/2017/10/05-logo-educere.jpg" }, { n: "Futbol Más", p: "Resiliencia y felicidad en la infancia.", img: "https://futbolinclusivo.org.ar/app/uploads/2017/10/06-logo-futbol-mas.jpg" }] },
+  { country: "Colombia", color: "#F1C40F", orgs: [{ n: "F. Tiempo De Juego", p: "Habilidades para la vida mediante el deporte.", img: "https://futbolinclusivo.org.ar/app/uploads/2017/10/07-logo-tiempo-de-juego.jpg" }, { n: "Futbol Con Corazón", p: "Promoviendo respeto y solidaridad.", img: "https://futbolinclusivo.org.ar/app/uploads/2017/10/08-logo-futbol-con-corazon.jpg" }] },
+  { country: "Perú / Uruguay", color: "#2980B9", orgs: [{ n: "Los Pioneros", p: "Cambios positivos usando el fútbol.", img: "https://futbolinclusivo.org.ar/app/uploads/2017/10/13-logo-los-pioneros.jpg" }, { n: "Gurises Unidos", p: "Protección de derechos infantiles.", img: "https://futbolinclusivo.org.ar/app/uploads/2017/10/16-logo-gurises-unidos.jpg" }] },
 ];
 
 export default function FestivalLatam() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <section className="bg-primary text-white py-16 px-4 md:px-8">
-        <div className="max-w-4xl mx-auto text-center">
-            <Flame className="w-16 h-16 mx-auto mb-6 text-white" aria-hidden="true" />
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Festival Latinoamericano de Fútbol 3</h1>
-            <p className="text-xl opacity-90 leading-relaxed font-light">
-               Empoderamiento juvenil, igualdad de género e inclusión social en la región.
-            </p>
+    <div style={{ background: "#000B1A", color: "#fff", minHeight: "100vh" }}>
+      {/* Hero Section */}
+      <section style={{ 
+        background: "linear-gradient(to bottom, #001A3D, #000B1A)", 
+        padding: "100px 0 60px",
+        borderBottom: "1px solid rgba(255,255,255,0.05)"
+      }}>
+        <div className="container" style={{ textAlign: "center" }}>
+          <div style={{ 
+            display: "inline-flex", 
+            background: "rgba(230,126,34,0.1)", 
+            color: "#E67E22",
+            padding: "8px 16px", 
+            borderRadius: "4px", 
+            marginBottom: "24px", 
+            fontSize: "0.75rem", 
+            fontWeight: 800, 
+            letterSpacing: "2px" 
+          }}>
+            EVENTO INTERNACIONAL
+          </div>
+          <h1 style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", fontWeight: 900, marginBottom: "24px", letterSpacing: "-1.5px" }}>Festival Latinoamericano <br/> de Fútbol 3</h1>
+          <p style={{ fontSize: "1.2rem", color: "rgba(255,255,255,0.6)", maxWidth: "800px", margin: "0 auto", lineHeight: 1.6 }}>
+            Empoderamiento juvenil, igualdad de género e inclusión social en toda la región.
+          </p>
         </div>
       </section>
 
-      <section className="py-16 px-4 md:px-8 bg-white text-text">
-        <div className="max-w-4xl mx-auto space-y-16">
+      {/* Main Content */}
+      <section className="section" style={{ padding: "80px 0" }}>
+        <div className="container" style={{ maxWidth: "1000px" }}>
           
-          <FadeIn>
-            <div className="space-y-6">
-                <h2 className="text-3xl font-bold text-secondary border-l-4 border-primary pl-4">
-                   Resumen del Festival
+          <div style={{ display: "grid", gap: "60px" }}>
+            
+            <FadeIn>
+              <div style={{ background: "rgba(255,255,255,0.02)", padding: "40px", borderRadius: "20px", border: "1px solid rgba(255,255,255,0.05)" }}>
+                <h2 style={{ fontSize: "1.8rem", fontWeight: 900, color: "#E67E22", marginBottom: "24px", display: "flex", alignItems: "center", gap: "15px" }}>
+                  <Flame size={24} /> RESUMEN DEL FESTIVAL
                 </h2>
-                <div className="prose max-w-none text-lg text-text-muted leading-relaxed space-y-4">
-                    <p>Del 2 al 6 de noviembre más de 140 jóvenes participaron del Festival Latinoamericano de Fútbol 3, evento impulsado por la Asociación Civil Andar y streetfootballworld, que tuvo como ejes de desarrollo el empoderamiento juvenil, igualdad de género e inclusión social, tres focos temáticos directamente relacionados con los objetivos de fútbol para el desarrollo en la región. Este evento internacional reunió a 16 organizaciones de 10 países de Latinoamérica que llegaron a Buenos Aires para demostrar el poder del fútbol como herramienta de transformación social!</p>
-                </div>
-            </div>
-          </FadeIn>
+                <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "1.15rem", lineHeight: 1.7 }}>
+                  Más de 140 jóvenes de 16 organizaciones y 10 países se reunieron en Buenos Aires para demostrar el poder del fútbol como herramienta de transformación social. Un hito regional impulsado por Andar y streetfootballworld.
+                </p>
+              </div>
+            </FadeIn>
 
-          <FadeIn delay={0.1}>
-             <div className="space-y-6 pt-8 border-t border-gray-100">
-                <h2 className="text-3xl font-bold text-secondary border-l-4 border-accent-blue pl-4 flex items-center gap-2">
-                   <MessageSquare className="w-8 h-8 text-accent-blue" aria-hidden="true" />
-                   Foro Juvenil
-                </h2>
-                <div className="prose max-w-none text-lg text-text-muted leading-relaxed space-y-4">
-                    <p>El Salón Auditorio del Hotel Sheraton Buenos Aires albergó el Foro Juvenil del Festival Latinoamericano de Fútbol 3. Jóvenes líderes de las diferentes organizaciones participantes pudieron compartir sus experiencias personales y como el futbol les permitió vencer situaciones de vulnerabilidad y como apoyo el crecimiento personal de cada uno.</p>
-                    <p>Situaciones de violencia de género, discriminación por discapacidad, marginación y falta de oportunidades, son algunas de las situaciones en las cuales se han encontrado estos jóvenes y a través de programas de fútbol impulsadas por organizaciones con base territorial han logrado cambiar positivamente para sus comunidades.</p>
-                    <p>Asimismo, en este contexto se presentó Juan Roman Aguiló, quién brindó una charla motivacional. "Juanro", como él mismo se hace llamar, es un Conferencista Motivacional optimista, apasionado por el deporte y amante de los grandes desafíos. Nació sin brazos, por lo que tuvo que desarrollar sus pies como herramienta de vida. Perdiendo el miedo a ser diferente, ha utilizado la creatividad para superar las barreras en su vida, su actitud positiva y mentalidad de superación lo han convertido en un ganador.</p>
+            <FadeIn delay={0.1}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div style={{ background: "rgba(41,128,185,0.03)", padding: "40px", borderRadius: "16px", border: "1px solid rgba(41,128,185,0.1)" }}>
+                  <MessageSquare size={32} color="#2980B9" style={{ marginBottom: "20px" }} />
+                  <h3 style={{ fontSize: "1.5rem", fontWeight: 900, marginBottom: "15px" }}>FORO JUVENIL</h3>
+                  <p style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.6 }}>Líderes de toda la región compartieron experiencias de vida en el Hotel Sheraton, debatiendo sobre cómo el fútbol permite vencer situaciones de vulnerabilidad.</p>
                 </div>
-            </div>
-          </FadeIn>
-
-          <FadeIn delay={0.2}>
-             <div className="space-y-6 pt-8 border-t border-gray-100">
-                <h2 className="text-3xl font-bold text-secondary border-l-4 border-accent-orange pl-4 flex items-center gap-2">
-                   <Trophy className="w-8 h-8 text-accent-orange" aria-hidden="true" />
-                   Torneo de Fútbol 3 en el Predio de AFA
-                </h2>
-                <div className="prose max-w-none text-lg text-text-muted leading-relaxed space-y-4">
-                    <p>La Asociación del Fútbol Argentino y El Club Atlético San Lorenzo de Almagro albergaron el apasionante Torneo de Fútbol 3 que se desarrolló como eje central del Festival Latinoamericano. La metodología que cuenta con tres tiempo donde los valores, el respeto y la solidaridad son tan importantes como los goles convertidos.</p>
-                    <p>La jornada inaugural se desarrolló en el verde césped de la Ciudad Deportiva del Club Atlético San Lorenzo de Almagro donde las organizaciones participantes pudieron desfilar ante la atenta mirada de autoridades y el público presente. Banderas de 10 países flamearon y desfilaron al ritmo de la murga Estacatto. Luego se dio inicio formal con el encendido de la antorcha olímpica.</p>
-                    <p>La segunda jornada del Torneo se realizó en el Predio Julio H. Grondona que posee la Asociación del Fútbol Argentino en Ezeiza. En el mismo césped donde entrenan los mejores jugadores de argentina, los deportistas del Festival pudieron demostrar el valor del fútbol para la transformación social. Emocionantes partidos se jugaron y tuvieron su cierre con el presidente de la AFA, Claudio "Chiqui" Tapia, quien recibió una placa por su destacado compromiso con la inclusión social.</p>
+                <div style={{ background: "rgba(230,126,34,0.03)", padding: "40px", borderRadius: "16px", border: "1px solid rgba(230,126,34,0.1)" }}>
+                  <Trophy size={32} color="#E67E22" style={{ marginBottom: "20px" }} />
+                  <h3 style={{ fontSize: "1.5rem", fontWeight: 900, marginBottom: "15px" }}>TORNEO AFA</h3>
+                  <p style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.6 }}>El Predio Julio H. Grondona de Ezeiza albergó el torneo central, donde los valores y el respeto fueron tan importantes como los goles.</p>
                 </div>
-            </div>
-          </FadeIn>
+              </div>
+            </FadeIn>
 
-          <FadeIn delay={0.3}>
-            <div className="space-y-6 pt-8 border-t border-gray-100">
-                <h2 className="text-3xl font-bold text-secondary border-l-4 border-primary pl-4">
-                   Partido Exhibición "Fútbol por la Inclusión"
-                </h2>
-                <div className="prose max-w-none text-lg text-text-muted leading-relaxed space-y-4">
-                    <p>En alianza con la Fundación Estudiantes de la Plata, se desarrolló un partido exhibición que nos permitió promover el mensaje del "fútbol por la Inclusión". Esta actividad se desarrolló el día domingo 5 de noviembre en la República de los Niños, el primer parque temático, educativo de Latinoamérica.</p>
-                    <p>La presencia de Juan Sebastián Verón permitió que los jóvenes líderes de las organizaciones de Latinoamérica pudieran demostrar el valor del fútbol para el desarrollo y la transformación social. Sin lugar a dudas el Partido "Fútbol por la Inclusión" brindó un marco excepcional para la Ceremonia de Clausura del Festival Latinoamericano de Fútbol 3.</p>
-                    <p>Luego del partido llegó el momento más emotivo del Festival: la Ceremonia de Premiación donde se reconocieron a todos los jugadores, jóvenes líderes, voluntarios, colaboradores y organizadores del Festival. Cada integrante recibió su medalla y se entregó la copa de campeón a los ganadores del encuentro Latinoamericano.</p>
-                </div>
-            </div>
-          </FadeIn>
-
-          <FadeIn delay={0.4}>
-            <div className="space-y-6 pt-8 border-t border-gray-100">
-                <h2 className="text-3xl font-bold text-secondary border-l-4 border-accent-blue pl-4 mb-8">
-                   16 Organizaciones de 10 Países
-                </h2>
-                <div className="space-y-12">
-                    {orgLatam.map((group, idx) => (
-                        <div key={idx}>
-                            <h3 className="text-2xl font-bold text-accent-blue mb-4 border-b border-gray-200 pb-2">{group.country}</h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {group.orgs.map((org, oidx) => (
-                                    <div key={oidx} className="bg-gray-50 border border-gray-100 p-6 rounded-xl flex flex-col items-center text-center hover:-translate-y-1 transition-transform">
-                                        <img src={org.img} alt={`Logo de ${org.n}`} className="w-[100px] h-[100px] object-contain mb-4 bg-white rounded-lg p-2 shadow-sm" />
-                                        <h4 className="font-bold text-secondary text-lg mb-2">{org.n}</h4>
-                                        <p className="text-sm text-text-muted">{org.p}</p>
-                                    </div>
-                                ))}
+            {/* Organizations */}
+            <FadeIn delay={0.2}>
+              <div>
+                <h2 style={{ fontSize: "2rem", fontWeight: 900, marginBottom: "50px", textAlign: "center", letterSpacing: "-1px" }}>ORGANIZACIONES PARTICIPANTES</h2>
+                <div style={{ display: "grid", gap: "60px" }}>
+                  {orgLatam.map((group, idx) => (
+                    <div key={idx}>
+                      <h3 style={{ 
+                        fontSize: "0.8rem", 
+                        fontWeight: 900, 
+                        color: group.color, 
+                        letterSpacing: "3px", 
+                        marginBottom: "30px", 
+                        borderLeft: `4px solid ${group.color}`,
+                        paddingLeft: "15px" 
+                      }}>{group.country.toUpperCase()}</h3>
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px" }}>
+                        {group.orgs.map((org, oidx) => (
+                          <div key={oidx} style={{
+                            background: "rgba(255,255,255,0.03)",
+                            padding: "30px",
+                            borderRadius: "12px",
+                            border: "1px solid rgba(255,255,255,0.05)",
+                            textAlign: "center",
+                            transition: "all 0.3s"
+                          }} className="hover:bg-white/10 hover:border-white/20 hover:-translate-y-1">
+                            <div style={{ 
+                              width: "80px", 
+                              height: "80px", 
+                              background: "#fff",
+                              borderRadius: "8px",
+                              padding: "10px",
+                              margin: "0 auto 20px"
+                            }}>
+                              <img src={org.img} alt={org.n} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                             </div>
-                        </div>
-                    ))}
-                 </div>
-            </div>
-          </FadeIn>
+                            <h4 style={{ fontWeight: 800, marginBottom: "10px", color: "#fff" }}>{org.n}</h4>
+                            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.9rem", lineHeight: 1.5 }}>{org.p}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </FadeIn>
 
+          </div>
         </div>
       </section>
+
     </div>
   );
 }

@@ -1,96 +1,112 @@
-import { Map, Trophy, Network, Star } from "lucide-react";
+import { Map, Trophy, Network, Star, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import FadeIn from "@/components/ui/FadeIn";
 
 export const metadata = {
-  title: "Liga Nacional de Fútbol Inclusivo",
+  title: "Liga Nacional - Premium Experience",
   description: "Una red federal que expande el modelo deportivo a todo el país.",
 };
 
 const sedesNacionales = [
-  { region: "Tucumán", org: "Liga Tucumana (Fundación Valores Especiales)", slug: "tucuman", email: "cariverosa@hotmail.com" },
-  { region: "Mendoza", org: "Liga Mendocina (Programa Deporte Especial, San Rafael)", slug: "mendoza", email: "aledavila@hotmail.com" },
-  { region: "Río Negro", org: "Liga del Alto Valle (Esc. Mun. Deportiva Cipolletti)", slug: "rio-negro", email: "deportes@cipolletti.gov.ar" },
-  { region: "Jujuy", org: "Liga Jujeña (Fundación Valencia de Jujuy)", slug: "jujuy", email: null },
-  { region: "Santa Fe", org: "Liga de Santa Fe (CEF N° 49 de Rosario)", slug: "santa-fe", email: null },
-  { region: "Buenos Aires", org: "LFI Quilmes (Municipalidad de Quilmes)", slug: "quilmes", email: null },
+  { region: "Río Negro", title: "LFI RÍO NEGRO", slug: "rio-negro", email: "deportes@cipolletti.gov.ar", desc: "Desde 2010 la Escuela Municipal de Cipolletti lidera la red en la Patagonia. Participan más de 270 jóvenes de 40 organizaciones de la provincia rionegrina." },
+  { region: "Mendoza", title: "LFI MENDOZA", slug: "mendoza", email: "aledavila@hotmail.com", desc: "Coordinada desde San Rafael por el Programa Deporte Especial. Cuenta con 24 equipos y un cuerpo de 32 voluntarios activos desde el 2008." },
+  { region: "Tucumán", title: "LFI TUCUMÁN", slug: "tucuman", email: "cariverosa@hotmail.com", desc: "Organizada por la Fundación Valores Especiales, articula con los principales clubes de la provincia e involucra a más de 100 voluntarios." },
+  { region: "Jujuy", title: "LFI JUJUY", slug: "jujuy", email: null, desc: "Sede federal operada por la Fundación Valencia de Jujuy, llevando el fútbol inclusivo al extremo norte de nuestro país." },
 ];
 
 export default function LigaNacional() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <section className="bg-[var(--color-secondary)] text-white py-16 px-4 md:px-8">
-        <div className="max-w-4xl mx-auto text-center">
-            <Network className="w-16 h-16 mx-auto mb-6 text-primary" aria-hidden="true" />
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Liga Nacional</h1>
-            <p className="text-xl opacity-90 leading-relaxed font-light">
-              Proyecto Federal de Fútbol Inclusivo
-            </p>
+    <div style={{ background: "#000B1A", color: "#fff", minHeight: "100vh" }}>
+      {/* Hero Section */}
+      <section style={{ 
+        background: "linear-gradient(to bottom, #001A3D, #000B1A)", 
+        padding: "100px 0 60px",
+        borderBottom: "1px solid rgba(255,255,255,0.05)"
+      }}>
+        <div className="container" style={{ textAlign: "center" }}>
+          <div style={{ 
+            display: "inline-flex", 
+            background: "rgba(41,128,185,0.1)", 
+            color: "#2980B9",
+            padding: "8px 16px", 
+            borderRadius: "4px", 
+            marginBottom: "24px", 
+            fontSize: "0.75rem", 
+            fontWeight: 800, 
+            letterSpacing: "2px" 
+          }}>
+            PROYECTO FEDERAL
+          </div>
+          <h1 style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", fontWeight: 900, marginBottom: "24px", letterSpacing: "-1.5px" }}>Liga Nacional</h1>
+          <p style={{ fontSize: "1.2rem", color: "rgba(255,255,255,0.6)", maxWidth: "800px", margin: "0 auto", lineHeight: 1.6 }}>
+            Expandiendo una metodología de éxito a cada rincón de la Argentina a través de una red federal de cooperación.
+          </p>
         </div>
       </section>
 
-      <section className="py-16 px-4 md:px-8 bg-[var(--color-surface)] text-[var(--color-text)]">
-        <div className="max-w-4xl mx-auto space-y-12">
+      {/* Main Content */}
+      <section className="section" style={{ padding: "80px 0" }}>
+        <div className="container" style={{ maxWidth: "1000px" }}>
           
           <FadeIn>
-            <div className="prose max-w-none text-lg text-text-muted leading-relaxed mb-12">
-               <p className="text-xl font-medium text-secondary mb-8">
-                  La Liga de Fútbol Inclusiva ha extendido sus fronteras y se replica en distintos puntos del país gracias al trabajo en conjunto con organizaciones y entidades que promueven el desarrollo del fútbol como herramienta de inclusión social.
-               </p>
+            <div style={{ textAlign: "center", marginBottom: "80px" }}>
+              <h2 style={{ fontSize: "2.2rem", fontWeight: 900, marginBottom: "30px", letterSpacing: "-1px" }}>UNA RED DE TRABAJO EN CONJUNTO</h2>
+              <p style={{ fontSize: "1.3rem", color: "rgba(255,255,255,0.5)", lineHeight: 1.7, maxWidth: "850px", margin: "0 auto" }}>
+                La Liga de Fútbol Inclusiva ha extendido sus fronteras y se replica en distintos puntos del país gracias al trabajo con organizaciones que promueven el deporte como herramienta de inclusión.
+              </p>
             </div>
           </FadeIn>
 
-          <FadeIn delay={0.1}>
-            <div className="space-y-8">
-                <h2 className="text-3xl font-bold text-secondary border-l-4 border-primary pl-4 flex items-center gap-3">
-                   <Map className="w-8 h-8 text-primary" aria-hidden="true" />
-                   Sedes Nacionales
-                </h2>
-                
-                <div className="space-y-12">
-
-                    <div className="bg-gray-50 border border-gray-100 rounded-2xl p-8 hover:-translate-y-1 transition-transform">
-                        <h3 className="text-2xl font-bold text-secondary mb-4">LFI Río Negro</h3>
-                        <div className="prose text-lg text-text-muted">
-                            <p>Desde el año 2010 la Escuela Municipal Deportiva Inclusiva de Cipolletti, lleva adelante la Liga de Fútbol Inclusiva en Río Negro. Esta propuesta involucra la participación de más de 274 niños, jóvenes y adultos con discapacidad que integran 40 organizaciones de Río Negro. Asimismo acompañan el desarrollo de la Liga 10 voluntarios.</p>
-                            <p>La propuesta esta abierta a Escuelas Especiales, Talleres Protegidos, Centros de Día y demás organizaciones. La sede cuenta con 4 zonas de fútbol masculina y 1 zona de fútbol femenino. Su Ceremonia Inaugural será en el mes de Abril y tendrá sus respectivas fechas de juego de Mayo a Octubre, inclusive.</p>
-                            <p className="mt-4"><strong className="text-secondary">Contacto:</strong> deportes@cipolletti.gov.ar</p>
-                        </div>
-                    </div>
-
-                    <div className="bg-gray-50 border border-gray-100 rounded-2xl p-8 hover:-translate-y-1 transition-transform">
-                        <h3 className="text-2xl font-bold text-secondary mb-4">LFI Mendoza</h3>
-                        <div className="prose text-lg text-text-muted">
-                            <p>Desde el año 2008 la Coordinación Integral de Personas con Discapacidad de San Rafael, lleva adelante la Liga de Fútbol Inclusiva Mendocina. Esta propuesta involucra la participación de más de 252 niños, jóvenes y adultos con discapacidad que integran los 24 equipos de 15 organizaciones de San Rafael, Mendoza. Asimismo acompañan el desarrollo de la Liga 32 voluntarios.</p>
-                            <p>La propuesta esta abierta a Escuelas Especiales, Talleres Protegidos, Centros de Día y CEBJAs. Su Ceremonia Inaugural será en el mes de Abril y tendrá sus respectivas fechas de juego de Mayo a Octubre, inclusive.</p>
-                            <p className="mt-4"><strong className="text-secondary">Contacto:</strong> aledavila@hotmail.com</p>
-                        </div>
-                    </div>
-
-                    <div className="bg-gray-50 border border-gray-100 rounded-2xl p-8 hover:-translate-y-1 transition-transform">
-                        <h3 className="text-2xl font-bold text-secondary mb-4">LFI Tucumán</h3>
-                        <div className="prose text-lg text-text-muted">
-                            <p>Desde el año 2010 la provincia de Tucumán es sede de la Liga de Fútbol Inclusiva bajo la organización de la Fundación Valores Especiales.</p>
-                            <p>La sede tucumana articula e involucra a la Liga Tucumana de Fútbol y a los principales clubes de la Provincia. Esto permite la participación de más de 150 jóvenes y adultos con discapacidad que representan a 7 clubes, 2 talleres protegidos y 1 centro de Día. Asimismo acompañan el desarrollo anual de la Liga más de 100 voluntarios pertenecientes a los profesorados de educación física.</p>
-                            <p>La Liga en Tucumán cuenta con 4 zonas, 3 masculinas y 1 femenina. Su Ceremonia Inaugural será en el mes de Mayo y tendrá 10 fechas de juego de Mayo a Octubre, inclusive.</p>
-                            <p className="mt-4"><strong className="text-secondary">Contacto:</strong> cariverosa@hotmail.com</p>
-                        </div>
-                    </div>
-
-                     <div className="bg-gray-50 border border-gray-100 rounded-2xl p-8 hover:-translate-y-1 transition-transform">
-                        <h3 className="text-2xl font-bold text-secondary mb-4">LFI Jujuy</h3>
-                        <div className="prose text-lg text-text-muted">
-                            <p>La Liga Jujeña organizada por la Fundación Valencia de Jujuy.</p>
-                        </div>
-                    </div>
-
-                </div>
+          <div style={{ display: "grid", gap: "32px" }}>
+            <h3 style={{ fontSize: "1.2rem", fontWeight: 900, color: "var(--color-primary-light)", letterSpacing: "2px", display: "flex", alignItems: "center", gap: "10px", marginBottom: "20px" }}>
+              <Map size={24} /> SEDES NACIONALES ACTIVAS
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+              {sedesNacionales.map((sede, idx) => (
+                <FadeIn key={idx} delay={idx * 0.1}>
+                  <div style={{ 
+                    background: "rgba(255,255,255,0.03)", 
+                    padding: "40px", 
+                    borderRadius: "16px", 
+                    border: "1px solid rgba(255,255,255,0.05)",
+                    transition: "all 0.3s"
+                  }} className="hover:bg-white/10 hover:border-white/20 hover:-translate-y-1">
+                    <span style={{ color: "var(--color-primary-light)", fontWeight: 800, fontSize: "0.75rem", letterSpacing: "1.5px" }}>{sede.region.toUpperCase()}</span>
+                    <h4 style={{ fontSize: "1.8rem", fontWeight: 900, marginTop: "10px", marginBottom: "20px", color: "#fff" }}>{sede.title}</h4>
+                    <p style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.7, marginBottom: "30px", fontSize: "1.05rem" }}>
+                      {sede.desc}
+                    </p>
+                    {sede.email && (
+                      <div style={{ borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: "20px", fontSize: "0.9rem" }}>
+                        <span style={{ opacity: 0.3, fontWeight: 700 }}>CONTACTO: </span>
+                        <a href={`mailto:${sede.email}`} style={{ color: "var(--color-primary-light)", textDecoration: "none", fontWeight: 700 }}>{sede.email}</a>
+                      </div>
+                    )}
+                  </div>
+                </FadeIn>
+              ))}
             </div>
-          </FadeIn>
+          </div>
 
         </div>
       </section>
+
+      {/* FOOTER ACTION */}
+      <section style={{ padding: "80px 20px" }}>
+        <div className="container" style={{ textAlign: "center" }}>
+          <div style={{ background: "rgba(41,128,185,0.05)", padding: "60px", borderRadius: "24px", border: "1px solid rgba(41,128,185,0.1)" }}>
+             <Network size={40} color="#2980B9" style={{ margin: "0 auto 20px" }} />
+             <h3 style={{ fontSize: "1.8rem", fontWeight: 900, marginBottom: "20px" }}>¿QUERÉS QUE TU CIUDAD SEA SEDE?</h3>
+             <p style={{ color: "rgba(255,255,255,0.5)", maxWidth: "550px", margin: "0 auto 30px" }}>
+               Buscamos organizaciones comprometidas para seguir expandiendo la Red Federal de Fútbol Inclusivo en toda la Argentina.
+             </p>
+             <Link href="/contacto" className="btn btn-lg" style={{ background: "#2980B9", color: "#fff", fontWeight: 800 }}>PONERSE EN CONTACTO</Link>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Facebook, Twitter, Instagram, Mail } from "lucide-react";
 
 const footerLinks = [
@@ -15,7 +16,7 @@ const footerLinks = [
   {
     title: "Institución",
     links: [
-      { href: "/nosotros", label: "Nosotros" },
+      { href: "/institucional/nosotros", label: "Nosotros" },
       { href: "/contacto", label: "Contacto" },
       {
         href: "https://donaronline.org/asociacion-civil-andar/suma-tu-apoyo-al-futbol-inclusivo",
@@ -54,9 +55,10 @@ export default function Footer() {
     <footer
       role="contentinfo"
       style={{
-        background: "var(--color-secondary)",
-        color: "var(--color-text-inverse)",
-        padding: "64px 0 24px",
+        background: "#000814",
+        color: "rgba(255,255,255,0.8)",
+        padding: "80px 0 40px",
+        borderTop: "1px solid rgba(255,255,255,0.05)",
       }}
     >
       <div className="container">
@@ -64,67 +66,77 @@ export default function Footer() {
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-            gap: "40px",
-            marginBottom: "48px",
+            gap: "60px",
+            marginBottom: "60px",
           }}
         >
           {/* Brand column */}
-          <div>
+          <div style={{ gridColumn: "span 2" }}>
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "12px",
-                marginBottom: "16px",
+                gap: "15px",
+                marginBottom: "24px",
               }}
             >
-              <div
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  background: "var(--color-primary)",
-                  borderRadius: "8px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontWeight: 800,
-                  fontSize: "1.1rem",
-                }}
-              >
-                FI
+              <Image src="/logo.png" alt="Logo Andar FC" width={50} height={50} />
+              <div>
+                <span style={{ fontWeight: 900, fontSize: "1.4rem", color: "#fff", display: "block", letterSpacing: "-0.5px" }}>
+                  Fútbol Inclusivo
+                </span>
+                <span style={{ color: "var(--color-primary-light)", fontWeight: 700, fontSize: "0.75rem", textTransform: "uppercase" }}>
+                  Asociación Civil Andar
+                </span>
               </div>
-              <span style={{ fontWeight: 700, fontSize: "1.1rem" }}>
-                Fútbol Inclusivo
-              </span>
             </div>
             <p
               style={{
-                fontSize: "0.9rem",
-                opacity: 0.7,
+                fontSize: "1rem",
+                opacity: 0.6,
                 lineHeight: 1.7,
-                maxWidth: "280px",
+                maxWidth: "400px",
+                marginBottom: "30px"
               }}
             >
-              La Liga de Fútbol Inclusiva es un proyecto de la Asociación Civil
-              Andar. Creando valores a través del deporte desde 1998.
+              Desde 1998, equiparando oportunidades y construyendo una sociedad más inclusiva a través del deporte sistemático. Un orgullo morenense con proyección latinoamericana.
             </p>
             <div
               style={{
                 display: "flex",
-                gap: "12px",
-                marginTop: "20px",
+                gap: "16px",
               }}
             >
               {socialLinks.map(({ href, label, Icon }) => (
                 <a
                   key={label}
                   href={href}
-                  target={href.startsWith("mailto") ? undefined : "_blank"}
-                  rel={href.startsWith("mailto") ? undefined : "noopener noreferrer"}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={label}
-                  className="p-2 bg-secondary text-white rounded-full hover:bg-primary focus:outline-none focus:ring-2 focus:ring-accent-orange transition-colors"
+                  style={{ 
+                    color: "rgba(255,255,255,0.4)",
+                    background: "rgba(255,255,255,0.05)",
+                    width: "40px",
+                    height: "40px",
+                    borderRadius: "50%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    transition: "all 0.2s"
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = "var(--color-primary-light)";
+                    e.currentTarget.style.background = "rgba(255,255,255,0.1)";
+                    e.currentTarget.style.transform = "translateY(-3px)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = "rgba(255,255,255,0.4)";
+                    e.currentTarget.style.background = "rgba(255,255,255,0.05)";
+                    e.currentTarget.style.transform = "translateY(0)";
+                  }}
                 >
-                  <Icon size={18} aria-hidden="true" />
+                  <Icon size={20} aria-hidden="true" />
                 </a>
               ))}
             </div>
@@ -193,20 +205,20 @@ export default function Footer() {
           <div>
             <h3
               style={{
-                fontSize: "0.85rem",
-                fontWeight: 700,
+                fontSize: "0.75rem",
+                fontWeight: 800,
                 textTransform: "uppercase",
-                letterSpacing: "0.08em",
-                marginBottom: "16px",
-                opacity: 0.5,
+                letterSpacing: "2px",
+                marginBottom: "24px",
+                color: "#fff",
               }}
             >
-              Accesibilidad
+              ACCESIBILIDAD
             </h3>
             <p
               style={{
-                fontSize: "0.9rem",
-                opacity: 0.7,
+                fontSize: "0.95rem",
+                opacity: 0.5,
                 lineHeight: 1.7,
               }}
             >
@@ -220,22 +232,25 @@ export default function Footer() {
         {/* Bottom bar */}
         <div
           style={{
-            borderTop: "1px solid rgba(255,255,255,0.1)",
-            paddingTop: "24px",
+            borderTop: "1px solid rgba(255,255,255,0.05)",
+            paddingTop: "32px",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
             flexWrap: "wrap",
-            gap: "12px",
+            gap: "20px",
             fontSize: "0.85rem",
-            opacity: 0.5,
+            color: "rgba(255,255,255,0.3)",
           }}
         >
-          <p>
-            © {new Date().getFullYear()} Asociación Civil Andar. Todos los
-            derechos reservados.
-          </p>
-          <p>Un proyecto de Fútbol Inclusivo</p>
+          <div style={{ display: "flex", gap: "24px" }}>
+            <p>© {new Date().getFullYear()} Asociación Civil Andar.</p>
+            <p>Moreno, Buenos Aires, Argentina.</p>
+          </div>
+          <div style={{ display: "flex", gap: "24px" }}>
+            <Link href="/contacto" style={{ color: "inherit", textDecoration: "none" }}>Contacto</Link>
+            <Link href="/sumate" style={{ color: "var(--color-primary-light)", textDecoration: "none", fontWeight: 700 }}>¡Sumate!</Link>
+          </div>
         </div>
       </div>
     </footer>

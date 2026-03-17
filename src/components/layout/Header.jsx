@@ -10,15 +10,22 @@ import {
   Instagram,
   Mail,
   Heart,
-  Home,
+  ChevronRight,
+  Trophy,
+  Users,
+  Calendar,
+  Newspaper,
+  LayoutGrid,
 } from "lucide-react";
+import ClubStrip from "./ClubStrip";
 
 const mainNav = [
-  { href: "/institucional", label: "LA ASOCIACIÓN" },
-  { href: "/programas", label: "PROGRAMAS" },
-  { href: "/contacto", label: "CONTACTO" },
-  { href: "/novedades", label: "NOVEDADES" },
-  { href: "/sumate", label: "¡SUMATE!" },
+  { href: "/institucional", label: "LA ASOCIACIÓN", icon: Users },
+  { href: "/programas", label: "PROGRAMAS", icon: LayoutGrid },
+  { href: "/novedades", label: "NOVEDADES", icon: Newspaper },
+  { href: "/inscripcion", label: "INSCRIPCIÓN", icon: Trophy },
+  { href: "/canchas", label: "CANCHAS", icon: Calendar },
+  { href: "/sumate", label: "¡SUMATE!", icon: Heart },
 ];
 
 const programNav = [
@@ -29,11 +36,6 @@ const programNav = [
 ];
 
 const socialLinks = [
-  {
-    href: "/",
-    label: "Inicio",
-    Icon: Home,
-  },
   {
     href: "https://www.facebook.com/ligadefutbolinclusiva",
     label: "Facebook",
@@ -57,8 +59,8 @@ const socialLinks = [
 ];
 
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [fontSizeIndex, setFontSizeIndex] = useState(0); // 0: normal, 1: large, 2: largest
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [fontSizeIndex, setFontSizeIndex] = useState(0); 
 
   const fontSizes = ["100%", "110%", "120%"];
 
@@ -78,314 +80,177 @@ export default function Header() {
   };
 
   return (
-    <header
-      role="banner"
-      style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 100,
-        background: "var(--color-secondary)",
-        boxShadow: "var(--shadow-md)",
-      }}
-    >
-      {/* Top bar with social links and accessibility tools */}
-      <div
-        style={{
-          background: "var(--color-surface-dark)",
-          padding: "6px 0",
-          fontSize: "0.8rem",
-        }}
+    <>
+      <ClubStrip />
+      
+      <header
+        role="banner"
+        className="sticky top-0 z-[100] bg-[#000B1A]/95 backdrop-blur-md border-b border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.5)]"
       >
-        <div className="container" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-            {socialLinks.map(({ href, label, Icon }) => (
-              <a
-                key={label}
-                href={href}
-                target={href.startsWith("mailto") || href === "/" ? undefined : "_blank"}
-                rel={href.startsWith("mailto") || href === "/" ? undefined : "noopener noreferrer"}
-                aria-label={label}
-                style={{ color: "rgba(255,255,255,0.6)", transition: "color var(--transition-fast)", display: "flex" }}
-                onMouseEnter={(e) => (e.target.style.color = "#fff")}
-                onMouseLeave={(e) => (e.target.style.color = "rgba(255,255,255,0.6)")}
-              >
-                <Icon size={16} aria-hidden="true" />
-              </a>
-            ))}
-            <div style={{ width: "1px", height: "16px", background: "rgba(255,255,255,0.2)", margin: "0 4px" }} aria-hidden="true" />
+        <div className="max-w-[1600px] mx-auto px-12 lg:px-20 flex items-center justify-between h-[110px]">
+          {/* Logo & Desktop Nav Left */}
+          <div className="flex items-center gap-24">
+            <Link href="/" className="flex items-center gap-4 no-underline transition-all duration-300 hover:scale-105 active:scale-95 group">
+              <div className="relative">
+                <div className="absolute -inset-2 bg-[#36b37e]/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                <Image 
+                  src="/logo.png" 
+                  alt="Logo Andar FC" 
+                  width={64} 
+                  height={64} 
+                  className="relative object-contain drop-shadow-[0_0_12px_rgba(54,179,126,0.3)] transition-transform group-hover:rotate-6"
+                />
+              </div>
+              <div className="hidden sm:block">
+                <span className="text-white font-black text-2xl block leading-none tracking-tighter">ANDAR FC</span>
+                <span className="text-[#36b37e] font-bold text-[10px] uppercase tracking-[3px] mt-1 block">Fútbol Inclusivo</span>
+              </div>
+            </Link>
+ 
+            {/* Desktop Navigation Menu - Visible from LG (1024px) */}
+            <nav className="hidden lg:flex items-center gap-16">
+              {mainNav.slice(0, 5).map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="group relative py-2 text-white/50 font-black text-[12px] tracking-[2.5px] uppercase no-underline transition-all hover:text-white"
+                >
+                  <span className="relative z-10">{item.label}</span>
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#36b37e] transition-all duration-300 group-hover:w-full" />
+                </Link>
+              ))}
+            </nav>
+          </div>
+
+          {/* Actions Right */}
+          <div className="flex items-center gap-6">
+            <Link 
+              href="/sumate/donar" 
+              className="hidden lg:flex bg-[#36b37e] text-white rounded-full px-10 py-3.5 font-black text-[11px] tracking-[3px] transition-all hover:bg-[#2da372] hover:shadow-[0_0_30px_rgba(54,179,126,0.5)] hover:translate-y-[-2px] active:scale-95 active:translate-y-0 uppercase border-4 border-white/20"
+            >
+              DONAR AHORA
+            </Link>
             
-            {/* Font Size Switcher */}
-            <div style={{ display: "flex", gap: "8px", alignItems: "baseline" }}>
-              <button
-                onClick={() => changeFontSize(0)}
-                aria-label="Tamaño de texto normal"
-                style={{
-                  background: "none",
-                  border: "none",
-                  padding: "0 4px",
-                  color: fontSizeIndex === 0 ? "#fff" : "rgba(255,255,255,0.6)",
-                  cursor: "pointer",
-                  fontSize: "14px",
-                  fontWeight: 700,
-                  fontFamily: "var(--font-primary)",
-                  transition: "color var(--transition-fast)"
-                }}
-              >
-                A
-              </button>
-              <button
-                onClick={() => changeFontSize(1)}
-                aria-label="Tamaño de texto grande"
-                style={{
-                  background: "none",
-                  border: "none",
-                  padding: "0 4px",
-                  color: fontSizeIndex === 1 ? "#fff" : "rgba(255,255,255,0.6)",
-                  cursor: "pointer",
-                  fontSize: "16px",
-                  fontWeight: 700,
-                  fontFamily: "var(--font-primary)",
-                  transition: "color var(--transition-fast)"
-                }}
-              >
-                A
-              </button>
-              <button
-                onClick={() => changeFontSize(2)}
-                aria-label="Tamaño de texto muy grande"
-                style={{
-                  background: "none",
-                  border: "none",
-                  padding: "0 4px",
-                  color: fontSizeIndex === 2 ? "#fff" : "rgba(255,255,255,0.6)",
-                  cursor: "pointer",
-                  fontSize: "18px",
-                  fontWeight: 700,
-                  fontFamily: "var(--font-primary)",
-                  transition: "color var(--transition-fast)"
-                }}
-              >
-                A
-              </button>
+            <button
+              onClick={() => setIsSidebarOpen(true)}
+              aria-label="Abrir menú de navegación"
+              className="flex lg:hidden items-center gap-4 px-6 py-3 bg-white/5 border border-white/10 text-white rounded-xl cursor-pointer transition-all hover:bg-white/10 hover:border-white/20 active:scale-95 group"
+            >
+              <div className="flex flex-col gap-1 w-5">
+                <span className="h-0.5 w-full bg-white transition-all group-hover:w-3" />
+                <span className="h-0.5 w-full bg-[#36b37e]" />
+                <span className="h-0.5 w-full bg-white transition-all group-hover:w-4" />
+              </div>
+              <span className="font-black text-[12px] tracking-[3px] uppercase hidden sm:block">Menú</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Sidebar Overlay */}
+      {isSidebarOpen && (
+        <div 
+          onClick={() => setIsSidebarOpen(false)}
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[1000]"
+        />
+      )}
+
+      {/* Sidebar Navigation */}
+      <aside
+        id="main-sidebar"
+        className={`fixed top-0 left-0 bottom-0 w-[min(420px,95vw)] bg-[#000B1A] z-[1100] shadow-[20px_0_50px_rgba(0,0,0,0.5)] flex flex-col transition-transform duration-700 ease-[cubic-bezier(0.2,1,0.2,1)] ${
+          isSidebarOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full"
+        }`}
+      >
+        <div className="p-8 border-b border-white/5 flex justify-between items-center group">
+          <div className="flex items-center gap-4">
+            <Image src="/logo.png" alt="Logo" width={40} height={40} className="transition-transform group-hover:rotate-12" />
+            <div className="flex flex-col">
+              <span className="text-white font-black text-xs leading-none">ANDAR FC</span>
+              <span className="text-[#36b37e] font-bold text-[8px] uppercase tracking-wider">Premium</span>
             </div>
           </div>
-          <a
-            href="https://donaronline.org/asociacion-civil-andar/suma-tu-apoyo-al-futbol-inclusivo"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-sm"
-            style={{
-              background: "var(--color-primary-light)",
-              color: "#fff",
-              padding: "4px 14px",
-              fontSize: "0.8rem",
-              borderRadius: "100px",
-              fontWeight: 700
-            }}
+          <button 
+            onClick={() => setIsSidebarOpen(false)}
+            className="w-10 h-10 flex items-center justify-center bg-white/5 border border-white/10 text-white rounded-full cursor-pointer transition-all hover:bg-white/10 hover:rotate-90 active:scale-90"
           >
-            <Heart size={14} aria-hidden="true" />
-            ¡DONAR AHORA!
-          </a>
-        </div>
-      </div>
-
-      {/* Main navigation */}
-      <div className="container">
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            height: "var(--header-height)",
-          }}
-        >
-          {/* Logo */}
-          <Link
-            href="/"
-            aria-label="Fútbol Inclusivo - Ir al inicio"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "12px",
-              textDecoration: "none",
-            }}
-          >
-            <div
-              style={{
-                width: "60px",
-                height: "60px",
-                background: "#fff",
-                borderRadius: "8px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                overflow: "hidden",
-                padding: "4px"
-              }}
-            >
-              <Image 
-                src="/logo.png"
-                alt="Logo Andar FC"
-                width={50}
-                height={50}
-                style={{ objectFit: "contain" }}
-                priority
-              />
-            </div>
-            <div style={{ lineHeight: 1.2 }}>
-              <div
-                style={{
-                  color: "#fff",
-                  fontSize: "1.1rem",
-                  fontWeight: 700,
-                }}
-              >
-                Fútbol Inclusivo
-              </div>
-              <div
-                style={{
-                  color: "var(--color-primary-light)",
-                  fontSize: "0.7rem",
-                  fontWeight: 500,
-                }}
-              >
-                Asociación Civil Andar
-              </div>
-            </div>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <nav
-            aria-label="Navegación principal"
-            style={{ display: "flex", alignItems: "center", gap: "4px", flexWrap: "wrap", justifyContent: "flex-end" }}
-            className="desktop-nav"
-          >
-            {mainNav.map(({ href, label }) => (
-              <Link
-                key={href}
-                href={href}
-                style={{
-                  color: href === "/sumate" ? "var(--color-accent-orange)" : "rgba(255,255,255,0.85)",
-                  textDecoration: "none",
-                  padding: "8px 12px",
-                  borderRadius: "var(--radius-sm)",
-                  fontSize: "0.85rem",
-                  fontWeight: 700,
-                  transition: "all var(--transition-fast)",
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.color = "#fff";
-                  e.target.style.background = "rgba(255,255,255,0.1)";
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.color = href === "/sumate" ? "var(--color-accent-orange)" : "rgba(255,255,255,0.85)";
-                  e.target.style.background = "transparent";
-                }}
-              >
-                {label}
-              </Link>
-            ))}
-            <span style={{ width: "1px", height: "24px", background: "rgba(255,255,255,0.2)", margin: "0 4px" }} aria-hidden="true" />
-            {programNav.map(({ href, label }) => (
-              <Link
-                key={href}
-                href={href}
-                style={{
-                  color: "rgba(255,255,255,0.85)",
-                  textDecoration: "none",
-                  padding: "8px 12px",
-                  borderRadius: "var(--radius-sm)",
-                  fontSize: "0.85rem",
-                  fontWeight: 700,
-                  transition: "all var(--transition-fast)",
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.color = "#fff";
-                  e.target.style.background = "rgba(255,255,255,0.1)";
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.color = "rgba(255,255,255,0.85)";
-                  e.target.style.background = "transparent";
-                }}
-              >
-                {label}
-              </Link>
-            ))}
-          </nav>
-
-          {/* Mobile menu button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-expanded={isMenuOpen}
-            aria-controls="mobile-menu"
-            aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
-            className="mobile-menu-btn"
-            style={{
-              display: "none",
-              background: "transparent",
-              border: "none",
-              color: "#fff",
-              cursor: "pointer",
-              padding: "8px",
-            }}
-          >
-            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            <X size={20} />
           </button>
         </div>
-      </div>
 
-      {/* Mobile menu */}
-      {isMenuOpen && (
-        <nav
-          id="mobile-menu"
-          aria-label="Menú móvil"
-          style={{
-            position: "absolute",
-            top: "100%",
-            left: 0,
-            right: 0,
-            background: "var(--color-secondary)",
-            padding: "16px 24px 24px",
-            borderTop: "1px solid rgba(255,255,255,0.1)",
-            boxShadow: "var(--shadow-lg)",
-            maxHeight: "80vh",
-            overflowY: "auto"
-          }}
-        >
-          <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-            {[...mainNav, ...programNav].map(({ href, label }) => (
-              <li key={href}>
+        <nav className="flex-1 overflow-y-auto py-6">
+          <ul className="list-none p-0">
+            {mainNav.map((item) => (
+              <li key={item.href}>
                 <Link
-                  href={href}
-                  onClick={() => setIsMenuOpen(false)}
-                  style={{
-                    display: "block",
-                    padding: "14px 0",
-                    color: href === "/sumate" ? "var(--color-accent-orange)" : "rgba(255,255,255,0.9)",
-                    textDecoration: "none",
-                    fontSize: "1.05rem",
-                    fontWeight: 700,
-                    borderBottom: "1px solid rgba(255,255,255,0.05)",
-                  }}
+                  href={item.href}
+                  onClick={() => setIsSidebarOpen(false)}
+                  className="flex items-center justify-between px-8 py-5 text-white no-underline font-black text-base md:text-lg transition-all hover:bg-white/5 hover:pl-10 group border-b border-white/[0.02]"
                 >
-                  {label}
+                  <div className="flex items-center gap-4">
+                    <item.icon size={22} className="text-[#36b37e] transition-transform group-hover:scale-110" />
+                    <span className="tracking-tighter uppercase">{item.label}</span>
+                  </div>
+                  <ChevronRight size={18} className="opacity-30 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
                 </Link>
               </li>
             ))}
           </ul>
-        </nav>
-      )}
 
-      <style jsx>{`
-        @media (max-width: 1024px) {
-          .desktop-nav {
-            display: none !important;
-          }
-          .mobile-menu-btn {
-            display: block !important;
-          }
-        }
-      `}</style>
-    </header>
+          <div className="mt-10 px-8">
+            <span className="text-white/30 text-[10px] font-extrabold tracking-widest uppercase">Programas</span>
+            <ul className="list-none py-4 space-y-2">
+              {programNav.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    onClick={() => setIsSidebarOpen(false)}
+                    className="block py-2 text-white/70 no-underline text-sm font-semibold transition-colors hover:text-[#36b37e]"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </nav>
+
+        {/* Accessibility & Social in Sidebar Footer */}
+        <div className="p-8 border-t border-white/5 space-y-8 bg-black/20">
+          <div className="flex flex-col gap-4">
+            <span className="text-white/30 text-[10px] font-extrabold tracking-widest uppercase text-center">Accesibilidad</span>
+            <div className="flex justify-center gap-10">
+              {[0, 1, 2].map((idx) => (
+                <button
+                  key={idx}
+                  onClick={() => changeFontSize(idx)}
+                  className={`bg-none border-none cursor-pointer font-extrabold transition-all hover:scale-125 ${
+                    fontSizeIndex === idx ? "text-white" : "text-white/30"
+                  }`}
+                  style={{ fontSize: idx === 0 ? "14px" : idx === 1 ? "18px" : "22px" }}
+                >
+                  A
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex justify-center gap-6 border-t border-white/5 pt-6">
+            {socialLinks.map(({ href, label, Icon }) => (
+              <a 
+                key={label} 
+                href={href} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-white/40 transition-all hover:text-white hover:scale-110"
+              >
+                <Icon size={24} />
+              </a>
+            ))}
+          </div>
+        </div>
+      </aside>
+
+    </>
   );
 }

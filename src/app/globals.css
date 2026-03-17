@@ -6,11 +6,11 @@
    =========================== */
 
 @theme inline {
-  --color-primary: #007A3D;
-  --color-primary-dark: #005A2B;
-  --color-primary-light: #00A94F;
-  --color-secondary: #1B2838;
-  --color-secondary-light: #2D3E50;
+  --color-primary: #004D26;
+  --color-primary-dark: #003319;
+  --color-primary-light: #008D4D;
+  --color-secondary: #001A3D;
+  --color-secondary-light: #002D66;
   --color-accent-orange: #E67E22;
   --color-accent-orange-dark: #D35400;
   --color-accent-blue: #2980B9;
@@ -75,8 +75,8 @@ html {
 }
 
 body {
-  background: var(--color-surface);
-  color: var(--color-text);
+  background: #000B1A;
+  color: var(--color-text-inverse);
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -435,8 +435,8 @@ body {
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all var(--transition-fast);
-  text-align: center;
-  font-weight: 500;
+  background: var(--color-surface-alt);
+  color: var(--color-text);
 }
 
 .time-slot:hover:not(:disabled) {
@@ -509,7 +509,7 @@ body {
 .section-title {
   font-size: 2rem;
   font-weight: 800;
-  color: var(--color-secondary);
+  color: var(--color-text-inverse);
   margin-bottom: 16px;
 }
 
