@@ -26,15 +26,33 @@ export const metadata = {
     "asociación civil andar",
     "liga de fútbol",
     "argentina",
+    "liga ba",
+    "Liga Nacional de Fútbol Inclusivo",
   ],
+  authors: [{ name: "Asociación Civil Andar" }],
+  creator: "Asociación Civil Andar",
   openGraph: {
     title: "Fútbol Inclusivo — Asociación Civil Andar",
     description:
       "Creando valores a través del deporte. Liga de Fútbol para personas con y sin discapacidad.",
     url: "https://futbolinclusivo.org.ar",
     siteName: "Fútbol Inclusivo",
+    images: [
+      {
+        url: "https://futbolinclusivo.org.ar/app/uploads/2018/12/MG_0325.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Fútbol Inclusivo - Asociación Civil Andar",
+      },
+    ],
     locale: "es_AR",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Fútbol Inclusivo — Asociación Civil Andar",
+    description: "La liga de fútbol para personas con y sin discapacidad más grande del país.",
+    images: ["https://futbolinclusivo.org.ar/app/uploads/2018/12/MG_0325.jpg"],
   },
 };
 

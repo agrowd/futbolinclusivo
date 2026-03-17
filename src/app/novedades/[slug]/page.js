@@ -87,8 +87,8 @@ export default async function BlogPostPage({ params }) {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-white text-text">
-        <article className="max-w-3xl mx-auto px-4 py-16 w-full">
+    <div className="flex flex-col min-h-screen bg-[#000B1A] text-white/80 overflow-x-hidden">
+        <article className="container mx-auto px-8 sm:px-12 md:px-16 py-20 md:py-32 w-full overflow-hidden">
             
             <Link href="/novedades" className="inline-flex items-center text-primary font-bold hover:underline mb-8">
                 <ArrowLeft className="w-5 h-5 mr-2" />
