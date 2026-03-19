@@ -12,13 +12,19 @@ async function readJson(relPath) {
 export async function getLegacyContent() {
   if (cached) return cached;
 
-  const [content, assets] = await Promise.all([
-    readJson("public/legacy/legacy-content.json"),
-    readJson("public/legacy/legacy-assets-map.json"),
-  ]);
+  try {
+    const [content, assets] = await Promise.all([
+      readJson("public/legacy/legacy-content.json").catch(() => ({})),
+      readJson("public/legacy/legacy-assets-map.json").catch(() => ({})),
+    ]);
 
-  cached = { content, assets };
-  return cached;
+    cached = { content, assets };
+    return cached;
+  } catch (error) {
+    console.warn("Legacy content files not found, using empty fallback");
+    cached = { content: {}, assets: {} };
+    return cached;
+  }
 }
 
 export function mapLegacyImage(urlToLocal, remoteUrl) {
