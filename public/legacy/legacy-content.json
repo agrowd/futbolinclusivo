@@ -1,0 +1,52 @@
+{
+  "institutionalExtract": {
+    "pages": {
+      "Nosotros\\nuestro_campo\\nuestro_campo_source.txt": {
+        "title": "Nuestro Campo",
+        "text": [
+          "El Complejo Fútbol por la Inclusión es un espacio único en Argentina, diseñado específicamente para promover la inclusión a través del deporte.",
+          "Ubicado en la ciudad de Moreno, provincia de Buenos Aires, nuestro campo cuenta con instalaciones de primer nivel adaptadas para todas las capacidades.",
+          "Contamos con canchas de fútbol adaptadas, vestuarios accesibles, áreas de entrenamiento especializadas y espacios de convivencia para todos los participantes.",
+          "Más que un complejo deportivo, es un símbolo de cómo el deporte puede transformar vidas y construir comunidades más inclusivas."
+        ]
+      },
+      "Nosotros\\nuestra_historia\\nuestra_historia_source.txt": {
+        "title": "Nuestra Historia",
+        "text": [
+          "Desde 1998, Fútbol por la Inclusión ha trabajado incansablemente para transformar la realidad de miles de personas a través del deporte.",
+          "Nacimos como una iniciativa pequeña con un gran propósito: demostrar que el fútbol es una herramienta poderosa para la inclusión social.",
+          "A lo largo de más de 25 años, hemos crecido hasta convertirnos en una organización referente a nivel latinoamericano.",
+          "Hemos impactado positivamente la vida de más de 50,000 personas a través de nuestros programas y torneos inclusivos."
+        ]
+      },
+      "Nosotros\\nuestro_equipo\\nuestro_equipo_source.txt": {
+        "title": "Nuestro Equipo",
+        "text": [
+          "Contamos con un equipo multidisciplinario de profesionales apasionados por la inclusión.",
+          "Nuestro staff está conformado por entrenadores especializados, trabajadores sociales, psicólogos deportivos y voluntarios comprometidos.",
+          "Cada miembro de nuestro equipo aporta su experiencia y dedicación para hacer posible nuestra misión.",
+          "Trabajamos juntos para crear oportunidades y desarrollar el potencial de cada participante."
+        ]
+      },
+      "Nosotros\\nuestros_aliados\\nuestros_aliados_source.txt": {
+        "title": "Nuestros Aliados",
+        "text": [
+          "Contamos con el apoyo de organizaciones internacionales y locales que comparten nuestra visión.",
+          "FIFA Foundation, UEFA Foundation, Common Goal y AFA son algunos de nuestros aliados estratégicos.",
+          "Empresas, fundaciones y gobiernos confían en nuestro trabajo para generar impacto social positivo.",
+          "Juntos construimos un ecosistema de apoyo para el fútbol inclusivo."
+        ]
+      },
+      "Nosotros\\nuestro_impacto\\nuestro_impacto_source.txt": {
+        "title": "Nuestro Impacto",
+        "text": [
+          "Más de 50,000 beneficiarios directos en 25 años de trayectoria.",
+          "Presencia en más de 15 provincias argentinas con programas activos.",
+          "Más de 1,000 voluntarios involucrados en nuestras actividades.",
+          "Reconocimiento internacional como referente en fútbol inclusivo.",
+          "Creación de empleos y oportunidades para comunidades vulnerables."
+        ]
+      }
+    }
+  }
+}

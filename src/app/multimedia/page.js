@@ -10,7 +10,7 @@ const multimediaCategories = [
     title: "Fotos y Videos",
     description: "Galería completa de imágenes y videos de nuestros eventos, torneos y actividades",
     icon: Camera,
-    image: "/futbolinclusivo_recorrido/Multimedia/futbolinclusivo.org.ar_multimedia_fotos-videos_.png",
+    image: "https://futbolinclusivo.org.ar/app/uploads/2022/03/multimedia-fotos-videos-480x360.jpg",
     href: "/multimedia/fotos-videos",
     featured: true,
     count: "12 Galerías"
@@ -19,7 +19,7 @@ const multimediaCategories = [
     title: "Revista",
     description: "Publicaciones digitales con historias, entrevistas y artículos destacados",
     icon: FileText,
-    image: "/futbolinclusivo_recorrido/Nosotros/futbolinclusivo.org.ar_nosotros_nuestro-proposito_.png",
+    image: "https://futbolinclusivo.org.ar/app/uploads/2022/03/nosotros-nuestro-proposito-480x360.jpg",
     href: "/multimedia/revista",
     featured: false,
     count: "8 Ediciones"
@@ -28,7 +28,7 @@ const multimediaCategories = [
     title: "Prensa",
     description: "Noticias, artículos y cobertura mediática del Fútbol Inclusivo",
     icon: Newspaper,
-    image: "/liga-ba-institucional.png",
+    image: "https://futbolinclusivo.org.ar/app/uploads/2022/03/liga-ba-institucional-480x360.jpg",
     href: "/multimedia/prensa",
     featured: false,
     count: "50+ Artículos"
@@ -37,7 +37,7 @@ const multimediaCategories = [
     title: "Documentos Útiles",
     description: "Formularios, reglamentos y documentos oficiales para descargar",
     icon: Download,
-    image: "/liga-nacional-proyecto.png",
+    image: "https://futbolinclusivo.org.ar/app/uploads/2022/03/liga-nacional-proyecto-480x360.jpg",
     href: "/multimedia/documentos-utiles",
     featured: false,
     count: "20+ Documentos"
