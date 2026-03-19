@@ -78,7 +78,7 @@ export default function Header() {
               <div className="relative">
                 <div className="absolute -inset-2 bg-[#36b37e]/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                 <Image 
-                  src="https://futbolinclusivo.org.ar/app/uploads/2022/03/ANDAR-AFC-ESCUDO-logo.png" 
+                  src="/logo.png" 
                   alt="Logo Andar FC" 
                   width={40} 
                   height={40} 
