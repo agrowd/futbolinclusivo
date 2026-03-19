@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -16,15 +16,17 @@ import {
   Calendar,
   Newspaper,
   LayoutGrid,
+  MapPin,
 } from "lucide-react";
 import ClubStrip from "./ClubStrip";
 
 const mainNav = [
   { href: "/institucional", label: "LA ASOCIACIÓN", icon: Users },
-  { href: "/programas", label: "PROGRAMAS", icon: LayoutGrid },
+  { href: "/programas/ligas", label: "LIGAS", icon: Trophy, highlight: true },
+  { href: "/programas/escuela", label: "ESCUELA", icon: Users, highlight: true },
   { href: "/novedades", label: "NOVEDADES", icon: Newspaper },
-  { href: "/inscripcion", label: "INSCRIPCIÓN", icon: Trophy },
-  { href: "/canchas", label: "CANCHAS", icon: Calendar },
+  { href: "/inscripcion", label: "INSCRIPCIÓN", icon: Trophy, special: true },
+  { href: "/canchas", label: "ALQUILER DE CANCHAS", icon: MapPin },
   { href: "/sumate", label: "¡SUMATE!", icon: Heart },
 ];
 
@@ -60,24 +62,6 @@ const socialLinks = [
 
 export default function Header() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [fontSizeIndex, setFontSizeIndex] = useState(0); 
-
-  const fontSizes = ["100%", "110%", "120%"];
-
-  useEffect(() => {
-    const savedSize = localStorage.getItem("accessibility_font_size");
-    if (savedSize !== null) {
-      const index = parseInt(savedSize, 10);
-      setFontSizeIndex(index);
-      document.documentElement.style.fontSize = fontSizes[index];
-    }
-  }, []);
-
-  const changeFontSize = (index) => {
-    setFontSizeIndex(index);
-    document.documentElement.style.fontSize = fontSizes[index];
-    localStorage.setItem("accessibility_font_size", index.toString());
-  };
 
   return (
     <>
@@ -85,63 +69,81 @@ export default function Header() {
       
       <header
         role="banner"
-        className="sticky top-0 z-[100] bg-[#000B1A]/95 backdrop-blur-md border-b border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.5)]"
+        className="sticky top-0 z-100 bg-[#000B1A]/95 backdrop-blur-md border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.5)]"
       >
-        <div className="max-w-[1600px] mx-auto px-12 lg:px-20 flex items-center justify-between h-[110px]">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-16 flex items-center justify-between min-h-[60px] md:min-h-[72px] py-2">
           {/* Logo & Desktop Nav Left */}
-          <div className="flex items-center gap-24">
-            <Link href="/" className="flex items-center gap-4 no-underline transition-all duration-300 hover:scale-105 active:scale-95 group">
+          <div className="flex items-center gap-6 lg:gap-12 min-w-0">
+            <Link href="/" className="flex items-center gap-2 sm:gap-3 no-underline transition-all duration-300 hover:scale-105 active:scale-95 group shrink-0">
               <div className="relative">
                 <div className="absolute -inset-2 bg-[#36b37e]/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                 <Image 
                   src="/logo.png" 
                   alt="Logo Andar FC" 
-                  width={64} 
-                  height={64} 
-                  className="relative object-contain drop-shadow-[0_0_12px_rgba(54,179,126,0.3)] transition-transform group-hover:rotate-6"
+                  width={40} 
+                  height={40} 
+                  className="relative object-contain drop-shadow-[0_0_12px_rgba(54,179,126,0.3)] transition-transform group-hover:rotate-6 md:w-[50px] md:h-[50px]"
                 />
               </div>
               <div className="hidden sm:block">
-                <span className="text-white font-black text-2xl block leading-none tracking-tighter">ANDAR FC</span>
-                <span className="text-[#36b37e] font-bold text-[10px] uppercase tracking-[3px] mt-1 block">Fútbol Inclusivo</span>
+                <span className="text-white font-black text-lg md:text-2xl block leading-none tracking-tighter">ANDAR FC</span>
+                <span className="text-[#36b37e] font-bold text-[10px] md:text-xs uppercase tracking-wider mt-0.5 block">Fútbol Inclusivo</span>
               </div>
             </Link>
  
             {/* Desktop Navigation Menu - Visible from LG (1024px) */}
-            <nav className="hidden lg:flex items-center gap-16">
-              {mainNav.slice(0, 5).map((item) => (
+            <nav className="hidden lg:flex items-center gap-10">
+              {mainNav.slice(0, 6).map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="group relative py-2 text-white/50 font-black text-[12px] tracking-[2.5px] uppercase no-underline transition-all hover:text-white"
+                  className={`group relative py-2 font-black text-sm tracking-wider uppercase no-underline transition-all ${
+                    item.highlight 
+                      ? "text-[#36b37e] hover:text-white" 
+                      : item.special
+                      ? "text-white hover:text-[#36b37e]"
+                      : "text-white/50 hover:text-white"
+                  }`}
                 >
                   <span className="relative z-10">{item.label}</span>
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#36b37e] transition-all duration-300 group-hover:w-full" />
+                  {item.highlight && (
+                    <span className="absolute -inset-1 bg-[#36b37e]/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity" />
+                  )}
+                  {item.special ? (
+                    <>
+                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-[#36b37e] to-transparent opacity-60" style={{ animation: "energy-pulse 2s ease-in-out infinite" }} />
+                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-[#36b37e] to-transparent opacity-30" style={{ animation: "energy-pulse 2s ease-in-out infinite 0.5s" }} />
+                    </>
+                  ) : (
+                    <span className={`absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full ${
+                      item.highlight ? "bg-[#36b37e]" : "bg-[#36b37e]"
+                    }`} />
+                  )}
                 </Link>
               ))}
             </nav>
           </div>
 
           {/* Actions Right */}
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-2 sm:gap-4 lg:gap-6">
             <Link 
               href="/sumate/donar" 
-              className="hidden lg:flex bg-[#36b37e] text-white rounded-full px-10 py-3.5 font-black text-[11px] tracking-[3px] transition-all hover:bg-[#2da372] hover:shadow-[0_0_30px_rgba(54,179,126,0.5)] hover:translate-y-[-2px] active:scale-95 active:translate-y-0 uppercase border-4 border-white/20"
+              className="hidden lg:flex bg-[#36b37e] text-white rounded-full px-5 py-2 font-black text-xs tracking-wider transition-all hover:bg-[#2da372] hover:shadow-[0_0_20px_rgba(54,179,126,0.4)] hover:-translate-y-px active:scale-95 active:translate-y-0 uppercase border border-white/20"
             >
-              DONAR AHORA
+              DONAR
             </Link>
             
             <button
               onClick={() => setIsSidebarOpen(true)}
               aria-label="Abrir menú de navegación"
-              className="flex lg:hidden items-center gap-4 px-6 py-3 bg-white/5 border border-white/10 text-white rounded-xl cursor-pointer transition-all hover:bg-white/10 hover:border-white/20 active:scale-95 group"
+              className="flex lg:hidden items-center gap-3 px-4 py-2.5 bg-white/5 border border-white/10 text-white rounded-lg cursor-pointer transition-all hover:bg-white/10 hover:border-white/20 active:scale-95 group"
             >
               <div className="flex flex-col gap-1 w-5">
                 <span className="h-0.5 w-full bg-white transition-all group-hover:w-3" />
                 <span className="h-0.5 w-full bg-[#36b37e]" />
                 <span className="h-0.5 w-full bg-white transition-all group-hover:w-4" />
               </div>
-              <span className="font-black text-[12px] tracking-[3px] uppercase hidden sm:block">Menú</span>
+              <span className="font-black text-xs tracking-wider uppercase hidden sm:block">Menú</span>
             </button>
           </div>
         </div>
@@ -151,14 +153,14 @@ export default function Header() {
       {isSidebarOpen && (
         <div 
           onClick={() => setIsSidebarOpen(false)}
-          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[1000]"
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-1000"
         />
       )}
 
       {/* Sidebar Navigation */}
       <aside
         id="main-sidebar"
-        className={`fixed top-0 left-0 bottom-0 w-[min(420px,95vw)] bg-[#000B1A] z-[1100] shadow-[20px_0_50px_rgba(0,0,0,0.5)] flex flex-col transition-transform duration-700 ease-[cubic-bezier(0.2,1,0.2,1)] ${
+        className={`fixed top-0 left-0 bottom-0 w-[min(420px,95vw)] bg-[#000B1A] z-1100 shadow-[20px_0_50px_rgba(0,0,0,0.5)] flex flex-col transition-transform duration-700 ease-[cubic-bezier(0.2,1,0.2,1)] ${
           isSidebarOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full"
         }`}
       >
@@ -185,7 +187,7 @@ export default function Header() {
                 <Link
                   href={item.href}
                   onClick={() => setIsSidebarOpen(false)}
-                  className="flex items-center justify-between px-8 py-5 text-white no-underline font-black text-base md:text-lg transition-all hover:bg-white/5 hover:pl-10 group border-b border-white/[0.02]"
+                  className="flex items-center justify-between px-8 py-5 text-white no-underline font-black text-base md:text-lg transition-all hover:bg-white/5 hover:pl-10 group border-b border-white/2"
                 >
                   <div className="flex items-center gap-4">
                     <item.icon size={22} className="text-[#36b37e] transition-transform group-hover:scale-110" />
@@ -198,7 +200,7 @@ export default function Header() {
           </ul>
 
           <div className="mt-10 px-8">
-            <span className="text-white/30 text-[10px] font-extrabold tracking-widest uppercase">Programas</span>
+            <span className="text-white/30 text-xs font-extrabold tracking-wider uppercase">Programas</span>
             <ul className="list-none py-4 space-y-2">
               {programNav.map((item) => (
                 <li key={item.href}>
@@ -215,27 +217,9 @@ export default function Header() {
           </div>
         </nav>
 
-        {/* Accessibility & Social in Sidebar Footer */}
+        {/* Social in Sidebar Footer */}
         <div className="p-8 border-t border-white/5 space-y-8 bg-black/20">
-          <div className="flex flex-col gap-4">
-            <span className="text-white/30 text-[10px] font-extrabold tracking-widest uppercase text-center">Accesibilidad</span>
-            <div className="flex justify-center gap-10">
-              {[0, 1, 2].map((idx) => (
-                <button
-                  key={idx}
-                  onClick={() => changeFontSize(idx)}
-                  className={`bg-none border-none cursor-pointer font-extrabold transition-all hover:scale-125 ${
-                    fontSizeIndex === idx ? "text-white" : "text-white/30"
-                  }`}
-                  style={{ fontSize: idx === 0 ? "14px" : idx === 1 ? "18px" : "22px" }}
-                >
-                  A
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex justify-center gap-6 border-t border-white/5 pt-6">
+          <div className="flex justify-center gap-6">
             {socialLinks.map(({ href, label, Icon }) => (
               <a 
                 key={label} 

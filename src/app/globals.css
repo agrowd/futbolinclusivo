@@ -64,10 +64,12 @@
 /* ===========================
    BASE STYLES
    =========================== */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 }
 
 html {
@@ -742,4 +744,47 @@ body {
 .institucional-card:hover {
   transform: translateY(-5px);
   box-shadow: var(--shadow-md);
+}
+
+/* ===========================
+   MARQUEE ANIMATION
+   =========================== */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee linear infinite;
+}
+
+/* ===========================
+   BOUNCE ANIMATION
+   =========================== */
+@keyframes bounce-slow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ===========================
+   ENERGY PULSE ANIMATION
+   =========================== */
+@keyframes energy-pulse {
+  0% {
+    background-position: -100% 0;
+  }
+  50% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
 }

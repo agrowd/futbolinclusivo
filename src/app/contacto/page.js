@@ -35,13 +35,33 @@ export default function ContactoPage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
-    // For MVP, show success (in production, send to API)
-    setSubmitResult({ type: "success", message: "Mensaje enviado exitosamente. Te responderemos a la brevedad." });
-    setFormData({ name: "", email: "", subject: "", message: "" });
-    if (liveRegionRef.current) liveRegionRef.current.textContent = "Mensaje enviado exitosamente.";
+
+    try {
+      const res = await fetch("/api/contacto", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          phone: formData.email,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        setSubmitResult({ type: "success", message: data.message });
+        setFormData({ name: "", email: "", subject: "", message: "" });
+        if (liveRegionRef.current) liveRegionRef.current.textContent = "Mensaje enviado exitosamente.";
+      } else {
+        setSubmitResult({ type: "error", message: data.message || "Error al enviar mensaje" });
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setSubmitResult({ type: "error", message: "Error al enviar mensaje. Intenta nuevamente." });
+    }
   };
 
   return (
@@ -50,7 +70,7 @@ export default function ContactoPage() {
         <div ref={liveRegionRef} aria-live="polite" className="sr-only" role="status" />
 
         <header className="text-center mb-20">
-          <div className="inline-flex items-center gap-3 bg-[#36b37e]/10 text-[#36b37e] px-4 py-1.5 rounded font-black text-[10px] tracking-widest mb-8 uppercase border border-[#36b37e]/20">
+          <div className="inline-flex items-center gap-3 bg-[#36b37e]/10 text-[#36b37e] px-6 py-2.5 rounded-full font-black text-sm tracking-wider mb-8 uppercase border-2 border-[#36b37e]/30">
             <Mail size={14} />
             HABLEMOS
           </div>

@@ -4,6 +4,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { Facebook, Twitter, Instagram, Mail } from "lucide-react";
 
+const aliados = [
+  { name: "FIFA Foundation", logo: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/commons/a/aa/FIFA_logo_without_slogan.svg&n=-1" },
+  { name: "Common Goal", logo: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/commons/8/84/Logo_Common_Goal.svg&n=-1" },
+  { name: "UEFA Foundation", logo: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/commons/e/ef/Uefa_logo.svg&n=-1" },
+  { name: "AFA", logo: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/commons/c/c4/Afa_gold_logo24.svg&n=-1" }
+];
+
 const footerLinks = [
   {
     title: "Programas",
@@ -65,13 +72,13 @@ export default function Footer() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-            gap: "60px",
+            gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+            gap: "40px",
             marginBottom: "60px",
           }}
         >
           {/* Brand column */}
-          <div style={{ gridColumn: "span 2" }}>
+          <div>
             <div
               style={{
                 display: "flex",
@@ -92,11 +99,14 @@ export default function Footer() {
             </div>
             <p
               style={{
-                fontSize: "1rem",
+                fontSize: "clamp(0.875rem, 2vw, 1rem)",
                 opacity: 0.6,
-                lineHeight: 1.7,
-                maxWidth: "400px",
-                marginBottom: "30px"
+                lineHeight: 1.6,
+                marginBottom: "30px",
+                wordWrap: "break-word",
+                overflowWrap: "break-word",
+                hyphens: "auto",
+                maxWidth: "400px"
               }}
             >
               Desde 1998, equiparando oportunidades y construyendo una sociedad más inclusiva a través del deporte sistemático. Un orgullo morenense con proyección latinoamericana.
@@ -229,6 +239,175 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Inauguration Complex Section */}
+        <div
+          style={{
+            borderTop: "1px solid rgba(255,255,255,0.05)",
+            paddingTop: "40px",
+            paddingBottom: "40px",
+            textAlign: "center"
+          }}
+        >
+          <h3
+            style={{
+              fontSize: "0.75rem",
+              fontWeight: 800,
+              textTransform: "uppercase",
+              letterSpacing: "2px",
+              marginBottom: "24px",
+              color: "rgba(255,255,255,0.5)"
+            }}
+          >
+            Inauguración Complejo Fútbol por la Inclusión
+          </h3>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              gap: "24px",
+              flexWrap: "wrap",
+              alignItems: "center"
+            }}
+          >
+            <div
+              style={{
+                position: "relative",
+                width: "clamp(80px, 15vw, 120px)",
+                height: "clamp(80px, 15vw, 120px)",
+                cursor: "pointer",
+                transition: "all 0.3s",
+                flexShrink: 0
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "scale(1.05)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "scale(1)";
+              }}
+            >
+              <Image
+                src="https://futbolinclusivo.org.ar/app/uploads/2024/02/ANDAR-AFC-ESCUDO-2-e1708535283345.png"
+                alt="ANDAR AFC ESCUDO"
+                fill
+                style={{
+                  objectFit: "contain",
+                  transition: "all 0.3s"
+                }}
+              />
+            </div>
+            <div
+              style={{
+                position: "relative",
+                width: "clamp(60px, 12vw, 80px)",
+                height: "clamp(48px, 10vw, 64px)",
+                cursor: "pointer",
+                transition: "all 0.3s",
+                flexShrink: 0
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "scale(1.05)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "scale(1)";
+              }}
+            >
+              <Image
+                src="https://futbolinclusivo.org.ar/app/uploads/2017/10/andar@2x.png"
+                alt="Andar Logo"
+                fill
+                style={{
+                  objectFit: "contain",
+                  transition: "all 0.3s"
+                }}
+              />
+            </div>
+          </div>
+          <p
+            style={{
+              fontSize: "0.9rem",
+              color: "rgba(255,255,255,0.4)",
+              marginTop: "24px",
+              maxWidth: "600px",
+              margin: "24px auto 0",
+              lineHeight: 1.6
+            }}
+          >
+            El primer espacio deportivo inclusivo y accesible con 4 canchas de primer nivel en Moreno
+          </p>
+        </div>
+
+        {/* Global Partners Section */}
+        <div
+          style={{
+            borderTop: "1px solid rgba(255,255,255,0.05)",
+            paddingTop: "40px",
+            paddingBottom: "40px",
+            textAlign: "center"
+          }}
+        >
+          <h3
+            style={{
+              fontSize: "0.75rem",
+              fontWeight: 800,
+              textTransform: "uppercase",
+              letterSpacing: "2px",
+              marginBottom: "24px",
+              color: "rgba(255,255,255,0.5)"
+            }}
+          >
+            Partners Globales
+          </h3>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              gap: "clamp(16px, 4vw, 32px)",
+              flexWrap: "wrap",
+              alignItems: "center"
+            }}
+          >
+            {aliados.map((a, i) => (
+              <div
+                key={i}
+                style={{
+                  position: "relative",
+                  width: "clamp(60px, 8vw, 80px)",
+                  height: "clamp(24px, 3vw, 32px)",
+                  cursor: "pointer",
+                  transition: "all 0.3s",
+                  flexShrink: 0
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "scale(1.15)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "scale(1)";
+                }}
+              >
+                <Image
+                  src={a.logo}
+                  alt={a.name}
+                  fill
+                  style={{
+                    objectFit: "contain",
+                    filter: "grayscale(100%) brightness(0) invert(1)",
+                    opacity: 0.4,
+                    transition: "all 0.5s"
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.filter = "grayscale(0%) brightness(1) invert(0)";
+                    e.target.style.opacity = "1";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.filter = "grayscale(100%) brightness(0) invert(1)";
+                    e.target.style.opacity = "0.4";
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Bottom bar */}
         <div
           style={{
@@ -241,13 +420,14 @@ export default function Footer() {
             gap: "20px",
             fontSize: "0.85rem",
             color: "rgba(255,255,255,0.3)",
+            flexDirection: "row"
           }}
         >
-          <div style={{ display: "flex", gap: "24px" }}>
+          <div style={{ display: "flex", gap: "24px", flexWrap: "wrap", flexDirection: "row", alignItems: "center" }}>
             <p>© {new Date().getFullYear()} Asociación Civil Andar.</p>
             <p>Moreno, Buenos Aires, Argentina.</p>
           </div>
-          <div style={{ display: "flex", gap: "24px" }}>
+          <div style={{ display: "flex", gap: "24px", flexWrap: "wrap", flexDirection: "row", alignItems: "center" }}>
             <Link href="/contacto" style={{ color: "inherit", textDecoration: "none" }}>Contacto</Link>
             <Link href="/sumate" style={{ color: "var(--color-primary-light)", textDecoration: "none", fontWeight: 700 }}>¡Sumate!</Link>
           </div>

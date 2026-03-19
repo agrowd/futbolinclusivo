@@ -14,7 +14,7 @@ export default function Nosotros() {
       <section className="relative py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-[#001A3D] to-[#000B1A]" />
         <div className="container mx-auto px-4 relative z-10 text-center">
-          <div className="inline-flex bg-[#36b37e]/10 text-[#36b37e] px-4 py-1.5 rounded font-black text-[10px] tracking-widest mb-8 uppercase">
+          <div className="inline-flex bg-[#36b37e]/10 text-[#36b37e] px-6 py-2.5 rounded-full font-black text-sm tracking-wider mb-8 uppercase border-2 border-[#36b37e]/30">
             QUIÉNES SOMOS
           </div>
           <h1 className="text-5xl md:text-7xl font-black mb-8 tracking-tighter">Nosotros</h1>
@@ -63,7 +63,7 @@ export default function Nosotros() {
                   <div className="text-center md:text-left">
                     <h3 className="text-2xl font-black mb-3 text-[#36b37e] uppercase tracking-tight">ADIDAS ARGENTINA</h3>
                     <p className="text-white/50 leading-relaxed font-medium">
-                      Acompañan a la Asociación desde el año 2007. La "Magia que Adidas Argentina le puso a nuestro Potrero" fue el punto de partida para mejorar el impacto de la Liga cada año.
+                      Acompañan a la Asociación desde el año 2007. La &quot;Magia que Adidas Argentina le puso a nuestro Potrero&quot; fue el punto de partida para mejorar el impacto de la Liga cada año.
                     </p>
                   </div>
                 </div>
@@ -89,7 +89,7 @@ export default function Nosotros() {
                   <div className="text-center md:text-left">
                     <h3 className="text-2xl font-black mb-3 text-[#36b37e] uppercase tracking-tight">ASOCIACIÓN DEL FÚTBOL ARGENTINO</h3>
                     <p className="text-white/50 leading-relaxed font-medium">
-                      Cedieron las instalaciones del Predio "Julio Humberto Grondona" en Ezeiza para el desarrollo de las Finales Anuales y el Festival Latinoamericano de Fútbol 3.
+                      Cedieron las instalaciones del Predio &quot;Julio Humberto Grondona&quot; en Ezeiza para el desarrollo de las Finales Anuales y el Festival Latinoamericano de Fútbol 3.
                     </p>
                   </div>
                 </div>

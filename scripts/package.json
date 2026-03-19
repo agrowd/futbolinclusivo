@@ -1,0 +1,15 @@
+{
+  "name": "legacy-extractor",
+  "version": "1.0.0",
+  "description": "Script para extraer contenido completo del sitio legacy de Fútbol Inclusivo",
+  "main": "extract-legacy-content.js",
+  "scripts": {
+    "extract": "node extract-legacy-content.js",
+    "install-deps": "npm install jsdom"
+  },
+  "dependencies": {
+    "jsdom": "^22.1.0"
+  },
+  "keywords": ["scraping", "extraction", "legacy", "content"],
+  "author": "Fútbol Inclusivo Team"
+}

@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SkipLink from "@/components/layout/SkipLink";
+import FloatingButtons from "@/components/layout/FloatingButtons";
 
 const atkinson = Atkinson_Hyperlegible({
   variable: "--font-atkinson",
@@ -59,13 +60,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="es">
-      <body className={`${atkinson.variable}`} style={{ fontFamily: "var(--font-atkinson), system-ui, sans-serif" }}>
+      <body className={`${atkinson.variable} overflow-x-hidden`} style={{ fontFamily: "var(--font-atkinson), system-ui, sans-serif" }}>
         <SkipLink />
         <Header />
         <main id="main-content" role="main" tabIndex={-1}>
           {children}
         </main>
         <Footer />
+        <FloatingButtons />
       </body>
     </html>
   );

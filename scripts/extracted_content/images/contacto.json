@@ -1,0 +1,40 @@
+[
+  {
+    "src": "https://futbolinclusivo.org.ar/app/uploads/2024/02/ANDAR-AFC-ESCUDO-2-e1708535283345.png",
+    "alt": "",
+    "width": "600",
+    "height": "703",
+    "class": "main-logo img-fluid",
+    "pageUrl": "https://futbolinclusivo.org.ar/contacto/"
+  },
+  {
+    "src": "https://futbolinclusivo.org.ar/app/uploads/2017/12/contacto.jpg",
+    "alt": "Contacto",
+    "width": "960",
+    "height": "420",
+    "class": "img-fluid w-100 wp-post-image",
+    "pageUrl": "https://futbolinclusivo.org.ar/contacto/"
+  },
+  {
+    "src": "https://futbolinclusivo.org.ar/app/uploads/2017/10/andar@2x.png",
+    "alt": "",
+    "width": "314",
+    "height": "250",
+    "class": "main-logo img-fluid float-right w-75",
+    "pageUrl": "https://futbolinclusivo.org.ar/contacto/"
+  },
+  {
+    "src": "https://futbolinclusivo.org.ar/app/plugins/accesspress-social-pro/images/share/ajax-loader.gif",
+    "alt": "Ajax loader",
+    "width": "",
+    "height": "",
+    "class": "",
+    "pageUrl": "https://futbolinclusivo.org.ar/contacto/"
+  },
+  {
+    "src": "https://futbolinclusivo.org.ar/app/uploads/2017/12/contacto.jpg",
+    "alt": "OG Image",
+    "type": "og:image",
+    "pageUrl": "https://futbolinclusivo.org.ar/contacto/"
+  }
+]

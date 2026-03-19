@@ -6,16 +6,26 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "legacy:download-assets": "node scripts/download-legacy-assets.mjs",
+    "legacy:extract-content": "node scripts/extract-legacy-content.mjs",
+    "db:import": "node scripts/import-legacy-to-db.mjs",
+    "db:create-admin": "node scripts/create-admin-user.mjs"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "cheerio": "^1.2.0",
+    "cloudinary": "^2.9.0",
     "framer-motion": "^12.35.2",
     "lucide-react": "^0.577.0",
     "mongoose": "^9.3.0",
     "next": "16.1.6",
+    "next-auth": "^4.24.13",
+    "next-cloudinary": "^6.17.5",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "resend": "^6.9.4",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

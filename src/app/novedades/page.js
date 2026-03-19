@@ -1,101 +1,393 @@
+'use client';
+
 import Link from "next/link";
-import { Newspaper, Calendar, ArrowRight, Trophy } from "lucide-react";
+import Image from "next/image";
+import { Newspaper, Calendar, ArrowRight, Trophy, MapPin, Users, Award, Heart } from "lucide-react";
+import CategoryButton from "@/components/CategoryButton";
+import NewsletterForm from "@/components/NewsletterForm";
+import React from "react";
 
-export const metadata = {
-  title: "Novedades",
-  description: "Últimas noticias y novedades de la Liga de Fútbol Inclusiva y la Asociación Civil Andar.",
-};
-
-const news = [
+const newsItems = [
   {
-    date: "May 2024",
     title: "Ceremonia de Apertura 2024",
-    excerpt: "La Liga de Fútbol Inclusiva abrió su temporada 2024 con una ceremonia que reunió a todas las instituciones participantes.",
-    href: "/novedades/apertura-2024",
+    date: "11 de Mayo de 2024",
+    excerpt: "La Asociación Civil Andar presenta la 27ª Edición de la Liga de Fútbol Inclusiva con 106 equipos y 964 deportistas de toda la provincia.",
+    category: "Liga de Buenos Aires",
+    image: "https://futbolinclusivo.org.ar/app/uploads/2021/12/FUTBOL-111221-89-Copiar-480x360.jpg",
+    slug: "ceremonia-apertura-2024",
+    featured: true
   },
   {
-    date: "Feb 2024",
-    title: "Torneo de Verano \"AFA Somos Todxs\"",
-    excerpt: "En el marco de la colaboración con AFA, se realizó el sorteo y conformación de grupos para el Torneo de Verano.",
-    href: "/novedades/torneo-verano-afa",
+    title: "TORNEO DE VERANO \"AFA SOMOS TODXS\"",
+    date: "16 de Febrero de 2024",
+    excerpt: "En el Predio Lionel Messi se desarrolló el torneo que promueve la inclusión y el respeto a través del fútbol.",
+    category: "TORNEO AFA",
+    image: "https://futbolinclusivo.org.ar/app/uploads/2024/02/WhatsApp-Image-2024-02-16-at-15.15.10-480x360.jpeg",
+    slug: "torneo-de-verano-afa-somos-todxs",
+    featured: true
   },
   {
-    date: "Oct 2023",
     title: "Nace Andar FC",
-    excerpt: "El sueño del Complejo 'Fútbol por la Inclusión' es realidad y lo celebramos con la presentación de Andar FC.",
-    href: "/novedades/nace-andar-fc",
+    date: "16 de Julio de 2022",
+    excerpt: "El sueño del Complejo \"Fútbol por la Inclusión\" es realidad. Una fiesta con shows, arte y fútbol dio inicio oficial al nuevo complejo.",
+    category: "Escuela inclusiva",
+    image: "https://futbolinclusivo.org.ar/app/uploads/2022/07/MG_3241-Copiar-480x360.jpg",
+    slug: "nace-andar-fc",
+    featured: true
   },
   {
-    date: "Jul 2022",
     title: "Nuevo Complejo \"Fútbol por la Inclusión\"",
-    excerpt: "Se inauguró el complejo deportivo oficial con canchas de pasto sintético y accesibilidad 100% garantizada, un hito para el proyecto.",
-    href: "/novedades/novedades-complejo",
+    date: "16 de Julio de 2022",
+    excerpt: "Inauguración del primer espacio deportivo inclusivo y accesible con 4 canchas de primer nivel en Moreno.",
+    category: "Escuela inclusiva",
+    image: "https://futbolinclusivo.org.ar/app/uploads/2022/07/MG_3241-Copiar-480x360.jpg",
+    slug: "complejo-futbol-por-la-inclusion",
+    featured: false
   },
   {
-    date: "Dic 2021",
     title: "Finales 2021 en AFA",
-    excerpt: "El predio de AFA en Ezeiza abrió sus puertas para recibir el último Festival de la temporada coronando el cierre de un gran año.",
-    href: "/novedades/finales-afa-2021",
+    date: "11 de Diciembre de 2021",
+    excerpt: "El predio de AFA en Ezeiza abrió sus puertas para recibir el último evento más importante del año de la Liga.",
+    category: "Liga de Buenos Aires",
+    image: "https://futbolinclusivo.org.ar/app/uploads/2021/12/FUTBOL-111221-374-Copiar-480x360.jpg",
+    slug: "finales-2021-en-afa",
+    featured: false
   },
+  {
+    title: "VOLVEMOS A LOS ENCUENTROS PRESENCIALES CUIDADOS",
+    date: "2021",
+    excerpt: "Desde el equipo de Fútbol Inclusivo estamos muy contentos en anunciar la vuelta a la presencialidad cuidada.",
+    category: "Escuela inclusiva",
+    image: "https://futbolinclusivo.org.ar/app/uploads/2019/11/FINAL-LFI-2019-163-Copiar-480x360.jpg",
+    slug: "volvemos-a-los-encuentros-presenciales-cuidados",
+    featured: false
+  },
+  {
+    title: "EL FÚTBOL QUE QUEREMOS: E1 Pablo Aimar",
+    date: "Mayo de 2020",
+    excerpt: "Lanzamos un ciclo de charlas en vivo que llamaremos \"El Fútbol que Queremos\" con figuras destacadas del fútbol argentino.",
+    category: "Comunicación",
+    image: "https://futbolinclusivo.org.ar/app/uploads/2020/09/WhatsApp-Image-2020-09-02-at-14.05.32-480x360.jpeg",
+    slug: "el-futbol-que-queremos-e1-pablo-aimar",
+    featured: false
+  },
+  {
+    title: "Charla en Vivo con el Chiqui Tapia",
+    date: "4 de Junio de 2020",
+    excerpt: "El presidente de la Asociación del Fútbol Argentino compartió una charla exclusiva sobre inclusión en el fútbol.",
+    category: "Escuela inclusiva",
+    image: "https://futbolinclusivo.org.ar/app/uploads/2020/05/CHARLA-CHIQUI-TAPIA-480x360.jpeg",
+    slug: "charla-en-vivo-con-el-chiqui-tapia",
+    featured: false
+  },
+  {
+    title: "VIVO con Charla Iacono",
+    date: "28 de Mayo de 2020",
+    excerpt: "Realizamos nuestro segundo vivo a través de Instagram y Facebook Live con contenido exclusivo sobre inclusión.",
+    category: "Institucional",
+    image: "https://futbolinclusivo.org.ar/app/uploads/2020/05/charly-iacono-480x360.jpeg",
+    slug: "vivo-con-charla-iacono",
+    featured: false
+  }
+];
+
+const categories = [
+  { name: "Todas", count: newsItems.length },
+  { name: "Liga de Buenos Aires", count: newsItems.filter(n => n.category === "Liga de Buenos Aires").length },
+  { name: "Escuela inclusiva", count: newsItems.filter(n => n.category === "Escuela inclusiva").length },
+  { name: "TORNEO AFA", count: newsItems.filter(n => n.category === "TORNEO AFA").length },
+  { name: "Comunicación", count: newsItems.filter(n => n.category === "Comunicación").length },
+  { name: "Institucional", count: newsItems.filter(n => n.category === "Institucional").length }
 ];
 
 export default function NovedadesPage() {
+  const [selectedCategory, setSelectedCategory] = React.useState(0);
+
   return (
-    <div className="bg-[#000B1A] text-white min-h-screen pt-48 pb-32">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <header className="text-center mb-20">
-          <div className="inline-flex items-center gap-3 bg-[#36b37e]/10 text-[#36b37e] px-4 py-1.5 rounded font-black text-[10px] tracking-widest mb-8 uppercase border border-[#36b37e]/20">
-            <Newspaper size={14} />
+    <div style={{ background: "#000B1A", color: "#fff", minHeight: "100vh" }}>
+      {/* Hero Section */}
+      <section style={{ 
+        background: "linear-gradient(to bottom, #001A3D, #000B1A)", 
+        padding: "180px 0 100px",
+        borderBottom: "1px solid rgba(255,255,255,0.05)",
+        position: "relative"
+      }}>
+        {/* Background Pattern */}
+        <div style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage: "radial-gradient(circle at 20% 50%, rgba(0,141,77,0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(230,126,34,0.1) 0%, transparent 50%)",
+          zIndex: 0
+        }} />
+        
+        <div className="container" style={{ textAlign: "center", position: "relative", zIndex: 1 }}>
+          <div style={{ 
+            display: "inline-flex", 
+            background: "rgba(0,141,77,0.1)", 
+            color: "var(--color-primary-light)",
+            padding: "8px 16px", 
+            borderRadius: "4px", 
+            marginBottom: "24px", 
+            fontSize: "0.75rem", 
+            fontWeight: 800, 
+            letterSpacing: "2px" 
+          }}>
+            <Newspaper size={14} style={{ marginRight: "8px" }} />
             ACTUALIDAD
           </div>
-          <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tighter uppercase leading-none">
+          <h1 style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", fontWeight: 900, marginBottom: "24px", letterSpacing: "-1.5px" }}>
             Novedades
           </h1>
-          <p className="text-xl text-white/50 max-w-2xl mx-auto leading-relaxed font-medium">
+          <p style={{ fontSize: "1.2rem", color: "rgba(255,255,255,0.6)", maxWidth: "800px", margin: "0 auto", lineHeight: 1.6 }}>
             Las últimas noticias y sucesos de la Liga de Fútbol Inclusiva y la Asociación Civil Andar.
           </p>
-        </header>
+        </div>
+      </section>
 
-        <div role="feed" className="grid gap-6">
-          {news.map(({ date, title, excerpt, href }, i) => (
-            <Link
-              key={i}
-              href={href}
-              className="group relative bg-white/[0.02] border border-white/5 p-8 md:p-10 rounded-3xl transition-all hover:bg-white/[0.05] hover:border-white/10 hover:-translate-y-1 shadow-2xl overflow-hidden"
-              aria-labelledby={`news-${i}`}
-            >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-[#36b37e]/5 rounded-full -mr-16 -mt-16 blur-3xl group-hover:bg-[#36b37e]/10 transition-all duration-700" />
-              
-              <div className="flex flex-col md:flex-row gap-8 items-start relative z-10">
-                <div className="w-16 h-16 shrink-0 bg-[#36b37e] rounded-2xl flex items-center justify-center text-white shadow-lg shadow-[#36b37e]/20 group-hover:rotate-6 transition-transform">
-                  <Trophy size={32} />
-                </div>
-                
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-3">
-                    <Calendar size={14} className="text-[#36b37e]" />
-                    <time className="text-[10px] font-black text-[#36b37e] uppercase tracking-widest">
-                      {date}
-                    </time>
+      {/* Categories Filter */}
+      <section style={{ padding: "60px 0" }}>
+        <div className="container">
+          <div style={{ 
+            display: "flex", 
+            gap: "15px", 
+            justifyContent: "center", 
+            flexWrap: "wrap",
+            marginBottom: "60px"
+          }}>
+            {categories.map((category, index) => (
+              <CategoryButton
+                key={index}
+                isActive={index === selectedCategory}
+                onClick={() => setSelectedCategory(index)}
+              >
+                {category.name} ({category.count})
+              </CategoryButton>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Featured News */}
+      <section style={{ padding: "0 0 80px" }}>
+        <div className="container">
+          <div style={{ 
+            background: "linear-gradient(135deg, rgba(0,141,77,0.1) 0%, rgba(0,141,77,0.05) 100%)",
+            padding: "60px",
+            borderRadius: "30px", 
+            border: "1px solid rgba(0,141,77,0.2)",
+            marginBottom: "60px"
+          }}>
+            <div style={{ display: "flex", alignItems: "center", marginBottom: "30px" }}>
+              <div style={{
+                width: "60px",
+                height: "60px",
+                borderRadius: "50%",
+                background: "rgba(0,141,77,0.2)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginRight: "20px"
+              }}>
+                <Trophy size={30} color="var(--color-primary-light)" />
+              </div>
+              <h2 style={{ fontSize: "2rem", fontWeight: 900, color: "#fff" }}>
+                Destacado
+              </h2>
+            </div>
+            
+            {newsItems.filter(n => n.featured).slice(0, 1).map((news, index) => (
+              <div key={index} style={{ 
+                display: "grid", 
+                gridTemplateColumns: "1fr 1fr", 
+                gap: "50px", 
+                alignItems: "center"
+              }}>
+                <div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "15px" }}>
+                    <Calendar size={16} color="var(--color-primary-light)" />
+                    <span style={{ color: "var(--color-primary-light)", fontSize: "0.9rem", fontWeight: 700 }}>
+                      {news.date}
+                    </span>
+                    <span style={{ 
+                      background: "rgba(0,141,77,0.2)", 
+                      color: "var(--color-primary-light)", 
+                      padding: "4px 12px", 
+                      borderRadius: "15px", 
+                      fontSize: "0.8rem", 
+                      fontWeight: 700 
+                    }}>
+                      {news.category}
+                    </span>
                   </div>
-                  <h2 
-                    id={`news-${i}`} 
-                    className="text-2xl md:text-3xl font-black mb-4 group-hover:text-[#36b37e] transition-colors tracking-tight uppercase leading-tight"
-                  >
-                    {title}
-                  </h2>
-                  <p className="text-white/50 text-base md:text-lg leading-relaxed mb-6 font-medium">
-                    {excerpt}
+                  <h3 style={{ fontSize: "2rem", fontWeight: 900, color: "#fff", marginBottom: "20px", lineHeight: 1.2 }}>
+                    {news.title}
+                  </h3>
+                  <p style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.6, marginBottom: "30px", fontSize: "1.1rem" }}>
+                    {news.excerpt}
                   </p>
-                  <div className="inline-flex items-center gap-2 text-white font-black text-xs tracking-widest uppercase border-b-2 border-white/10 pb-1 group-hover:border-[#36b37e] group-hover:text-[#36b37e] transition-all">
+                  <Link 
+                    href={`/novedades/${news.slug}`}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "10px",
+                      padding: "16px 32px",
+                      borderRadius: "12px",
+                      background: "var(--color-primary-light)",
+                      color: "#fff",
+                      fontWeight: 800,
+                      textDecoration: "none",
+                      fontSize: "1rem",
+                      transition: "all 0.3s"
+                    }}
+                  >
+                    Leer nota completa
+                    <ArrowRight size={20} />
+                  </Link>
+                </div>
+                <div style={{ 
+                  position: "relative", 
+                  height: "400px", 
+                  borderRadius: "20px", 
+                  overflow: "hidden",
+                  border: "2px solid rgba(255,255,255,0.1)"
+                }}>
+                  <Image 
+                    src={news.image}
+                    alt={news.title}
+                    fill
+                    style={{ objectFit: "cover" }}
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* All News Grid */}
+      <section style={{ padding: "0 0 100px" }}>
+        <div className="container">
+          <h2 style={{ fontSize: "2.5rem", fontWeight: 900, color: "#fff", marginBottom: "50px", textAlign: "center" }}>
+            Todas las Novedades
+          </h2>
+          
+          <div style={{ display: "grid", gap: "30px" }}>
+            {newsItems.map((news, index) => (
+              <Link
+                key={index}
+                href={`/novedades/${news.slug}`}
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "auto 1fr auto",
+                  gap: "30px",
+                  alignItems: "center",
+                  padding: "40px",
+                  borderRadius: "25px",
+                  border: "1px solid rgba(255,255,255,0.05)",
+                  background: "rgba(255,255,255,0.02)",
+                  textDecoration: "none",
+                  color: "inherit",
+                  transition: "all 0.3s"
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "rgba(255,255,255,0.05)";
+                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
+                  e.currentTarget.style.transform = "translateY(-2px)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "rgba(255,255,255,0.02)";
+                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)";
+                  e.currentTarget.style.transform = "translateY(0)";
+                }}
+              >
+                {/* Date */}
+                <div style={{ textAlign: "center" }}>
+                  <div style={{ 
+                    display: "flex", 
+                    flexDirection: "column", 
+                    alignItems: "center",
+                    gap: "8px"
+                  }}>
+                    <Calendar size={20} color="var(--color-primary-light)" />
+                    <div style={{ fontSize: "0.9rem", color: "var(--color-primary-light)", fontWeight: 700 }}>
+                      {news.date.split(' de ')[0]}
+                    </div>
+                    <div style={{ fontSize: "1.1rem", color: "#fff", fontWeight: 900 }}>
+                      {news.date.split(' de ')[1]} {news.date.split(' de ')[2]}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "15px" }}>
+                    <span style={{ 
+                      background: "rgba(0,141,77,0.2)", 
+                      color: "var(--color-primary-light)", 
+                      padding: "4px 12px", 
+                      borderRadius: "15px", 
+                      fontSize: "0.8rem", 
+                      fontWeight: 700 
+                    }}>
+                      {news.category}
+                    </span>
+                    {news.featured && (
+                      <div style={{ display: "flex", alignItems: "center", gap: "5px", color: "#E67E22" }}>
+                        <Trophy size={16} />
+                        <span style={{ fontSize: "0.8rem", fontWeight: 700 }}>Destacado</span>
+                      </div>
+                    )}
+                  </div>
+                  <h3 style={{ 
+                    fontSize: "1.5rem", 
+                    fontWeight: 900, 
+                    color: "#fff", 
+                    marginBottom: "15px", 
+                    lineHeight: 1.2 
+                  }}>
+                    {news.title}
+                  </h3>
+                  <p style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.6, marginBottom: "20px" }}>
+                    {news.excerpt}
+                  </p>
+                  <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", color: "var(--color-primary-light)", fontWeight: 700 }}>
                     Leer más <ArrowRight size={16} />
                   </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+
+                {/* Image */}
+                <div style={{ 
+                  position: "relative", 
+                  width: "200px", 
+                  height: "120px", 
+                  borderRadius: "15px", 
+                  overflow: "hidden",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  flexShrink: 0
+                }}>
+                  <Image 
+                    src={news.image}
+                    alt={news.title}
+                    fill
+                    style={{ objectFit: "cover" }}
+                    sizes="200px"
+                  />
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
-      </div>
+      </section>
+
+      {/* Newsletter Section */}
+      <section style={{ padding: "80px 0" }}>
+        <div className="container">
+          <NewsletterForm />
+        </div>
+      </section>
+
     </div>
   );
 }

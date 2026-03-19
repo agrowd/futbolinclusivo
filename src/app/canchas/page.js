@@ -205,7 +205,7 @@ export default function CanchasPage() {
         <div style={{ textAlign: "center", marginBottom: "40px" }}>
           <div className="hero-badge" style={{ justifyContent: "center", margin: "0 auto 16px" }}>
             <MapPin size={16} aria-hidden="true" />
-            Complejo "Fútbol por la Inclusión"
+            Complejo &quot;Fútbol por la Inclusión&quot;
           </div>
           <h1 className="section-title" style={{ textAlign: "center" }}>
             Alquiler de Canchas
