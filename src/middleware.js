@@ -4,14 +4,19 @@ import { NextResponse } from "next/server";
 export default withAuth(
   function middleware(req) {
     const token = req.nextauth.token;
+    const pathname = req.nextUrl.pathname;
+    
+    // Safety check just in case matcher fails
+    if (pathname === "/admin/login") {
+      return NextResponse.next();
+    }
+
     const isAdmin = token?.role === "admin";
     const isEditor = token?.role === "editor";
-    const pathname = req.nextUrl.pathname;
 
-    if (pathname.startsWith("/admin") && pathname !== "/admin/login") {
-      if (!isAdmin && !isEditor) {
-        return NextResponse.redirect(new URL("/admin/login", req.url));
-      }
+    // If not admin/editor, redirect to login
+    if (!isAdmin && !isEditor) {
+      return NextResponse.redirect(new URL("/admin/login", req.url));
     }
 
     return NextResponse.next();
@@ -21,20 +26,20 @@ export default withAuth(
       authorized: ({ token, req }) => {
         const pathname = req.nextUrl.pathname;
         
+        // Exclude login page from protection
         if (pathname === "/admin/login") {
           return true;
         }
 
-        if (pathname.startsWith("/admin")) {
-          return !!token;
-        }
-
-        return true;
+        // Must have a token to access any other /admin path
+        return !!token;
       },
     },
   }
 );
 
 export const config = {
-  matcher: ["/admin/:path*"],
+  // Protect all /admin routes except /admin/login
+  // This matcher uses a negative lookahead to exclude 'login'
+  matcher: ["/admin/((?!login).*)"],
 };
