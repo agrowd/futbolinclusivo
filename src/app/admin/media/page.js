@@ -45,6 +45,11 @@ export default function AdminMediaPage() {
     category: "Otros",
     file: null,
     preview: null,
+    isExternal: false,
+    externalUrl: "",
+    externalType: "image",
+    featured: false,
+    description: ""
   });
   const [message, setMessage] = useState({ type: "", text: "" });
 
@@ -92,8 +97,67 @@ export default function AdminMediaPage() {
     }
   };
 
+  const handleExternalAdd = async (e) => {
+    e.preventDefault();
+    setUploading(true);
+    setMessage({ type: "", text: "" });
+
+    try {
+      const res = await fetch("/api/media", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: uploadData.title,
+          type: uploadData.externalType,
+          url: uploadData.externalUrl,
+          thumbnailUrl: uploadData.externalType === 'video' 
+            ? `https://img.youtube.com/vi/${extractYoutubeId(uploadData.externalUrl)}/hqdefault.jpg`
+            : uploadData.preview, // If they uploaded a preview but assigned an external URL
+          category: uploadData.category,
+          featured: uploadData.featured,
+          description: uploadData.description
+        }),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        setMessage({ type: "success", text: "Media externo registrado correctamente" });
+        setIsUploadModalOpen(false);
+        resetForm();
+        fetchMedia();
+      } else {
+        throw new Error(data.message);
+      }
+    } catch (error) {
+      setMessage({ type: "error", text: error.message });
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const extractYoutubeId = (url) => {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
+  };
+
+  const resetForm = () => {
+    setUploadData({ 
+      title: "", 
+      category: "Otros", 
+      file: null, 
+      preview: null, 
+      isExternal: false, 
+      externalUrl: "", 
+      externalType: "image",
+      featured: false,
+      description: ""
+    });
+  };
+
   const handleUpload = async (e) => {
     e.preventDefault();
+    if (uploadData.isExternal) return handleExternalAdd(e);
     if (!uploadData.file) return;
 
     setUploading(true);
@@ -124,6 +188,8 @@ export default function AdminMediaPage() {
           url: uploadResult.data.url,
           publicId: uploadResult.data.publicId,
           category: uploadData.category,
+          featured: uploadData.featured,
+          description: uploadData.description,
           width: uploadResult.data.width,
           height: uploadResult.data.height,
           size: uploadResult.data.size,
@@ -135,7 +201,7 @@ export default function AdminMediaPage() {
       if (dbData.success) {
         setMessage({ type: "success", text: "Archivo subido correctamente" });
         setIsUploadModalOpen(false);
-        setUploadData({ title: "", category: "Otros", file: null, preview: null });
+        resetForm();
         fetchMedia();
       } else {
         throw new Error(dbData.message || "Error al registrar en DB");
@@ -320,59 +386,132 @@ export default function AdminMediaPage() {
                  <div className="text-center">
                     <h2 className="text-2xl font-black uppercase tracking-tight">Cargar Multimedia</h2>
                     <p className="text-white/40 text-xs font-medium uppercase mt-1 tracking-widest">Sincronizado con Cloudinary CDN</p>
-                 </div>
+                    
+                    {/* Toggle External/Upload */}
+                    <div className="flex bg-white/5 p-1 rounded-xl border border-white/10 mt-6">
+                      <button
+                        type="button"
+                        onClick={() => setUploadData({ ...uploadData, isExternal: false })}
+                        className={`flex-1 py-2 text-[10px] font-black uppercase tracking-widest rounded-lg transition-all ${!uploadData.isExternal ? 'bg-[#36b37e] text-white' : 'text-white/40'}`}
+                      >
+                        Subir Archivo
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setUploadData({ ...uploadData, isExternal: true })}
+                        className={`flex-1 py-2 text-[10px] font-black uppercase tracking-widest rounded-lg transition-all ${uploadData.isExternal ? 'bg-[#36b37e] text-white' : 'text-white/40'}`}
+                      >
+                        Link Externo (YouTube/URL)
+                      </button>
+                    </div>
 
-                 {/* Dropzone / File Select */}
-                 {!uploadData.file ? (
-                   <label className="flex flex-col items-center justify-center py-16 border-2 border-dashed border-white/10 rounded-3xl hover:border-[#36b37e]/50 hover:bg-[#36b37e]/5 transition-all cursor-pointer group">
-                      <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                         <Plus size={32} className="text-white/20 group-hover:text-[#36b37e]" />
-                      </div>
-                      <span className="text-sm font-black uppercase tracking-tight">Seleccionar Archivo</span>
-                      <span className="text-[10px] font-medium text-white/20 uppercase mt-2">Imagen o Video (Máx 100MB)</span>
-                      <input type="file" className="hidden" accept="image/*,video/*" onChange={handleFileSelect} />
-                   </label>
-                 ) : (
-                   <div className="flex flex-col items-center gap-6">
-                      <div className="relative w-40 h-40 rounded-3xl overflow-hidden border-2 border-[#36b37e] shadow-2xl shadow-[#36b37e]/10">
-                         {uploadData.file.type.startsWith("image/") ? (
-                           <img src={uploadData.preview} alt="Preview" className="w-full h-full object-cover" />
-                         ) : (
-                           <div className="w-full h-full flex items-center justify-center bg-black/40">
-                              <Video size={48} className="text-[#36b37e]" />
+                    {/* Dropzone / File Select */}
+                    {!uploadData.isExternal ? (
+                      !uploadData.file ? (
+                        <label className="flex flex-col items-center justify-center py-16 border-2 border-dashed border-white/10 rounded-3xl hover:border-[#36b37e]/50 hover:bg-[#36b37e]/5 transition-all cursor-pointer group mt-6">
+                           <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                              <Plus size={32} className="text-white/20 group-hover:text-[#36b37e]" />
                            </div>
-                         )}
-                         <button 
-                           onClick={() => setUploadData({ ...uploadData, file: null, preview: null })}
-                           className="absolute top-2 right-2 p-1 bg-black/60 rounded-lg hover:bg-black text-white transition-colors"
-                         >
-                            <X size={14} />
-                         </button>
-                      </div>
-                      
-                      <div className="w-full grid md:grid-cols-2 gap-4">
+                           <span className="text-sm font-black uppercase tracking-tight">Seleccionar Archivo</span>
+                           <span className="text-[10px] font-medium text-white/20 uppercase mt-2">Imagen o Video (Máx 100MB)</span>
+                           <input type="file" className="hidden" accept="image/*,video/*" onChange={handleFileSelect} />
+                        </label>
+                      ) : (
+                        <div className="flex flex-col items-center gap-6 mt-6">
+                           <div className="relative w-40 h-40 rounded-3xl overflow-hidden border-2 border-[#36b37e] shadow-2xl shadow-[#36b37e]/10">
+                              {uploadData.file.type.startsWith("image/") ? (
+                                <img src={uploadData.preview} alt="Preview" className="w-full h-full object-cover" />
+                              ) : (
+                                <div className="w-full h-full flex items-center justify-center bg-black/40">
+                                   <Video size={48} className="text-[#36b37e]" />
+                                </div>
+                              )}
+                              <button 
+                                type="button"
+                                onClick={() => setUploadData({ ...uploadData, file: null, preview: null })}
+                                className="absolute top-2 right-2 p-1 bg-black/60 rounded-lg hover:bg-black text-white transition-colors"
+                              >
+                                 <XIcon size={14} />
+                              </button>
+                           </div>
+                        </div>
+                      )
+                    ) : (
+                      <div className="space-y-6 mt-6 text-left">
                          <div className="space-y-2">
-                            <label className="text-[10px] font-black text-white/40 uppercase tracking-widest px-2">Nombre del Archivo</label>
+                            <label className="text-[10px] font-black text-white/40 uppercase tracking-widest px-2">Tipo de Medio Externo</label>
+                            <div className="flex gap-4">
+                               {['image', 'video', 'gallery'].map(t => (
+                                 <button
+                                   key={t}
+                                   type="button"
+                                   onClick={() => setUploadData({ ...uploadData, externalType: t })}
+                                   className={`px-4 py-2 rounded-lg text-[10px] font-black uppercase border transition-all ${uploadData.externalType === t ? 'bg-white/10 border-[#36b37e] text-[#36b37e]' : 'border-white/5 text-white/40'}`}
+                                 >
+                                   {t}
+                                 </button>
+                               ))}
+                            </div>
+                         </div>
+                         <div className="space-y-2">
+                            <label className="text-[10px] font-black text-white/40 uppercase tracking-widest px-2">URL del Recurso (YouTube, Imgur, etc.)</label>
                             <input 
                               type="text" 
-                              value={uploadData.title}
-                              onChange={(e) => setUploadData({ ...uploadData, title: e.target.value })}
+                              required
+                              placeholder="https://..."
+                              value={uploadData.externalUrl}
+                              onChange={(e) => setUploadData({ ...uploadData, externalUrl: e.target.value })}
                               className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-xs focus:border-[#36b37e]/50 outline-none transition-all"
                             />
                          </div>
-                         <div className="space-y-2">
-                            <label className="text-[10px] font-black text-white/40 uppercase tracking-widest px-2">Categoría</label>
-                            <select 
-                              value={uploadData.category}
-                              onChange={(e) => setUploadData({ ...uploadData, category: e.target.value })}
-                              className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-xs focus:border-[#36b37e]/50 outline-none transition-all selection:bg-[#36b37e]"
-                            >
-                               {CATEGORIES.map(cat => <option key={cat} value={cat}>{cat}</option>)}
-                            </select>
-                         </div>
                       </div>
-                   </div>
-                 )}
+                    )}
+
+                    <div className="grid md:grid-cols-2 gap-4 mt-6">
+                       <div className="space-y-2 text-left">
+                          <label className="text-[10px] font-black text-white/40 uppercase tracking-widest px-2">Título del Medio</label>
+                          <input 
+                            type="text" 
+                            required
+                            value={uploadData.title}
+                            onChange={(e) => setUploadData({ ...uploadData, title: e.target.value })}
+                            className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-xs focus:border-[#36b37e]/50 outline-none transition-all"
+                          />
+                       </div>
+                       <div className="space-y-2 text-left">
+                          <label className="text-[10px] font-black text-white/40 uppercase tracking-widest px-2">Categoría</label>
+                          <select 
+                            value={uploadData.category}
+                            onChange={(e) => setUploadData({ ...uploadData, category: e.target.value })}
+                            className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-xs focus:border-[#36b37e]/50 outline-none transition-all"
+                          >
+                             {CATEGORIES.map(cat => <option key={cat} value={cat}>{cat}</option>)}
+                          </select>
+                       </div>
+                    </div>
+
+                    <div className="space-y-2 text-left mt-4">
+                       <label className="text-[10px] font-black text-white/40 uppercase tracking-widest px-2">Descripción (Opcional)</label>
+                       <textarea 
+                         value={uploadData.description}
+                         onChange={(e) => setUploadData({ ...uploadData, description: e.target.value })}
+                         className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-xs focus:border-[#36b37e]/50 outline-none transition-all h-20"
+                       />
+                    </div>
+
+                    <div className="flex items-center gap-3 bg-white/5 p-4 rounded-2xl border border-white/10 mt-4">
+                       <input 
+                          type="checkbox"
+                          checked={uploadData.featured}
+                          onChange={(e) => setUploadData({ ...uploadData, featured: e.target.checked })}
+                          className="w-5 h-5 rounded border-white/10 bg-white/5 accent-[#36b37e]"
+                       />
+                       <div className="flex items-center gap-2">
+                          <Star size={16} className={uploadData.featured ? "text-[#36b37e]" : "text-white/20"} />
+                          <span className="text-xs font-black uppercase tracking-widest text-white/70">Marcar como contenido destacado</span>
+                       </div>
+                    </div>
+                 </div>
 
                  {message.text && (
                     <div className={`p-4 rounded-2xl flex items-center gap-3 border ${message.type === 'error' ? 'bg-red-500/10 border-red-500/20 text-red-400' : 'bg-green-500/10 border-green-500/20 text-green-400'}`}>

@@ -13,12 +13,12 @@ const mediaSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["image", "video"],
+      enum: ["image", "video", "gallery"],
       required: true,
     },
     url: {
       type: String,
-      required: [true, "La URL es obligatoria"],
+      required: [true, "La URL o link es obligatoria"],
     },
     publicId: {
       type: String,
@@ -27,6 +27,10 @@ const mediaSchema = new mongoose.Schema(
     thumbnailUrl: {
       type: String,
       default: null,
+    },
+    featured: {
+      type: Boolean,
+      default: false,
     },
     category: {
       type: String,
@@ -37,6 +41,8 @@ const mediaSchema = new mongoose.Schema(
         "Festival LATAM",
         "Institucional",
         "Eventos",
+        "Fotos",
+        "Video",
         "Otros",
       ],
       default: "Otros",

@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Camera, Video, FileText, Newspaper, Download, Play, Eye, Heart, Share2, Calendar, Star, ArrowRight, Youtube, ExternalLink } from "lucide-react";
+import { Camera, Video, FileText, Newspaper, Download, Play, Eye, Heart, Share2, Calendar, Star, ArrowRight, Youtube, ExternalLink, Loader2 } from "lucide-react";
 import React from "react";
 
+// The top categories remain static as they point to specific sections/routes
 const multimediaCategories = [
   {
     title: "Fotos y Videos",
@@ -44,126 +45,7 @@ const multimediaCategories = [
   }
 ];
 
-const featuredGalleries = [
-  {
-    title: "Inauguración Complejo Fútbol por la Inclusión",
-    description: "La inauguración oficial del primer espacio deportivo inclusivo y accesible con 4 canchas de primer nivel en Moreno.",
-    image: "https://img.youtube.com/vi/HSo1Fo3tRZ0/hqdefault.jpg",
-    date: "2022",
-    category: "Video",
-    href: "https://www.youtube.com/watch?v=HSo1Fo3tRZ0",
-    featured: true,
-    type: "video",
-    videoId: "HSo1Fo3tRZ0"
-  },
-  {
-    title: "Complejo \"Fútbol por la Inclusión\" – ESPN F360",
-    description: "Coverage especial de ESPN sobre el nuevo complejo inclusivo y su impacto en la comunidad.",
-    image: "https://img.youtube.com/vi/NRPpf0zAUko/hqdefault.jpg",
-    date: "2022",
-    category: "Video",
-    href: "https://www.youtube.com/watch?v=NRPpf0zAUko",
-    featured: false,
-    type: "video",
-    videoId: "NRPpf0zAUko"
-  },
-  {
-    title: "Finales 2021 por CLA",
-    description: "Los momentos más emocionantes de las finales de la Liga de Fútbol Inclusiva 2021.",
-    image: "https://futbolinclusivo.org.ar/app/uploads/2021/12/FUTBOL-111221-371-Copiar-480x360.jpg",
-    date: "2021",
-    category: "Fotos",
-    href: "/multimedia/fotos-videos/finales-2021-cla",
-    featured: false,
-    type: "gallery"
-  },
-  {
-    title: "1° Festival Inclusivo de Fútbol 3",
-    description: "El primer festival inclusivo de fútbol 3 organizado por la Asociación Civil Andar.",
-    image: "https://img.youtube.com/vi/e8RCwlkekDo/hqdefault.jpg",
-    date: "2021",
-    category: "Video",
-    href: "https://www.youtube.com/watch?v=e8RCwlkekDo",
-    featured: false,
-    type: "video",
-    videoId: "e8RCwlkekDo"
-  },
-  {
-    title: "Finales 2020",
-    description: "La cobertura completa de las finales 2020 de la Liga de Fútbol Inclusiva.",
-    image: "https://img.youtube.com/vi/1gEyBw8u-nI/hqdefault.jpg",
-    date: "2020",
-    category: "Video",
-    href: "https://www.youtube.com/watch?v=1gEyBw8u-nI",
-    featured: false,
-    type: "video",
-    videoId: "1gEyBw8u-nI"
-  },
-  {
-    title: "Complejo Fútbol por la Inclusión – Lorena Callegaris",
-    description: "Galería fotográfica profesional del complejo por la fotógrafa Lorena Callegaris.",
-    image: "https://futbolinclusivo.org.ar/app/uploads/2022/07/MG_2412-Copiar-480x360.jpg",
-    date: "2022",
-    category: "Fotos",
-    href: "/multimedia/fotos-videos/lorena-callegaris",
-    featured: false,
-    type: "gallery"
-  }
-];
-
-const allGalleries = [
-  {
-    title: "Finales 2021 por Paola Galvan",
-    description: "Cobertura fotográfica de las finales 2021 por Paola Galvan.",
-    image: "https://futbolinclusivo.org.ar/app/uploads/2021/12/CUA_5685-480x360.jpg",
-    date: "2021",
-    category: "Fotos",
-    type: "gallery"
-  },
-  {
-    title: "Festival CFR por CLA",
-    description: "Festival CFR capturado por CLA Photography.",
-    image: "https://futbolinclusivo.org.ar/app/uploads/2021/12/CFR-131121-164-480x360.jpg",
-    date: "2021",
-    category: "Fotos",
-    type: "gallery"
-  },
-  {
-    title: "Festival FI Infancias por Paola Galvan",
-    description: "Festival de Fútbol Inclusivo Infancias por Paola Galvan.",
-    image: "https://futbolinclusivo.org.ar/app/uploads/2021/12/CUA_7258-480x360.jpg",
-    date: "2021",
-    category: "Fotos",
-    type: "gallery"
-  },
-  {
-    title: "Finales 2020 por Lorena Callegaris",
-    description: "Finales 2020 documentadas por Lorena Callegaris.",
-    image: "https://futbolinclusivo.org.ar/app/uploads/2019/11/FINAL-LFI-2019-1-Copiar-480x360.jpg",
-    date: "2020",
-    category: "Fotos",
-    type: "gallery"
-  },
-  {
-    title: "Finales 2020 por Paola Galvan",
-    description: "Perspectiva única de las finales 2020 por Paola Galvan.",
-    image: "https://futbolinclusivo.org.ar/app/uploads/2019/11/ANC_9708-480x360.jpg",
-    date: "2020",
-    category: "Fotos",
-    type: "gallery"
-  },
-  {
-    title: "Finales 2020 por Sebastian Gil Miranda",
-    description: "Cobertura artística de las finales 2020 por Sebastian Gil Miranda.",
-    image: "https://futbolinclusivo.org.ar/app/uploads/2019/11/IMG_20191110_143354-480x360.jpg",
-    date: "2020",
-    category: "Fotos",
-    type: "gallery"
-  }
-];
-
 export default function MultimediaPage() {
-  const [selectedCategory, setSelectedCategory] = React.useState(0);
   const [filter, setFilter] = React.useState('all'); // all, videos, photos
   const [media, setMedia] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
@@ -176,10 +58,18 @@ export default function MultimediaPage() {
         const data = await res.json();
         if (data.success) {
           const items = data.data;
-          setMedia(items);
+          
+          // Sort: Featured first, then by date
+          const sortedItems = [...items].sort((a, b) => {
+            if (a.featured && !b.featured) return -1;
+            if (!a.featured && b.featured) return 1;
+            return new Date(b.createdAt) - new Date(a.createdAt);
+          });
+
+          setMedia(sortedItems);
           setStats({
             total: items.length,
-            photos: items.filter(m => m.type === 'image').length,
+            photos: items.filter(m => m.type === 'image' || m.type === 'gallery').length,
             videos: items.filter(m => m.type === 'video').length,
           });
         }
@@ -195,13 +85,9 @@ export default function MultimediaPage() {
   const filteredItems = media.filter(item => {
     if (filter === 'all') return true;
     if (filter === 'videos') return item.type === 'video';
-    if (filter === 'photos') return item.type === 'image';
+    if (filter === 'photos') return item.type === 'image' || item.type === 'gallery';
     return true;
   });
-
-  // Keep hardcoded fallback if DB is empty for demo/layout purposes
-  const displays = filteredItems.length > 0 ? filteredItems : [];
-
 
   return (
     <div style={{ background: "#000B1A", color: "#fff", minHeight: "100vh" }}>
@@ -212,7 +98,6 @@ export default function MultimediaPage() {
         borderBottom: "1px solid rgba(255,255,255,0.05)",
         position: "relative"
       }}>
-        {/* Background Pattern */}
         <div style={{
           position: "absolute",
           inset: 0,
@@ -224,7 +109,7 @@ export default function MultimediaPage() {
           <div style={{ 
             display: "inline-flex", 
             background: "rgba(0,141,77,0.1)", 
-            color: "var(--color-primary-light)",
+            color: "#36b37e",
             padding: "8px 16px", 
             borderRadius: "4px", 
             marginBottom: "24px", 
@@ -239,16 +124,16 @@ export default function MultimediaPage() {
             Multimedia
           </h1>
           <p style={{ fontSize: "1.2rem", color: "rgba(255,255,255,0.6)", maxWidth: "800px", margin: "0 auto", lineHeight: 1.6 }}>
-            Descubre los momentos más destacados del Fútbol Inclusivo a través de nuestras galerías de fotos, videos, publicaciones y documentos.
+            Explora la historia y el presente del Fútbol Inclusivo. Todo el contenido es gestionado dinámicamente desde nuestro panel de administración.
           </p>
         </div>
       </section>
 
-      {/* Categories Grid */}
+      {/* Categories Grid (Static Routes) */}
       <section style={{ padding: "80px 0" }}>
         <div className="container">
           <h2 style={{ fontSize: "2.5rem", fontWeight: 900, color: "#fff", marginBottom: "50px", textAlign: "center" }}>
-            Archivos Multimedia
+            Secciones
           </h2>
           
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "30px" }}>
@@ -285,38 +170,6 @@ export default function MultimediaPage() {
                     style={{ objectFit: "cover" }}
                     sizes="(max-width: 768px) 100vw, 300px"
                   />
-                  <div style={{
-                    position: "absolute",
-                    top: "15px",
-                    right: "15px",
-                    background: "rgba(0,141,77,0.9)",
-                    color: "#fff",
-                    padding: "5px 12px",
-                    borderRadius: "15px",
-                    fontSize: "0.8rem",
-                    fontWeight: 700
-                  }}>
-                    {category.count}
-                  </div>
-                  {category.featured && (
-                    <div style={{
-                      position: "absolute",
-                      top: "15px",
-                      left: "15px",
-                      background: "#E67E22",
-                      color: "#fff",
-                      padding: "5px 12px",
-                      borderRadius: "15px",
-                      fontSize: "0.8rem",
-                      fontWeight: 700,
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "5px"
-                    }}>
-                      <Star size={14} />
-                      Destacado
-                    </div>
-                  )}
                 </div>
                 
                 <div style={{ padding: "25px" }}>
@@ -330,7 +183,7 @@ export default function MultimediaPage() {
                       alignItems: "center",
                       justifyContent: "center"
                     }}>
-                      <category.icon size={24} color="var(--color-primary-light)" />
+                      <category.icon size={24} color="#36b37e" />
                     </div>
                     <h3 style={{ fontSize: "1.3rem", fontWeight: 900, color: "#fff", margin: 0 }}>
                       {category.title}
@@ -339,7 +192,7 @@ export default function MultimediaPage() {
                   <p style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.6, marginBottom: "20px" }}>
                     {category.description}
                   </p>
-                  <div style={{ display: "flex", alignItems: "center", gap: "8px", color: "var(--color-primary-light)", fontWeight: 700 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px", color: "#36b37e", fontWeight: 700 }}>
                     Explorar <ArrowRight size={16} />
                   </div>
                 </div>
@@ -350,7 +203,7 @@ export default function MultimediaPage() {
       </section>
 
       {/* Filter Section */}
-      <section style={{ padding: "60px 0" }}>
+      <section style={{ padding: "60px 0", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
         <div className="container">
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "20px", flexWrap: "wrap" }}>
             <button
@@ -358,8 +211,8 @@ export default function MultimediaPage() {
               style={{
                 padding: "12px 24px",
                 borderRadius: "25px",
-                border: filter === 'all' ? "2px solid var(--color-primary-light)" : "2px solid rgba(255,255,255,0.1)",
-                background: filter === 'all' ? "var(--color-primary-light)" : "transparent",
+                border: filter === 'all' ? "2px solid #36b37e" : "2px solid rgba(255,255,255,0.1)",
+                background: filter === 'all' ? "#36b37e" : "transparent",
                 color: "#fff",
                 fontWeight: 700,
                 fontSize: "0.9rem",
@@ -374,8 +227,8 @@ export default function MultimediaPage() {
               style={{
                 padding: "12px 24px",
                 borderRadius: "25px",
-                border: filter === 'videos' ? "2px solid var(--color-primary-light)" : "2px solid rgba(255,255,255,0.1)",
-                background: filter === 'videos' ? "var(--color-primary-light)" : "transparent",
+                border: filter === 'videos' ? "2px solid #36b37e" : "2px solid rgba(255,255,255,0.1)",
+                background: filter === 'videos' ? "#36b37e" : "transparent",
                 color: "#fff",
                 fontWeight: 700,
                 fontSize: "0.9rem",
@@ -393,8 +246,8 @@ export default function MultimediaPage() {
               style={{
                 padding: "12px 24px",
                 borderRadius: "25px",
-                border: filter === 'photos' ? "2px solid var(--color-primary-light)" : "2px solid rgba(255,255,255,0.1)",
-                background: filter === 'photos' ? "var(--color-primary-light)" : "transparent",
+                border: filter === 'photos' ? "2px solid #36b37e" : "2px solid rgba(255,255,255,0.1)",
+                background: filter === 'photos' ? "#36b37e" : "transparent",
                 color: "#fff",
                 fontWeight: 700,
                 fontSize: "0.9rem",
@@ -411,186 +264,177 @@ export default function MultimediaPage() {
         </div>
       </section>
 
-      {/* All Galleries Grid */}
+      {/* Dynamic Content Grid */}
       <section style={{ padding: "80px 0" }}>
         <div className="container">
-          <div style={{ display: "flex", alignItems: "center", marginBottom: "50px", justifyContent: "space-between" }}>
-            <h2 style={{ fontSize: "2.5rem", fontWeight: 900, color: "#fff", margin: 0 }}>
-              Galerías {filter === 'all' ? 'Completas' : filter === 'videos' ? 'de Videos' : 'de Fotos'}
-            </h2>
-            <div style={{ fontSize: "1.1rem", color: "rgba(255,255,255,0.6)" }}>
-              {displays.length} elementos encontrados
+          {loading ? (
+            <div style={{ textAlign: "center", padding: "100px 0" }}>
+              <Loader2 className="animate-spin text-[#36b37e] mx-auto mb-4" size={48} />
+              <p className="text-white/40 font-bold uppercase tracking-widest text-xs">Cargando Galería...</p>
             </div>
-          </div>
-          
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))", gap: "30px" }}>
-            {displays.length === 0 && !loading ? (
-              <div style={{ gridColumn: "1/-1", textAlign: "center", py: "100px", color: "rgba(255,255,255,0.3)" }}>
-                 No hay contenido disponible todavía.
-              </div>
-            ) : (
-              displays.map((item, index) => (
+          ) : filteredItems.length === 0 ? (
+            <div style={{ textAlign: "center", padding: "100px 20px", color: "rgba(255,255,255,0.3)", background: "rgba(255,255,255,0.02)", borderRadius: "40px", border: "2px dashed rgba(255,255,255,0.05)" }}>
+               <ImageIcon size={64} className="mx-auto mb-6 opacity-20" />
+               <h3 className="text-xl font-black uppercase tracking-tight">No hay contenido disponible</h3>
+               <p className="text-xs font-bold uppercase mt-2 opacity-50">Sube contenido desde el panel de administración</p>
+            </div>
+          ) : (
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))", gap: "30px" }}>
+              {filteredItems.map((item) => (
                 <div
-                  key={item._id || index}
+                  key={item._id}
                   style={{
                     background: "rgba(255,255,255,0.02)",
-                    border: "1px solid rgba(255,255,255,0.05)",
-                    borderRadius: "20px",
+                    border: item.featured ? "2px solid rgba(54,179,126,0.3)" : "1px solid rgba(255,255,255,0.05)",
+                    borderRadius: "24px",
                     overflow: "hidden",
-                    transition: "all 0.3s"
+                    transition: "all 0.3s",
+                    position: "relative"
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.background = "rgba(255,255,255,0.05)";
-                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
-                    e.currentTarget.style.transform = "translateY(-5px)";
+                    e.currentTarget.style.transform = "translateY(-8px)";
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.background = "rgba(255,255,255,0.02)";
-                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)";
                     e.currentTarget.style.transform = "translateY(0)";
                   }}
                 >
                   <div style={{ position: "relative", height: "250px", overflow: "hidden" }}>
                     <Image
-                      src={item.url || item.image}
+                      src={item.thumbnailUrl || item.url}
                       alt={item.title}
                       fill
                       style={{ objectFit: "cover" }}
                       sizes="(max-width: 768px) 100vw, 350px"
                     />
-                    <div style={{
-                      position: "absolute",
-                      top: "15px",
-                      right: "15px",
-                      background: "rgba(0,0,0,0.7)",
-                      color: "#fff",
-                      padding: "5px 12px",
-                      borderRadius: "15px",
-                      fontSize: "0.8rem",
-                      fontWeight: 700,
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "5px"
-                    }}>
-                      <Calendar size={14} />
-                      {item.createdAt ? new Date(item.createdAt).getFullYear() : (item.date || "2024")}
-                    </div>
                     
+                    {item.featured && (
+                      <div style={{
+                        position: "absolute",
+                        top: "15px",
+                        left: "15px",
+                        background: "#36b37e",
+                        color: "#fff",
+                        padding: "5px 12px",
+                        borderRadius: "10px",
+                        fontSize: "0.7rem",
+                        fontWeight: 900,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "5px",
+                        zIndex: 10,
+                        boxShadow: "0 4px 15px rgba(0,0,0,0.3)"
+                      }}>
+                        <Star size={12} fill="white" /> DESTACADO
+                      </div>
+                    )}
+
                     <div style={{
                       position: "absolute",
                       bottom: "15px",
                       left: "15px",
-                      background: item.type === 'video' ? "rgba(255,0,0,0.8)" : "rgba(0,141,77,0.9)",
+                      background: item.type === 'video' ? "rgba(255,0,0,0.8)" : "rgba(54,179,126,0.9)",
                       color: "#fff",
                       padding: "5px 12px",
-                      borderRadius: "15px",
-                      fontSize: "0.8rem",
-                      fontWeight: 700,
+                      borderRadius: "10px",
+                      fontSize: "0.7rem",
+                      fontWeight: 900,
                       display: "flex",
                       alignItems: "center",
-                      gap: "5px"
+                      gap: "5px",
+                      backdropBlur: "sm"
                     }}>
                       {item.type === 'video' ? <Youtube size={14} /> : <Camera size={14} />}
-                      {item.category}
+                      {item.category.toUpperCase()}
                     </div>
                   </div>
                   
-                  <div style={{ padding: "25px" }}>
-                    <h3 style={{ fontSize: "1.3rem", fontWeight: 900, color: "#fff", marginBottom: "15px" }}>
+                  <div style={{ padding: "28px" }}>
+                    <h3 style={{ fontSize: "1.25rem", fontWeight: 900, color: "#fff", marginBottom: "12px", lineHeight: 1.2 }}>
                       {item.title}
                     </h3>
-                    <p style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.6, marginBottom: "20px" }}>
+                    <p style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.6, marginBottom: "20px", fontSize: "0.9rem", height: "3em", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
                       {item.description}
                     </p>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                      <a
-                        href={item.url || item.href}
+                      <Link
+                        href={item.url}
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{
                           display: "flex",
                           alignItems: "center",
                           gap: "8px",
-                          color: "var(--color-primary-light)",
-                          fontWeight: 700,
+                          color: "#36b37e",
+                          fontWeight: 800,
                           textDecoration: "none",
-                          transition: "all 0.3s"
+                          fontSize: "0.85rem",
+                          letterSpacing: "0.5px"
                         }}
                       >
-                        {item.type === 'video' ? (
-                          <>
-                            <Youtube size={16} />
-                            Ver video
-                          </>
-                        ) : (
-                          <>
-                            <Eye size={16} />
-                            Ver imagen
-                          </>
-                        )}
+                        {item.type === 'video' ? "REPRODUCIR VIDEO" : "VER GALERÍA"}
                         <ExternalLink size={14} />
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
-              ))
-            )}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
       {/* Stats Section */}
-      <section style={{ padding: "80px 0" }}>
+      <section style={{ padding: "100px 0", background: "rgba(255,255,255,0.01)" }}>
         <div className="container">
           <div style={{ 
-            background: "linear-gradient(135deg, rgba(0,141,77,0.1) 0%, rgba(0,141,77,0.05) 100%)",
-            padding: "60px 40px", 
-            borderRadius: "30px", 
-            border: "1px solid rgba(0,141,77,0.2)",
+            background: "linear-gradient(135deg, rgba(54,179,126,0.1) 0%, rgba(54,179,126,0.05) 100%)",
+            padding: "80px 40px", 
+            borderRadius: "40px", 
+            border: "1px solid rgba(54,179,126,0.2)",
             textAlign: "center"
           }}>
-            <h2 style={{ fontSize: "2.2rem", fontWeight: 900, color: "#fff", marginBottom: "50px" }}>
-              Nuestro Contenido en Números
+            <h2 style={{ fontSize: "2.25rem", fontWeight: 900, color: "#fff", marginBottom: "60px", letterSpacing: "-1px" }}>
+              Galería Multimedia Dinámica
             </h2>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "40px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "50px" }}>
               <div>
-                <div style={{ fontSize: "3rem", fontWeight: 900, color: "var(--color-primary-light)", marginBottom: "10px" }}>
+                <div style={{ fontSize: "3.5rem", fontWeight: 900, color: "#36b37e", marginBottom: "12px" }}>
                   {stats.total}
                 </div>
-                <div style={{ color: "rgba(255,255,255,0.6)", fontSize: "1.1rem" }}>
-                  Elementos Totales
+                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.9rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "1px" }}>
+                  Items Totales
                 </div>
               </div>
               <div>
-                <div style={{ fontSize: "3rem", fontWeight: 900, color: "var(--color-primary-light)", marginBottom: "10px" }}>
+                <div style={{ fontSize: "3.5rem", fontWeight: 900, color: "#36b37e", marginBottom: "12px" }}>
                   {stats.videos}
                 </div>
-                <div style={{ color: "rgba(255,255,255,0.6)", fontSize: "1.1rem" }}>
-                  Videos en Galería
+                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.9rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "1px" }}>
+                  Videos
                 </div>
               </div>
               <div>
-                <div style={{ fontSize: "3rem", fontWeight: 900, color: "var(--color-primary-light)", marginBottom: "10px" }}>
+                <div style={{ fontSize: "3.5rem", fontWeight: 900, color: "#36b37e", marginBottom: "12px" }}>
                   {stats.photos}
                 </div>
-                <div style={{ color: "rgba(255,255,255,0.6)", fontSize: "1.1rem" }}>
-                  Fotos en Galería
+                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.9rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "1px" }}>
+                  Fotos y Galerías
                 </div>
               </div>
               <div>
-                <div style={{ fontSize: "3rem", fontWeight: 900, color: "var(--color-primary-light)", marginBottom: "10px" }}>
+                <div style={{ fontSize: "3.5rem", fontWeight: 900, color: "#36b37e", marginBottom: "12px" }}>
                   {new Date().getFullYear()}
                 </div>
-                <div style={{ color: "rgba(255,255,255,0.6)", fontSize: "1.1rem" }}>
-                  Última Actualización
+                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.9rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "1px" }}>
+                  Año Actual
                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
-
-
     </div>
   );
 }

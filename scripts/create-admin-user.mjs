@@ -40,7 +40,11 @@ async function createAdminUser() {
       console.log(`⚠️  El usuario admin ya existe: ${ADMIN_EMAIL}`);
       
       const hashedPassword = await bcrypt.hash(ADMIN_PASSWORD, 10);
-      await User.findByIdAndUpdate(existing._id, { password: hashedPassword });
+      await User.findByIdAndUpdate(existing._id, { 
+        password: hashedPassword,
+        role: "admin",
+        active: true
+      });
       console.log("✅ Contraseña actualizada");
     } else {
       const hashedPassword = await bcrypt.hash(ADMIN_PASSWORD, 10);
