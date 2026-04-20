@@ -25,6 +25,7 @@ const footerLinks = [
     links: [
       { href: "/institucional/nosotros", label: "Nosotros" },
       { href: "/contacto", label: "Contacto" },
+      { href: "/admin", label: "Administrador" },
       {
         href: "https://donaronline.org/asociacion-civil-andar/suma-tu-apoyo-al-futbol-inclusivo",
         label: "¡Donar ahora!",
