@@ -3,22 +3,22 @@ import React from "react";
 
 // Mock data for clubs - in production this could come from a JSON or API
 const clubs = [
-  { name: "River Plate", logo: "/logo.png" },
-  { name: "Boca Juniors", logo: "/logo.png" },
-  { name: "Independiente", logo: "/logo.png" },
-  { name: "Racing Club", logo: "/logo.png" },
-  { name: "San Lorenzo", logo: "/logo.png" },
-  { name: "Huracán", logo: "/logo.png" },
-  { name: "Estudiantes LP", logo: "/logo.png" },
-  { name: "Gimnasia LP", logo: "/logo.png" },
-  { name: "Rosario Central", logo: "/logo.png" },
-  { name: "Newell's", logo: "/logo.png" },
-  { name: "Talleres", logo: "/logo.png" },
-  { name: "Belgrano", logo: "/logo.png" },
-  { name: "Lanús", logo: "/logo.png" },
-  { name: "Banfield", logo: "/logo.png" },
-  { name: "Vélez Sarsfield", logo: "/logo.png" },
-  { name: "Argentinos Jrs", logo: "/logo.png" },
+  { name: "River Plate", logo: "/andarfc-logo.png" },
+  { name: "Boca Juniors", logo: "/andarfc-logo.png" },
+  { name: "Independiente", logo: "/andarfc-logo.png" },
+  { name: "Racing Club", logo: "/andarfc-logo.png" },
+  { name: "San Lorenzo", logo: "/andarfc-logo.png" },
+  { name: "Huracán", logo: "/andarfc-logo.png" },
+  { name: "Estudiantes LP", logo: "/andarfc-logo.png" },
+  { name: "Gimnasia LP", logo: "/andarfc-logo.png" },
+  { name: "Rosario Central", logo: "/andarfc-logo.png" },
+  { name: "Newell's", logo: "/andarfc-logo.png" },
+  { name: "Talleres", logo: "/andarfc-logo.png" },
+  { name: "Belgrano", logo: "/andarfc-logo.png" },
+  { name: "Lanús", logo: "/andarfc-logo.png" },
+  { name: "Banfield", logo: "/andarfc-logo.png" },
+  { name: "Vélez Sarsfield", logo: "/andarfc-logo.png" },
+  { name: "Argentinos Jrs", logo: "/andarfc-logo.png" },
 ];
 
 export default function ClubStrip() {

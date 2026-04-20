@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Save, Eye, EyeOff, Upload } from "lucide-react";
+import RichTextEditor from "@/components/ui/RichTextEditor";
 
 export default function NewNewsPage() {
   const { data: session, status } = useSession();
@@ -167,13 +168,13 @@ export default function NewNewsPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-bold mb-2">Contenido *</label>
-                <textarea
-                  value={formData.content}
-                  onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-[#36b37e] focus:outline-none h-64"
-                  required
-                />
+                <label className="block text-sm font-bold mb-2">Contenido (Editor Visual) *</label>
+                <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden focus-within:border-[#36b37e] transition-colors">
+                  <RichTextEditor
+                    value={formData.content}
+                    onChange={(value) => setFormData({ ...formData, content: value })}
+                  />
+                </div>
               </div>
 
               <div>

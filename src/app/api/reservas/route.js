@@ -2,6 +2,41 @@ import dbConnect from "@/lib/mongodb";
 import Reservation from "@/lib/schemas/Reservation";
 import { NextResponse } from "next/server";
 
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+
+export async function GET(request) {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session || (session.user.role !== "admin" && session.user.role !== "editor")) {
+      return NextResponse.json({ success: false, message: "No autorizado" }, { status: 401 });
+    }
+
+    await dbConnect();
+    
+    const { searchParams } = new URL(request.url);
+    const dateParam = searchParams.get("date");
+    const courtParam = searchParams.get("courtId");
+
+    let query = {};
+    if (dateParam) query.date = new Date(dateParam);
+    if (courtParam) query.courtId = courtParam;
+
+    const reservations = await Reservation.find(query).sort({ date: -1, timeSlot: 1 });
+    const count = await Reservation.countDocuments(query);
+
+    return NextResponse.json({
+      success: true,
+      data: reservations,
+      pagination: { total: count, page: 1, limit: 100, pages: 1 }
+    });
+  } catch (error) {
+    console.error("Error fetching reservations:", error);
+    return NextResponse.json({ success: false, message: "Error al obtener reservas" }, { status: 500 });
+  }
+}
+
+
 export async function POST(request) {
   try {
     await dbConnect();

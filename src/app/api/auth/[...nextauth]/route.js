@@ -4,7 +4,7 @@ import dbConnect from "@/lib/mongodb";
 import User from "@/lib/schemas/User";
 import bcrypt from "bcryptjs";
 
-const handler = NextAuth({
+export const authOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -13,36 +13,50 @@ const handler = NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
+        console.log("[AUTH] Intentando login para:", credentials?.email);
+        
         if (!credentials?.email || !credentials?.password) {
+          console.log("[AUTH] Faltan credenciales");
           throw new Error("Email y contraseña son requeridos");
         }
 
-        await dbConnect();
+        try {
+          await dbConnect();
+          const safeEmail = credentials.email.trim().toLowerCase();
+          console.log("[AUTH] DB conectada, buscando:", safeEmail);
 
-        const user = await User.findOne({ email: credentials.email }).select("+password");
+          const user = await User.findOne({ email: safeEmail }).select("+password");
+          console.log("[AUTH] Usuario encontrado:", user ? "SI" : "NO");
 
-        if (!user) {
-          throw new Error("Credenciales inválidas");
+          if (!user) {
+            throw new Error("Credenciales inválidas");
+          }
+
+          if (!user.active) {
+            console.log("[AUTH] Usuario inactivo");
+            throw new Error("Usuario inactivo");
+          }
+
+          const isPasswordValid = await bcrypt.compare(credentials.password, user.password);
+          console.log("[AUTH] Contraseña válida:", isPasswordValid);
+
+          if (!isPasswordValid) {
+            throw new Error("Credenciales inválidas");
+          }
+
+          await User.findByIdAndUpdate(user._id, { lastLogin: new Date() });
+          console.log("[AUTH] Login exitoso");
+
+          return {
+            id: user._id.toString(),
+            email: user.email,
+            name: user.name,
+            role: user.role,
+          };
+        } catch (error) {
+          console.error("[AUTH] Error en try-catch de authorize:", error);
+          throw error;
         }
-
-        if (!user.active) {
-          throw new Error("Usuario inactivo");
-        }
-
-        const isPasswordValid = await bcrypt.compare(credentials.password, user.password);
-
-        if (!isPasswordValid) {
-          throw new Error("Credenciales inválidas");
-        }
-
-        await User.findByIdAndUpdate(user._id, { lastLogin: new Date() });
-
-        return {
-          id: user._id.toString(),
-          email: user.email,
-          name: user.name,
-          role: user.role,
-        };
       },
     }),
   ],
@@ -71,6 +85,8 @@ const handler = NextAuth({
     maxAge: 30 * 24 * 60 * 60,
   },
   secret: process.env.NEXTAUTH_SECRET,
-});
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

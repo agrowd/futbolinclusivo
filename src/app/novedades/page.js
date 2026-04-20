@@ -1,107 +1,44 @@
-'use client';
-
 import Link from "next/link";
 import Image from "next/image";
 import { Newspaper, Calendar, ArrowRight, Trophy, MapPin, Users, Award, Heart } from "lucide-react";
 import CategoryButton from "@/components/CategoryButton";
 import NewsletterForm from "@/components/NewsletterForm";
-import React from "react";
+import dbConnect from "@/lib/mongodb";
+import News from "@/lib/schemas/News";
 
-const newsItems = [
-  {
-    title: "Ceremonia de Apertura 2024",
-    date: "11 de Mayo de 2024",
-    excerpt: "La Asociación Civil Andar presenta la 27ª Edición de la Liga de Fútbol Inclusiva con 106 equipos y 964 deportistas de toda la provincia.",
-    category: "Liga de Buenos Aires",
-    image: "https://futbolinclusivo.org.ar/app/uploads/2021/12/FUTBOL-111221-89-Copiar-480x360.jpg",
-    slug: "ceremonia-apertura-2024",
-    featured: true
-  },
-  {
-    title: "TORNEO DE VERANO \"AFA SOMOS TODXS\"",
-    date: "16 de Febrero de 2024",
-    excerpt: "En el Predio Lionel Messi se desarrolló el torneo que promueve la inclusión y el respeto a través del fútbol.",
-    category: "TORNEO AFA",
-    image: "https://futbolinclusivo.org.ar/app/uploads/2024/02/WhatsApp-Image-2024-02-16-at-15.15.10-480x360.jpeg",
-    slug: "torneo-de-verano-afa-somos-todxs",
-    featured: true
-  },
-  {
-    title: "Nace Andar FC",
-    date: "16 de Julio de 2022",
-    excerpt: "El sueño del Complejo \"Fútbol por la Inclusión\" es realidad. Una fiesta con shows, arte y fútbol dio inicio oficial al nuevo complejo.",
-    category: "Escuela inclusiva",
-    image: "https://futbolinclusivo.org.ar/app/uploads/2022/07/MG_3241-Copiar-480x360.jpg",
-    slug: "nace-andar-fc",
-    featured: true
-  },
-  {
-    title: "Nuevo Complejo \"Fútbol por la Inclusión\"",
-    date: "16 de Julio de 2022",
-    excerpt: "Inauguración del primer espacio deportivo inclusivo y accesible con 4 canchas de primer nivel en Moreno.",
-    category: "Escuela inclusiva",
-    image: "https://futbolinclusivo.org.ar/app/uploads/2022/07/MG_3241-Copiar-480x360.jpg",
-    slug: "complejo-futbol-por-la-inclusion",
-    featured: false
-  },
-  {
-    title: "Finales 2021 en AFA",
-    date: "11 de Diciembre de 2021",
-    excerpt: "El predio de AFA en Ezeiza abrió sus puertas para recibir el último evento más importante del año de la Liga.",
-    category: "Liga de Buenos Aires",
-    image: "https://futbolinclusivo.org.ar/app/uploads/2021/12/FUTBOL-111221-374-Copiar-480x360.jpg",
-    slug: "finales-2021-en-afa",
-    featured: false
-  },
-  {
-    title: "VOLVEMOS A LOS ENCUENTROS PRESENCIALES CUIDADOS",
-    date: "2021",
-    excerpt: "Desde el equipo de Fútbol Inclusivo estamos muy contentos en anunciar la vuelta a la presencialidad cuidada.",
-    category: "Escuela inclusiva",
-    image: "https://futbolinclusivo.org.ar/app/uploads/2019/11/FINAL-LFI-2019-163-Copiar-480x360.jpg",
-    slug: "volvemos-a-los-encuentros-presenciales-cuidados",
-    featured: false
-  },
-  {
-    title: "EL FÚTBOL QUE QUEREMOS: E1 Pablo Aimar",
-    date: "Mayo de 2020",
-    excerpt: "Lanzamos un ciclo de charlas en vivo que llamaremos \"El Fútbol que Queremos\" con figuras destacadas del fútbol argentino.",
-    category: "Comunicación",
-    image: "https://futbolinclusivo.org.ar/app/uploads/2020/09/WhatsApp-Image-2020-09-02-at-14.05.32-480x360.jpeg",
-    slug: "el-futbol-que-queremos-e1-pablo-aimar",
-    featured: false
-  },
-  {
-    title: "Charla en Vivo con el Chiqui Tapia",
-    date: "4 de Junio de 2020",
-    excerpt: "El presidente de la Asociación del Fútbol Argentino compartió una charla exclusiva sobre inclusión en el fútbol.",
-    category: "Escuela inclusiva",
-    image: "https://futbolinclusivo.org.ar/app/uploads/2020/05/CHARLA-CHIQUI-TAPIA-480x360.jpeg",
-    slug: "charla-en-vivo-con-el-chiqui-tapia",
-    featured: false
-  },
-  {
-    title: "VIVO con Charla Iacono",
-    date: "28 de Mayo de 2020",
-    excerpt: "Realizamos nuestro segundo vivo a través de Instagram y Facebook Live con contenido exclusivo sobre inclusión.",
-    category: "Institucional",
-    image: "https://futbolinclusivo.org.ar/app/uploads/2020/05/charly-iacono-480x360.jpeg",
-    slug: "vivo-con-charla-iacono",
-    featured: false
-  }
-];
+export const dynamic = "force-dynamic"; // Opcional, pero ideal para reflejar cambios del CMS en tiempo real
 
-const categories = [
-  { name: "Todas", count: newsItems.length },
-  { name: "Liga de Buenos Aires", count: newsItems.filter(n => n.category === "Liga de Buenos Aires").length },
-  { name: "Escuela inclusiva", count: newsItems.filter(n => n.category === "Escuela inclusiva").length },
-  { name: "TORNEO AFA", count: newsItems.filter(n => n.category === "TORNEO AFA").length },
-  { name: "Comunicación", count: newsItems.filter(n => n.category === "Comunicación").length },
-  { name: "Institucional", count: newsItems.filter(n => n.category === "Institucional").length }
-];
+export default async function NovedadesPage(props) {
+  const searchParams = await props.searchParams;
+  const selectedCategoryQuery = searchParams?.category || "Todas";
 
-export default function NovedadesPage() {
-  const [selectedCategory, setSelectedCategory] = React.useState(0);
+  await dbConnect();
+
+  // Traer todas las noticias publicadas
+  const allNewsRaw = await News.find({ published: true }).sort({ publishedAt: -1, createdAt: -1 }).lean();
+  
+  // Parseo para solucionar obj ids de mongo
+  const allNewsResponse = JSON.parse(JSON.stringify(allNewsRaw));
+
+  // Mapa de categorías y cuentas
+  const categoriesMap = { "Todas": allNewsResponse.length };
+  allNewsResponse.forEach(news => {
+    const cat = news.category || "Novedades";
+    categoriesMap[cat] = (categoriesMap[cat] || 0) + 1;
+  });
+
+  const categories = Object.keys(categoriesMap).map(name => ({
+    name,
+    count: categoriesMap[name]
+  })).sort((a,b) => b.count - a.count); // Ordenar por cantidad
+
+  // Filtrado final
+  const newsItems = selectedCategoryQuery === "Todas" 
+    ? allNewsResponse 
+    : allNewsResponse.filter(n => (n.category || "Novedades") === selectedCategoryQuery);
+
+  const featuredNews = allNewsResponse.filter(n => n.featured).slice(0, 1);
+
 
   return (
     <div style={{ background: "#000B1A", color: "#fff", minHeight: "100vh" }}>
@@ -157,8 +94,8 @@ export default function NovedadesPage() {
             {categories.map((category, index) => (
               <CategoryButton
                 key={index}
-                isActive={index === selectedCategory}
-                onClick={() => setSelectedCategory(index)}
+                isActive={category.name === selectedCategoryQuery}
+                href={category.name === "Todas" ? "/novedades" : `/novedades?category=${encodeURIComponent(category.name)}`}
               >
                 {category.name} ({category.count})
               </CategoryButton>
@@ -195,7 +132,7 @@ export default function NovedadesPage() {
               </h2>
             </div>
             
-            {newsItems.filter(n => n.featured).slice(0, 1).map((news, index) => (
+            {featuredNews.map((news, index) => (
               <div key={index} style={{ 
                 display: "grid", 
                 gridTemplateColumns: "1fr 1fr", 
@@ -206,7 +143,7 @@ export default function NovedadesPage() {
                   <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "15px" }}>
                     <Calendar size={16} color="var(--color-primary-light)" />
                     <span style={{ color: "var(--color-primary-light)", fontSize: "0.9rem", fontWeight: 700 }}>
-                      {news.date}
+                      {new Date(news.publishedAt || news.createdAt).toLocaleDateString("es-AR", { year: "numeric", month: "long", day: "numeric" })}
                     </span>
                     <span style={{ 
                       background: "rgba(0,141,77,0.2)", 
@@ -253,7 +190,7 @@ export default function NovedadesPage() {
                   border: "2px solid rgba(255,255,255,0.1)"
                 }}>
                   <Image 
-                    src={news.image}
+                    src={news.image || "https://futbolinclusivo.org.ar/app/uploads/2018/12/MG_0325.jpg"}
                     alt={news.title}
                     fill
                     style={{ objectFit: "cover" }}
@@ -278,6 +215,7 @@ export default function NovedadesPage() {
               <Link
                 key={index}
                 href={`/novedades/${news.slug}`}
+                className="hover:bg-white/5 hover:border-white/10 hover:-translate-y-1"
                 style={{
                   display: "grid",
                   gridTemplateColumns: "auto 1fr auto",
@@ -291,16 +229,6 @@ export default function NovedadesPage() {
                   color: "inherit",
                   transition: "all 0.3s"
                 }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "rgba(255,255,255,0.05)";
-                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
-                  e.currentTarget.style.transform = "translateY(-2px)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "rgba(255,255,255,0.02)";
-                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)";
-                  e.currentTarget.style.transform = "translateY(0)";
-                }}
               >
                 {/* Date */}
                 <div style={{ textAlign: "center" }}>
@@ -312,10 +240,10 @@ export default function NovedadesPage() {
                   }}>
                     <Calendar size={20} color="var(--color-primary-light)" />
                     <div style={{ fontSize: "0.9rem", color: "var(--color-primary-light)", fontWeight: 700 }}>
-                      {news.date.split(' de ')[0]}
+                      {new Date(news.publishedAt || news.createdAt).toLocaleDateString("es-AR", { month: "short" }).toUpperCase()}
                     </div>
                     <div style={{ fontSize: "1.1rem", color: "#fff", fontWeight: 900 }}>
-                      {news.date.split(' de ')[1]} {news.date.split(' de ')[2]}
+                      {new Date(news.publishedAt || news.createdAt).getDate()}
                     </div>
                   </div>
                 </div>
@@ -368,7 +296,7 @@ export default function NovedadesPage() {
                   flexShrink: 0
                 }}>
                   <Image 
-                    src={news.image}
+                    src={news.image || "https://futbolinclusivo.org.ar/app/uploads/2018/12/MG_0325.jpg"}
                     alt={news.title}
                     fill
                     style={{ objectFit: "cover" }}

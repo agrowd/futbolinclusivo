@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import {
   Menu,
-  X,
+  X as XIcon,
   Facebook,
   Twitter,
   Instagram,
@@ -176,7 +176,7 @@ export default function Header() {
             onClick={() => setIsSidebarOpen(false)}
             className="w-10 h-10 flex items-center justify-center bg-white/5 border border-white/10 text-white rounded-full cursor-pointer transition-all hover:bg-white/10 hover:rotate-90 active:scale-90"
           >
-            <X size={20} />
+            <XIcon size={20} />
           </button>
         </div>
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.2.0 — 2026-04-13
+- feat: Paridad visual 100% con sitio de producción (Home, Nosotros, Escuela, Historia).
+- feat: Sistema de inyección dinámica de componentes premium en `GenericCmsPage` basado en slug.
+- feat: Nuevos componentes: `MissionVisionCards`, `Timeline`, `MethodologySteps`, `ImpactMetrics`.
+- feat: Inclusión de la "Página de Inicio" en el dashboard de administración del CMS.
+- fix: Reparado `ReferenceError: dbConnect` en el componente `GenericCmsPage`.
+
 ## v1.1.0 — 2026-03-11
 - feat: Accesibilidad: Selector de tamaño de fuente persistente en el Header (`A A A`).
 - feat: Integración del logo oficial de Andar FC.

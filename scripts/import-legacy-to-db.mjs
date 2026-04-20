@@ -1,7 +1,16 @@
-import fs from "fs/promises";
+import fsAsync from "fs/promises";
+import fs from "fs";
 import path from "path";
 import mongoose from "mongoose";
 import { fileURLToPath } from "url";
+
+try {
+  const envContent = fs.readFileSync(path.resolve(process.cwd(), ".env"), "utf8");
+  envContent.split("\n").forEach(line => {
+    const match = line.match(/^([^=]+)=(.*)$/);
+    if (match && match[1] === "MONGODB_URI") process.env.MONGODB_URI = match[2].trim();
+  });
+} catch (e) {}
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -48,8 +57,8 @@ async function importLegacyData() {
     const legacyAssetsPath = path.join(__dirname, "../public/legacy/legacy-assets-map.json");
 
     console.log("\n📖 Leyendo archivos legacy...");
-    const contentData = JSON.parse(await fs.readFile(legacyContentPath, "utf8"));
-    const assetsData = JSON.parse(await fs.readFile(legacyAssetsPath, "utf8"));
+    const contentData = JSON.parse(await fsAsync.readFile(legacyContentPath, "utf8"));
+    const assetsData = JSON.parse(await fsAsync.readFile(legacyAssetsPath, "utf8"));
 
     console.log("\n📰 Importando noticias...");
     const newsItems = contentData.news?.items || [];

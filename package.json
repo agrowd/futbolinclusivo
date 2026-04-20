@@ -24,6 +24,7 @@
     "next-cloudinary": "^6.17.5",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "react-quill-new": "^3.8.3",
     "resend": "^6.9.4",
     "zod": "^4.3.6"
   },

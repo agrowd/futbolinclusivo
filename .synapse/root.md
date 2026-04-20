@@ -7,6 +7,7 @@ Plataforma web para la **Liga de Fútbol Inclusiva** de la Asociación Civil And
 - **Frontend:** Next.js 14 (App Router) + React 18 + Tailwind CSS v4
 - **Backend:** Next.js API Routes
 - **Database:** MongoDB (Mongoose)
+- **Storage:** Cloudinary (Multimedia/Assets)
 - **Font:** Atkinson Hyperlegible
 - **Icons:** Lucide React
 

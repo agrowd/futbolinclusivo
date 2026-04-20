@@ -2,7 +2,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { MapPin, Trophy, Calendar, X, MousePointer } from "lucide-react";
+import { MapPin, Trophy, Calendar, X as XIcon, MousePointer } from "lucide-react";
 
 export default function FloatingButtons() {
   const [isOpen, setIsOpen] = useState(false);
@@ -120,8 +120,8 @@ export default function FloatingButtons() {
               onClick={dismissMessage}
               className="absolute top-2 right-2 w-5 h-5 sm:w-6 sm:h-6 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
             >
-              <X size={12} className="sm:hidden" />
-              <X size={14} className="hidden sm:block" />
+              <XIcon size={12} className="sm:hidden" />
+              <XIcon size={14} className="hidden sm:block" />
             </button>
             
             {/* Message content */}
@@ -252,17 +252,15 @@ export default function FloatingButtons() {
         </div>
         
         <div className="relative z-10 flex items-center justify-center">
-          <motion.X 
+          <XIcon 
             size={20} 
             className="sm:hidden"
-            animate={{ rotate: isOpen ? 0 : 45 }}
-            transition={{ duration: 0.3 }}
+            style={{ rotate: isOpen ? "0deg" : "45deg", transition: "0.3s" }}
           />
-          <motion.X 
+          <XIcon 
             size={28} 
             className="hidden sm:block"
-            animate={{ rotate: isOpen ? 0 : 45 }}
-            transition={{ duration: 0.3 }}
+            style={{ rotate: isOpen ? "0deg" : "45deg", transition: "0.3s" }}
           />
         </div>
         

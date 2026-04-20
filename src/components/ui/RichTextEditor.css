@@ -1,0 +1,72 @@
+.rich-text-editor-container .ql-container {
+  font-family: inherit;
+  font-size: 1rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: none;
+  border-bottom-left-radius: 0.75rem;
+  border-bottom-right-radius: 0.75rem;
+  color: #fff;
+  min-height: 250px;
+}
+
+.rich-text-editor-container .ql-editor {
+  min-height: 250px;
+  padding: 1.5rem;
+}
+
+/* Scrollbar override */
+.rich-text-editor-container .ql-editor::-webkit-scrollbar {
+  width: 8px;
+}
+.rich-text-editor-container .ql-editor::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+}
+.rich-text-editor-container .ql-editor::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.rich-text-editor-container .ql-toolbar {
+  font-family: inherit;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
+}
+
+/* Modificar los íconos de la toolbar para que sean blancos/claros */
+.rich-text-editor-container .ql-snow .ql-stroke {
+  stroke: rgba(255, 255, 255, 0.7);
+}
+
+.rich-text-editor-container .ql-snow .ql-fill, 
+.rich-text-editor-container .ql-snow .ql-stroke.ql-fill {
+  fill: rgba(255, 255, 255, 0.7);
+}
+
+/* Hover effects */
+.rich-text-editor-container .ql-snow .ql-picker-label:hover,
+.rich-text-editor-container .ql-snow .ql-picker-label:hover .ql-stroke,
+.rich-text-editor-container .ql-snow button:hover .ql-stroke {
+  stroke: #36b37e;
+  color: #36b37e;
+}
+
+.rich-text-editor-container .ql-snow button:hover .ql-fill {
+  fill: #36b37e;
+}
+
+.rich-text-editor-container .ql-snow .ql-picker-options {
+  background-color: #001A3D;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+/* Focus styles */
+.rich-text-editor-container:focus-within .ql-container {
+  border-color: #36b37e;
+}
+.rich-text-editor-container:focus-within .ql-toolbar {
+  border-color: #36b37e;
+}

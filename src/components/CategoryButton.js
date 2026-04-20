@@ -1,6 +1,8 @@
 'use client';
 
-export default function CategoryButton({ children, isActive, onClick }) {
+import Link from "next/link";
+
+export default function CategoryButton({ children, isActive, onClick, href }) {
   const buttonStyle = {
     padding: "12px 24px",
     borderRadius: "25px",
@@ -10,7 +12,9 @@ export default function CategoryButton({ children, isActive, onClick }) {
     fontWeight: 700,
     fontSize: "0.9rem",
     cursor: "pointer",
-    transition: "all 0.3s"
+    transition: "all 0.3s",
+    display: "inline-block",
+    textDecoration: "none"
   };
 
   const handleMouseEnter = (e) => {
@@ -26,6 +30,20 @@ export default function CategoryButton({ children, isActive, onClick }) {
       e.target.style.borderColor = "rgba(255,255,255,0.1)";
     }
   };
+
+  if (href) {
+    return (
+      <Link
+        href={href}
+        style={buttonStyle}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        scroll={false}
+      >
+        {children}
+      </Link>
+    );
+  }
 
   return (
     <button

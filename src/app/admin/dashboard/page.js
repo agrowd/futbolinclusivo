@@ -27,6 +27,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     if (status === "unauthenticated") {
+      console.log("[DASHBOARD] Usuario no autenticado, redirigiendo a login...");
       router.push("/admin/login");
     }
   }, [status, router]);
@@ -34,18 +35,20 @@ export default function AdminDashboard() {
   useEffect(() => {
     async function fetchStats() {
       try {
-        const [newsRes, mediaRes, teamsRes, reservationsRes] = await Promise.all([
+        const [newsRes, mediaRes, teamsRes, reservationsRes, pagesRes] = await Promise.all([
           fetch("/api/news?limit=1"),
           fetch("/api/media?limit=1"),
           fetch("/api/inscripcion?limit=1"),
           fetch("/api/reservas?limit=1"),
+          fetch("/api/admin/pages"),
         ]);
 
-        const [news, media, teams, reservations] = await Promise.all([
+        const [news, media, teams, reservations, pagesData] = await Promise.all([
           newsRes.json(),
           mediaRes.json(),
           teamsRes.json(),
           reservationsRes.json(),
+          pagesRes.json(),
         ]);
 
         setStats({
@@ -53,6 +56,7 @@ export default function AdminDashboard() {
           media: media.pagination?.total || 0,
           teams: teams.pagination?.total || 0,
           reservations: reservations.pagination?.total || 0,
+          pages: pagesData.data?.length || 0,
         });
       } catch (error) {
         console.error("Error fetching stats:", error);
@@ -63,6 +67,7 @@ export default function AdminDashboard() {
       fetchStats();
     }
   }, [status]);
+
 
   if (status === "loading") {
     return (
@@ -79,7 +84,8 @@ export default function AdminDashboard() {
   const menuItems = [
     { href: "/admin/news", label: "Noticias", icon: Newspaper, count: stats.news, color: "#36b37e" },
     { href: "/admin/media", label: "Multimedia", icon: ImageIcon, count: stats.media, color: "#2980B9" },
-    { href: "/admin/pages", label: "Páginas", icon: FileText, count: 0, color: "#E67E22" },
+    { href: "/admin/pages", label: "Páginas", icon: FileText, count: stats.pages, color: "#E67E22" },
+
     { href: "/admin/teams", label: "Equipos", icon: Users, count: stats.teams, color: "#8E44AD" },
     { href: "/admin/reservations", label: "Reservas", icon: Calendar, count: stats.reservations, color: "#E74C3C" },
   ];

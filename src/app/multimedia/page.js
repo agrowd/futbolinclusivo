@@ -165,13 +165,43 @@ const allGalleries = [
 export default function MultimediaPage() {
   const [selectedCategory, setSelectedCategory] = React.useState(0);
   const [filter, setFilter] = React.useState('all'); // all, videos, photos
+  const [media, setMedia] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+  const [stats, setStats] = React.useState({ total: 0, photos: 0, videos: 0 });
 
-  const filteredGalleries = [...featuredGalleries, ...allGalleries].filter(gallery => {
+  React.useEffect(() => {
+    async function fetchMedia() {
+      try {
+        const res = await fetch("/api/media?limit=100");
+        const data = await res.json();
+        if (data.success) {
+          const items = data.data;
+          setMedia(items);
+          setStats({
+            total: items.length,
+            photos: items.filter(m => m.type === 'image').length,
+            videos: items.filter(m => m.type === 'video').length,
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching media:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchMedia();
+  }, []);
+
+  const filteredItems = media.filter(item => {
     if (filter === 'all') return true;
-    if (filter === 'videos') return gallery.type === 'video';
-    if (filter === 'photos') return gallery.type === 'gallery';
+    if (filter === 'videos') return item.type === 'video';
+    if (filter === 'photos') return item.type === 'image';
     return true;
   });
+
+  // Keep hardcoded fallback if DB is empty for demo/layout purposes
+  const displays = filteredItems.length > 0 ? filteredItems : [];
+
 
   return (
     <div style={{ background: "#000B1A", color: "#fff", minHeight: "100vh" }}>
@@ -337,7 +367,7 @@ export default function MultimediaPage() {
                 transition: "all 0.3s"
               }}
             >
-              Todo (12)
+              Todo ({stats.total})
             </button>
             <button
               onClick={() => setFilter('videos')}
@@ -356,7 +386,7 @@ export default function MultimediaPage() {
                 gap: "8px"
               }}
             >
-              <Video size={16} /> Videos (5)
+              <Video size={16} /> Videos ({stats.videos})
             </button>
             <button
               onClick={() => setFilter('photos')}
@@ -375,7 +405,7 @@ export default function MultimediaPage() {
                 gap: "8px"
               }}
             >
-              <Camera size={16} /> Fotos (7)
+              <Camera size={16} /> Fotos ({stats.photos})
             </button>
           </div>
         </div>
@@ -389,63 +419,50 @@ export default function MultimediaPage() {
               Galerías {filter === 'all' ? 'Completas' : filter === 'videos' ? 'de Videos' : 'de Fotos'}
             </h2>
             <div style={{ fontSize: "1.1rem", color: "rgba(255,255,255,0.6)" }}>
-              {filteredGalleries.length} elementos encontrados
+              {displays.length} elementos encontrados
             </div>
           </div>
           
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))", gap: "30px" }}>
-            {filteredGalleries.map((gallery, index) => (
-              <div
-                key={index}
-                style={{
-                  background: "rgba(255,255,255,0.02)",
-                  border: "1px solid rgba(255,255,255,0.05)",
-                  borderRadius: "20px",
-                  overflow: "hidden",
-                  transition: "all 0.3s"
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "rgba(255,255,255,0.05)";
-                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
-                  e.currentTarget.style.transform = "translateY(-5px)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "rgba(255,255,255,0.02)";
-                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)";
-                  e.currentTarget.style.transform = "translateY(0)";
-                }}
-              >
-                <div style={{ position: "relative", height: "250px", overflow: "hidden" }}>
-                  <Image
-                    src={gallery.image}
-                    alt={gallery.title}
-                    fill
-                    style={{ objectFit: "cover" }}
-                    sizes="(max-width: 768px) 100vw, 350px"
-                  />
-                  <div style={{
-                    position: "absolute",
-                    top: "15px",
-                    right: "15px",
-                    background: "rgba(0,0,0,0.7)",
-                    color: "#fff",
-                    padding: "5px 12px",
-                    borderRadius: "15px",
-                    fontSize: "0.8rem",
-                    fontWeight: 700,
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "5px"
-                  }}>
-                    <Calendar size={14} />
-                    {gallery.date}
-                  </div>
-                  {gallery.featured && (
+            {displays.length === 0 && !loading ? (
+              <div style={{ gridColumn: "1/-1", textAlign: "center", py: "100px", color: "rgba(255,255,255,0.3)" }}>
+                 No hay contenido disponible todavía.
+              </div>
+            ) : (
+              displays.map((item, index) => (
+                <div
+                  key={item._id || index}
+                  style={{
+                    background: "rgba(255,255,255,0.02)",
+                    border: "1px solid rgba(255,255,255,0.05)",
+                    borderRadius: "20px",
+                    overflow: "hidden",
+                    transition: "all 0.3s"
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "rgba(255,255,255,0.05)";
+                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
+                    e.currentTarget.style.transform = "translateY(-5px)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "rgba(255,255,255,0.02)";
+                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)";
+                    e.currentTarget.style.transform = "translateY(0)";
+                  }}
+                >
+                  <div style={{ position: "relative", height: "250px", overflow: "hidden" }}>
+                    <Image
+                      src={item.url || item.image}
+                      alt={item.title}
+                      fill
+                      style={{ objectFit: "cover" }}
+                      sizes="(max-width: 768px) 100vw, 350px"
+                    />
                     <div style={{
                       position: "absolute",
                       top: "15px",
-                      left: "15px",
-                      background: "#E67E22",
+                      right: "15px",
+                      background: "rgba(0,0,0,0.7)",
                       color: "#fff",
                       padding: "5px 12px",
                       borderRadius: "15px",
@@ -455,112 +472,69 @@ export default function MultimediaPage() {
                       alignItems: "center",
                       gap: "5px"
                     }}>
-                      <Heart size={14} />
-                      Destacado
+                      <Calendar size={14} />
+                      {item.createdAt ? new Date(item.createdAt).getFullYear() : (item.date || "2024")}
                     </div>
-                  )}
-                  <div style={{
-                    position: "absolute",
-                    bottom: "15px",
-                    left: "15px",
-                    background: gallery.type === 'video' ? "rgba(255,0,0,0.8)" : "rgba(0,141,77,0.9)",
-                    color: "#fff",
-                    padding: "5px 12px",
-                    borderRadius: "15px",
-                    fontSize: "0.8rem",
-                    fontWeight: 700,
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "5px"
-                  }}>
-                    {gallery.type === 'video' ? <Youtube size={14} /> : <Camera size={14} />}
-                    {gallery.category}
-                  </div>
-                  {gallery.type === 'video' && (
+                    
                     <div style={{
                       position: "absolute",
-                      top: "50%",
-                      left: "50%",
-                      transform: "translate(-50%, -50%)",
-                      width: "60px",
-                      height: "60px",
-                      borderRadius: "50%",
-                      background: "rgba(255,255,255,0.9)",
+                      bottom: "15px",
+                      left: "15px",
+                      background: item.type === 'video' ? "rgba(255,0,0,0.8)" : "rgba(0,141,77,0.9)",
+                      color: "#fff",
+                      padding: "5px 12px",
+                      borderRadius: "15px",
+                      fontSize: "0.8rem",
+                      fontWeight: 700,
                       display: "flex",
                       alignItems: "center",
-                      justifyContent: "center",
-                      cursor: "pointer",
-                      transition: "all 0.3s"
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = "var(--color-primary-light)";
-                      e.currentTarget.style.transform = "translate(-50%, -50%) scale(1.1)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = "rgba(255,255,255,0.9)";
-                      e.currentTarget.style.transform = "translate(-50%, -50%) scale(1)";
-                    }}
-                  >
-                    <Play size={24} color="#000" />
+                      gap: "5px"
+                    }}>
+                      {item.type === 'video' ? <Youtube size={14} /> : <Camera size={14} />}
+                      {item.category}
+                    </div>
                   </div>
-                  )}
-                </div>
-                
-                <div style={{ padding: "25px" }}>
-                  <h3 style={{ fontSize: "1.3rem", fontWeight: 900, color: "#fff", marginBottom: "15px" }}>
-                    {gallery.title}
-                  </h3>
-                  <p style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.6, marginBottom: "20px" }}>
-                    {gallery.description}
-                  </p>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                    <a
-                      href={gallery.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "8px",
-                        color: "var(--color-primary-light)",
-                        fontWeight: 700,
-                        textDecoration: "none",
-                        transition: "all 0.3s"
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.color = "#fff";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.color = "var(--color-primary-light)";
-                      }}
-                    >
-                      {gallery.type === 'video' ? (
-                        <>
-                          <Youtube size={16} />
-                          Ver video
-                        </>
-                      ) : (
-                        <>
-                          <Eye size={16} />
-                          Ver galería
-                        </>
-                      )}
-                      <ExternalLink size={14} />
-                    </a>
-                    <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: "5px", color: "rgba(255,255,255,0.4)" }}>
-                        <Heart size={14} />
-                        <span style={{ fontSize: "0.9rem" }}>2.3k</span>
-                      </div>
-                      <div style={{ display: "flex", alignItems: "center", gap: "5px", color: "rgba(255,255,255,0.4)" }}>
-                        <Share2 size={14} />
-                        <span style={{ fontSize: "0.9rem" }}>89</span>
-                      </div>
+                  
+                  <div style={{ padding: "25px" }}>
+                    <h3 style={{ fontSize: "1.3rem", fontWeight: 900, color: "#fff", marginBottom: "15px" }}>
+                      {item.title}
+                    </h3>
+                    <p style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.6, marginBottom: "20px" }}>
+                      {item.description}
+                    </p>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                      <a
+                        href={item.url || item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "8px",
+                          color: "var(--color-primary-light)",
+                          fontWeight: 700,
+                          textDecoration: "none",
+                          transition: "all 0.3s"
+                        }}
+                      >
+                        {item.type === 'video' ? (
+                          <>
+                            <Youtube size={16} />
+                            Ver video
+                          </>
+                        ) : (
+                          <>
+                            <Eye size={16} />
+                            Ver imagen
+                          </>
+                        )}
+                        <ExternalLink size={14} />
+                      </a>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </section>
@@ -581,40 +555,41 @@ export default function MultimediaPage() {
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "40px" }}>
               <div>
                 <div style={{ fontSize: "3rem", fontWeight: 900, color: "var(--color-primary-light)", marginBottom: "10px" }}>
-                  12
+                  {stats.total}
                 </div>
                 <div style={{ color: "rgba(255,255,255,0.6)", fontSize: "1.1rem" }}>
-                  Galerías Totales
+                  Elementos Totales
                 </div>
               </div>
               <div>
                 <div style={{ fontSize: "3rem", fontWeight: 900, color: "var(--color-primary-light)", marginBottom: "10px" }}>
-                  5
+                  {stats.videos}
                 </div>
                 <div style={{ color: "rgba(255,255,255,0.6)", fontSize: "1.1rem" }}>
-                  Videos YouTube
+                  Videos en Galería
                 </div>
               </div>
               <div>
                 <div style={{ fontSize: "3rem", fontWeight: 900, color: "var(--color-primary-light)", marginBottom: "10px" }}>
-                  7
+                  {stats.photos}
                 </div>
                 <div style={{ color: "rgba(255,255,255,0.6)", fontSize: "1.1rem" }}>
-                  Galerías de Fotos
+                  Fotos en Galería
                 </div>
               </div>
               <div>
                 <div style={{ fontSize: "3rem", fontWeight: 900, color: "var(--color-primary-light)", marginBottom: "10px" }}>
-                  2020-2022
+                  {new Date().getFullYear()}
                 </div>
                 <div style={{ color: "rgba(255,255,255,0.6)", fontSize: "1.1rem" }}>
-                  Años de Cobertura
+                  Última Actualización
                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
+
 
     </div>
   );

@@ -8,18 +8,18 @@ import {
   Calendar,
   Heart,
   Newspaper,
-  Flame,
-  Crown,
   MonitorPlay,
   Camera,
   Ticket,
   ArrowRight,
-  ChevronRight,
   Shield,
   Goal,
-  Swords,
 } from "lucide-react";
 
+// SEO Metadata for Next.js (Needs to be in a layout or a server-side component wrapper if we want SEO, 
+// but for now keeping it as requested by the user for perfect 1:1 match in this file)
+// Since this is "use client", we can't export metadata here. I'll put it in a separate layout or the parent.
+// For now, I'll keep the client logic.
 
 const actionButtons = [
   { label: "NOTICIAS", icon: Newspaper, href: "/novedades", color: "#008D4D", desc: "Enterate de todo" },
@@ -51,21 +51,9 @@ const recentNews = [
   }
 ];
 
-const aliados = [
-  { name: "FIFA Foundation", logo: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/commons/a/aa/FIFA_logo_without_slogan.svg&n=-1" },
-  { name: "Common Goal", logo: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/commons/8/84/Logo_Common_Goal.svg&n=-1" },
-  { name: "UEFA Foundation", logo: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/commons/e/ef/Uefa_logo.svg&n=-1" },
-  { name: "AFA", logo: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/commons/c/c4/Afa_gold_logo24.svg&n=-1" }
-];
-
 const containerVariants = {
   hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2
-    }
-  }
+  visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
 };
 
 const itemVariants = {
@@ -103,7 +91,7 @@ export default function HomePage() {
             variants={containerVariants}
             className="max-w-3xl"
           >
-            <motion.div variants={itemVariants} className="inline-block px-5 py-2 bg-[#36b37e] rounded-full font-black text-xs tracking-wider mb-6 shadow-[0_5px_20px_rgba(54,179,126,0.3)] border border-white/20 uppercase">
+            <motion.div variants={itemVariants} className="inline-block px-5 py-2 bg-[#36b37e] rounded-full font-black text-xs tracking-wider mb-6 shadow-[0_5px_20px_rgba(54,179,126,0.3)] border border-white/20 uppercase text-white">
               DESDE 1998
             </motion.div>
             <motion.h1 variants={itemVariants} className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-black mb-4 md:mb-6 leading-[0.9] tracking-tighter">
@@ -131,7 +119,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== ACTION GRID - Separated cards with depth ===== */}
+      {/* ===== ACTION GRID ===== */}
       <section className="relative z-20 px-4 md:px-6 mt-6 md:mt-12 mb-10 md:mb-16">
         <motion.div 
           initial={{ y: 50, opacity: 0 }}
@@ -155,35 +143,26 @@ export default function HomePage() {
                   href={btn.href}
                   className="group block relative overflow-hidden rounded-2xl md:rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.4)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)] transition-all duration-500"
                 >
-                  {/* Background with gradient overlay */}
                   <div 
                     className="absolute inset-0 transition-transform duration-700 group-hover:scale-110"
                     style={{ backgroundColor: btn.color }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   
-                  {/* Content */}
                   <div className="relative p-4 sm:p-5 md:p-6 flex flex-col items-center justify-center gap-2 md:gap-3 min-h-[110px] sm:min-h-[130px] md:min-h-[150px]">
-                    {/* Icon with animated background */}
                     <div className="relative">
                       <div className="absolute inset-0 bg-white/20 rounded-full blur-xl scale-0 group-hover:scale-150 transition-transform duration-500" />
                       <div className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex items-center justify-center bg-white/10 rounded-2xl border border-white/20 backdrop-blur-sm transition-all duration-500 group-hover:bg-white/20 group-hover:scale-110 group-hover:rotate-3">
                         <btn.icon size={22} className="text-white md:w-6 md:h-6" strokeWidth={2} />
                       </div>
                     </div>
-                    
-                    {/* Label */}
                     <span className="text-white font-black text-[10px] sm:text-xs md:text-sm tracking-wider text-center uppercase leading-tight">
                       {btn.label}
                     </span>
-                    
-                    {/* Hidden description that appears on hover */}
                     <span className="text-white/70 text-[9px] md:text-xs text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 -mt-1">
                       {btn.desc}
                     </span>
                   </div>
-                  
-                  {/* Shine effect on hover */}
                   <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
                 </Link>
               </motion.div>
@@ -205,71 +184,57 @@ export default function HomePage() {
           </motion.div>
           
           <div className="flex flex-wrap justify-center gap-6 md:gap-10 max-w-6xl mx-auto">
-            {/* LIGA INCLUSIVA - Soccer Ball Shape */}
+            {/* LIGA INCLUSIVA */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
               animate={{ y: [0, -10, 0] }}
-              whileHover={{ scale: 1.05, animationPlayState: "paused" }}
-              className="relative w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-[#001A3D] to-[#000B1A] border-4 border-[#36b37e]/40 shadow-[0_0_60px_rgba(54,179,126,0.3)] overflow-hidden group flex flex-col items-center justify-center text-center p-6"
               style={{ animation: "bounce-slow 4s ease-in-out infinite" }}
+              className="relative w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-[#001A3D] to-[#000B1A] border-4 border-[#36b37e]/40 shadow-[0_0_60px_rgba(54,179,126,0.3)] overflow-hidden group flex flex-col items-center justify-center text-center p-6"
             >
-              {/* Multiple hexagon patterns */}
               <div className="absolute inset-0 opacity-30" style={{background: 'radial-gradient(circle at 20% 20%, transparent 8%, #000 8%, #000 12%, transparent 12%), radial-gradient(circle at 50% 10%, transparent 8%, #000 8%, #000 12%, transparent 12%), radial-gradient(circle at 80% 20%, transparent 8%, #000 8%, #000 12%, transparent 12%), radial-gradient(circle at 10% 50%, transparent 8%, #000 8%, #000 12%, transparent 12%), radial-gradient(circle at 90% 50%, transparent 8%, #000 8%, #000 12%, transparent 12%), radial-gradient(circle at 20% 80%, transparent 8%, #000 8%, #000 12%, transparent 12%), radial-gradient(circle at 50% 90%, transparent 8%, #000 8%, #000 12%, transparent 12%), radial-gradient(circle at 80% 80%, transparent 8%, #000 8%, #000 12%, transparent 12%), radial-gradient(circle at 35% 35%, transparent 6%, #000 6%, #000 10%, transparent 10%), radial-gradient(circle at 65% 35%, transparent 6%, #000 6%, #000 10%, transparent 10%), radial-gradient(circle at 35% 65%, transparent 6%, #000 6%, #000 10%, transparent 10%), radial-gradient(circle at 65% 65%, transparent 6%, #000 6%, #000 10%, transparent 10%)'}} />
-              
               <div className="relative z-10 flex flex-col items-center">
                 <div className="w-16 h-16 rounded-full bg-white/10 border-2 border-[#36b37e]/50 flex items-center justify-center mb-3 shadow-[0_0_20px_rgba(54,179,126,0.4)]">
-                  <img src="/logo.png" alt="Andar FC" width={48} height={48} className="object-contain" />
+                  <Image src="/logo.png" alt="Andar FC" width={48} height={48} className="object-contain" />
                 </div>
                 <h3 className="text-xl md:text-2xl font-black tracking-tight text-white mb-1">Liga Inclusiva</h3>
                 <p className="text-[#36b37e] text-xs font-bold uppercase tracking-wider mb-3">Desde 1998</p>
-                <p className="text-white/70 text-xs leading-relaxed mb-4 max-w-[180px]">
-                  Fútbol inclusivo para todos
-                </p>
-                <Link href="/programas" className="inline-flex items-center gap-1 text-[#36b37e] font-black text-xs uppercase tracking-wider hover:gap-2 transition-all bg-white/10 px-4 py-2 rounded-full">
-                  CONOCER <ArrowRight size={14} />
-                </Link>
+                <p className="text-white/70 text-xs leading-relaxed mb-4 max-w-[180px]">Fútbol inclusivo para todos</p>
+                <Link href="/programas" className="inline-flex items-center gap-1 text-[#36b37e] font-black text-xs uppercase tracking-wider hover:gap-2 transition-all bg-white/10 px-4 py-2 rounded-full">CONOCER <ArrowRight size={14} /></Link>
               </div>
             </motion.div>
 
-            {/* SUPER LIGA - Soccer Ball Shape */}
+            {/* SUPER LIGA */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
               animate={{ y: [0, -10, 0] }}
-              whileHover={{ scale: 1.05, animationPlayState: "paused" }}
-              className="relative w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-[#6B1026] to-[#2B050D] border-4 border-[#75AADB]/40 shadow-[0_0_60px_rgba(117,170,219,0.3)] overflow-hidden group flex flex-col items-center justify-center text-center p-6"
               style={{ animation: "bounce-slow 4s ease-in-out infinite", animationDelay: "2s" }}
+              className="relative w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-[#6B1026] to-[#2B050D] border-4 border-[#75AADB]/40 shadow-[0_0_60px_rgba(117,170,219,0.3)] overflow-hidden group flex flex-col items-center justify-center text-center p-6"
             >
-              {/* Multiple hexagon patterns */}
               <div className="absolute inset-0 opacity-30" style={{background: 'radial-gradient(circle at 20% 20%, transparent 8%, #000 8%, #000 12%, transparent 12%), radial-gradient(circle at 50% 10%, transparent 8%, #000 8%, #000 12%, transparent 12%), radial-gradient(circle at 80% 20%, transparent 8%, #000 8%, #000 12%, transparent 12%), radial-gradient(circle at 10% 50%, transparent 8%, #000 8%, #000 12%, transparent 12%), radial-gradient(circle at 90% 50%, transparent 8%, #000 8%, #000 12%, transparent 12%), radial-gradient(circle at 20% 80%, transparent 8%, #000 8%, #000 12%, transparent 12%), radial-gradient(circle at 50% 90%, transparent 8%, #000 8%, #000 12%, transparent 12%), radial-gradient(circle at 80% 80%, transparent 8%, #000 8%, #000 12%, transparent 12%), radial-gradient(circle at 35% 35%, transparent 6%, #000 6%, #000 10%, transparent 10%), radial-gradient(circle at 65% 35%, transparent 6%, #000 6%, #000 10%, transparent 10%), radial-gradient(circle at 35% 65%, transparent 6%, #000 6%, #000 10%, transparent 10%), radial-gradient(circle at 65% 65%, transparent 6%, #000 6%, #000 10%, transparent 10%)'}} />
-              
               <div className="relative z-10 flex flex-col items-center">
                 <div className="flex -space-x-2 mb-3">
                   <div className="w-12 h-12 rounded-full bg-white/10 border border-white/30 flex items-center justify-center z-10">
-                    <img src="/satlogo.png" alt="SAT" width={32} height={32} className="object-contain" />
+                    <Image src="/satlogo.png" alt="SAT" width={32} height={32} className="object-contain" />
                   </div>
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/c/c4/Afa_gold_logo24.svg" alt="AFA" width={40} height={40} className="object-contain" />
+                  <Image src="https://upload.wikimedia.org/wikipedia/commons/c/c4/Afa_gold_logo24.svg" alt="AFA" width={40} height={40} className="object-contain" />
                 </div>
                 <h3 className="text-xl md:text-2xl font-black tracking-tight text-white mb-1">Super Liga</h3>
                 <p className="text-[#75AADB] text-xs font-bold uppercase tracking-wider mb-3">AFA</p>
-                <p className="text-white/70 text-xs leading-relaxed mb-4 max-w-[180px]">
-                  Máxima categoría del fútbol inclusivo
-                </p>
-                <Link href="/programas/liga-nacional" className="inline-flex items-center gap-1 text-[#75AADB] font-black text-xs uppercase tracking-wider hover:gap-2 transition-all bg-white/10 px-4 py-2 rounded-full">
-                  VER TORNEO <ArrowRight size={14} />
-                </Link>
+                <p className="text-white/70 text-xs leading-relaxed mb-4 max-w-[180px]">Máxima categoría del fútbol inclusivo</p>
+                <Link href="/programas/liga-nacional" className="inline-flex items-center gap-1 text-[#75AADB] font-black text-xs uppercase tracking-wider hover:gap-2 transition-all bg-white/10 px-4 py-2 rounded-full">VER TORNEO <ArrowRight size={14} /></Link>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* ===== RECENT NEWS & RESULTS ===== */}
+      {/* ===== RECENT NEWS & RESULTS (Sidebar Layout) ===== */}
       <section className="py-10 md:py-16">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8 md:gap-12">
@@ -277,7 +242,7 @@ export default function HomePage() {
             {/* LATEST NEWS */}
             <div className="space-y-8 md:space-y-12">
               <div className="flex justify-between items-end border-b border-white/5 pb-4 md:pb-8">
-                <h2 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-tight">ÚLTIMAS NOVEDADES</h2>
+                <h2 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-tight uppercase">Últimas Novedades</h2>
                 <Link href="/novedades" className="text-[#36b37e] font-bold text-xs flex items-center gap-2 hover:gap-4 transition-all uppercase tracking-widest hidden sm:flex">
                   VER TODAS <ArrowRight size={16} />
                 </Link>
@@ -324,7 +289,7 @@ export default function HomePage() {
               >
                 <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-150 duration-700" />
                 <Trophy size={36} className="text-white/20 mx-auto mb-3 md:mb-5" />
-                <h3 className="font-black text-lg md:text-2xl mb-1 md:mb-2 tracking-tight">FINALES 2025</h3>
+                <h3 className="font-black text-lg md:text-2xl mb-1 md:mb-2 tracking-tight uppercase">Finales 2025</h3>
                 <p className="text-white/60 text-xs font-black tracking-wider uppercase mb-4 md:mb-6">6 DE DICIEMBRE</p>
                 <div className="flex justify-center gap-4 md:gap-6">
                   {[ {v: "00", l: "DÍAS"}, {v: "00", l: "HRS"}, {v: "00", l: "MIN"} ].map((t, i) => (
@@ -366,14 +331,12 @@ export default function HomePage() {
                 </div>
               </motion.div>
             </div>
-
           </div>
         </div>
       </section>
 
-      {/* ===== COMPETENCIA SECTION ===== */}
+      {/* ===== COMPETENCIA SECTION (Fixture, Goleadores, Participá) ===== */}
       <section className="bg-[#000B1A] border-y border-white/5 relative overflow-hidden py-10 md:py-16 lg:py-20">
-        {/* Subtle Decorative Background */}
         <div className="absolute top-32 left-1/2 -translate-x-1/2 opacity-[0.03] select-none pointer-events-none whitespace-nowrap hidden lg:block">
           <span className="text-[240px] font-black uppercase tracking-tighter text-white">Competencia</span>
         </div>
@@ -390,7 +353,7 @@ export default function HomePage() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-            {/* FIXTURE - Enhanced with depth and glow */}
+            {/* FIXTURE */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -399,36 +362,20 @@ export default function HomePage() {
               whileHover={{ y: -5 }}
               className="relative bg-gradient-to-br from-[#001229] to-[#000814] border border-white/10 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col group hover:border-[#36b37e]/40 hover:shadow-[0_30px_60px_rgba(54,179,126,0.15)] transition-all duration-500 overflow-hidden p-5 md:p-6"
             >
-              {/* Glow effect on hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-[#36b37e]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="absolute -inset-px bg-gradient-to-br from-[#36b37e]/20 via-transparent to-transparent rounded-2xl opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500 -z-10" />
-              
               <div className="flex items-center gap-3 mb-4 md:mb-5 relative z-10">
                 <div className="w-10 h-10 md:w-11 md:h-11 bg-gradient-to-br from-[#36b37e]/20 to-[#36b37e]/5 rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(54,179,126,0.2)] border border-[#36b37e]/20 transition-transform group-hover:scale-110 group-hover:rotate-3 duration-300">
                   <Calendar className="text-[#36b37e]" size={20} strokeWidth={2.5} />
                 </div>
                 <h3 className="text-sm md:text-lg font-black tracking-wider uppercase text-white">Fixture</h3>
               </div>
-              
               <div className="flex-1 flex flex-col gap-2 md:gap-4 mb-3 md:mb-6">
                 <p className="text-white/70 text-xs md:text-sm leading-relaxed">Los partidos más próximos de cada liga.</p>
                 <div className="flex flex-col gap-2 mt-auto">
                   {[
-                    { 
-                      liga: "LIGA BA", 
-                      dia: "Sáb 15/05 • 15:00",
-                      partido: "Andar A vs CEF 123"
-                    },
-                    { 
-                      liga: "LIGA NACIONAL", 
-                      dia: "Dom 16/05 • 14:30",
-                      partido: "San Lorenzo vs River"
-                    },
-                    { 
-                      liga: "ESCUELA", 
-                      dia: "Mié 19/05 • 16:00",
-                      partido: "Andar C vs San Martín"
-                    },
+                    { liga: "LIGA BA", dia: "Sáb 15/05 • 15:00", partido: "Andar A vs CEF 123" },
+                    { liga: "LIGA NACIONAL", dia: "Dom 16/05 • 14:30", partido: "San Lorenzo vs River" },
+                    { liga: "ESCUELA", dia: "Mié 19/05 • 16:00", partido: "Andar C vs San Martín" },
                   ].map((f, i) => (
                     <div key={i} className="p-3 md:p-4 bg-white/5 rounded-xl border border-white/10 text-center shadow-inner">
                       <span className="text-[9px] md:text-[10px] font-black tracking-wider text-[#36b37e] block mb-1 uppercase">{f.liga}</span>
@@ -438,13 +385,10 @@ export default function HomePage() {
                   ))}
                 </div>
               </div>
-
-              <Link href="/canchas" className="w-full bg-white/5 hover:bg-[#36b37e] text-white font-black py-3 md:py-4 rounded-xl md:rounded-2xl text-center transition-all border border-white/10 uppercase text-xs tracking-wider hover:shadow-2xl hover:-translate-y-1">
-                VER FIXTURE COMPLETO
-              </Link>
+              <Link href="/canchas" className="w-full bg-white/5 hover:bg-[#36b37e] text-white font-black py-3 md:py-4 rounded-xl md:rounded-2xl text-center transition-all border border-white/10 uppercase text-xs tracking-wider hover:shadow-2xl hover:-translate-y-1">VER FIXTURE COMPLETO</Link>
             </motion.div>
 
-            {/* GOLEADORES - Enhanced with depth and glow */}
+            {/* GOLEADORES */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -453,17 +397,13 @@ export default function HomePage() {
               whileHover={{ y: -5 }}
               className="relative bg-gradient-to-br from-[#001229] to-[#000814] border border-white/10 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col group hover:border-[#36b37e]/40 hover:shadow-[0_30px_60px_rgba(54,179,126,0.15)] transition-all duration-500 overflow-hidden p-5 md:p-6"
             >
-              {/* Glow effect on hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-[#36b37e]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="absolute -inset-px bg-gradient-to-br from-[#36b37e]/20 via-transparent to-transparent rounded-2xl opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500 -z-10" />
-              
               <div className="flex items-center gap-3 mb-4 md:mb-5 relative z-10">
                 <div className="w-10 h-10 md:w-11 md:h-11 bg-gradient-to-br from-[#36b37e]/20 to-[#36b37e]/5 rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(54,179,126,0.2)] border border-[#36b37e]/20 transition-transform group-hover:scale-110 group-hover:rotate-3 duration-300">
                   <Trophy className="text-[#36b37e]" size={20} strokeWidth={2.5} />
                 </div>
                 <h3 className="text-sm md:text-lg font-black tracking-wider uppercase text-white">Goleadores</h3>
               </div>
-
               <div className="flex-1 flex flex-col gap-3 md:gap-4 mb-4 md:mb-6 relative z-10">
                 {[
                   { name: "Juan Pérez", team: "Andar A", goals: 12, icon: "🥇" },
@@ -482,13 +422,10 @@ export default function HomePage() {
                   </div>
                 ))}
               </div>
-
-              <Link href="/novedades" className="relative z-10 w-full bg-gradient-to-r from-white/5 to-white/[0.02] hover:from-[#36b37e] hover:to-[#2da372] text-white font-black py-3 md:py-4 rounded-xl text-center transition-all border border-white/10 hover:border-[#36b37e] uppercase text-xs tracking-wider hover:shadow-[0_0_30px_rgba(54,179,126,0.4)] hover:-translate-y-0.5">
-                TABLA COMPLETA
-              </Link>
+              <Link href="/novedades" className="relative z-10 w-full bg-gradient-to-r from-white/5 to-white/[0.02] hover:from-[#36b37e] hover:to-[#2da372] text-white font-black py-3 md:py-4 rounded-xl text-center transition-all border border-white/10 hover:border-[#36b37e] uppercase text-xs tracking-wider hover:shadow-[0_0_30px_rgba(54,179,126,0.4)] hover:-translate-y-0.5">TABLA COMPLETA</Link>
             </motion.div>
 
-            {/* PARTICIPÁ - Premium highlight card */}
+            {/* PARTICIPÁ */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -497,38 +434,29 @@ export default function HomePage() {
               whileHover={{ y: -8, scale: 1.02 }}
               className="relative bg-gradient-to-br from-[#1a5e42] via-[#0d3d2a] to-[#000B1A] border-2 border-[#36b37e]/60 rounded-2xl shadow-[0_0_60px_rgba(54,179,126,0.2)] flex flex-col overflow-hidden group p-5 md:p-6"
             >
-              {/* Animated background glow */}
               <div className="absolute top-0 right-0 w-96 h-96 bg-[#36b37e]/20 rounded-full blur-[120px] -mr-48 -mt-48 animate-pulse" />
               <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#36b37e]/10 rounded-full blur-[80px] -ml-32 -mb-32" />
-              
-              {/* Shine effect */}
               <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-              
               <div className="flex items-center gap-3 mb-4 md:mb-5 relative z-10">
                 <div className="w-11 h-11 md:w-12 md:h-12 bg-gradient-to-br from-[#36b37e] to-[#2da372] rounded-xl flex items-center justify-center shadow-[0_0_30px_rgba(54,179,126,0.5)] border border-white/30 transition-transform group-hover:scale-110 group-hover:rotate-6 duration-300">
                   <Heart className="text-white" size={22} fill="currentColor" />
                 </div>
                 <h3 className="text-sm md:text-lg font-black tracking-wider uppercase text-white">Participá</h3>
               </div>
-
               <div className="flex-1 flex flex-col gap-3 md:gap-4 mb-4 md:mb-6 relative z-10">
-                <p className="text-white text-lg md:text-xl font-black leading-tight tracking-tight drop-shadow-lg">Sumate a la liga más grande del país.</p>
-                <p className="text-white/70 text-xs md:text-sm font-bold">Inscribí a tu equipo o vení a disfrutar de las finales en familia.</p>
+                <p className="text-white text-lg md:text-xl font-black leading-tight tracking-tight drop-shadow-lg uppercase">Sumate a la liga más grande del país.</p>
+                <p className="text-white/70 text-xs md:text-sm font-bold uppercase">Inscribí a tu equipo o vení a disfrutar de las finales en familia.</p>
                 <div className="bg-white/10 backdrop-blur-md p-4 md:p-5 rounded-xl border border-white/20 shadow-[0_10px_30px_rgba(0,0,0,0.3)] mt-auto">
                   <span className="text-[10px] md:text-xs font-black tracking-wider text-[#36b37e] block mb-2 uppercase">Próximas Entradas</span>
-                  <p className="font-black text-xl md:text-2xl text-white mb-1">Finales 2025</p>
+                  <p className="font-black text-xl md:text-2xl text-white mb-1 uppercase">Finales 2025</p>
                   <p className="text-xs md:text-sm text-white/60 font-bold uppercase tracking-wide">6 de Diciembre</p>
                 </div>
               </div>
-
-              <Link href="/inscripcion" className="relative z-10 w-full bg-gradient-to-r from-[#36b37e] to-[#2da372] text-white font-black py-3 md:py-4 rounded-xl text-center transition-all hover:shadow-[0_0_40px_rgba(54,179,126,0.6)] uppercase text-sm tracking-wider border border-white/30 hover:border-white/50 active:scale-95 hover:-translate-y-1">
-                INSCRIBITE AHORA
-              </Link>
+              <Link href="/inscripcion" className="relative z-10 w-full bg-gradient-to-r from-[#36b37e] to-[#2da372] text-white font-black py-3 md:py-4 rounded-xl text-center transition-all hover:shadow-[0_0_40px_rgba(54,179,126,0.6)] uppercase text-sm tracking-wider border border-white/30 hover:border-white/50 active:scale-95 hover:-translate-y-1">INSCRIBITE AHORA</Link>
             </motion.div>
           </div>
         </div>
       </section>
-
     </div>
   );
 }

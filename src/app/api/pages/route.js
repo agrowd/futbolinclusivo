@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import dbConnect from "@/lib/mongodb";
 import Page from "@/lib/schemas/Page";
 import { pageSchema } from "@/lib/validations";
@@ -36,7 +37,7 @@ export async function GET(request) {
 
 export async function POST(request) {
   try {
-    const session = await getServerSession();
+    const session = await getServerSession(authOptions);
     
     if (!session || !["admin", "editor"].includes(session.user.role)) {
       return NextResponse.json(

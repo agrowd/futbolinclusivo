@@ -24,8 +24,13 @@ const pageSchema = new mongoose.Schema(
     },
     section: {
       type: String,
-      enum: ["institucional", "programas", "sumate", "otros"],
+      enum: ["institucional", "programas", "sumate", "navegacion", "servicios", "multimedia", "otros"],
       default: "otros",
+    },
+    data: {
+      type: Map,
+      of: mongoose.Schema.Types.Mixed,
+      default: {},
     },
     published: {
       type: Boolean,

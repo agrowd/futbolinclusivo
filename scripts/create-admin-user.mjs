@@ -1,5 +1,17 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
+import fs from "fs";
+import path from "path";
+
+try {
+  const envContent = fs.readFileSync(path.resolve(process.cwd(), ".env"), "utf8");
+  envContent.split("\n").forEach(line => {
+    const match = line.match(/^([^=]+)=(.*)$/);
+    if (match && match[1] === "MONGODB_URI") process.env.MONGODB_URI = match[2].trim();
+  });
+} catch (e) {
+  // Ignorar si no hay .env
+}
 
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/futbolinclusivo";
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@futbolinclusivo.org.ar";

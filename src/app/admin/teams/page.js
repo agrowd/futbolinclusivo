@@ -38,6 +38,22 @@ export default function AdminTeamsPage() {
     }
   };
 
+  const handleStatusChange = async (teamId, newStatus) => {
+    try {
+      const res = await fetch(`/api/inscripcion/${teamId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setTeams(teams.map(t => t._id === teamId ? { ...t, status: newStatus } : t));
+      }
+    } catch (err) {
+      console.error("Error updating status", err);
+    }
+  };
+
   if (status === "loading" || loading) {
     return (
       <div className="min-h-screen bg-[#000B1A] flex items-center justify-center">
@@ -81,6 +97,9 @@ export default function AdminTeamsPage() {
                     <div className="flex items-center gap-3 mb-3">
                       <Users size={20} className="text-[#36b37e]" />
                       <h3 className="text-xl font-black">{team.institutionName}</h3>
+                      {team.status === "approved" && <span className="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded">Aprobado</span>}
+                      {team.status === "rejected" && <span className="text-xs bg-red-500/20 text-red-400 px-2 py-1 rounded">Rechazado</span>}
+                      {(!team.status || team.status === "pending") && <span className="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded">Pendiente</span>}
                     </div>
                     
                     <div className="grid md:grid-cols-2 gap-4 mb-4">
@@ -94,20 +113,43 @@ export default function AdminTeamsPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-4 text-xs text-white/40">
+                    <div className="flex flex-wrap items-center gap-4 text-xs text-white/40">
                       <span>Liga: {team.league}</span>
                       <span>•</span>
                       <span>{team.players?.length || 0} jugadores</span>
                       <span>•</span>
                       <span>{new Date(team.createdAt).toLocaleDateString()}</span>
+                      {team.medicalFileUrl && (
+                        <>
+                          <span>•</span>
+                          <a href={team.medicalFileUrl} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline flex items-center gap-1">
+                            <FileText size={12} /> Ver Fichas Médicas
+                          </a>
+                        </>
+                      )}
                     </div>
 
-                    {team.isMedicalClearancePending && (
+                    {team.isMedicalClearancePending && !team.medicalFileUrl && (
                       <div className="mt-4 inline-flex items-center gap-2 bg-yellow-500/10 text-yellow-400 px-3 py-1 rounded-lg text-xs font-bold">
                         <FileText size={14} />
-                        Pendiente: Certificado médico
+                        Pendiente: Entrega Física
                       </div>
                     )}
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                     <button 
+                        onClick={() => handleStatusChange(team._id, "approved")}
+                        className="px-4 py-2 bg-green-600/20 text-green-400 text-sm font-bold rounded-lg hover:bg-green-600/40 transition-colors"
+                     >
+                       Aprobar
+                     </button>
+                     <button 
+                        onClick={() => handleStatusChange(team._id, "rejected")}
+                        className="px-4 py-2 bg-red-600/20 text-red-400 text-sm font-bold rounded-lg hover:bg-red-600/40 transition-colors"
+                     >
+                       Rechazar
+                     </button>
                   </div>
                 </div>
               </div>

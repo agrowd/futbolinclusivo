@@ -2,18 +2,21 @@ import Link from "next/link";
 import { ArrowLeft, Calendar, User, Tag } from "lucide-react";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { getLegacyContent, mapLegacyImage } from "@/lib/legacy-content";
+import dbConnect from "@/lib/mongodb";
+import News from "@/lib/schemas/News";
 
 async function getPostBySlug(slug) {
-  const { content, assets } = await getLegacyContent();
-  const items = content?.news?.items ?? [];
-  const found = items.find((n) => n.slug === slug);
-  return { post: found ?? null, urlToLocal: assets?.urlToLocal ?? {} };
+  await dbConnect();
+  const post = await News.findOne({ slug, published: true }).lean();
+  if (post) {
+     return JSON.parse(JSON.stringify(post));
+  }
+  return null;
 }
 
-export async function generateMetadata({ params }) {
-  const { slug } = await params;
-  const { post } = await getPostBySlug(slug);
+export async function generateMetadata(props) {
+  const params = await props.params;
+  const post = await getPostBySlug(params.slug);
   if (!post) {
     return { title: "Post no encontrado" };
   }
@@ -23,17 +26,13 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function BlogPostPage({ params }) {
-  const { slug } = await params;
-  const { post, urlToLocal } = await getPostBySlug(slug);
+export default async function BlogPostPage(props) {
+  const params = await props.params;
+  const post = await getPostBySlug(params.slug);
 
   if (!post) {
     notFound();
   }
-
-  // En el legado, este JSON contiene listado + excerpt. El cuerpo completo se puede agregar
-  // luego desde un extractor de “detalle” por URL. Por ahora mostramos excerpt ampliado.
-  const paragraphs = [post.excerpt].filter(Boolean);
 
   return (
     <div className="flex flex-col min-h-screen bg-[#000B1A] text-white/80 overflow-x-hidden">
@@ -57,7 +56,7 @@ export default async function BlogPostPage({ params }) {
                 <div className="flex flex-wrap items-center gap-6 text-text-muted text-sm border-t border-b border-white/10 py-4">
                     <div className="flex items-center gap-2">
                         <Calendar className="w-4 h-4 text-primary" />
-                        <time>{post.date || ""}</time>
+                        <time>{new Date(post.publishedAt || post.createdAt).toLocaleDateString("es-AR", { year: "numeric", month: "long", day: "numeric" })}</time>
                     </div>
                     <div className="flex items-center gap-2">
                         <User className="w-4 h-4 text-primary" />
@@ -70,7 +69,7 @@ export default async function BlogPostPage({ params }) {
                 <div className="mb-12 rounded-2xl overflow-hidden shadow-sm bg-white/5 border border-white/10">
                     <div className="relative w-full h-[240px] sm:h-[320px] md:h-[420px]">
                       <Image
-                        src={mapLegacyImage(urlToLocal, post.image)}
+                        src={post.image || "https://futbolinclusivo.org.ar/app/uploads/2018/12/MG_0325.jpg"}
                         alt={post.title}
                         fill
                         sizes="(max-width: 768px) 100vw, 768px"
@@ -80,11 +79,10 @@ export default async function BlogPostPage({ params }) {
                 </div>
             )}
 
-            <div className="prose prose-invert prose-lg max-w-none prose-p:leading-relaxed">
-                {paragraphs.map((paragraph, i) => (
-                    <p key={i} className="mb-6">{paragraph}</p>
-                ))}
-            </div>
+            <div 
+               className="prose prose-invert prose-lg max-w-none prose-p:leading-relaxed"
+               dangerouslySetInnerHTML={{ __html: post.content }}
+            />
 
             <footer className="mt-16 pt-8 border-t border-white/10">
                 <div className="flex items-center justify-between">

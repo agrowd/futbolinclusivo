@@ -9,3 +9,15 @@
 **Root Cause:** Opaque Response Blocking (ORB) del navegador bloquea SVGs de S3/Wikimedia sin CORS.
 **Solución:** Proxy vía `images.weserv.nl` para inyectar headers correctos.
 **Estado:** ✅ FIXED
+
+## ERR-05: Crash en Novedades por imagen subida (2026-04-08)
+**Síntoma:** Unhandled Runtime Error al entrar a `/novedades` tras crear una noticia. En terminal lanza errores raros de Turbopack como `Can't resolve tailwindcss`.
+**Root Cause:** La imagen subida pertenece a Cloudinary pero el dominio `res.cloudinary.com` no estaba autorizado en `remotePatterns` de `next.config.mjs`, causando que el componente `<Image>` tire un error catastrófico.
+**Solución:** Agregar `res.cloudinary.com` a `next.config.mjs` y reiniciar el servidor.
+**Estado:** ✅ FIXED
+
+## ERR-06: ReferenceError: dbConnect is not defined (2026-04-13)
+**Síntoma:** Error 500 al intentar acceder a rutas dinámicas institucionales (/nosotros, /historia, /escuela).
+**Root Cause:** Se eliminó accidentalmente el bloque de importaciones de base de datos durante el refactoring de `GenericCmsPage.js`.
+**Solución:** Restaurar las importaciones de `dbConnect`, `Page` y `CMS_FALLBACKS`.
+**Estado:** ✅ FIXED
