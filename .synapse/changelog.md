@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.4.1 — 2026-05-21
+- feat: Redirección del botón de Fixture y Tabla Completa en la página de inicio al portal oficial externo (https://futbolinclusivo.mygol.es/tournaments).
+
 ## v1.4.0 — 2026-05-21
 - feat: Remoción de la liga "Festival LATAM de Fútbol 3" de la página de ligas.
 - feat: Incorporación y énfasis premium de la "Super Liga AFA" en la página de ligas con renderizado de logotipos oficiales solapados (AFA dorado + SAT).

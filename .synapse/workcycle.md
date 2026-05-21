@@ -106,3 +106,13 @@
 - Diseñar la inyección del logo dual para ligas con `isAfa: true` directamente en el componente para dar flexibilidad, en lugar de forzar un solo ícono Lucide.
 - Mantener los paths de redirección consistentes con el resto de la web.
 
+## 2026-05-21 — Sesión 4: Redirección al Portal de Tournaments (MyGol)
+
+### Qué se hizo:
+1. **Redirección de Fixture y Tabla**: Se actualizaron los botones "VER FIXTURE COMPLETO" y "TABLA COMPLETA" en la sección de competencia del inicio (`src/components/ui/HomeClient.js`).
+2. **Uso de Enlaces Externos Nativos**: Se reemplazaron los componentes `<Link>` de Next.js por etiquetas `<a>` estándar para soportar de manera óptima el enlace externo `https://futbolinclusivo.mygol.es/tournaments`, configurando además `target="_blank"` y `rel="noopener noreferrer"` por seguridad y performance.
+3. **Validación de Build**: Se ejecutó exitosamente el comando `npm run build` confirmando que el proyecto Next.js compila al 100% sin advertencias ni errores en estas páginas.
+
+### Decisiones tomadas:
+- Utilizar enlaces externos nativos con navegación a pestaña nueva para el fixture completo y la tabla, permitiendo a los usuarios acceder al motor externo de gestión de torneos sin perder el contexto de navegación en la web de Fútbol Inclusivo.
+

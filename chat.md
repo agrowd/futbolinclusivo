@@ -48,3 +48,23 @@ El usuario solicitó:
 4. **Validación de Compilación**:
    - Se ejecutó `npm run build` con éxito total, verificando que la página estática `/programas/ligas` y todas las demás rutas compilan perfectamente con Turbopack sin errores.
 
+---
+
+## ⚽ Sesión 5: Redirección al Portal de Tournaments (MyGol)
+
+### 📌 Contexto
+El usuario solicitó:
+1. Que en la sección de competencia del inicio, tanto la opción de "Fixture" (botón **VER FIXTURE COMPLETO**) como la opción de "Goleadores" (botón **TABLA COMPLETA**) redirijan al portal de información de torneos externo: `https://futbolinclusivo.mygol.es/tournaments`.
+
+### 🛠️ Acciones Realizadas
+1. **Redirecciones Precisas en HomeClient**:
+   - Se modificó `src/components/ui/HomeClient.js` en los dos botones de navegación.
+   - Se reemplazaron las etiquetas `<Link>` de Next.js por etiquetas `<a>` HTML estándar. Esto es ideal para enlaces externos de dominios distintos (`mygol.es`), evitando advertencias de prefetch o problemas en la carga por parte del router de Next.js.
+   - Se incorporó `target="_blank"` y `rel="noopener noreferrer"` para asegurar que los enlaces abran en una nueva pestaña sin penalizar la seguridad ni el rendimiento de la aplicación principal.
+2. **Validación de Compilación en Next.js**:
+   - Se ejecutó el comando `npm run build` localmente.
+   - El compilador Next.js/Turbopack compiló exitosamente todas las rutas estáticas y dinámicas en 32.8 segundos sin errores ni advertencias en las páginas de frontend modificadas.
+3. **Persistencia e Historial**:
+   - Se actualizaron los archivos del motor Ariadne (`.synapse/changelog.md` y `.synapse/workcycle.md`) registrando la versión `v1.4.1` con la solución a este requerimiento.
+
+

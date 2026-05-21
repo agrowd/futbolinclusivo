@@ -372,7 +372,7 @@ export default function HomeClient({ dynamicNews = [] }) {
                   ))}
                 </div>
               </div>
-              <Link href="/canchas" className="w-full bg-white/5 hover:bg-[#36b37e] text-white font-black py-3 md:py-4 rounded-xl text-center transition-all border border-white/10 uppercase text-xs tracking-wider">VER FIXTURE COMPLETO</Link>
+              <a href="https://futbolinclusivo.mygol.es/tournaments" target="_blank" rel="noopener noreferrer" className="w-full bg-white/5 hover:bg-[#36b37e] text-white font-black py-3 md:py-4 rounded-xl text-center transition-all border border-white/10 uppercase text-xs tracking-wider">VER FIXTURE COMPLETO</a>
             </motion.div>
 
             <motion.div 
@@ -407,7 +407,7 @@ export default function HomeClient({ dynamicNews = [] }) {
                   </div>
                 ))}
               </div>
-              <Link href="/novedades" className="w-full bg-white/5 hover:bg-[#36b37e] text-white font-black py-3 md:py-4 rounded-xl text-center transition-all border border-white/10 uppercase text-xs tracking-wider">TABLA COMPLETA</Link>
+              <a href="https://futbolinclusivo.mygol.es/tournaments" target="_blank" rel="noopener noreferrer" className="w-full bg-white/5 hover:bg-[#36b37e] text-white font-black py-3 md:py-4 rounded-xl text-center transition-all border border-white/10 uppercase text-xs tracking-wider">TABLA COMPLETA</a>
             </motion.div>
 
             <motion.div 
