@@ -32,7 +32,7 @@ const programs = [
   {
     title: "Super Liga AFA",
     description: "La máxima categoría de competición de fútbol inclusivo en Argentina. Organizada en alianza de cooperación con la Asociación del Fútbol Argentino (AFA) y el Sindicato Argentino de Televisión (SAT). Reúne a los planteles más destacados y competitivos del país, quienes disputan cada fecha en las canchas de césped natural de primer nivel dentro del mítico Predio Lionel Andrés Messi en Ezeiza.",
-    href: "/programas/liga-nacional",
+    href: "https://futbolinclusivo.mygol.es/tournaments",
     icon: Trophy,
     color: "#6B1026",
     isAfa: true,
@@ -326,26 +326,49 @@ export default function LigasPage() {
                         )}
                       </div>
                       
-                      <Link href={prog.href} style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: "12px",
-                        padding: "18px 36px",
-                        borderRadius: "16px",
-                        background: `linear-gradient(135deg, ${prog.color}, ${prog.color}CC)`,
-                        color: "#fff",
-                        fontWeight: 800,
-                        textDecoration: "none",
-                        fontSize: "1rem",
-                        transition: "all 0.3s",
-                        textTransform: "uppercase",
-                        letterSpacing: "0.8px",
-                        border: `2px solid ${prog.color}50`,
-                        boxShadow: `0 8px 25px ${prog.color}40`
-                      }} className="hover:shadow-xl hover:-translate-y-2 hover:scale-105">
-                        CONOCER MÁS <ChevronRight size={20} />
-                      </Link>
+                      {prog.href.startsWith("http") ? (
+                        <a href={prog.href} target="_blank" rel="noopener noreferrer" style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "12px",
+                          padding: "18px 36px",
+                          borderRadius: "16px",
+                          background: `linear-gradient(135deg, ${prog.color}, ${prog.color}CC)`,
+                          color: "#fff",
+                          fontWeight: 800,
+                          textDecoration: "none",
+                          fontSize: "1rem",
+                          transition: "all 0.3s",
+                          textTransform: "uppercase",
+                          letterSpacing: "0.8px",
+                          border: `2px solid ${prog.color}50`,
+                          boxShadow: `0 8px 25px ${prog.color}40`
+                        }} className="hover:shadow-xl hover:-translate-y-2 hover:scale-105">
+                          VER FIXTURE Y TABLAS <ChevronRight size={20} />
+                        </a>
+                      ) : (
+                        <Link href={prog.href} style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "12px",
+                          padding: "18px 36px",
+                          borderRadius: "16px",
+                          background: `linear-gradient(135deg, ${prog.color}, ${prog.color}CC)`,
+                          color: "#fff",
+                          fontWeight: 800,
+                          textDecoration: "none",
+                          fontSize: "1rem",
+                          transition: "all 0.3s",
+                          textTransform: "uppercase",
+                          letterSpacing: "0.8px",
+                          border: `2px solid ${prog.color}50`,
+                          boxShadow: `0 8px 25px ${prog.color}40`
+                        }} className="hover:shadow-xl hover:-translate-y-2 hover:scale-105">
+                          CONOCER MÁS <ChevronRight size={20} />
+                        </Link>
+                      )}
                     </div>
                   </div>
                 </FadeIn>

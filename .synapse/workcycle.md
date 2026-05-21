@@ -157,4 +157,16 @@
 ### Decisiones tomadas:
 - Mantener la sincronización estricta del archivo `logo-afa.png` de la raíz del proyecto al directorio `public/` para que la visualización del escudo en la Super Liga AFA (tanto en la página de inicio como en la de ligas) sea 100% fiel al diseño entregado por el usuario.
 
+## 2026-05-21 — Sesión 10: Redirección de Botón Super Liga AFA en Ligas
+
+### Qué se hizo:
+1. **Redirección de la Liga de AFA**: Se actualizó el enlace del botón de la Super Liga AFA en la página de ligas (`src/app/programas/ligas/page.js`) para que dirija directamente al portal externo de torneos: `https://futbolinclusivo.mygol.es/tournaments`.
+2. **Navegación Externa Segura**: Se modificó la renderización del botón de las tarjetas en la página de ligas para que, si el enlace (`href`) comienza con `"http"`, se renderice como una etiqueta de anclaje `<a>` nativa con `target="_blank"`, `rel="noopener noreferrer"`, y el texto `"VER FIXTURE Y TABLAS"`. Para el resto de los programas internos se mantiene la etiqueta `<Link>` de Next.js con el texto `"CONOCER MÁS"`.
+3. **Validación de Compilación**: Se ejecutó `npm run build` localmente constatando que todo funciona y se compila sin errores en Next.js.
+4. **Despliegue a GitHub**: Se stagearon los cambios en `src/app/programas/ligas/page.js`, `.synapse/workcycle.md`, `.synapse/changelog.md` y `chat.md` y se enviaron a la rama `main` de GitHub.
+
+### Decisiones tomadas:
+- Utilizar enlaces externos nativos con navegación a pestaña nueva y textos informativos diferenciadores ("VER FIXTURE Y TABLAS" vs "CONOCER MÁS") para optimizar la experiencia de usuario según el tipo de contenido de cada liga.
+
+
 

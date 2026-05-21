@@ -1,5 +1,18 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 10: Redirección de Botón Super Liga AFA en Ligas
+
+### 📌 Contexto
+El usuario solicitó que el botón de la Super Liga AFA en la página de ligas (`/programas/ligas`) redirija al portal externo de torneos: `https://futbolinclusivo.mygol.es/tournaments`.
+
+### 🛠️ Acciones Realizadas
+1. **Actualización de Enlaces en el Componente**: Se editó `src/app/programas/ligas/page.js` para modificar la propiedad `href` de la Super Liga AFA, asignándole el valor `"https://futbolinclusivo.mygol.es/tournaments"`.
+2. **Navegación Externa Segura**: Se incorporó un condicional de renderizado en el bucle que dibuja las tarjetas de programas de liga. Si la propiedad `href` comienza con `"http"`, se genera una etiqueta `<a>` nativa con los atributos de seguridad recomendados (`target="_blank" rel="noopener noreferrer"`) y se actualiza el texto de acción a `"VER FIXTURE Y TABLAS"`. Para enlaces internos se mantiene la etiqueta `<Link>` de Next.js y el texto `"CONOCER MÁS"`.
+3. **Validación de Compilación**: Se ejecutó `npm run build` localmente para constatar que todo compila exitosamente sin anomalías.
+4. **Git Sync & Despliegue**: Se stagearon, commitearon y pushearon todos los cambios a la rama principal (`main`) de GitHub.
+
+---
+
 ## ⚽ Sesión 9: Sincronización del Nuevo Logotipo Oficial de la AFA
 
 ### 📌 Contexto

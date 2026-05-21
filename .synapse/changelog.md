@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.4.6 — 2026-05-21
+- feat: Redirección del botón de la Super Liga AFA en la página de ligas al portal oficial de torneos externo (https://futbolinclusivo.mygol.es/tournaments) con visualización y comportamiento nativo adaptado para enlaces externos.
+
 ## v1.4.5 — 2026-05-21
 - fix: Sincronizar el nuevo logotipo oficial de la AFA (`logo-afa.png`) provisto por el usuario en la raíz del proyecto hacia `public/logo-afa.png` para que sea servido estática y correctamente por Next.js en el inicio y en la página de ligas.
 
