@@ -186,7 +186,7 @@ export default function LigasPage() {
                             border: "2px solid rgba(255,255,255,0.2)",
                             boxShadow: "0 10px 30px rgba(0,0,0,0.3)"
                           }}>
-                            <Image src="/satlogo.png" alt="SAT" width={56} height={56} style={{ objectFit: "contain" }} />
+                            <Image src="/logo-afa.png" alt="AFA" width={56} height={56} style={{ objectFit: "contain" }} />
                           </div>
                           <div style={{
                             width: "85px",

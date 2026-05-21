@@ -85,4 +85,24 @@ El usuario solicitó:
 3. **Persistencia e Historial**:
    - Se actualizaron los archivos del motor Ariadne (`.synapse/changelog.md` y `.synapse/workcycle.md`) registrando la versión `v1.4.2` con la solución a este requerimiento.
 
+---
+
+## ⚽ Sesión 7: Reemplazo de Logo SAT por Logo AFA en Página de Ligas
+
+### 📌 Contexto
+El usuario solicitó:
+1. Reemplazar la imagen del logo de SAT (`/satlogo.png`) por la del logo oficial de la AFA (`logo-afa.png`) en el bloque de la Super Liga AFA en la página de ligas.
+
+### 🛠️ Acciones Realizadas
+1. **Disponibilización del Recurso Estático**:
+   - Ubiqué el archivo `logo-afa.png` en la raíz del proyecto.
+   - Lo copié al directorio `public/` (`public/logo-afa.png`) para que Next.js pueda servirlo estáticamente.
+2. **Actualización de la Tarjeta en `page.js`**:
+   - Modifiqué `src/app/programas/ligas/page.js` dentro del condicional `prog.isAfa`.
+   - Cambié el elemento `<Image src="/satlogo.png" alt="SAT" ... />` por `<Image src="/logo-afa.png" alt="AFA" ... />`.
+3. **Validación de Compilación en Next.js**:
+   - Se ejecutó `npm run build` localmente con un resultado exitoso.
+4. **Persistencia e Historial**:
+   - Se actualizaron los archivos del motor Ariadne (`.synapse/changelog.md` y `.synapse/workcycle.md`) registrando la versión `v1.4.3` con la solución a este requerimiento.
+
 

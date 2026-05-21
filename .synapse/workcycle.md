@@ -126,3 +126,13 @@
 ### Decisiones tomadas:
 - Garantizar que la identidad oficial de Andar FC (club principal de la Asociación Civil Andar) resalte en la barra de navegación de manera prioritaria para toda la experiencia del usuario de la plataforma.
 
+## 2026-05-21 — Sesión 6: Reemplazo de Logo SAT por Logo AFA en Página de Ligas
+
+### Qué se hizo:
+1. **Copia del Logotipo Oficial de la AFA**: Se detectó que el archivo `logo-afa.png` se encontraba en la raíz del proyecto. Se copió este recurso a `public/logo-afa.png` para que sea servido de manera estática y correcta por Next.js.
+2. **Reemplazo en la Tarjeta Premium**: En `src/app/programas/ligas/page.js`, dentro del contenedor visual exclusivo de la Super Liga AFA, se reemplazó el logo del SAT (`/satlogo.png`) por la ruta del nuevo logo oficial de la AFA (`/logo-afa.png`), actualizando también el atributo `alt` a `"AFA"`.
+3. **Validación**: Se ejecutó exitosamente el comando `npm run build` constatando que no se presentan errores ni fallas de compilación en Next.js.
+
+### Decisiones tomadas:
+- Utilizar el logo oficial `logo-afa.png` alojado estáticamente en `public/` para enfatizar la jerarquía y relevancia visual de la Super Liga AFA dentro del menú e interfaz de programas de ligas.
+

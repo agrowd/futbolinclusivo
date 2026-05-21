@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.4.3 — 2026-05-21
+- fix: Reemplazar el logo de SAT (`/satlogo.png`) por el logo de AFA (`/logo-afa.png`) en la sección premium de la Super Liga AFA en la página de ligas.
+
 ## v1.4.2 — 2026-05-21
 - fix: Cambiar el logo del navbar principal (desktop y mobile sidebar) para que use el logo de Andar FC (`/andarfc-logo.png`) en lugar del de la Liga Inclusiva (`/logo.png`).
 
