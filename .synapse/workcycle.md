@@ -53,3 +53,20 @@
 - Editable: Sí, todas las páginas mapeadas en `/admin/pages`.
 
 **Ariadne Engine Initialized. Parity Confirmed. Cortex Ready.**
+
+## 2026-05-21 — Sesión: Corrección de Edición de Noticias
+
+### Qué se hizo:
+1. **Auditoría e Identificación del Problema**: Se detectó que el botón de edición de noticias redirigía a `/admin/news/edit/[id]`, pero la ruta no existía en el frontend.
+2. **Plan de Implementación**: Se diseñó una solución para crear el archivo `src/app/admin/news/edit/[id]/page.js` reutilizando la estética y validaciones de `new/page.js`.
+3. **Página de Edición**: Se implementó completamente `src/app/admin/news/edit/[id]/page.js` con autenticación, pre-llenado de datos (GET a `/api/news/[id]`), RichTextEditor, opciones de imagen/tags/publicación y actualización (PUT a `/api/news/[id]`).
+4. **Verificación de Eliminación**: Se revisó el handler de borrado en `src/app/admin/news/page.js` y se añadieron console.logs de debugging numerados.
+5. **Compilación Exitosa**: Se validó el build del proyecto con `npm run build`, compilando sin errores en Next.js (Dynamic route `/admin/news/edit/[id]`).
+
+### Decisiones tomadas:
+- Se optó por reutilizar la lógica de `new/page.js` para asegurar paridad visual y consistencia de comportamiento en el editor de noticias.
+- Se implementaron console.logs de debugging siguiendo el estándar de Ariadne Engine (D-18), y se registraron en `.synapse/logs.md`.
+
+### Estado Final:
+- Edición de noticias: Funcional y compilado en producción sin errores.
+- Eliminación de noticias: Funcional, con logs de debugging agregados.

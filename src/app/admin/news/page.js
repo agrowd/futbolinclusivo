@@ -44,8 +44,10 @@ export default function AdminNewsPage() {
 
     setDeleting(id);
     try {
+      console.log("[LOG-NEWS-DELETE-01] Requesting deletion for news ID:", id);
       const res = await fetch(`/api/news/${id}`, { method: "DELETE" });
       if (res.ok) {
+        console.log("[LOG-NEWS-DELETE-02] News item successfully deleted:", id);
         setNews(news.filter((n) => n._id !== id));
       } else {
         alert("Error al eliminar");

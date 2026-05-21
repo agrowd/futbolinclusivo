@@ -21,3 +21,9 @@
 **Root Cause:** Se eliminó accidentalmente el bloque de importaciones de base de datos durante el refactoring de `GenericCmsPage.js`.
 **Solución:** Restaurar las importaciones de `dbConnect`, `Page` y `CMS_FALLBACKS`.
 **Estado:** ✅ FIXED
+
+## ERR-07: Botón de Editar Noticias Roto / 404 (2026-05-21)
+**Síntoma:** Los usuarios no pueden editar las noticias desde la sección `/admin/news` (redirección a `/admin/news/edit/[id]` que daba 404).
+**Root Cause:** Falta la ruta e implementación del archivo de frontend `/admin/news/edit/[id]/page.js` a pesar de que el backend y el botón en el listado de administración ya estaban configurados.
+**Solución:** Crear e implementar el componente `EditNewsPage` en `src/app/admin/news/edit/[id]/page.js` reutilizando el diseño y las validaciones de creación.
+**Estado:** ✅ FIXED
