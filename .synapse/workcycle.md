@@ -60,13 +60,14 @@
 1. **Auditoría e Identificación del Problema**: Se detectó que el botón de edición de noticias redirigía a `/admin/news/edit/[id]`, pero la ruta no existía en el frontend.
 2. **Plan de Implementación**: Se diseñó una solución para crear el archivo `src/app/admin/news/edit/[id]/page.js` reutilizando la estética y validaciones de `new/page.js`.
 3. **Página de Edición**: Se implementó completamente `src/app/admin/news/edit/[id]/page.js` con autenticación, pre-llenado de datos (GET a `/api/news/[id]`), RichTextEditor, opciones de imagen/tags/publicación y actualización (PUT a `/api/news/[id]`).
-4. **Verificación de Eliminación**: Se revisó el handler de borrado en `src/app/admin/news/page.js` y se añadieron console.logs de debugging numerados.
+4. **Verificación y Corrección de Eliminación**: Se detectó una inconsistencia de permisos en `/api/news/[id]/route.js` (método DELETE), el cual restringía el borrado únicamente a usuarios con el rol `"admin"`. Se actualizó la verificación para permitir también a usuarios con el rol `"editor"`, logrando consistencia con las rutas de creación/edición de noticias y gestión de multimedia. También se añadieron console.logs de debugging numerados en el cliente.
 5. **Compilación Exitosa**: Se validó el build del proyecto con `npm run build`, compilando sin errores en Next.js (Dynamic route `/admin/news/edit/[id]`).
 
 ### Decisiones tomadas:
 - Se optó por reutilizar la lógica de `new/page.js` para asegurar paridad visual y consistencia de comportamiento en el editor de noticias.
 - Se implementaron console.logs de debugging siguiendo el estándar de Ariadne Engine (D-18), y se registraron en `.synapse/logs.md`.
+- Se autorizó el rol `"editor"` para realizar eliminaciones de noticias para que sea coherente con sus privilegios de gestión de contenidos multimedia y edición de posts.
 
 ### Estado Final:
 - Edición de noticias: Funcional y compilado en producción sin errores.
-- Eliminación de noticias: Funcional, con logs de debugging agregados.
+- Eliminación de noticias: Funcional para administradores y editores por igual, con logs de debugging agregados.
