@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.4.0 — 2026-05-21
+- feat: Remoción de la liga "Festival LATAM de Fútbol 3" de la página de ligas.
+- feat: Incorporación y énfasis premium de la "Super Liga AFA" en la página de ligas con renderizado de logotipos oficiales solapados (AFA dorado + SAT).
+- style: Aplicación de paleta de colores personalizada (gradiente de borravino AFA `#6B1026` a `#2B050D`, borde celeste `#75AADB`/40 y sombras brillantes) en el card de la Super Liga AFA.
+- refactor: Corrección del mapeo de etiquetas de estadísticas (Sede Principal, Coordinación) y visualización limpia de arreglos de características.
+
 ## v1.3.0 — 2026-05-21
 - feat: Implementación de la página de edición de noticias (`src/app/admin/news/edit/[id]/page.js`) para habilitar edición dinámica de posts.
 - fix: Corrección de permisos de eliminación de noticias para habilitar a usuarios con rol `"editor"`.
