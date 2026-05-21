@@ -105,4 +105,21 @@ El usuario solicitó:
 4. **Persistencia e Historial**:
    - Se actualizaron los archivos del motor Ariadne (`.synapse/changelog.md` y `.synapse/workcycle.md`) registrando la versión `v1.4.3` con la solución a este requerimiento.
 
+---
+
+## ⚽ Sesión 8: Reemplazo de Logo SAT por Logo AFA en el Inicio
+
+### 📌 Contexto
+El usuario solicitó:
+1. Reemplazar la imagen del logo de SAT (`/satlogo.png`) por la del logo oficial de la AFA (`/logo-afa.png`) en el inicio (Home) de la web bajo el bloque de la Super Liga AFA, y realizar nuevamente el despliegue.
+
+### 🛠️ Acciones Realizadas
+1. **Actualización del Logo en Inicio (HomeClient)**:
+   - Modifiqué `src/components/ui/HomeClient.js` en la tarjeta de la **Super Liga** (sección Competencia).
+   - Reemplacé el elemento `<Image src="/satlogo.png" alt="SAT" ... />` por `<Image src="/logo-afa.png" alt="AFA" ... />`.
+2. **Validación de Compilación en Next.js**:
+   - Se ejecutó `npm run build` localmente con un resultado exitoso de compilación y optimización.
+3. **Persistencia e Historial**:
+   - Se actualizaron los archivos del motor Ariadne (`.synapse/changelog.md` y `.synapse/workcycle.md`) registrando la versión `v1.4.4` con la solución a este requerimiento.
+
 

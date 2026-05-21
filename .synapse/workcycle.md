@@ -136,3 +136,13 @@
 ### Decisiones tomadas:
 - Utilizar el logo oficial `logo-afa.png` alojado estáticamente en `public/` para enfatizar la jerarquía y relevancia visual de la Super Liga AFA dentro del menú e interfaz de programas de ligas.
 
+## 2026-05-21 — Sesión 7: Reemplazo del Logo de SAT por el de AFA en el Inicio
+
+### Qué se hizo:
+1. **Reemplazo en la Tarjeta de Inicio**: En `src/components/ui/HomeClient.js`, dentro de la tarjeta de la **Super Liga** (sección Competencia del inicio), se reemplazó el logo del SAT (`/satlogo.png`) por el logo oficial de la AFA (`/logo-afa.png`), actualizando además el atributo `alt` a `"AFA"`.
+2. **Validación**: Se ejecutó satisfactoriamente `npm run build` localmente constatando que todo funciona y se compila sin errores.
+3. **Despliegue a GitHub**: Se stagearon, commitearon y pushearon todos los cambios a la rama principal (`main`) de GitHub.
+
+### Decisiones tomadas:
+- Estandarizar la identidad visual de la Super Liga AFA en toda la web utilizando el logo de la AFA en lugar del SAT, tanto en la página de ligas como en el inicio, garantizando consistencia estética.
+

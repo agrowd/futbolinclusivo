@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.4.4 — 2026-05-21
+- fix: Reemplazar el logo de SAT (`/satlogo.png`) por el de AFA (`/logo-afa.png`) en el inicio (Home) de la web bajo el bloque de la Super Liga AFA.
+
 ## v1.4.3 — 2026-05-21
 - fix: Reemplazar el logo de SAT (`/satlogo.png`) por el logo de AFA (`/logo-afa.png`) en la sección premium de la Super Liga AFA en la página de ligas.
 

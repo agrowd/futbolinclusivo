@@ -203,7 +203,7 @@ export default function HomeClient({ dynamicNews = [] }) {
               <div className="relative z-10 flex flex-col items-center">
                 <div className="flex -space-x-2 mb-3">
                   <div className="w-12 h-12 rounded-full bg-white/10 border border-white/30 flex items-center justify-center z-10">
-                    <Image src="/satlogo.png" alt="SAT" width={32} height={32} className="object-contain" />
+                    <Image src="/logo-afa.png" alt="AFA" width={32} height={32} className="object-contain" />
                   </div>
                   <Image src="https://upload.wikimedia.org/wikipedia/commons/c/c4/Afa_gold_logo24.svg" alt="AFA" width={40} height={40} className="object-contain" />
                 </div>
