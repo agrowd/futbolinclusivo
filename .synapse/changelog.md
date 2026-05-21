@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.4.2 — 2026-05-21
+- fix: Cambiar el logo del navbar principal (desktop y mobile sidebar) para que use el logo de Andar FC (`/andarfc-logo.png`) en lugar del de la Liga Inclusiva (`/logo.png`).
+
 ## v1.4.1 — 2026-05-21
 - feat: Redirección del botón de Fixture y Tabla Completa en la página de inicio al portal oficial externo (https://futbolinclusivo.mygol.es/tournaments).
 

@@ -116,3 +116,13 @@
 ### Decisiones tomadas:
 - Utilizar enlaces externos nativos con navegación a pestaña nueva para el fixture completo y la tabla, permitiendo a los usuarios acceder al motor externo de gestión de torneos sin perder el contexto de navegación en la web de Fútbol Inclusivo.
 
+## 2026-05-21 — Sesión 5: Actualización del Logo del Navbar Principal
+
+### Qué se hizo:
+1. **Reemplazo del Logo de Liga Inclusiva**: Se actualizó el componente `src/components/layout/Header.jsx` en la barra de navegación del sitio para mostrar el logotipo de **Andar FC** (`/andarfc-logo.png`) en lugar del de la Liga de Fútbol Inclusiva (`/logo.png`).
+2. **Navbar y Sidebar**: Este cambio se aplicó tanto para la vista de escritorio en el navbar principal de la cabecera como en la cabecera del menú lateral (mobile sidebar).
+3. **Validación**: Se ejecutó de forma satisfactoria `npm run build` confirmando que la aplicación compila perfectamente y los assets están correctamente mapeados en producción.
+
+### Decisiones tomadas:
+- Garantizar que la identidad oficial de Andar FC (club principal de la Asociación Civil Andar) resalte en la barra de navegación de manera prioritaria para toda la experiencia del usuario de la plataforma.
+

@@ -67,4 +67,22 @@ El usuario solicitó:
 3. **Persistencia e Historial**:
    - Se actualizaron los archivos del motor Ariadne (`.synapse/changelog.md` y `.synapse/workcycle.md`) registrando la versión `v1.4.1` con la solución a este requerimiento.
 
+---
+
+## ⚽ Sesión 6: Actualización del Logo del Navbar Principal
+
+### 📌 Contexto
+El usuario solicitó:
+1. Cambiar el logo principal del navbar del sitio para que corresponda a **Andar FC** en lugar del logotipo de la Liga de Fútbol Inclusiva.
+
+### 🛠️ Acciones Realizadas
+1. **Reemplazo en Header.jsx**:
+   - Se modificó el archivo `src/components/layout/Header.jsx` en los dos componentes de cabecera principales: el navbar de escritorio y la cabecera del menú lateral (mobile sidebar).
+   - Se cambió la ruta del asset de `/logo.png` (que contiene el logo de la Liga Inclusiva) a `/andarfc-logo.png` (que contiene el logo oficial de Andar FC).
+2. **Validación de Compilación en Next.js**:
+   - Se ejecutó `npm run build` localmente.
+   - El compilador compiló con éxito total todas las páginas, incluyendo los componentes de navegación.
+3. **Persistencia e Historial**:
+   - Se actualizaron los archivos del motor Ariadne (`.synapse/changelog.md` y `.synapse/workcycle.md`) registrando la versión `v1.4.2` con la solución a este requerimiento.
+
 

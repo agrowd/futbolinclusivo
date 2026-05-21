@@ -78,7 +78,7 @@ export default function Header() {
               <div className="relative">
                 <div className="absolute -inset-2 bg-[#36b37e]/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                 <Image 
-                  src="/logo.png" 
+                  src="/andarfc-logo.png" 
                   alt="Logo Andar FC" 
                   width={40} 
                   height={40} 
@@ -166,7 +166,7 @@ export default function Header() {
       >
         <div className="p-8 border-b border-white/5 flex justify-between items-center group">
           <div className="flex items-center gap-4">
-            <Image src="/logo.png" alt="Logo" width={40} height={40} className="transition-transform group-hover:rotate-12" />
+            <Image src="/andarfc-logo.png" alt="Logo" width={40} height={40} className="transition-transform group-hover:rotate-12" />
             <div className="flex flex-col">
               <span className="text-white font-black text-xs leading-none">ANDAR FC</span>
               <span className="text-[#36b37e] font-bold text-[8px] uppercase tracking-wider">Premium</span>
