@@ -89,3 +89,20 @@
 ### Estado Final:
 - Operaciones dinámicas de la API (noticias, multimedia, páginas): 100% estables, corregidas y validadas.
 - Borrado de "Prueba": Listo para ser ejecutado en producción una vez que finalice el despliegue automático de Vercel.
+
+## 2026-05-21 — Sesión 3: Ajuste de Ligas (Super Liga AFA y Remoción de Festival LATAM)
+
+### Qué se hizo:
+1. **Remoción de Festival LATAM de Fútbol 3**: Se eliminó la sección y metadatos referentes a "Festival LATAM de Fútbol 3" de la página de ligas (`src/app/programas/ligas/page.js`).
+2. **Énfasis Premium en la Super Liga AFA**:
+   - Se incorporó la **Super Liga AFA** como una liga destacada en `src/app/programas/ligas/page.js`.
+   - Se diseñó un contenedor visual con la paleta de colores oficial de la AFA (gradiente de borravino `#6B1026` a `#2B050D`, borde `#75AADB`/40 y sombra brillante `rgba(117,170,219,0.25)`).
+   - Se integraron los logotipos oficiales de la AFA (SVG dorado oficial) y el SAT (`/satlogo.png`) solapados elegantemente, replicando y elevando el estilo del Home.
+   - Se estructuraron los stats y destaques de la Super Liga AFA con la sede oficial en el Predio Lionel Andrés Messi en Ezeiza y la alianza AFA/SAT.
+3. **Validación**:
+   - Se verificará la compilación sin errores utilizando `npm run build`.
+
+### Decisiones tomadas:
+- Diseñar la inyección del logo dual para ligas con `isAfa: true` directamente en el componente para dar flexibilidad, en lugar de forzar un solo ícono Lucide.
+- Mantener los paths de redirección consistentes con el resto de la web.
+

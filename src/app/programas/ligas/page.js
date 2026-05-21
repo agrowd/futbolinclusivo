@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export const metadata = {
   title: "Ligas - Premium Experience",
-  description: "Conocé todas las ligas y torneos de Fútbol Inclusivo: Liga BA, Liga Nacional y Festival LATAM.",
+  description: "Conocé todas las ligas y torneos de Fútbol Inclusivo: Liga BA, Super Liga AFA y Liga Nacional.",
 };
 
 const programs = [
@@ -30,6 +30,27 @@ const programs = [
     ]
   },
   {
+    title: "Super Liga AFA",
+    description: "La máxima categoría de competición de fútbol inclusivo en Argentina. Organizada en alianza de cooperación con la Asociación del Fútbol Argentino (AFA) y el Sindicato Argentino de Televisión (SAT). Reúne a los planteles más destacados y competitivos del país, quienes disputan cada fecha en las canchas de césped natural de primer nivel dentro del mítico Predio Lionel Andrés Messi en Ezeiza.",
+    href: "/programas/liga-nacional",
+    icon: Trophy,
+    color: "#6B1026",
+    isAfa: true,
+    image: "https://futbolinclusivo.org.ar/app/uploads/2018/12/MG_0325.jpg",
+    stats: {
+      sede: "Predio AFA Ezeiza",
+      coordinacion: "AFA / SAT",
+      categorias: "Nivel de Élite",
+      caracteristicas: ["Predio AFA Ezeiza", "Competencia Élite", "Alianza AFA/SAT", "Desde 2015"]
+    },
+    highlights: [
+      "Predio Lionel Andrés Messi",
+      "Organización conjunta AFA y SAT",
+      "Categoría competitiva de élite",
+      "Césped natural profesional"
+    ]
+  },
+  {
     title: "Liga Nacional",
     description: "Réplica del modelo en diferentes provincias de Argentina, conformando una red federal única. La Liga de Fútbol Inclusiva ha extendido sus fronteras y se replica en distintos puntos del país gracias al trabajo en conjunto con organizaciones y entidades que promueven el desarrollo del fútbol como herramienta de inclusión social.",
     href: "/programas/liga-nacional",
@@ -49,27 +70,6 @@ const programs = [
       "Liga Jujeña - Fundación Valencia",
       "Liga de Santa Fe - CEF N°49 Rosario",
       "Liga Quilmes - Municipalidad Quilmes"
-    ]
-  },
-  {
-    title: "Festival LATAM de Fútbol 3",
-    description: "Encuentro internacional que impulsa el desarrollo juvenil. 140+ jóvenes de 10 países participan, con ejes en empoderamiento juvenil, igualdad de género e inclusión social. Del 2 al 6 de noviembre más de 140 jóvenes participaron del Festival Latinoamericano de Fútbol 3, evento impulsado por la Asociación Civil Andar y streetfootballworld.",
-    href: "/programas/festival-latam",
-    icon: Globe,
-    color: "#8E44AD",
-    image: "https://futbolinclusivo.org.ar/app/uploads/2017/12/Festival-intro.jpg",
-    stats: {
-      paises: "10 países",
-      participantes: "140+ jóvenes",
-      organizaciones: "16 organizaciones",
-      caracteristicas: ["Impacto internacional", "Empoderamiento juvenil", "Igualdad de género", "Inclusión social"]
-    },
-    highlights: [
-      "Empoderamiento juvenil",
-      "Igualdad de género",
-      "Inclusión social",
-      "Red Latinoamericana",
-      "Desarrollo sostenible"
     ]
   }
 ];
@@ -110,19 +110,34 @@ export default function LigasPage() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))", gap: "50px" }}>
             {programs.map((prog, index) => {
               const Icon = prog.icon;
+              const cardBg = prog.isAfa 
+                ? "linear-gradient(135deg, rgba(107, 16, 38, 0.18) 0%, rgba(43, 5, 13, 0.18) 100%)" 
+                : "linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)";
+              const cardBorder = prog.isAfa 
+                ? "2px solid rgba(117, 170, 219, 0.4)" 
+                : "1px solid rgba(255,255,255,0.10)";
+              const cardShadow = prog.isAfa
+                ? "0 0 50px rgba(117, 170, 219, 0.2)"
+                : "none";
+
               return (
                 <FadeIn key={index} delay={index * 0.1}>
                   <div style={{
-                    background: "linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)",
+                    background: cardBg,
                     borderRadius: "28px",
                     overflow: "hidden",
-                    border: "1px solid rgba(255,255,255,0.10)",
+                    border: cardBorder,
                     display: "flex",
                     flexDirection: "column",
                     height: "100%",
                     transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-                    position: "relative"
-                  }} className="group hover:bg-white/8 hover:border-white/20 hover:-translate-y-4 hover:shadow-[0_25px_70px_rgba(0,0,0,0.4)]">
+                    position: "relative",
+                    boxShadow: cardShadow
+                  }} className={
+                    prog.isAfa 
+                      ? "group hover:bg-gradient-to-br hover:from-[#6B1026]/30 hover:to-[#2B050D]/30 hover:border-[#75AADB]/60 hover:-translate-y-4 hover:shadow-[0_25px_70px_rgba(117,170,219,0.35)]"
+                      : "group hover:bg-white/8 hover:border-white/20 hover:-translate-y-4 hover:shadow-[0_25px_70px_rgba(0,0,0,0.4)]"
+                  }>
                     {/* Gradient overlay */}
                     <div style={{
                       position: "absolute",
@@ -152,21 +167,55 @@ export default function LigasPage() {
                         backgroundImage: `radial-gradient(circle at 25% 25%, ${prog.color} 10%, transparent 10%), radial-gradient(circle at 75% 75%, ${prog.color} 10%, transparent 10%), radial-gradient(circle at 50% 10%, ${prog.color} 6%, transparent 6%)`,
                         backgroundSize: "40px 40px"
                       }} />
-                      <div style={{
-                        width: "120px",
-                        height: "120px",
-                        borderRadius: "24px",
-                        background: `linear-gradient(135deg, ${prog.color}25, ${prog.color}15)`,
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        border: `3px solid ${prog.color}40`,
-                        position: "relative",
-                        zIndex: 1,
-                        boxShadow: `0 10px 30px ${prog.color}30`
-                      }} className="group-hover:scale-110 transition-transform duration-400">
-                        <Icon size={60} strokeWidth={1.5} />
-                      </div>
+                      {prog.isAfa ? (
+                        <div style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "12px",
+                          position: "relative",
+                          zIndex: 1,
+                        }} className="group-hover:scale-110 transition-transform duration-400">
+                          <div style={{
+                            width: "75px",
+                            height: "75px",
+                            borderRadius: "50%",
+                            background: "rgba(255,255,255,0.08)",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            border: "2px solid rgba(255,255,255,0.2)",
+                            boxShadow: "0 10px 30px rgba(0,0,0,0.3)"
+                          }}>
+                            <Image src="/satlogo.png" alt="SAT" width={56} height={56} style={{ objectFit: "contain" }} />
+                          </div>
+                          <div style={{
+                            width: "85px",
+                            height: "85px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            filter: "drop-shadow(0 10px 20px rgba(0,0,0,0.4))"
+                          }}>
+                            <Image src="https://upload.wikimedia.org/wikipedia/commons/c/c4/Afa_gold_logo24.svg" alt="AFA" width={75} height={75} style={{ objectFit: "contain" }} />
+                          </div>
+                        </div>
+                      ) : (
+                        <div style={{
+                          width: "120px",
+                          height: "120px",
+                          borderRadius: "24px",
+                          background: `linear-gradient(135deg, ${prog.color}25, ${prog.color}15)`,
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          border: `3px solid ${prog.color}40`,
+                          position: "relative",
+                          zIndex: 1,
+                          boxShadow: `0 10px 30px ${prog.color}30`
+                        }} className="group-hover:scale-110 transition-transform duration-400">
+                          <Icon size={60} strokeWidth={1.5} />
+                        </div>
+                      )}
                     </div>
                     
                     {/* Content Section */}
@@ -214,10 +263,10 @@ export default function LigasPage() {
                               transition: "all 0.3s"
                             }} className="hover:bg-white/8 hover:border-white/15">
                               <div style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.8px", marginBottom: "6px", fontWeight: 700 }}>
-                                {key === "equipos" ? "EQUIPOS" : key === "zonas" ? "ZONAS" : key === "categorias" ? "CATEGORÍAS" : key === "provincias" ? "SEDES" : key === "crecimiento" ? "CRECIMIENTO" : key === "modelo" ? "MODELO" : key === "paises" ? "PAÍSES" : key === "organizaciones" ? "ORGANIZACIONES" : key.toUpperCase()}
+                                {key === "equipos" ? "EQUIPOS" : key === "zonas" ? "ZONAS" : key === "categorias" ? "CATEGORÍAS" : key === "provincias" ? "SEDES" : key === "crecimiento" ? "CRECIMIENTO" : key === "modelo" ? "MODELO" : key === "paises" ? "PAÍSES" : key === "organizaciones" ? "ORGANIZACIONES" : key === "sede" ? "SEDE PRINCIPAL" : key === "coordinacion" ? "COORDINACIÓN" : key.toUpperCase()}
                               </div>
                               <div style={{ fontSize: "1.1rem", fontWeight: 800, color: prog.color }}>
-                                {value}
+                                {Array.isArray(value) ? value.join(", ") : value}
                               </div>
                             </div>
                           ))}
