@@ -146,3 +146,15 @@
 ### Decisiones tomadas:
 - Estandarizar la identidad visual de la Super Liga AFA en toda la web utilizando el logo de la AFA en lugar del SAT, tanto en la página de ligas como en el inicio, garantizando consistencia estética.
 
+## 2026-05-21 — Sesión 9: Sincronización del Nuevo Logotipo Oficial de la AFA
+
+### Qué se hizo:
+1. **Identificación de Cambios**: El usuario actualizó el archivo de imagen `logo-afa.png` en la raíz del proyecto. Dado que los archivos `.png` en la raíz del proyecto están excluidos en `.gitignore` (`/*.png`), Next.js no los compila ni se suben a Git de manera automática.
+2. **Sincronización del Recurso Estático**: Se copió el nuevo logotipo de la AFA desde la raíz del proyecto a `public/logo-afa.png` de manera forzada, sobreescribiendo la versión anterior para asegurar la consistencia del asset visual.
+3. **Validación de Compilación**: Se ejecutó `npm run build` localmente para garantizar que el nuevo asset no introduce ninguna anomalía de compilación o renderizado en el build de producción de Next.js.
+4. **Despliegue**: Se stagearon los cambios en `public/logo-afa.png` y se procedió a realizar commit y push a la rama `main` de GitHub.
+
+### Decisiones tomadas:
+- Mantener la sincronización estricta del archivo `logo-afa.png` de la raíz del proyecto al directorio `public/` para que la visualización del escudo en la Super Liga AFA (tanto en la página de inicio como en la de ligas) sea 100% fiel al diseño entregado por el usuario.
+
+

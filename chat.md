@@ -1,5 +1,18 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 9: Sincronización del Nuevo Logotipo Oficial de la AFA
+
+### 📌 Contexto
+El usuario actualizó el logotipo `logo-afa.png` en la raíz del proyecto y solicitó validar que sea este nuevo archivo el que se sirva e implemente en la plataforma web, procediendo a redesplegar en GitHub.
+
+### 🛠️ Acciones Realizadas
+1. **Identificación de Exclusiones**: Se detectó que las imágenes en la raíz del proyecto están excluidas por `.gitignore` (`/*.png`), lo que prevenía que los cambios realizados por el usuario en `logo-afa.png` fueran detectados por Git.
+2. **Copia de Asset Estático**: Se copió de forma forzada el nuevo archivo `logo-afa.png` desde la raíz a `public/logo-afa.png` para sobreescribir el recurso estático servido por Next.js.
+3. **Validación de Compilación**: Se ejecutó `npm run build` localmente para garantizar la correcta optimización de la imagen y la estabilidad del build de producción.
+4. **Git Sync & Despliegue**: Se stageó `public/logo-afa.png`, `.synapse/workcycle.md`, `.synapse/changelog.md` y `chat.md` y se subieron a GitHub para disparar el despliegue automático de Vercel.
+
+---
+
 ## 📌 Contexto
 El usuario reportó que el borrado de noticias de prueba ("Prueba") en el dashboard de producción (`https://futbolinclusivo.vercel.app/admin/news`) seguía fallando con el aviso de alerta "Error al eliminar" (el cual era un alert estático en el frontend anterior).
 
