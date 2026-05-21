@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export async function GET(request, { params }) {
   try {
     await dbConnect();
-    const { slug } = params;
+    const { slug } = await params;
     
     const page = await Page.findOne({ slug, published: true });
 

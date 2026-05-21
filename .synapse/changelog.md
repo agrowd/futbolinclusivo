@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.3.0 — 2026-05-21
+- feat: Implementación de la página de edición de noticias (`src/app/admin/news/edit/[id]/page.js`) para habilitar edición dinámica de posts.
+- fix: Corrección de permisos de eliminación de noticias para habilitar a usuarios con rol `"editor"`.
+- fix: Corrección crítica de compatibilidad con Next.js 16 haciendo que `params` sea correctamente asíncrono (await) en todas las rutas API dinámicas.
+- feat: Mensajes de diagnóstico de error explícitos en el cliente de administración de noticias.
+
 ## v1.2.0 — 2026-04-13
 - feat: Paridad visual 100% con sitio de producción (Home, Nosotros, Escuela, Historia).
 - feat: Sistema de inyección dinámica de componentes premium en `GenericCmsPage` basado en slug.

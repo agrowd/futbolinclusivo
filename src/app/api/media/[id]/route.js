@@ -23,7 +23,7 @@ export async function DELETE(request, { params }) {
     }
 
     await dbConnect();
-    const { id } = params;
+    const { id } = await params;
 
     const media = await Media.findById(id);
 

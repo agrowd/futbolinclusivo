@@ -20,3 +20,5 @@
 | D-16 | **Inyección Dinámica de UI Premium** | Uso de wrapper genérico (`GenericCmsPage`) con inyección de componentes específicos por slug (`Timeline`, `MissionVisionCards`, etc.) para garantizar paridad visual total en el CMS. | 🔒 LOCKED |
 | D-17 | **Centralización de Métricas de Impacto** | Implementación de `ImpactMetrics.js` como estándar de validación social en la Home Page para asegurar consistencia de marca. | 🔒 LOCKED |
 | D-18 | **Permitir eliminación a editores** | Inconsistencia de seguridad que limitaba el DELETE a `admin` mientras que `editor` ya podía crear/editar noticias y eliminar multimedia. Ahora los editores también eliminan noticias para mejorar consistencia operativa. | 🔒 LOCKED |
+| D-19 | **Uso obligatorio de `await params`** | En Next.js 16/15, `params` es una promesa asíncrona tanto en páginas de servidor como en Route Handlers. Se impone el await obligatorio para evitar lecturas síncronas que den `undefined` o lancen warnings/runtime crashes en producción. | 🔒 LOCKED |
+

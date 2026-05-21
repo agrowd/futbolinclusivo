@@ -46,15 +46,18 @@ export default function AdminNewsPage() {
     try {
       console.log("[LOG-NEWS-DELETE-01] Requesting deletion for news ID:", id);
       const res = await fetch(`/api/news/${id}`, { method: "DELETE" });
-      if (res.ok) {
+      
+      const data = await res.json().catch(() => ({}));
+      
+      if (res.ok && data.success) {
         console.log("[LOG-NEWS-DELETE-02] News item successfully deleted:", id);
         setNews(news.filter((n) => n._id !== id));
       } else {
-        alert("Error al eliminar");
+        alert(data.message || "Error al eliminar la noticia");
       }
     } catch (error) {
       console.error("Error deleting:", error);
-      alert("Error al eliminar");
+      alert("Error de conexión al eliminar la noticia");
     } finally {
       setDeleting(null);
     }

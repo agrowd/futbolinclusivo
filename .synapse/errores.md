@@ -27,3 +27,9 @@
 **Root Cause:** Falta la ruta e implementación del archivo de frontend `/admin/news/edit/[id]/page.js` a pesar de que el backend y el botón en el listado de administración ya estaban configurados.
 **Solución:** Crear e implementar el componente `EditNewsPage` en `src/app/admin/news/edit/[id]/page.js` reutilizando el diseño y las validaciones de creación.
 **Estado:** ✅ FIXED
+
+## ERR-08: Dynamic Route Handlers Failing / "Error al eliminar" (2026-05-21)
+**Síntoma:** Al intentar eliminar una noticia (o realizar operaciones en rutas dinámicas API), el servidor falla de manera silenciosa o retorna 404, haciendo que el cliente muestre la alerta genérica de "Error al eliminar".
+**Root Cause:** En Next.js 16/15, el objeto `params` en los Route Handlers es ahora una promesa asíncrona. Acceder a `params.id` o desestructurarlo de manera síncrona (`const { id } = params;`) causaba que la variable fuera `undefined`, lo que hacía que `News.findByIdAndDelete(undefined)` retornara `null` y fallara la consulta en base de datos en producción.
+**Solución:** Await el objeto `params` en todos los API dynamic routes (`const { id } = await params;` y `const { slug } = await params;`) antes de interactuar con MongoDB.
+**Estado:** ✅ FIXED

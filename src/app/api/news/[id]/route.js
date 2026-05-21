@@ -8,8 +8,9 @@ import { newsSchema } from "@/lib/validations";
 export async function GET(request, { params }) {
   try {
     await dbConnect();
+    const { id } = await params;
 
-    const news = await News.findById(params.id).lean();
+    const news = await News.findById(id).lean();
 
     if (!news) {
       return NextResponse.json(
@@ -40,6 +41,7 @@ export async function PUT(request, { params }) {
     }
 
     await dbConnect();
+    const { id } = await params;
 
     const body = await request.json();
     const validated = newsSchema.partial().parse(body);
@@ -49,7 +51,7 @@ export async function PUT(request, { params }) {
     }
 
     const news = await News.findByIdAndUpdate(
-      params.id,
+      id,
       validated,
       { new: true, runValidators: true }
     );
@@ -91,8 +93,9 @@ export async function DELETE(request, { params }) {
     }
 
     await dbConnect();
+    const { id } = await params;
 
-    const news = await News.findByIdAndDelete(params.id);
+    const news = await News.findByIdAndDelete(id);
 
     if (!news) {
       return NextResponse.json(

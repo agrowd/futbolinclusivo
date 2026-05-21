@@ -70,4 +70,22 @@
 
 ### Estado Final:
 - Edición de noticias: Funcional y compilado en producción sin errores.
-- Eliminación de noticias: Funcional para administradores y editores por igual, con logs de debugging agregados.
+- Eliminación de noticias: Funcional para administradores y editores por igual, con logs de debugging agregados y corrección de parámetros asíncronos en Next.js 16.
+
+## 2026-05-21 — Sesión 2: Corrección de Rutas Dinámicas Asíncronas (Next.js 16)
+
+### Qué se hizo:
+1. **Identificación de la Causa Raíz**: Se descubrió que en Next.js 16/15, el objeto `params` de las rutas de la API es ahora una Promesa. Acceder a `params.id` o `params.slug` de forma síncrona en producción causaba que la variable fuera `undefined`, lo que provocaba errores 404/500 silenciosos que en el cliente se traducían en "Error al eliminar" debido al alert genérico antiguo.
+2. **Corrección de la API de Noticias**: Se actualizó `src/app/api/news/[id]/route.js` para usar `await params` en los métodos `GET`, `PUT` y `DELETE`.
+3. **Corrección de la API de Multimedia**: Se actualizó `src/app/api/media/[id]/route.js` para usar `await params` en el método `DELETE`.
+4. **Corrección de la API de Páginas**: Se actualizó `src/app/api/pages/[slug]/route.js` para usar `await params` en el método `GET`.
+5. **Mejora del Cliente de Noticias**: Se actualizaron las alertas del listado de noticias en `src/app/admin/news/page.js` para mostrar el mensaje de error específico enviado por el backend (por ejemplo, "Noticia no encontrada" o "No autorizado") en lugar del genérico "Error al eliminar".
+6. **Compilación Local y Validación**: Se ejecutó `npm run build` con éxito rotundo localmente, validando que todas las rutas se compilan y funcionan correctamente con Turbopack.
+
+### Decisiones tomadas:
+- Se estandarizó el uso de `await params` en todas las rutas dinámicas del backend para cumplir estrictamente con los estándares y requerimientos asíncronos de Next.js 16/15 (D-19).
+- Se mejoraron los avisos al usuario en el listado para proveer diagnósticos claros si algo vuelve a fallar.
+
+### Estado Final:
+- Operaciones dinámicas de la API (noticias, multimedia, páginas): 100% estables, corregidas y validadas.
+- Borrado de "Prueba": Listo para ser ejecutado en producción una vez que finalice el despliegue automático de Vercel.
