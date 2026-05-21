@@ -12,7 +12,7 @@ const programs = [
   {
     title: "Liga de Fútbol Inclusiva BA",
     description: "El torneo más importante de la Provincia de Buenos Aires con sistema de testeo de habilidades equitativo. Más de 20 zonas de competencia incluyendo categorías masculinas y femeninas. Desde 1998, en la ciudad de Moreno, trabajamos valores y equiparamos oportunidades, construyendo una sociedad más inclusiva a través del deporte.",
-    href: "/programas/liga-ba",
+    href: "https://futbolinclusivo.mygol.es/tournaments",
     icon: Trophy,
     color: "#E67E22",
     image: "https://futbolinclusivo.org.ar/app/uploads/2017/12/Liga-d-1.jpg",

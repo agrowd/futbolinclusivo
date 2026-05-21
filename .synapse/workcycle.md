@@ -168,5 +168,19 @@
 ### Decisiones tomadas:
 - Utilizar enlaces externos nativos con navegación a pestaña nueva y textos informativos diferenciadores ("VER FIXTURE Y TABLAS" vs "CONOCER MÁS") para optimizar la experiencia de usuario según el tipo de contenido de cada liga.
 
+## 2026-05-21 — Sesión 11: Unificación de Redirecciones a MyGol en Ligas e Inicio
+
+### Qué se hizo:
+1. **Redirección de Liga Inclusiva BA en Ligas**: Se actualizó el enlace del botón de la "Liga de Fútbol Inclusiva BA" en la página de ligas (`src/app/programas/ligas/page.js`) para apuntar directamente al portal de torneos: `https://futbolinclusivo.mygol.es/tournaments`.
+2. **Redirecciones en el Inicio (Home Page)**: En `src/components/ui/HomeClient.js`, se actualizaron los dos botones interactivos en forma de círculo:
+   - El botón `"CONOCER"` de la **Liga Inclusiva** se reemplazó por un enlace de anclaje `<a>` nativo con `target="_blank"`, `rel="noopener noreferrer"`, con destino a `https://futbolinclusivo.mygol.es/tournaments` y texto `"VER TORNEO"`.
+   - El botón `"VER TORNEO"` de la **Super Liga** se reemplazó por un enlace de anclaje `<a>` nativo con `target="_blank"`, `rel="noopener noreferrer"`, con destino a `https://futbolinclusivo.mygol.es/tournaments` y texto `"VER TORNEO"`.
+3. **Validación de Compilación**: Se ejecutó `npm run build` localmente constatando que todo funciona y se compila sin errores en Next.js.
+4. **Despliegue a GitHub**: Se stagearon los cambios en `src/app/programas/ligas/page.js`, `src/components/ui/HomeClient.js`, `.synapse/workcycle.md`, `.synapse/changelog.md` y `chat.md` y se enviaron a la rama `main` de GitHub.
+
+### Decisiones tomadas:
+- Unificar la experiencia del portal de competiciones en toda la plataforma redirigiendo de manera nativa y directa al dominio oficial de torneos `mygol.es`, usando el texto uniforme `"VER TORNEO"` para evitar fricciones de navegación en la audiencia.
+
+
 
 

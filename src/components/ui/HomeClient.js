@@ -185,7 +185,7 @@ export default function HomeClient({ dynamicNews = [] }) {
                 <h3 className="text-xl md:text-2xl font-black tracking-tight text-white mb-1">Liga Inclusiva</h3>
                 <p className="text-[#36b37e] text-xs font-bold uppercase tracking-wider mb-3">Desde 1998</p>
                 <p className="text-white/70 text-xs leading-relaxed mb-4 max-w-[180px]">Fútbol inclusivo para todos</p>
-                <Link href="/programas" className="inline-flex items-center gap-1 text-[#36b37e] font-black text-xs uppercase tracking-wider hover:gap-2 transition-all bg-white/10 px-4 py-2 rounded-full">CONOCER <ArrowRight size={14} /></Link>
+                <a href="https://futbolinclusivo.mygol.es/tournaments" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-[#36b37e] font-black text-xs uppercase tracking-wider hover:gap-2 transition-all bg-white/10 px-4 py-2 rounded-full">VER TORNEO <ArrowRight size={14} /></a>
               </div>
             </motion.div>
 
@@ -210,7 +210,7 @@ export default function HomeClient({ dynamicNews = [] }) {
                 <h3 className="text-xl md:text-2xl font-black tracking-tight text-white mb-1">Super Liga</h3>
                 <p className="text-[#75AADB] text-xs font-bold uppercase tracking-wider mb-3">AFA</p>
                 <p className="text-white/70 text-xs leading-relaxed mb-4 max-w-[180px]">Máxima categoría del fútbol inclusivo</p>
-                <Link href="/programas/liga-nacional" className="inline-flex items-center gap-1 text-[#75AADB] font-black text-xs uppercase tracking-wider hover:gap-2 transition-all bg-white/10 px-4 py-2 rounded-full">VER TORNEO <ArrowRight size={14} /></Link>
+                <a href="https://futbolinclusivo.mygol.es/tournaments" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-[#75AADB] font-black text-xs uppercase tracking-wider hover:gap-2 transition-all bg-white/10 px-4 py-2 rounded-full">VER TORNEO <ArrowRight size={14} /></a>
               </div>
             </motion.div>
           </div>

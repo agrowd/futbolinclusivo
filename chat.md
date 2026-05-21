@@ -1,5 +1,20 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 11: Unificación de Redirecciones a MyGol en Ligas e Inicio
+
+### 📌 Contexto
+El usuario solicitó que:
+1. El botón de la **Liga de Fútbol Inclusiva BA** en la página de ligas también redirija al portal externo: `https://futbolinclusivo.mygol.es/tournaments`.
+2. Las dos tarjetas interactivas de la Home Page (**Liga Inclusiva** y **Super Liga**) también lleven a ese mismo portal externo a través de sus respectivos botones.
+
+### 🛠️ Acciones Realizadas
+1. **Página de Ligas**: Se editó `src/app/programas/ligas/page.js` para modificar la propiedad `href` de la Liga BA, asignándole el valor `"https://futbolinclusivo.mygol.es/tournaments"`. Gracias a la lógica condicional que creamos en la sesión anterior, el botón para esta liga cambió automáticamente a un enlace externo `<a>` nativo con `target="_blank"`, `rel="noopener noreferrer"` y con el texto de acción `"VER FIXTURE Y TABLAS"`.
+2. **Página de Inicio (Home)**: Se editó `src/components/ui/HomeClient.js` para reemplazar los enlaces `<Link>` de las tarjetas circulares interactivas por enlaces externos nativos `<a>` con `target="_blank"` y `rel="noopener noreferrer"` apuntando a `https://futbolinclusivo.mygol.es/tournaments`. Ambos botones pasaron a tener el texto `"VER TORNEO"` para mayor coherencia visual y UX.
+3. **Validación de Compilación**: Se ejecutó `npm run build` localmente para constatar que todo compila exitosamente sin anomalías.
+4. **Git Sync & Despliegue**: Se stagearon, commitearon y pushearon todos los cambios a la rama principal (`main`) de GitHub.
+
+---
+
 ## ⚽ Sesión 10: Redirección de Botón Super Liga AFA en Ligas
 
 ### 📌 Contexto
