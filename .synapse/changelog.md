@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.4.8 — 2026-07-03
+- feat: Integración de `@vercel/analytics` en el root layout para recopilación de datos de analíticas y rendimiento web en tiempo real.
+
 ## v1.4.7 — 2026-05-21
 - feat: Unificar redirecciones en toda la web apuntando a https://futbolinclusivo.mygol.es/tournaments para la Liga BA en la página de ligas y para las tarjetas circulares interactivas (Liga Inclusiva y Super Liga AFA) en la Home Page, adaptando los botones de manera nativa para enlaces externos de pestaña nueva y textos uniformes "VER TORNEO".
 

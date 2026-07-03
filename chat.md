@@ -1,5 +1,31 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 13: Integración de Vercel Analytics (2026-07-03)
+
+### 📌 Contexto
+El usuario solicitó instalar `@vercel/analytics` y agregar el componente `<Analytics />` importado desde `@vercel/analytics/next` en la aplicación.
+
+### 🛠️ Acciones Realizadas
+1. **Instalación de Dependencia**: Se ejecutó `npm install @vercel/analytics` instalando exitosamente la dependencia.
+2. **Integración en Root Layout**: Se importó `Analytics` de `@vercel/analytics/next` y se renderizó el componente `<Analytics />` en `src/app/layout.js`.
+3. **Validación de Compilación**: Se ejecutó `npm run build` localmente y se confirmó la compilación exitosa (51/51 páginas estáticas y dinámicas optimizadas) sin errores.
+4. **Git Sync**: Se stagearon, commitearon y pushearon los archivos actualizados a la rama `main` de GitHub.
+
+---
+
+## ⚽ Sesión 12: Configuración de Dominio NIC.ar en Vercel (2026-06-25)
+
+### 📌 Contexto
+El usuario consulta cómo conectar su dominio `futbolinclusivo.org.ar` registrado en NIC.ar a su despliegue web de Vercel.
+
+### 🛠️ Acciones Realizadas
+1. **Investigación/Asesoría**: NIC.ar no posee un servidor DNS propio para crear registros A o CNAME directamente, por lo que requiere obligatoriamente la delegación de servidores de nombres (Nameservers).
+2. **Documentación del Proceso**: Se brindaron los pasos detallados para configurar el dominio usando los DNS nativos de Vercel (Opción recomendada y directa, sin Cloudflare) o a través de Cloudflare. Se aclaró que Cloudflare no es obligatorio y que Vercel permite gestionar registros MX (correos) y subdominios directamente en su plataforma.
+3. **Guía para Cliente**: Se generó una plantilla paso a paso lista para copiar y enviar al cliente final (Martín) para realizar la delegación en NIC.ar de forma autónoma.
+4. **Verificación de Vercel**: Se validó mediante la captura provista por el usuario que el proyecto está correctamente configurado y a la espera del cambio de DNS.
+
+---
+
 ## ⚽ Sesión 11: Unificación de Redirecciones a MyGol en Ligas e Inicio
 
 ### 📌 Contexto

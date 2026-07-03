@@ -181,6 +181,28 @@
 ### Decisiones tomadas:
 - Unificar la experiencia del portal de competiciones en toda la plataforma redirigiendo de manera nativa y directa al dominio oficial de torneos `mygol.es`, usando el texto uniforme `"VER TORNEO"` para evitar fricciones de navegación en la audiencia.
 
+## 2026-06-25 — Sesión 12: Consulta de Vinculación de Dominio NIC.ar
+
+### Qué se hizo:
+1. **Asesoramiento Técnico**: Se estructuraron los pasos para vincular `futbolinclusivo.org.ar` desde NIC.ar a Vercel. 
+2. **Métodos sugeridos**: Delegación directa por DNS de Vercel (Nameservers) y alternativa vía Cloudflare (para mayor control de registros adicionales).
+
+### Decisiones tomadas:
+- Recomendar la delegación DNS directa de Vercel como primera opción por simplicidad de mantenimiento del sitio y generación automática de SSL.
+
+## 2026-07-03 — Sesión 13: Integración de Vercel Analytics
+
+### Qué se hizo:
+1. **Instalación de Dependencia**: Se instaló `@vercel/analytics` para seguimiento del rendimiento del sitio y análisis web.
+2. **Integración en Root Layout**: Se importó e inyectó `<Analytics />` en `src/app/layout.js`.
+3. **Validación de Compilación**: Se validó localmente con `npm run build` confirmando que Next.js compila sin advertencias ni errores.
+4. **Despliegue**: Se subieron los cambios a la rama `main` en GitHub.
+
+### Decisiones tomadas:
+- Utilizar la biblioteca oficial `@vercel/analytics/next` para un registro de visitas optimizado en el App Router de Next.js.
+
+
+
 
 
 

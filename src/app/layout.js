@@ -7,6 +7,7 @@ import Footer from "@/components/layout/Footer";
 import SkipLink from "@/components/layout/SkipLink";
 import FloatingButtons from "@/components/layout/FloatingButtons";
 import FloatingAdminTools from "@/components/admin/FloatingAdminTools";
+import { Analytics } from "@vercel/analytics/next";
 
 const atkinson = Atkinson_Hyperlegible({
   variable: "--font-atkinson",
@@ -28,6 +29,7 @@ export default function RootLayout({ children }) {
           <Footer />
           <FloatingButtons />
           <FloatingAdminTools />
+          <Analytics />
         </SessionProvider>
       </body>
     </html>
