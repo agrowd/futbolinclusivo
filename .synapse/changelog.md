@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.4.9 — 2026-07-03
+- edit: Actualizar títulos, etiquetas, misión y textos descriptivos de la sección Institucional y Nosotros con los nuevos contenidos provistos por el usuario en PDF.
+
 ## v1.4.8 — 2026-07-03
 - feat: Integración de `@vercel/analytics` en el root layout para recopilación de datos de analíticas y rendimiento web en tiempo real.
 

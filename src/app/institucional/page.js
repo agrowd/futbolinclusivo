@@ -19,9 +19,9 @@ export default async function InstitucionalPage() {
 
   const data = cmsPage?.data || {};
   const heroImage = data.hero_image || "https://futbolinclusivo.org.ar/app/uploads/2017/12/nosotros-campo4.jpg";
-  const heroLabel = data.hero_label || "LA ASOCIACIÓN";
-  const heroTitle = cmsPage?.title || "Institucional";
-  const heroDescription = data.hero_description || "El fútbol como herramienta de inclusión social.";
+  const heroLabel = data.hero_label || "Institucional";
+  const heroTitle = cmsPage?.title || "Andar Fútbol Club";
+  const heroDescription = data.hero_description || "Promoviendo la Inclusión a través del fútbol";
 
   return (
     <div style={{ background: "#000B1A", color: "#fff", minHeight: "100vh" }}>

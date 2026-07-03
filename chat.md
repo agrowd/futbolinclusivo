@@ -1,5 +1,26 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 14: Actualización de Contenidos de Institucional y Nosotros (2026-07-03)
+
+### 📌 Contexto
+El usuario adjuntó un PDF con capturas y textos a modificar sobre la página de `/institucional` y `/institucional/nosotros`.
+
+### 🛠️ Acciones Realizadas
+1. **Actualización de Héroe en Institucional**: Modificación de los valores por defecto en `src/app/institucional/page.js` y `src/lib/cmsFallbacks.js`:
+   - Etiqueta superior del Héroe: `"LA ASOCIACIÓN"` -> `"Institucional"`.
+   - Título de la sección: `"Institucional"` -> `"Andar Fútbol Club"`.
+   - Descripción: `"El fútbol como herramienta de inclusión social."` -> `"Promoviendo la Inclusión a través del fútbol"`.
+2. **Actualización de Nosotros (`/institucional/nosotros`)**:
+   - Extracto: Modificado a `"Promovemos la educación y la inclusión social a través del fútbol"`.
+   - Título del contenido: Cambiado a `"EL FÚTBOL COMO HERRAMIENTA DE EDUCACIÓN E INCLUSIÓN SOCIAL"`.
+   - Párrafos de contenido: Reemplazados con la nueva redacción sobre trayectoria educativa, la Academia de Fútbol con categorías mixtas infantiles (4 a 13 años) e inclusivas (mayores de 14 años), y la visión del deporte como ejercicio pleno de derechos.
+   - Caja de objetivo destacada: Removida del cuerpo del texto a pedido del cliente.
+3. **Misión**: Actualización del texto `"Promover la inclusión a través del fútbol social."` -> `"Promover la inclusión a través del fútbol."` (removiendo el término "social") tanto en `src/lib/cmsFallbacks.js` como en el componente `<GenericCmsPage />` (`src/components/ui/GenericCmsPage.js`).
+4. **Validación de Compilación**: Se ejecutó `npm run build` con éxito rotundo.
+5. **Git Sync**: Cambios subidos a GitHub.
+
+---
+
 ## ⚽ Sesión 13: Integración de Vercel Analytics (2026-07-03)
 
 ### 📌 Contexto

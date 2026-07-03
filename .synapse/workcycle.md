@@ -201,6 +201,26 @@
 ### Decisiones tomadas:
 - Utilizar la biblioteca oficial `@vercel/analytics/next` para un registro de visitas optimizado en el App Router de Next.js.
 
+## 2026-07-03 — Sesión 14: Actualización de Contenidos Institucionales (Sobre Nosotros y Misión)
+
+### Qué se hizo:
+1. **Página de Institucional (`/institucional`)**: Se actualizaron los fallbacks de cabecera en `src/app/institucional/page.js` y `src/lib/cmsFallbacks.js` para modificar la etiqueta, título y descripción del héroe:
+   - Etiqueta: `"LA ASOCIACIÓN"` -> `"Institucional"`.
+   - Título: `"Institucional"` -> `"Andar Fútbol Club"`.
+   - Descripción: `"El fútbol como herramienta de inclusión social."` -> `"Promoviendo la Inclusión a través del fútbol"`.
+2. **Página de Nosotros (`/institucional/nosotros`)**: Se actualizó el extracto de la página a `"Promovemos la educación y la inclusión social a través del fútbol"`.
+3. **Contenido de Nosotros**: Se actualizó el HTML del bloque de contenido de la página Nosotros en `src/lib/cmsFallbacks.js`:
+   - Se cambió el título principal a `"EL FÚTBOL COMO HERRAMIENTA DE EDUCACIÓN E INCLUSIÓN SOCIAL"`.
+   - Se reemplazaron los párrafos antiguos por el nuevo texto provisto sobre desarrollo social y educativo, y la programación deportiva mixta (Academia de Fútbol) e inclusiva.
+   - Se removió el bloque de destacado de objetivo ("Nuestro objetivo es claro...").
+4. **Misión**: Se eliminó la palabra `"social"` al final de la definición de Misión, quedando como `"Promover la inclusión a través del fútbol"` tanto en `src/lib/cmsFallbacks.js` como en el componente `<GenericCmsPage />` (`src/components/ui/GenericCmsPage.js`).
+5. **Validación**: Se ejecutó `npm run build` con éxito total.
+6. **Despliegue**: Se subieron los cambios a GitHub.
+
+### Decisiones tomadas:
+- Modificar tanto los componentes estructurados como los fallbacks de datos estáticos en código para garantizar que el nuevo texto del cliente se renderice perfectamente en producción sin depender de si la página proviene del CMS local o el fallback de código.
+
+
 
 
 

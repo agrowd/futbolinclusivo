@@ -2,11 +2,11 @@ export const CMS_FALLBACKS = {
   "institucional": {
     title: "Institucional",
     excerpt: "Más de 25 años construyendo inclusión a través del fútbol.",
-    content: `<h3>NUESTRA MISIÓN</h3><p>Promover la inclusión a través del fútbol social y deporte para el desarrollo.</p>`,
+    content: `<h3>NUESTRA MISIÓN</h3><p>Promover la inclusión a través del fútbol.</p>`,
     section: "institucional",
     data: {
-      hero_label: "LA ASOCIACIÓN",
-      hero_description: "El fútbol como herramienta de inclusión social.",
+      hero_label: "Institucional",
+      hero_description: "Promoviendo la Inclusión a través del fútbol",
       mission_title: "Misión",
       mission_desc: "Promover la inclusión a través del fútbol",
       vision_title: "Visión",
@@ -17,16 +17,14 @@ export const CMS_FALLBACKS = {
   },
   "nosotros": {
     title: "Nosotros",
-    excerpt: "El fútbol como herramienta de inclusión social y transformación colectiva.",
+    excerpt: "Promovemos la educación y la inclusión social a través del fútbol",
     content: `<h2 class="text-3xl md:text-4xl font-black text-[#36b37e] mb-10 uppercase tracking-tighter leading-none">
-  EL FÚTBOL COMO HERRAMIENTA <br/> DE INCLUSIÓN SOCIAL
+  EL FÚTBOL COMO HERRAMIENTA DE EDUCACIÓN E INCLUSIÓN SOCIAL
 </h2>
 <div class="space-y-8 text-lg leading-relaxed text-white/70">
-  <p>El fútbol tiene un arraigo particular en la cultura argentina. Su poder es ampliamente movilizador y nos permite generar un espacio masivo de participación colectiva donde el eje no es la competencia sino la equiparación de oportunidades.</p>
-  <p>Buscamos a través de la revalorización colectiva y personal darle visibilidad a un colectivo que ve vulnerado sus derechos permanentemente. La situación de discapacidad es muchas veces el resultado de una sociedad que no toma en cuenta necesidades peculiares.</p>
-  <div class="border-l-4 border-[#36b37e] pl-8 py-4 bg-white/2 rounded-r-xl">
-    <p class="text-white font-black text-xl italic leading-snug">Nuestro objetivo es claro: derribar mitos y aportar a una inclusión plena de todas las personas, más allá de la condición que puedan tener.</p>
-  </div>
+  <p>El fútbol tiene un arraigo particular en la cultura argentina, y por eso constituye una herramienta privilegiada de desarrollo social y educativo. Su poder convocante nos permite generar un espacio de participación colectiva donde el eje no es la competencia, sino la de acompañar trayectorias educativas a través del juego, el aprendizaje de valores y la construcción de ciudadanía.</p>
+  <p>La programación deportiva de Andar Fútbol Club no se circunscribe exclusivamente al abordaje de personas con discapacidad: la Academia de Fútbol cuenta con categorías infantiles mixtas desde los 4 a 13 años de edad, categorías inclusivas para personas mayores de 14 años de edad, articulando una propuesta integral centrada en las infancias y el fútbol inclusivo. En todos los casos, garantizando espacios seguros y libres de discriminación donde cada persona pueda desarrollarse plenamente.</p>
+  <p>El deporte, desde nuestra visión, es una plataforma para la inclusión, la educación y el ejercicio pleno de derechos.</p>
 </div>`,
     section: "institucional"
   },

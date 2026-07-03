@@ -80,7 +80,7 @@ export default async function GenericCmsPage({ slug, fallbackTitle, fallbackSubt
                       <div className="bg-[#E67E22]/10 p-4 rounded-xl text-[#E67E22]"><Target size={28} /></div>
                       <div>
                         <h3 className="text-xl font-black uppercase mb-2">Nuestra Misión</h3>
-                        <p className="text-white/50 leading-relaxed">{pageData.mission_desc || "Promover la inclusión a través del fútbol social."}</p>
+                        <p className="text-white/50 leading-relaxed">{pageData.mission_desc || "Promover la inclusión a través del fútbol."}</p>
                       </div>
                    </div>
                    <div className="flex gap-6 items-start bg-white/[0.02] p-8 rounded-2xl border border-white/5 shadow-xl">
