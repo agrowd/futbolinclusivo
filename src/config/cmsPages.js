@@ -22,7 +22,7 @@ export const CMS_PAGE_CONFIGS = {
   "institucional": {
     fields: [
       { id: "hero_image", label: "Imagen Hero (URL)", type: "text" },
-      { id: "hero_label", label: "Etiqueta Hero", type: "text", placeholder: "LA ASOCIACIÓN" },
+      { id: "hero_label", label: "Etiqueta Hero", type: "text", placeholder: "Institucional" },
       { id: "hero_description", label: "Descripción Hero", type: "textarea" },
       { id: "mission_title", label: "Título Sección Misión", type: "text" },
       { id: "mission_desc", label: "Descripción Misión", type: "textarea" },

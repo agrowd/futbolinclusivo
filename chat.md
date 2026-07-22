@@ -1,5 +1,21 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 15: Corrección y Forzado de Textos Hero Institucional (2026-07-22)
+
+### 📌 Contexto
+El usuario envió una captura del sitio mostrando que la cabecera de `/institucional` conservaba los textos legados (`LA ASOCIACIÓN`, `Institucional` como título, `El fútbol como herramienta de inclusión social.`), solicitando asegurar que se muestren los tres textos corregidos:
+- Etiqueta: `Institucional`
+- Título: `Andar Fútbol Club`
+- Descripción: `Promoviendo la Inclusión a través del fútbol`
+
+### 🛠️ Acciones Realizadas
+1. **Identificación de Causa Raíz**: Si en la base de datos de producción existían campos de texto o documentos creados previamente con los valores antiguos (`LA ASOCIACIÓN` o `Institucional` como título), el operador ternario por defecto priorizaba dichos valores antiguos sobre el fallback.
+2. **Filtrado Explicito**: Se actualizó `src/app/institucional/page.js` para filtrar explícitamente los textos legados y forzar el renderizado de los tres valores solicitados por el usuario.
+3. **Actualización de CMS Config**: Se actualizó el placeholder en `src/config/cmsPages.js`.
+4. **Validación de Build & Push**: Se ejecutó `npm run build` con éxito y se subieron los cambios a GitHub.
+
+---
+
 ## ⚽ Sesión 14: Actualización de Contenidos de Institucional y Nosotros (2026-07-03)
 
 ### 📌 Contexto

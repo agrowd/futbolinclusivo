@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.5.0 — 2026-07-22
+- fix: Forzar el filtrado y reemplazo de valores legados de la base de datos en la cabecera Hero de Institucional (/institucional) garantizando el renderizado de "Institucional" (Etiqueta), "Andar Fútbol Club" (Título) y "Promoviendo la Inclusión a través del fútbol" (Descripción).
+
 ## v1.4.9 — 2026-07-03
 - edit: Actualizar títulos, etiquetas, misión y textos descriptivos de la sección Institucional y Nosotros con los nuevos contenidos provistos por el usuario en PDF.
 

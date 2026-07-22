@@ -220,6 +220,18 @@
 ### Decisiones tomadas:
 - Modificar tanto los componentes estructurados como los fallbacks de datos estáticos en código para garantizar que el nuevo texto del cliente se renderice perfectamente en producción sin depender de si la página proviene del CMS local o el fallback de código.
 
+## 2026-07-22 — Sesión 15: Refuerzo de Textos Hero Institucional
+
+### Qué se hizo:
+1. **Refuerzo de Fallbacks en `src/app/institucional/page.js`**: Se ajustó la lógica en la página de `/institucional` para que reemplace explícitamente cualquier valor heredado en base de datos (`LA ASOCIACIÓN`, `Institucional` como título, `El fútbol como herramienta de inclusión social.`) por el nuevo encabezado solicitado:
+   - Etiqueta: `Institucional`
+   - Título: `Andar Fútbol Club`
+   - Descripción: `Promoviendo la Inclusión a través del fútbol`
+2. **Actualización de CMS Config**: Se actualizó el placeholder predeterminado en `src/config/cmsPages.js`.
+3. **Validación**: Compilación limpia con `npm run build`.
+4. **Despliegue**: Cambios pusheados a la rama principal de GitHub.
+
+
 
 
 
