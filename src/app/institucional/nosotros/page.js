@@ -9,8 +9,8 @@ export default function NosotrosPage() {
   return (
     <GenericCmsPage 
        slug="nosotros" 
-       fallbackTitle="Sobre Nosotros" 
-       fallbackSubtitle="Más de 25 años construyendo inclusión a través del fútbol."
+       fallbackTitle="Nosotros" 
+       fallbackSubtitle="Promovemos la educación y la inclusión social a través del fútbol"
     />
   );
 }

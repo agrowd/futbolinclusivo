@@ -1,5 +1,17 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 17: Actualización de Subtítulo Hero en Página Nosotros (2026-07-22)
+
+### 📌 Contexto
+El usuario adjuntó una captura solicitando cambiar el subtítulo del encabezado Hero de la página `/institucional/nosotros` por:
+`Promovemos la educación y la inclusión social a través del fútbol`
+
+### 🛠️ Acciones Realizadas
+1. **Actualización de Props en `/institucional/nosotros`**: Se actualizaron los valores por defecto en `src/app/institucional/nosotros/page.js` para asegurar que el título sea `Nosotros` y la descripción sea `Promovemos la educación y la inclusión social a través del fútbol`.
+2. **Validación y Despliegue**: Compilación limpia con `npm run build` (51/51 páginas) y push a GitHub.
+
+---
+
 ## ⚽ Sesión 16: Conversión a Sitio Estático (Excluyendo Noticias y Blogs) (2026-07-22)
 
 ### 📌 Contexto

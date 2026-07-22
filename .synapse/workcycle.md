@@ -252,3 +252,11 @@
 
 ### Decisiones tomadas:
 - Garantizar rendimiento ultra rápido, disponibilidad 100% independiente del servidor de BD para el contenido informativo de la web, manteniendo únicamente Noticias y Formularios como módulos dinámicos.
+
+## 2026-07-22 — Sesión 17: Actualización de Subtítulo en Página Nosotros
+
+### Qué se hizo:
+1. **Actualización de Copia de Hero de Nosotros (`/institucional/nosotros`)**: Se modificó `fallbackTitle` a `"Nosotros"` y `fallbackSubtitle` a `"Promovemos la educación y la inclusión social a través del fútbol"` en `src/app/institucional/nosotros/page.js`.
+2. **Validación**: Compilación `npm run build` exitosa (51/51 páginas).
+3. **Despliegue**: Cambios pusheados a la rama principal `main` en GitHub.
+

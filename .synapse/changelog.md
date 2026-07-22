@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.6.1 — 2026-07-22
+- edit: Actualizar el título y subtítulo de la cabecera Hero en la página /institucional/nosotros a "Nosotros" y "Promovemos la educación y la inclusión social a través del fútbol".
+
 ## v1.6.0 — 2026-07-22
 - feat: Convertir todas las páginas informativas e institucionales del sitio en componentes 100% estáticos desvinculando la colección Page de MongoDB. Se mantienen totalmente dinámicas las secciones de Noticias, Novedades, Blogs, Multimedia, Reservas y Equipos.
 
