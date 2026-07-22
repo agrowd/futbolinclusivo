@@ -84,8 +84,6 @@ export default function AdminDashboard() {
   const menuItems = [
     { href: "/admin/news", label: "Noticias", icon: Newspaper, count: stats.news, color: "#36b37e" },
     { href: "/admin/media", label: "Multimedia", icon: ImageIcon, count: stats.media, color: "#2980B9" },
-    { href: "/admin/pages", label: "Páginas", icon: FileText, count: stats.pages, color: "#E67E22" },
-
     { href: "/admin/teams", label: "Equipos", icon: Users, count: stats.teams, color: "#8E44AD" },
     { href: "/admin/reservations", label: "Reservas", icon: Calendar, count: stats.reservations, color: "#E74C3C" },
   ];

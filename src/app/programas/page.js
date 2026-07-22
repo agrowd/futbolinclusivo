@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import FadeIn from "@/components/ui/FadeIn";
-import dbConnect from "@/lib/mongodb";
-import Page from "@/lib/schemas/Page";
 import DynamicIcon from "@/components/ui/DynamicIcon";
 
 // Fallbacks nativos si no hay datos en CMS
@@ -33,29 +31,20 @@ const DEFAULT_PROGRAMS = [
   }
 ];
 
-export async function generateMetadata() {
-  await dbConnect();
-  const pageData = await Page.findOne({ slug: "programas", published: true }).lean();
-  return {
-    title: pageData?.metadata?.metaTitle || "Nuestros Programas - Fútbol Inclusivo",
-    description: pageData?.metadata?.metaDescription || "Conocé todos los programas deportivos y sociales.",
-  };
-}
+export const metadata = {
+  title: "Nuestros Programas - Fútbol Inclusivo",
+  description: "Conocé todos los programas deportivos y sociales.",
+};
 
-export default async function ProgramasPage() {
-  await dbConnect();
-  const cmsPage = await Page.findOne({ slug: "programas", published: true }).lean();
+export default function ProgramasPage() {
+  const heroLabel = "QUÉ HACEMOS";
+  const heroTitle = "Nuestros Programas";
+  const heroDescription = "Desarrollamos una metodología integral de intervención social y deportiva.";
   
-  const heroLabel = cmsPage?.data?.hero_label || "QUÉ HACEMOS";
-  const heroTitle = cmsPage?.data?.hero_title || "Nuestros Programas";
-  const heroDescription = cmsPage?.data?.hero_description || "Desarrollamos una metodología integral de intervención social y deportiva.";
-  
-  const programs = cmsPage?.data?.programs_list?.length > 0 
-    ? cmsPage.data.programs_list 
-    : DEFAULT_PROGRAMS;
+  const programs = DEFAULT_PROGRAMS;
 
-  const ctaTitle = cmsPage?.data?.cta_title || "¿QUERÉS INSCRIBIR A TU INSTITUCIÓN?";
-  const ctaDescription = cmsPage?.data?.cta_description || "Registrá a tu equipo en la Liga BA o la Liga Nacional de manera 100% online.";
+  const ctaTitle = "¿QUERÉS INSCRIBIR A TU INSTITUCIÓN?";
+  const ctaDescription = "Registrá a tu equipo en la Liga BA o la Liga Nacional de manera 100% online.";
 
   return (
     <div style={{ background: "#000B1A", color: "#fff", minHeight: "100vh" }}>

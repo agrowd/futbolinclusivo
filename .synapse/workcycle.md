@@ -231,10 +231,24 @@
 3. **Validación**: Compilación limpia con `npm run build`.
 4. **Despliegue**: Cambios pusheados a la rama principal de GitHub.
 
+## 2026-07-22 — Sesión 16: Conversión de Páginas Estáticas Desvinculando CMS
 
+### Qué se hizo:
+1. **Desvinculación de Base de Datos para Páginas Estáticas**: Se eliminaron las consultas `Page.findOne` a MongoDB en todas las páginas institucionales y de programa/sumate/canchas/inscripción:
+   - `GenericCmsPage.js`: Se convirtió en componente 100% estático que lee únicamente de `CMS_FALLBACKS[slug]`.
+   - `/institucional`: Componente estático con metadata fija sin consultas a base de datos.
+   - `/institucional/comision`: Limpieza de consultas y renderizado 100% estático desde `CMS_FALLBACKS["comision"]`.
+   - `/programas`: Renderizado directo de programas por defecto de forma estática.
+   - `/sumate`: Renderizado directo de opciones y perfiles de articulación estáticos.
+   - `/canchas` y `/inscripcion`: Eliminación de consultas a la colección `Page`. Las APIs activas de reservas e inscripción continúan dinámicas.
+2. **Preservación de Secciones Dinámicas**:
+   - Noticias, Novedades y Blogs (`/novedades`, `/novedades/[slug]`, `/api/news`, `/admin/news`) se mantienen 100% dinámicos en MongoDB.
+   - Multimedia (`/multimedia`, `/api/media`, `/admin/media`), Reservas (`/api/reservas`, `/admin/reservations`) y Equipos (`/admin/teams`) se mantienen dinámicos.
+3. **Limpieza de UI de Edición CMS**:
+   - `FloatingAdminTools.js` deshabilitado (retorna `null`).
+   - Módulo "Páginas" removido del menú principal del Admin Dashboard (`/admin/dashboard`).
+4. **Validación**: Compilación `npm run build` 100% exitosa (51/51 páginas estáticas/dinámicas prerenderizadas).
+5. **Despliegue**: Cambios pusheados a la rama `main` en GitHub.
 
-
-
-
-
-
+### Decisiones tomadas:
+- Garantizar rendimiento ultra rápido, disponibilidad 100% independiente del servidor de BD para el contenido informativo de la web, manteniendo únicamente Noticias y Formularios como módulos dinámicos.

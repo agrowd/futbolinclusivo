@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.6.0 — 2026-07-22
+- feat: Convertir todas las páginas informativas e institucionales del sitio en componentes 100% estáticos desvinculando la colección Page de MongoDB. Se mantienen totalmente dinámicas las secciones de Noticias, Novedades, Blogs, Multimedia, Reservas y Equipos.
+
 ## v1.5.0 — 2026-07-22
 - fix: Forzar el filtrado y reemplazo de valores legados de la base de datos en la cabecera Hero de Institucional (/institucional) garantizando el renderizado de "Institucional" (Etiqueta), "Andar Fútbol Club" (Título) y "Promoviendo la Inclusión a través del fútbol" (Descripción).
 

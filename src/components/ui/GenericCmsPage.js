@@ -1,19 +1,16 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Users, History, Target, Heart, ArrowRight } from "lucide-react";
-import dbConnect from "@/lib/mongodb";
-import Page from "@/lib/schemas/Page";
 import { CMS_FALLBACKS } from "@/lib/cmsFallbacks";
 import Timeline from "@/components/ui/Timeline";
 
-export default async function GenericCmsPage({ slug, fallbackTitle, fallbackSubtitle }) {
-  await dbConnect();
-  const cmsPage = await Page.findOne({ slug, published: true }).lean();
+export default function GenericCmsPage({ slug, fallbackTitle, fallbackSubtitle }) {
+  const fallback = CMS_FALLBACKS[slug] || {};
 
-  const title = cmsPage?.title || CMS_FALLBACKS[slug]?.title || fallbackTitle;
-  const content = cmsPage?.content || CMS_FALLBACKS[slug]?.content || "";
-  const subtitle = cmsPage?.excerpt || CMS_FALLBACKS[slug]?.excerpt || fallbackSubtitle;
-  const pageData = cmsPage?.data || CMS_FALLBACKS[slug]?.data || {};
+  const title = fallback.title || fallbackTitle;
+  const content = fallback.content || "";
+  const subtitle = fallback.excerpt || fallbackSubtitle;
+  const pageData = fallback.data || {};
 
   const sidebarLinks = [
     { href: "/institucional/nosotros", title: "Nuestro Propósito", desc: "Misión y visión institucional.", icon: Target, img: "https://futbolinclusivo.org.ar/app/uploads/2017/12/nosotros-campo4.jpg", color: "var(--color-primary-light)" },

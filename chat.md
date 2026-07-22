@@ -1,5 +1,27 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 16: Conversión a Sitio Estático (Excluyendo Noticias y Blogs) (2026-07-22)
+
+### 📌 Contexto
+El usuario solicitó que la página deje de comportarse como un CMS para las páginas informativas/institucionales y pase a ser estática, manteniendo intacto el dinamismo en Noticias, Novedades, Blogs, Multimedia, Reservas y Equipos.
+
+### 🛠️ Acciones Realizadas
+1. **Desvinculación de Consultas a BD en Páginas Informativas**:
+   - `src/components/ui/GenericCmsPage.js`: Convertido en componente síncrono estático que consume únicamente los datos de `CMS_FALLBACKS[slug]`.
+   - `src/app/institucional/page.js`: Renderiza estáticamente la cabecera y estructura.
+   - `src/app/institucional/comision/page.js`: Eliminada la función `getPageData`, renderizando directamente la comisión desde `CMS_FALLBACKS["comision"]`.
+   - `src/app/programas/page.js`, `src/app/sumate/page.js`, `src/app/canchas/page.js` y `src/app/inscripcion/page.js`: Eliminadas las dependencias de la colección `Page` de MongoDB.
+2. **Preservación de Módulos Dinámicos**:
+   - `/novedades`, `/novedades/[slug]`, `/api/news`, `/admin/news` permanecen 100% dinámicos con MongoDB.
+   - `/multimedia`, `/api/media`, `/admin/media`, `/api/reservas`, `/admin/reservations`, `/admin/teams` permanecen 100% dinámicos.
+3. **Desactivación de UI de CMS de Páginas**:
+   - `FloatingAdminTools.js` deshabilitado (`return null`).
+   - Removido el ítem "Páginas" del Admin Dashboard (`/admin/dashboard`).
+4. **Validación**:
+   - Ejecutado `npm run build` obteniendo 51 de 51 páginas prerenderizadas limpiamente.
+
+---
+
 ## ⚽ Sesión 15: Corrección y Forzado de Textos Hero Institucional (2026-07-22)
 
 ### 📌 Contexto

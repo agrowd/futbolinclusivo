@@ -1,7 +1,10 @@
 import { MapPin } from "lucide-react";
-import dbConnect from "@/lib/mongodb";
-import Page from "@/lib/schemas/Page";
 import CourtReservationSystem from "@/components/ui/CourtReservationSystem";
+
+export const metadata = {
+  title: "Alquiler de Canchas - Fútbol Inclusivo",
+  description: "Reservá tu cancha con disponibilidad en tiempo real.",
+};
 
 const COURTS = [
   { id: "cancha-1", name: "Cancha 1 — Pasto sintético", capacity: "Fútbol 7" },
@@ -9,21 +12,9 @@ const COURTS = [
   { id: "cancha-3", name: "Cancha 3 — Multiuso", capacity: "Fútbol 5 / Multideporte" },
 ];
 
-export async function generateMetadata() {
-  await dbConnect();
-  const pageData = await Page.findOne({ slug: "canchas", published: true }).lean();
-  return {
-    title: pageData?.metadata?.metaTitle || "Alquiler de Canchas - Fútbol Inclusivo",
-    description: pageData?.metadata?.metaDescription || "Reservá tu cancha con disponibilidad en tiempo real.",
-  };
-}
-
-export default async function CanchasPage() {
-  await dbConnect();
-  const cmsPage = await Page.findOne({ slug: "canchas", published: true }).lean();
-
-  const heroTitle = cmsPage?.data?.hero_title || "Alquiler de Canchas";
-  const heroSubtitle = cmsPage?.data?.hero_subtitle || "Reservá tu cancha con disponibilidad en tiempo real. Este servicio es abierto a todas las personas.";
+export default function CanchasPage() {
+  const heroTitle = "Alquiler de Canchas";
+  const heroSubtitle = "Reservá tu cancha con disponibilidad en tiempo real. Este servicio es abierto a todas las personas.";
 
   return (
     <div className="section" style={{ minHeight: "80vh", padding: "120px 0 60px" }}>

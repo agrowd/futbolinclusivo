@@ -1,10 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import dbConnect from "@/lib/mongodb";
-import Page from "@/lib/schemas/Page";
 import DynamicIcon from "@/components/ui/DynamicIcon";
 
-// Fallbacks nativos si no hay datos en CMS
 const DEFAULT_PARTICIPATION = [
   {
     title: "Donaciones Individuales",
@@ -38,34 +35,19 @@ const DEFAULT_PROFILES = [
   { name: "Universidades", icon: "GraduationCap" },
 ];
 
-export async function generateMetadata() {
-  await dbConnect();
-  const pageData = await Page.findOne({ slug: "sumate", published: true }).lean();
-  
-  return {
-    title: pageData?.metadata?.metaTitle || "¡Sumate! - Fútbol Inclusivo",
-    description: pageData?.metadata?.metaDescription || "Descubrí todas las formas de apoyar y participar en la Liga de Fútbol Inclusiva.",
-  };
-}
+export const metadata = {
+  title: "¡Sumate! - Fútbol Inclusivo",
+  description: "Descubrí todas las formas de apoyar y participar en la Liga de Fútbol Inclusiva.",
+};
 
-export default async function SumatePage() {
-  await dbConnect();
-  const cmsPage = await Page.findOne({ slug: "sumate", published: true }).lean();
+export default function SumatePage() {
+  const heroTitle = "Se parte del cambio";
+  const heroDescription = "El movimiento de Fútbol Inclusivo crece gracias al apoyo de personas, organizaciones, empresas e instituciones gubernamentales. Existen múltiples formas de articular y colaborar con nuestra misión.";
   
-  // Extraer datos dinámicos o usar fallbacks
-  const heroTitle = cmsPage?.data?.hero_title || "Se parte del cambio";
-  const heroDescription = cmsPage?.data?.hero_description || "El movimiento de Fútbol Inclusivo crece gracias al apoyo de personas, organizaciones, empresas e instituciones gubernamentales. Existen múltiples formas de articular y colaborar con nuestra misión.";
-  
-  const items = cmsPage?.data?.participation_options?.length > 0 
-    ? cmsPage.data.participation_options 
-    : DEFAULT_PARTICIPATION;
-    
-  const profilesTitle = cmsPage?.data?.red_title || "Red de Articulación";
-  const profilesDescription = cmsPage?.data?.red_description || "Nuestras alianzas estratégicas involucran a diversos sectores de la sociedad para garantizar un impacto sostenible.";
-  
-  const profiles = cmsPage?.data?.profiles?.length > 0 
-    ? cmsPage.data.profiles 
-    : DEFAULT_PROFILES;
+  const items = DEFAULT_PARTICIPATION;
+  const profilesTitle = "Red de Articulación";
+  const profilesDescription = "Nuestras alianzas estratégicas involucran a diversos sectores de la sociedad para garantizar un impacto sostenible.";
+  const profiles = DEFAULT_PROFILES;
 
   return (
     <div className="page-container">

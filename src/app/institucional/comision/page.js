@@ -1,7 +1,5 @@
 import { Users, UserCircle } from "lucide-react";
 import FadeIn from "@/components/ui/FadeIn";
-import dbConnect from "@/lib/mongodb";
-import Page from "@/lib/schemas/Page";
 import { CMS_FALLBACKS } from "@/lib/cmsFallbacks";
 
 export const metadata = {
@@ -9,19 +7,15 @@ export const metadata = {
   description: "Conocé al equipo humano que lidera la Asociación Civil Andar.",
 };
 
-async function getPageData() {
-  await dbConnect();
-  return await Page.findOne({ slug: "comision", published: true }).lean();
-}
-
 const boardMembers = [
   { name: "Juan Ramón Fiasche", role: "Presidente" },
   { name: "Martín Petrelli", role: "Vicepresidente" },
   { name: "Raúl Lucero", role: "Secretario" },
 ];
 
-export default async function Comision() {
-  const dynamicPage = await getPageData();
+export default function Comision() {
+  const title = CMS_FALLBACKS["comision"]?.title || "Comisión Directiva";
+  const excerpt = CMS_FALLBACKS["comision"]?.excerpt || "Conocé al equipo humano que lidera la Asociación Civil Andar.";
 
   return (
     <div style={{ background: "#030712", color: "#fff", minHeight: "100vh" }}>
@@ -46,10 +40,10 @@ export default async function Comision() {
             LIDERAZGO
           </div>
           <h1 style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", fontWeight: 900, marginBottom: "24px" }}>
-            {dynamicPage ? dynamicPage.title : CMS_FALLBACKS["comision"].title}
+            {title}
           </h1>
           <p style={{ fontSize: "1.2rem", color: "rgba(255,255,255,0.6)", maxWidth: "800px", margin: "0 auto", lineHeight: 1.6 }}>
-            {dynamicPage && dynamicPage.excerpt ? dynamicPage.excerpt : CMS_FALLBACKS["comision"].excerpt}
+            {excerpt}
           </p>
         </div>
       </section>
@@ -69,7 +63,7 @@ export default async function Comision() {
           }}>
               <div 
                 className="prose prose-invert max-w-none text-white/50 text-center"
-                dangerouslySetInnerHTML={{ __html: dynamicPage?.content || CMS_FALLBACKS["comision"].content }}
+                dangerouslySetInnerHTML={{ __html: CMS_FALLBACKS["comision"].content }}
               />
           </div>
 

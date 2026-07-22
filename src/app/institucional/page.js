@@ -1,27 +1,17 @@
 import Link from "next/link";
-import { Users, History, Target, Heart, ArrowRight } from "lucide-react";
+import { Target, ArrowRight } from "lucide-react";
 import Image from "next/image";
-import dbConnect from "@/lib/mongodb";
-import Page from "@/lib/schemas/Page";
 
-export async function generateMetadata() {
-  await dbConnect();
-  const pageData = await Page.findOne({ slug: "institucional", published: true }).lean();
-  return {
-    title: pageData?.metadata?.metaTitle || "Institucional - Fútbol Inclusivo",
-    description: pageData?.metadata?.metaDescription || "Conocé la historia y el propósito de Andar.",
-  };
-}
+export const metadata = {
+  title: "Andar Fútbol Club - Institucional",
+  description: "Promoviendo la Inclusión a través del fútbol.",
+};
 
-export default async function InstitucionalPage() {
-  await dbConnect();
-  const cmsPage = await Page.findOne({ slug: "institucional", published: true }).lean();
-
-  const data = cmsPage?.data || {};
-  const heroImage = data.hero_image || "https://futbolinclusivo.org.ar/app/uploads/2017/12/nosotros-campo4.jpg";
-  const heroLabel = (data.hero_label && data.hero_label !== "LA ASOCIACIÓN") ? data.hero_label : "Institucional";
-  const heroTitle = (cmsPage?.title && cmsPage.title !== "Institucional") ? cmsPage.title : "Andar Fútbol Club";
-  const heroDescription = (data.hero_description && data.hero_description !== "El fútbol como herramienta de inclusión social.") ? data.hero_description : "Promoviendo la Inclusión a través del fútbol";
+export default function InstitucionalPage() {
+  const heroImage = "https://futbolinclusivo.org.ar/app/uploads/2017/12/nosotros-campo4.jpg";
+  const heroLabel = "Institucional";
+  const heroTitle = "Andar Fútbol Club";
+  const heroDescription = "Promoviendo la Inclusión a través del fútbol";
 
   return (
     <div style={{ background: "#000B1A", color: "#fff", minHeight: "100vh" }}>
@@ -50,8 +40,8 @@ export default async function InstitucionalPage() {
                 <div style={{ display: "flex", gap: "24px", alignItems: "flex-start", background: "rgba(255,255,255,0.02)", padding: "30px", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.05)" }}>
                   <div style={{ background: "rgba(230,126,34,0.1)", color: "#E67E22", padding: "12px", borderRadius: "8px" }}><Target size={28} /></div>
                   <div>
-                    <h3 style={{ fontSize: "1.3rem", fontWeight: 800, marginBottom: "10px" }}>{data.mission_title || "Misión"}</h3>
-                    <p style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.6 }}>{data.mission_desc || "Promover la inclusión a través del fútbol"}</p>
+                    <h3 style={{ fontSize: "1.3rem", fontWeight: 800, marginBottom: "10px" }}>Misión</h3>
+                    <p style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.6 }}>Promover la inclusión a través del fútbol</p>
                   </div>
                 </div>
                 {/* ... Otros bloques similares para Visión y Objetivo ... */}
