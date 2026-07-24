@@ -1,5 +1,20 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 18: Actualización de Textos de Propósito y Misión (2026-07-24)
+
+### 📌 Contexto
+El usuario envió dos capturas del documento oficial solicitando reemplazar los textos antiguos de Propósito y Misión por la nueva redacción:
+- Título principal: `EL FÚTBOL COMO HERRAMIENTA DE EDUCACIÓN E INCLUSIÓN SOCIAL`
+- Nuevos párrafos detallando el rol del fútbol en trayectorias educativas, la propuesta deportiva inclusiva de Andar FC (categorías infantiles mixtas 4-13 años e inclusivas +14 años), y la visión del deporte como plataforma de derechos.
+- Misión: `Promover la inclusión a través del fútbol.` (removiendo la palabra `social` al final).
+
+### 🛠️ Acciones Realizadas
+1. **Actualización de `src/app/institucional/propósito/page.js`**: Reemplazado el encabezado, subtítulo, los tres párrafos del cuerpo principal y el texto en la tarjeta de Misión.
+2. **Sincronización en `src/lib/cmsFallbacks.js`**: Actualizado el objeto fallback `proposito`.
+3. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (51/51 páginas) y commit/push a GitHub.
+
+---
+
 ## ⚽ Sesión 17: Actualización de Subtítulo Hero en Página Nosotros (2026-07-22)
 
 ### 📌 Contexto

@@ -253,10 +253,16 @@
 ### Decisiones tomadas:
 - Garantizar rendimiento ultra rápido, disponibilidad 100% independiente del servidor de BD para el contenido informativo de la web, manteniendo únicamente Noticias y Formularios como módulos dinámicos.
 
-## 2026-07-22 — Sesión 17: Actualización de Subtítulo en Página Nosotros
+## 2026-07-24 — Sesión 18: Actualización de Textos de Propósito y Misión Institucional
 
 ### Qué se hizo:
-1. **Actualización de Copia de Hero de Nosotros (`/institucional/nosotros`)**: Se modificó `fallbackTitle` a `"Nosotros"` y `fallbackSubtitle` a `"Promovemos la educación y la inclusión social a través del fútbol"` en `src/app/institucional/nosotros/page.js`.
-2. **Validación**: Compilación `npm run build` exitosa (51/51 páginas).
-3. **Despliegue**: Cambios pusheados a la rama principal `main` en GitHub.
-
+1. **Actualización de Título y Cuerpo en Propósito (`/institucional/propósito`)**:
+   - Título: `"EL FÚTBOL COMO HERRAMIENTA DE EDUCACIÓN E INCLUSIÓN SOCIAL"`
+   - Subtítulo & Párrafo 1: `"El fútbol tiene un arraigo particular en la cultura argentina, y por eso constituye una herramienta privilegiada de desarrollo social y educativo. Su poder convocante nos permite generar un espacio de participación colectiva donde el eje no es la competencia, sino la de acompañar trayectorias educativas a través del juego, el aprendizaje de valores y la construcción de ciudadanía."`
+   - Párrafo 2: `"La programación deportiva de Andar Fútbol Club no se circunscribe exclusivamente al abordaje de personas con discapacidad: la Academia de Fútbol cuenta con categorías infantiles mixtas desde los 4 a 13 años de edad, categorías inclusivas para personas mayores de 14 años de edad, articulando una propuesta integral centrada en las infancias y el fútbol inclusivo. En todos los casos, garantizando espacios seguros y libres de discriminación donde cada persona pueda desarrollarse plenamente."`
+   - Párrafo 3: `"El deporte, desde nuestra visión, es una plataforma para la inclusión, la educación y el ejercicio pleno de derechos."`
+2. **Actualización de Misión**:
+   - `"Nuestra Misión"`: Se actualizó la definición a `"Promover la inclusión a través del fútbol."` (eliminando la palabra `"social"` del final para coincidir exactamente con la nueva redacción oficial).
+3. **Sincronización en Fallbacks**: Se actualizaron las entradas de `proposito` en `src/lib/cmsFallbacks.js` para mantener coherencia estática global.
+4. **Validación**: Compilación `npm run build` 100% limpia (51/51 páginas).
+5. **Despliegue**: Cambios subidos a GitHub.

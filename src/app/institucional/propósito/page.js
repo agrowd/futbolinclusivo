@@ -52,10 +52,10 @@ export default function PropositoPage() {
             NUESTRO PROPÓSITO
           </div>
           <h1 style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", fontWeight: 900, marginBottom: "24px" }}>
-            EL FÚTBOL COMO HERRAMIENTA DE INCLUSIÓN SOCIAL
+            EL FÚTBOL COMO HERRAMIENTA DE EDUCACIÓN E INCLUSIÓN SOCIAL
           </h1>
           <p style={{ fontSize: "1.2rem", color: "rgba(255,255,255,0.6)", maxWidth: "800px", margin: "0 auto", lineHeight: 1.6 }}>
-            El fútbol tiene un arraigo particular en la cultura argentina. Su poder es ampliamente movilizador y nos permite generar un espacio masivo de participación colectiva.
+            El fútbol tiene un arraigo particular en la cultura argentina, y por eso constituye una herramienta privilegiada de desarrollo social y educativo.
           </p>
         </div>
       </section>
@@ -74,19 +74,15 @@ export default function PropositoPage() {
               color: "rgba(255,255,255,0.7)"
             }}>
               <p style={{ marginBottom: "30px" }}>
-                El fútbol tiene un arraigo particular en la cultura argentina. Su poder es ampliamente movilizador y nos permite generar un espacio masivo de participación colectiva donde el eje no es la competencia si no la equiparación de oportunidades, brindando la posibilidad que todos y todas puedan jugar en igualdad de condiciones, independientemente de sus limitaciones.
+                El fútbol tiene un arraigo particular en la cultura argentina, y por eso constituye una herramienta privilegiada de desarrollo social y educativo. Su poder convocante nos permite generar un espacio de participación colectiva donde el eje no es la competencia, sino la de acompañar trayectorias educativas a través del juego, el aprendizaje de valores y la construcción de ciudadanía.
               </p>
               
               <p style={{ marginBottom: "30px" }}>
-                El fútbol, en este caso, nos permite demostrar a la comunidad, a través de una estrategia incluyente, que las personas con discapacidad, cuando se respetan sus particularidades y se potencia sus virtudes, tienen mucho para aportar a sus comunidades.
-              </p>
-              
-              <p style={{ marginBottom: "30px" }}>
-                Buscamos a través de la revalorización colectiva y personal darle visibilidad a un colectivo que ve vulnerado sus derechos permanentemente en nuestro país. La situación de discapacidad que atraviesa una persona le impone prejuicios y limitaciones que no son propios de esas personas, si no el resultado de una sociedad que no toma en cuenta sus necesidades y peculiaridades, generando un círculo vicioso de estigmatización y exclusión.
+                La programación deportiva de Andar Fútbol Club no se circunscribe exclusivamente al abordaje de personas con discapacidad: la Academia de Fútbol cuenta con categorías infantiles mixtas desde los 4 a 13 años de edad, categorías inclusivas para personas mayores de 14 años de edad, articulando una propuesta integral centrada en las infancias y el fútbol inclusivo. En todos los casos, garantizando espacios seguros y libres de discriminación donde cada persona pueda desarrollarse plenamente.
               </p>
               
               <p>
-                Nuestro objetivo es claro: derribar mitos y aportar a una inclusión plena de todas las personas, más allá de la condición que puedan tener o atravesar.
+                El deporte, desde nuestra visión, es una plataforma para la inclusión, la educación y el ejercicio pleno de derechos.
               </p>
             </div>
 
@@ -114,7 +110,7 @@ export default function PropositoPage() {
                 </div>
                 <h3 style={{ fontSize: "1.5rem", fontWeight: 800, color: "#fff", marginBottom: "15px" }}>Nuestra Misión</h3>
                 <p style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.6 }}>
-                  Generar oportunidades innovadoras para potenciar el desarrollo creativo de personas con discapacidad, mejorando su calidad de vida.
+                  Promover la inclusión a través del fútbol.
                 </p>
               </div>
 

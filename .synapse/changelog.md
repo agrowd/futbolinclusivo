@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.6.2 — 2026-07-24
+- edit: Actualización de los contenidos de la página de Propósito (/institucional/propósito), Misión y cmsFallbacks.js según nuevo texto oficial provisto por el usuario: "EL FÚTBOL COMO HERRAMIENTA DE EDUCACIÓN E INCLUSIÓN SOCIAL" y Misión "Promover la inclusión a través del fútbol." (removiendo "social" del final).
+
 ## v1.6.1 — 2026-07-22
 - edit: Actualizar el título y subtítulo de la cabecera Hero en la página /institucional/nosotros a "Nosotros" y "Promovemos la educación y la inclusión social a través del fútbol".
 

@@ -95,8 +95,8 @@ export const CMS_FALLBACKS = {
   },
   "proposito": { 
     title: "Nuestro Propósito", 
-    excerpt: "El fútbol como herramienta de transformación social.", 
-    content: "<p>Nuestro propósito es derribar barreras y construir puentes hacia la autonomía de las personas con discapacidad, erradicando el estigma y la discriminación en cada rincón del país.</p>", 
+    excerpt: "El fútbol como herramienta de educación e inclusión social.", 
+    content: "<p>El fútbol tiene un arraigo particular en la cultura argentina, y por eso constituye una herramienta privilegiada de desarrollo social y educativo. Su poder convocante nos permite generar un espacio de participación colectiva donde el eje no es la competencia, sino la de acompañar trayectorias educativas a través del juego, el aprendizaje de valores y la construcción de ciudadanía.</p><p>La programación deportiva de Andar Fútbol Club no se circunscribe exclusivamente al abordaje de personas con discapacidad: la Academia de Fútbol cuenta con categorías infantiles mixtas desde los 4 a 13 años de edad, categorías inclusivas para personas mayores de 14 años de edad, articulando una propuesta integral centrada en las infancias y el fútbol inclusivo. En todos los casos, garantizando espacios seguros y libres de discriminación donde cada persona pueda desarrollarse plenamente.</p><p>El deporte, desde nuestra visión, es una plataforma para la inclusión, la educación y el ejercicio pleno de derechos.</p>", 
     section: "institucional" 
   },
   "escuela": { 
