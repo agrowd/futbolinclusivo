@@ -36,28 +36,30 @@ const nextConfig = {
 
   },
   async rewrites() {
-    return [
-      {
-        source: '/:path*',
-        has: [
-          {
-            type: 'host',
-            value: 'canchas.futbolinclusivo.org.ar',
-          },
-        ],
-        destination: 'http://149.50.128.73:9191/:path*',
-      },
-      {
-        source: '/:path*',
-        has: [
-          {
-            type: 'host',
-            value: 'www.canchas.futbolinclusivo.org.ar',
-          },
-        ],
-        destination: 'http://149.50.128.73:9191/:path*',
-      },
-    ];
+    return {
+      beforeFiles: [
+        {
+          source: '/:path*',
+          has: [
+            {
+              type: 'host',
+              value: 'canchas.futbolinclusivo.org.ar',
+            },
+          ],
+          destination: 'http://149.50.128.73:9191/:path*',
+        },
+        {
+          source: '/:path*',
+          has: [
+            {
+              type: 'host',
+              value: 'www.canchas.futbolinclusivo.org.ar',
+            },
+          ],
+          destination: 'http://149.50.128.73:9191/:path*',
+        },
+      ],
+    };
   },
 };
 
