@@ -339,3 +339,13 @@
 3. **Invalidación Forzada de Caché para Favicon**:
    - Se agregaron parámetros de versión `?v=3` en `<head>` de `layout.js` y se sobreescribieron todos los archivos `public/favicon.ico`, `public/favicon.png`, `public/icon.png` y `src/app/favicon.ico` con el logo oficial de Andar FC.
 4. **Validación y Despliegue**: Compilación `npm run build` exitosa (59/59 rutas) y push a GitHub `main`.
+
+## 2026-08-13 — Sesión 24: Campos Obligatorios en Formulario Día de las Infancias
+
+### Qué se hizo:
+1. **Validación Estricta de Campos Obligatorios**:
+   - Se configuraron como obligatorios (`required` tanto en Frontend como en Backend `/api/infancias`):
+     - **Adulto / Tutor**: Nombre y Apellido (`tutorName`), Teléfono / WhatsApp (`tutorPhone`), Localidad / Barrio (`locality`), Email (`tutorEmail`), Autorización de Imagen (`imageConsent`).
+     - **Niño / Niña**: Nombre y Apellido (`childName`), DNI (`childDni`), Edad (`childAge`), Fecha de Nacimiento (`childBirthDate`), Observaciones Médicas / Alergias (`medicalNotes`).
+   - El único campo opcional es **Club o Institución** (`clubOrSchool`).
+2. **Validación y Despliegue**: Compilación `npm run build` exitosa (59/59 rutas) y push a GitHub `main`.

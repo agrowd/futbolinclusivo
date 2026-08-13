@@ -1,5 +1,21 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 24: Campos Obligatorios en Formulario Día de las Infancias (2026-08-13)
+
+### 📌 Contexto
+El usuario solicitó:
+1. Que todos los datos del formulario del Día de las Infancias sean obligatorios, excepto la institución / club del chico.
+
+### 🛠️ Acciones Realizadas
+1. **Validaciones en Frontend (`InfanciasForm.js`) y Backend (`/api/infancias/route.js`)**:
+   - Se configuraron como campos requeridos con asterisco rojo `* (Obligatorio)`:
+     - Nombre del adulto/tutor, Teléfono/WhatsApp, Localidad/barrio, Email de contacto y Autorización de imagen.
+     - Nombre completo de cada chico/a, DNI, Edad, Fecha de nacimiento y Observaciones médicas/alergias (con indicación de poner "Ninguna" si no posee).
+   - Se mantuvo "Club o Institución" como el único campo opcional.
+2. **Validación y Despliegue**: Compilación exitosa (59/59 rutas) y push a GitHub `main`.
+
+---
+
 ## ⚽ Sesión 23: Persistencia en LocalStorage, Instrucciones de WhatsApp y Favicon (2026-08-13)
 
 ### 📌 Contexto

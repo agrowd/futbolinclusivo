@@ -41,10 +41,31 @@ export async function POST(req) {
       medicalNotes,
     } = body;
 
-    // Common tutor validations
+    // Mandatory tutor validations (all required except clubOrSchool)
+    if (!tutorName || !tutorName.trim()) {
+      return NextResponse.json(
+        { error: "El nombre y apellido del adulto responsable es obligatorio." },
+        { status: 400 }
+      );
+    }
+
     if (!tutorPhone || !tutorPhone.trim()) {
       return NextResponse.json(
         { error: "El teléfono completo de contacto es obligatorio." },
+        { status: 400 }
+      );
+    }
+
+    if (!tutorEmail || !tutorEmail.trim()) {
+      return NextResponse.json(
+        { error: "El correo electrónico es obligatorio." },
+        { status: 400 }
+      );
+    }
+
+    if (!locality || !locality.trim()) {
+      return NextResponse.json(
+        { error: "La localidad / barrio es obligatoria." },
         { status: 400 }
       );
     }
@@ -59,7 +80,7 @@ export async function POST(req) {
     // Normalize children list
     let childrenList = [];
     if (Array.isArray(children) && children.length > 0) {
-      childrenList = children.filter((c) => c.childName && c.childName.trim());
+      childrenList = children;
     } else if (childName && childName.trim()) {
       childrenList = [
         {
@@ -77,6 +98,41 @@ export async function POST(req) {
         { error: "Debes ingresar los datos de al menos un niño o niña." },
         { status: 400 }
       );
+    }
+
+    // Validate every child mandatory fields
+    for (let i = 0; i < childrenList.length; i++) {
+      const c = childrenList[i];
+      if (!c.childName || !c.childName.trim()) {
+        return NextResponse.json(
+          { error: `El nombre y apellido del participante #${i + 1} es obligatorio.` },
+          { status: 400 }
+        );
+      }
+      if (!c.childDni || !c.childDni.trim()) {
+        return NextResponse.json(
+          { error: `El DNI de ${c.childName || `participante #${i + 1}`} es obligatorio.` },
+          { status: 400 }
+        );
+      }
+      if (!c.childAge || !String(c.childAge).trim()) {
+        return NextResponse.json(
+          { error: `La edad de ${c.childName || `participante #${i + 1}`} es obligatoria.` },
+          { status: 400 }
+        );
+      }
+      if (!c.childBirthDate || !String(c.childBirthDate).trim()) {
+        return NextResponse.json(
+          { error: `La fecha de nacimiento de ${c.childName || `participante #${i + 1}`} es obligatoria.` },
+          { status: 400 }
+        );
+      }
+      if (!c.medicalNotes || !c.medicalNotes.trim()) {
+        return NextResponse.json(
+          { error: `Las observaciones médicas de ${c.childName || `participante #${i + 1}`} son obligatorias (si no posee, indicar "Ninguna").` },
+          { status: 400 }
+        );
+      }
     }
 
     const familyGroupId = generateFamilyGroupId();

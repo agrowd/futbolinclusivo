@@ -176,8 +176,23 @@ export default function InfanciasForm() {
     e.preventDefault();
     setError("");
 
+    if (!tutorData.tutorName.trim()) {
+      setError("Por favor ingresá el nombre y apellido del adulto responsable / tutor.");
+      return;
+    }
+
     if (!tutorData.tutorPhone.trim()) {
       setError("Por favor ingresá un número de teléfono / WhatsApp de contacto.");
+      return;
+    }
+
+    if (!tutorData.tutorEmail.trim()) {
+      setError("Por favor ingresá un correo electrónico de contacto.");
+      return;
+    }
+
+    if (!tutorData.locality.trim()) {
+      setError("Por favor ingresá la localidad o barrio.");
       return;
     }
 
@@ -186,10 +201,33 @@ export default function InfanciasForm() {
       return;
     }
 
-    // Validate each child
+    // Validate each child mandatory fields
     for (let i = 0; i < children.length; i++) {
-      if (!children[i].childName.trim()) {
-        setError(`Por favor ingresá el nombre completo del participante #${i + 1}.`);
+      const c = children[i];
+      const childNum = i + 1;
+
+      if (!c.childName.trim()) {
+        setError(`Por favor ingresá el nombre completo del participante #${childNum}.`);
+        return;
+      }
+
+      if (!c.childDni.trim()) {
+        setError(`Por favor ingresá el DNI de ${c.childName || `participante #${childNum}`}.`);
+        return;
+      }
+
+      if (!String(c.childAge).trim()) {
+        setError(`Por favor ingresá la edad de ${c.childName || `participante #${childNum}`}.`);
+        return;
+      }
+
+      if (!String(c.childBirthDate).trim()) {
+        setError(`Por favor seleccioná la fecha de nacimiento de ${c.childName || `participante #${childNum}`}.`);
+        return;
+      }
+
+      if (!c.medicalNotes.trim()) {
+        setError(`Por favor completá las observaciones médicas o alergias de ${c.childName || `participante #${childNum}`} (si no posee ninguna, escribí "Ninguna").`);
         return;
       }
     }
@@ -683,22 +721,23 @@ export default function InfanciasForm() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-white/80 mb-2">
-                  Nombre y Apellido del Padre / Madre / Tutor <span className="text-white/40 text-[10px] lowercase font-normal">(opcional)</span>
+                  Nombre y Apellido del Adulto / Tutor <span className="text-[#E74C3C]">* (Obligatorio)</span>
                 </label>
                 <input
                   type="text"
                   name="tutorName"
                   value={tutorData.tutorName}
                   onChange={handleTutorChange}
+                  required
                   placeholder="Ej: Valeria Martínez"
-                  className="w-full bg-white/5 border border-white/10 focus:border-[#2980B9] rounded-xl px-4 py-3.5 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-[#2980B9]/20 transition-all text-sm"
+                  className="w-full bg-white/5 border border-white/10 focus:border-[#2980B9] rounded-xl px-4 py-3.5 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-[#2980B9]/20 transition-all text-sm font-medium"
                 />
               </div>
 
               {/* Teléfono Completo (OBLIGATORIO) */}
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-white/80 mb-2">
-                  Teléfono / WhatsApp de Contacto <span className="text-[#E74C3C]">*</span>
+                  Teléfono / WhatsApp de Contacto <span className="text-[#E74C3C]">* (Obligatorio)</span>
                 </label>
                 <input
                   type="tel"
@@ -715,29 +754,31 @@ export default function InfanciasForm() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-white/80 mb-2">
-                  Localidad / Barrio <span className="text-white/40 text-[10px] lowercase font-normal">(opcional)</span>
+                  Localidad / Barrio <span className="text-[#E74C3C]">* (Obligatorio)</span>
                 </label>
                 <input
                   type="text"
                   name="locality"
                   value={tutorData.locality}
                   onChange={handleTutorChange}
+                  required
                   placeholder="Ej: Moreno, Paso del Rey"
-                  className="w-full bg-white/5 border border-white/10 focus:border-[#2980B9] rounded-xl px-4 py-3.5 text-white placeholder-white/30 focus:outline-none text-sm"
+                  className="w-full bg-white/5 border border-white/10 focus:border-[#2980B9] rounded-xl px-4 py-3.5 text-white placeholder-white/30 focus:outline-none text-sm font-medium"
                 />
               </div>
 
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-white/80 mb-2">
-                  Email <span className="text-white/40 text-[10px] lowercase font-normal">(opcional)</span>
+                  Email de Contacto <span className="text-[#E74C3C]">* (Obligatorio)</span>
                 </label>
                 <input
                   type="email"
                   name="tutorEmail"
                   value={tutorData.tutorEmail}
                   onChange={handleTutorChange}
+                  required
                   placeholder="Ej: familia@gmail.com"
-                  className="w-full bg-white/5 border border-white/10 focus:border-[#2980B9] rounded-xl px-4 py-3.5 text-white placeholder-white/30 focus:outline-none text-sm"
+                  className="w-full bg-white/5 border border-white/10 focus:border-[#2980B9] rounded-xl px-4 py-3.5 text-white placeholder-white/30 focus:outline-none text-sm font-medium"
                 />
               </div>
 
@@ -812,7 +853,7 @@ export default function InfanciasForm() {
                 {/* Nombre Completo (OBLIGATORIO) */}
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-white/80 mb-2">
-                    Nombre y Apellido Completo <span className="text-[#E74C3C]">*</span>
+                    Nombre y Apellido Completo <span className="text-[#E74C3C]">* (Obligatorio)</span>
                   </label>
                   <input
                     type="text"
@@ -828,41 +869,44 @@ export default function InfanciasForm() {
                   {/* DNI */}
                   <div>
                     <label className="block text-xs font-bold uppercase tracking-wider text-white/80 mb-1.5">
-                      DNI <span className="text-white/40 text-[10px] lowercase font-normal">(opcional)</span>
+                      DNI <span className="text-[#E74C3C]">* (Obligatorio)</span>
                     </label>
                     <input
                       type="text"
                       value={child.childDni}
                       onChange={(e) => handleChildChange(index, "childDni", e.target.value)}
+                      required
                       placeholder="Ej: 52.418.902"
-                      className="w-full bg-white/5 border border-white/10 focus:border-[#36b37e] rounded-xl px-4 py-2.5 text-white placeholder-white/30 focus:outline-none text-sm"
+                      className="w-full bg-white/5 border border-white/10 focus:border-[#36b37e] rounded-xl px-4 py-2.5 text-white placeholder-white/30 focus:outline-none text-sm font-medium"
                     />
                   </div>
 
                   {/* Edad */}
                   <div>
                     <label className="block text-xs font-bold uppercase tracking-wider text-white/80 mb-1.5">
-                      Edad <span className="text-white/40 text-[10px] lowercase font-normal">(ej: 8 años)</span>
+                      Edad <span className="text-[#E74C3C]">* (Obligatorio)</span>
                     </label>
                     <input
                       type="text"
                       value={child.childAge}
                       onChange={(e) => handleChildChange(index, "childAge", e.target.value)}
-                      placeholder="Ej: 8"
-                      className="w-full bg-white/5 border border-white/10 focus:border-[#36b37e] rounded-xl px-4 py-2.5 text-white placeholder-white/30 focus:outline-none text-sm"
+                      required
+                      placeholder="Ej: 8 años"
+                      className="w-full bg-white/5 border border-white/10 focus:border-[#36b37e] rounded-xl px-4 py-2.5 text-white placeholder-white/30 focus:outline-none text-sm font-medium"
                     />
                   </div>
 
                   {/* Fecha Nacimiento */}
                   <div>
                     <label className="block text-xs font-bold uppercase tracking-wider text-white/80 mb-1.5">
-                      Fecha Nacimiento <span className="text-white/40 text-[10px] lowercase font-normal">(opcional)</span>
+                      Fecha Nacimiento <span className="text-[#E74C3C]">* (Obligatorio)</span>
                     </label>
                     <input
                       type="date"
                       value={child.childBirthDate}
                       onChange={(e) => handleChildChange(index, "childBirthDate", e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 focus:border-[#36b37e] rounded-xl px-4 py-2 text-white placeholder-white/30 focus:outline-none text-sm"
+                      required
+                      className="w-full bg-white/5 border border-white/10 focus:border-[#36b37e] rounded-xl px-4 py-2 text-white placeholder-white/30 focus:outline-none text-sm font-medium"
                     />
                   </div>
                 </div>
@@ -870,14 +914,15 @@ export default function InfanciasForm() {
                 {/* Observaciones Médicas */}
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-white/80 mb-1.5">
-                    Observaciones médicas o alergias <span className="text-white/40 text-[10px] lowercase font-normal">(opcional)</span>
+                    Observaciones médicas o alergias <span className="text-[#E74C3C]">* (Obligatorio - Si no posee, escribir "Ninguna")</span>
                   </label>
                   <input
                     type="text"
                     value={child.medicalNotes}
                     onChange={(e) => handleChildChange(index, "medicalNotes", e.target.value)}
-                    placeholder="Ej: Ninguna / Asma / Celiaco / Toma medicación"
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white placeholder-white/30 focus:outline-none text-sm"
+                    required
+                    placeholder="Ej: Ninguna / Asma / Celíaco / Toma medicación"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white placeholder-white/30 focus:outline-none text-sm font-medium"
                   />
                 </div>
 

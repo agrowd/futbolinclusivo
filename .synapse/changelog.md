@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.8.3 — 2026-08-13
+- feat: Establecidos todos los campos del formulario del Día de las Infancias como estrictamente obligatorios tanto en cliente como en backend (/api/infancias), dejando únicamente "Club o Institución" como campo opcional.
+
 ## v1.8.2 — 2026-08-13
 - feat: Persistencia de pases familiares en localStorage para que los adultos responsables puedan consultar sus QRs en cualquier momento sin volver a rellenar el formulario.
 - feat: Opciones para añadir más hijos/as manteniendo los datos del tutor o reiniciar la inscripción para otra familia.
