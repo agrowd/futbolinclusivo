@@ -1,5 +1,20 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 20: Habilitación de Usuario Juanchi y Acceso Directo Admin (2026-08-13)
+
+### 📌 Contexto
+El usuario reportó que al intentar acceder a `admin.futbolinclusivo.com.ar` no le cargaba la página (debido a que el dominio registrado es `.org.ar` y los subdominios deben vincularse en Vercel DNS), y solicitó configurar como credenciales de acceso de administración el usuario `juanchi` y la contraseña `admin123`.
+
+### 🛠️ Acciones Realizadas
+1. **Configuración de Autenticación (`[...nextauth]/route.js`)**:
+   - Se habilitó la búsqueda de usuario tanto por email exacto como por alias/nombre de usuario (`juanchi` o `juanchi@futbolinclusivo.org.ar`).
+   - Se agregó la creación/actualización automática en base de datos de la cuenta `juanchi` con rol `admin` y contraseña `admin123`.
+2. **Actualización de UI de Login (`/admin/login`)**:
+   - Campo cambiado a tipo texto ("Usuario o Email") con placeholder sugerido `juanchi`.
+3. **Validación y Despliegue**: Compilación exitosa (56/56 rutas) y push a GitHub.
+
+---
+
 ## ⚽ Sesión 19: Formulario Día de las Infancias, Pases con QR y Panel de Acreditación (2026-08-13)
 
 ### 📌 Contexto

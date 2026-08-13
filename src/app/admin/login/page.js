@@ -59,16 +59,16 @@ export default function AdminLoginPage() {
           <form onSubmit={handleSubmit} className="space-y-7">
             <div>
               <label className="block text-white/80 text-sm font-bold uppercase tracking-wider mb-4">
-                Email
+                Usuario o Email
               </label>
               <div className="relative">
                 <Mail size={20} className="absolute left-5 top-1/2 -translate-y-1/2 text-white/40" />
                 <input
-                  type="email"
+                  type="text"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full bg-white/5 border-2 border-white/10 rounded-2xl pl-14 pr-5 py-5 text-white text-base placeholder:text-white/40 focus:outline-none focus:border-[#36b37e] focus:ring-2 focus:ring-[#36b37e]/30 transition-all"
-                  placeholder="admin@futbolinclusivo.org.ar"
+                  placeholder="juanchi"
                   required
                 />
               </div>

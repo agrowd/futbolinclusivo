@@ -290,3 +290,16 @@
    - Mapeo y reescritura de subdominios `admin.futbolinclusivo.org.ar` y `admin.futbolinclusivo.com.ar` en `next.config.mjs`.
 5. **Validación**: Compilación `npm run build` 100% exitosa (56/56 rutas compiladas).
 6. **Despliegue**: Cambios pusheados a GitHub `main`.
+
+## 2026-08-13 — Sesión 20: Habilitación de Usuario Juanchi y Acceso Directo Admin
+
+### Qué se hizo:
+1. **Configuración de Autenticación (`[...nextauth]/route.js`)**:
+   - Soporte para inicio de sesión con nombre de usuario `juanchi` o email `juanchi@futbolinclusivo.org.ar`.
+   - Auto-sembrado/creación en base de datos del usuario `juanchi` con rol `admin` y contraseña `admin123`.
+2. **Formulario de Login (`/admin/login`)**:
+   - Entrada de texto flexible para usuario o correo.
+   - Placeholder predeterminado `"juanchi"`.
+3. **Endpoint `/api/setup` y Script de Inicialización**:
+   - Actualizado para sembrar `juanchi` / `admin123`.
+4. **Validación y Despliegue**: Compilación exitosa (56/56 rutas) y push a GitHub.

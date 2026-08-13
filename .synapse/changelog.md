@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.7.1 — 2026-08-13
+- feat: Configuración de credenciales de acceso para el usuario `juanchi` con contraseña `admin123` en NextAuth y auto-sembrado en base de datos.
+- edit: Actualizado el formulario de login administrativo (/admin/login) para aceptar nombres de usuario o correos con placeholder de `juanchi`.
+
 ## v1.7.0 — 2026-08-13
 - feat: Formulario de inscripción para el evento Día de las Infancias (/dia-de-las-infancias) con validación de campos obligatorios (nombre completo, teléfono/WhatsApp, autorización obligatoria de uso de imagen) y emisión instantánea de pases de acceso con código QR descargable e imprimible.
 - feat: Módulo de administración (/admin/infancias) con métricas en tiempo real, escáner de QR por cámara en vivo con feedback sonoro (Web Audio API) y detección de pases duplicados, buscador rápido por DNI/Código, edición completa, toggle de acreditación y exportación de inscriptos a formato CSV/Excel.

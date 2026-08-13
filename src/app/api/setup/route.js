@@ -7,30 +7,31 @@ export async function GET() {
   try {
     await dbConnect();
     
-    const email = "admin@futbolinclusivo.org.ar";
+    const email = "juanchi@futbolinclusivo.org.ar";
+    const hashedPassword = await bcrypt.hash("admin123", 10);
     
     // Buscar si existe
-    let user = await User.findOne({ email });
+    let user = await User.findOne({ 
+      $or: [{ email }, { email: "admin@futbolinclusivo.org.ar" }, { name: "Juanchi" }] 
+    });
     
     if (user) {
-      // Actualizar password porsiaca
-      const hashedPassword = await bcrypt.hash("changeme123", 10);
       user.password = hashedPassword;
       user.active = true;
       user.role = "admin";
+      user.name = "Juanchi";
+      user.email = email;
       await user.save();
-      return NextResponse.json({ success: true, message: "Admin actualizado en DB!", user });
+      return NextResponse.json({ success: true, message: "Usuario juanchi actualizado en DB con clave admin123!", user });
     } else {
-      // Crear nuevo
-      const hashedPassword = await bcrypt.hash("changeme123", 10);
       user = await User.create({
-        name: "Administrador Central",
+        name: "Juanchi",
         email: email,
         password: hashedPassword,
         role: "admin",
         active: true,
       });
-      return NextResponse.json({ success: true, message: "Admin CREADO en DB!", user });
+      return NextResponse.json({ success: true, message: "Usuario juanchi CREADO en DB con clave admin123!", user });
     }
   } catch (error) {
     console.error("Setup Error:", error);

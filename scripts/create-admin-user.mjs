@@ -14,8 +14,8 @@ try {
 }
 
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/futbolinclusivo";
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@futbolinclusivo.org.ar";
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "changeme123";
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "juanchi@futbolinclusivo.org.ar";
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin123";
 
 const userSchema = new mongoose.Schema({
   name: String,
