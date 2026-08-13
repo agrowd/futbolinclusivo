@@ -323,3 +323,19 @@
    - Se copió el logo de Andar FC a `src/app/icon.png` y `src/app/apple-icon.png` (generados automáticamente por Next.js).
    - Se incluyeron las etiquetas `<link rel="icon" ...>` y `<link rel="apple-touch-icon" ...>` en `<head>` de `src/app/layout.js`.
 3. **Validación y Despliegue**: Compilación `npm run build` exitosa (59/59 rutas estáticas/dinámicas) y push a GitHub `main`.
+
+## 2026-08-13 — Sesión 23: Persistencia en LocalStorage de Pases Familiares, Instrucciones de WhatsApp y Cache-Busting de Favicon
+
+### Qué se hizo:
+1. **Persistencia de Pases en LocalStorage (`InfanciasForm.js`)**:
+   - Guarda los pases generados y los datos del tutor en `localStorage` (`infancias_saved_tickets` e `infancias_saved_tutor`).
+   - Al ingresar a `/dia-de-las-infancias`, si ya existen pases guardados, se muestra un banner destacado con:
+     - Botón **"Ver mis Pases"** (abre la visualización directa con los códigos QR).
+     - Botón **"Inscribir a otro hijo/a (mantener mis datos)"** (precarga los datos del tutor para sumar otro chico).
+     - Botón **"Empezar de cero para otra persona/familia"** (limpia el formulario y el almacenamiento).
+2. **Mensaje de WhatsApp Enriquecido con Instrucciones Paso a Paso**:
+   - Redacta un mensaje detallado con el nombre de cada hijo/a, su código de ticket, DNI y una guía paso a paso de lo que deben hacer el día del evento (guardar el mensaje y mostrar el QR en la mesa de entrada).
+   - En la pantalla de confirmación se agregó una tarjeta informativa explicando los pasos para el ingreso.
+3. **Invalidación Forzada de Caché para Favicon**:
+   - Se agregaron parámetros de versión `?v=3` en `<head>` de `layout.js` y se sobreescribieron todos los archivos `public/favicon.ico`, `public/favicon.png`, `public/icon.png` y `src/app/favicon.ico` con el logo oficial de Andar FC.
+4. **Validación y Despliegue**: Compilación `npm run build` exitosa (59/59 rutas) y push a GitHub `main`.

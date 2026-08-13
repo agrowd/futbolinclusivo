@@ -20,8 +20,15 @@ import {
   Users, 
   ChevronRight, 
   AlertTriangle,
-  FileCheck
+  FileCheck,
+  RotateCcw,
+  Eye,
+  Info,
+  HelpCircle
 } from "lucide-react";
+
+const STORAGE_KEY_TICKETS = "infancias_saved_tickets";
+const STORAGE_KEY_TUTOR = "infancias_saved_tutor";
 
 export default function InfanciasForm() {
   // Tutor & General Info
@@ -51,9 +58,32 @@ export default function InfanciasForm() {
   const [error, setError] = useState("");
   const [ticketResult, setTicketResult] = useState(null); // { familyGroupId, tickets: [...] }
   const [selectedTicketIndex, setSelectedTicketIndex] = useState(0);
+  const [savedLocalData, setSavedLocalData] = useState(null);
 
   // Debounce timers for duplicate check
   const debounceTimers = useRef({});
+
+  // Load saved passes from LocalStorage on mount
+  useEffect(() => {
+    try {
+      const savedTicketsRaw = localStorage.getItem(STORAGE_KEY_TICKETS);
+      const savedTutorRaw = localStorage.getItem(STORAGE_KEY_TUTOR);
+
+      if (savedTicketsRaw) {
+        const parsedTickets = JSON.parse(savedTicketsRaw);
+        const parsedTutor = savedTutorRaw ? JSON.parse(savedTutorRaw) : {};
+
+        if (Array.isArray(parsedTickets) && parsedTickets.length > 0) {
+          setSavedLocalData({
+            tickets: parsedTickets,
+            tutor: parsedTutor,
+          });
+        }
+      }
+    } catch (e) {
+      console.warn("Error reading localStorage:", e);
+    }
+  }, []);
 
   const handleTutorChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -190,11 +220,37 @@ export default function InfanciasForm() {
         throw new Error(data.error || "Ocurrió un error al enviar la inscripción.");
       }
 
+      const newTickets = data.tickets || [data.ticket];
+
+      // Merge with previous tickets in localStorage if same tutor
+      let combinedTickets = newTickets;
+      try {
+        const existingRaw = localStorage.getItem(STORAGE_KEY_TICKETS);
+        if (existingRaw) {
+          const parsed = JSON.parse(existingRaw);
+          if (Array.isArray(parsed)) {
+            // Keep unique by ticketCode
+            const existingCodes = new Set(newTickets.map((t) => t.ticketCode));
+            const filteredOld = parsed.filter((t) => !existingCodes.has(t.ticketCode));
+            combinedTickets = [...filteredOld, ...newTickets];
+          }
+        }
+        localStorage.setItem(STORAGE_KEY_TICKETS, JSON.stringify(combinedTickets));
+        localStorage.setItem(STORAGE_KEY_TUTOR, JSON.stringify(tutorData));
+      } catch (e) {
+        console.warn("Failed to write to localStorage:", e);
+      }
+
       setTicketResult({
         familyGroupId: data.familyGroupId,
-        tickets: data.tickets || [data.ticket],
+        tickets: combinedTickets,
       });
-      setSelectedTicketIndex(0);
+      setSelectedTicketIndex(combinedTickets.length - newTickets.length); // focus on newly added
+      setSavedLocalData({
+        tickets: combinedTickets,
+        tutor: tutorData,
+      });
+
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (err) {
       setError(err.message || "Error al conectar con el servidor.");
@@ -207,26 +263,37 @@ export default function InfanciasForm() {
     window.print();
   };
 
+  // WhatsApp sharing message with clear instructions
   const handleShareWhatsAppAll = () => {
-    if (!ticketResult || !ticketResult.tickets.length) return;
+    const tickets = ticketResult?.tickets || savedLocalData?.tickets || [];
+    if (!tickets.length) return;
     
-    let text = `🎉 *¡Inscripción Confirmada - Día de las Infancias en Andar FC!*\n\n`;
-    text += `📍 *Lugar:* Complejo Deportivo Andar (Moreno)\n`;
-    text += `👨‍👩‍👧 *Familia:* ${tutorData.tutorName || "Inscriptos"}\n\n`;
+    const tutor = tutorData.tutorName || savedLocalData?.tutor?.tutorName || "Inscriptos";
+
+    let text = `🎉 *¡Inscripción Confirmada para el Gran Día de las Infancias en Andar Fútbol Club!*\n\n`;
+    text += `📅 *Evento:* Gran Jornada Recreativa y Deportiva\n`;
+    text += `📍 *Lugar:* Complejo Deportivo "Fútbol por la Inclusión" - Asociación Civil Andar (Moreno)\n`;
+    text += `👨‍👩‍👧 *Familia:* ${tutor}\n\n`;
     text += `🎟️ *PASES Y CÓDIGOS DE INGRESO:*\n`;
 
-    ticketResult.tickets.forEach((t, idx) => {
+    tickets.forEach((t, idx) => {
       text += `\n${idx + 1}. *${t.childName}* (Ticket: *${t.ticketCode}*)`;
       if (t.childDni) text += ` - DNI: ${t.childDni}`;
+      if (t.childAge) text += ` - ${t.childAge} años`;
     });
 
-    text += `\n\n_Presentá los códigos o imágenes QR en el acceso al predio._`;
+    text += `\n\n📌 *¿QUÉ TENÉS QUE HACER EL DÍA DEL EVENTO?*\n`;
+    text += `1️⃣ *Guardá este mensaje* o las capturas de pantalla de los códigos QR.\n`;
+    text += `2️⃣ Al llegar al predio, *mostrá este mensaje o el QR* en la mesa de entrada / acreditación.\n`;
+    text += `3️⃣ El personal escaneará tu pase y podrán ingresar directamente a disfrutar de los juegos, canchas de fútbol, merienda y sorpresas.\n\n`;
+    text += `¡Los esperamos para compartir una tarde inolvidable! ⚽🎈🎉`;
 
     window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, "_blank");
   };
 
   const handleDownloadSelectedQR = () => {
-    const ticket = ticketResult?.tickets[selectedTicketIndex];
+    const tickets = ticketResult?.tickets || savedLocalData?.tickets || [];
+    const ticket = tickets[selectedTicketIndex];
     if (!ticket?.qrDataUrl) return;
     const link = document.createElement("a");
     link.href = ticket.qrDataUrl;
@@ -234,18 +301,32 @@ export default function InfanciasForm() {
     link.click();
   };
 
-  const handleReset = () => {
-    setTutorData({
-      tutorName: "",
-      tutorPhone: "",
-      tutorEmail: "",
-      locality: "",
-      clubOrSchool: "",
-      imageConsent: false,
+  // View Saved Tickets from localStorage
+  const handleViewSavedTickets = () => {
+    if (!savedLocalData) return;
+    setTicketResult({
+      familyGroupId: "LOCAL",
+      tickets: savedLocalData.tickets,
     });
+    if (savedLocalData.tutor) {
+      setTutorData((prev) => ({ ...prev, ...savedLocalData.tutor }));
+    }
+    setSelectedTicketIndex(0);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // Add more children keeping saved tutor data
+  const handleAddMoreChildrenKeepTutor = () => {
+    if (savedLocalData?.tutor) {
+      setTutorData((prev) => ({
+        ...prev,
+        ...savedLocalData.tutor,
+        imageConsent: true,
+      }));
+    }
     setChildren([
       {
-        id: "child-1",
+        id: `child-${Date.now()}`,
         childName: "",
         childDni: "",
         childAge: "",
@@ -255,9 +336,42 @@ export default function InfanciasForm() {
       },
     ]);
     setTicketResult(null);
-    setSelectedTicketIndex(0);
     setError("");
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // Reset from scratch for another adult/family
+  const handleStartFromScratch = () => {
+    if (confirm("¿Querés comenzar una inscripción desde cero para otra persona o familia?")) {
+      try {
+        localStorage.removeItem(STORAGE_KEY_TICKETS);
+        localStorage.removeItem(STORAGE_KEY_TUTOR);
+      } catch {}
+      setSavedLocalData(null);
+      setTutorData({
+        tutorName: "",
+        tutorPhone: "",
+        tutorEmail: "",
+        locality: "",
+        clubOrSchool: "",
+        imageConsent: false,
+      });
+      setChildren([
+        {
+          id: "child-1",
+          childName: "",
+          childDni: "",
+          childAge: "",
+          childBirthDate: "",
+          medicalNotes: "",
+          duplicateWarning: null,
+        },
+      ]);
+      setTicketResult(null);
+      setSelectedTicketIndex(0);
+      setError("");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   // SUCCESS STATE: DIGITAL FAMILY TICKETS WITH QR
@@ -265,7 +379,7 @@ export default function InfanciasForm() {
     const currentTicket = ticketResult.tickets[selectedTicketIndex] || ticketResult.tickets[0];
 
     return (
-      <div className="max-w-4xl mx-auto px-4 py-8 animate-fade-in">
+      <div className="max-w-4xl mx-auto px-4 py-6 animate-fade-in">
         <div className="bg-[#00132B] border-2 border-[#36b37e]/40 rounded-3xl p-6 sm:p-10 text-white shadow-[0_20px_70px_rgba(0,0,0,0.6)] relative overflow-hidden">
           
           {/* Top Banner */}
@@ -273,14 +387,32 @@ export default function InfanciasForm() {
 
           <div className="text-center mb-8">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#36b37e]/20 text-[#36b37e] text-xs font-black uppercase tracking-widest mb-4">
-              <CheckCircle2 size={16} /> ¡Inscripción Confirmada!
+              <CheckCircle2 size={16} /> ¡Pases Guardados en tu Celular!
             </div>
             <h2 className="text-3xl sm:text-4xl font-black tracking-tight uppercase">
-              {ticketResult.tickets.length === 1 ? "Pase de Ingreso al Predio" : `Pases Familiares (${ticketResult.tickets.length} Niños/as)`}
+              {ticketResult.tickets.length === 1 ? "Pase de Ingreso al Predio" : `Pases Familiares (${ticketResult.tickets.length} Inscriptos)`}
             </h2>
             <p className="text-white/60 text-sm sm:text-base mt-2 max-w-lg mx-auto">
-              Presentá estos códigos QR en la entrada el día del evento. Cada niño/a tiene su pase individual con su código.
+              Presentá estos códigos QR en la entrada el día del evento. Cada participante tiene su código único.
             </p>
+          </div>
+
+          {/* Instructions Box */}
+          <div className="mb-8 p-5 rounded-2xl bg-gradient-to-r from-[#2980B9]/20 to-[#36b37e]/20 border border-white/10 flex items-start gap-4">
+            <div className="w-10 h-10 rounded-xl bg-[#36b37e] text-black font-black flex items-center justify-center shrink-0">
+              <HelpCircle size={22} />
+            </div>
+            <div className="text-xs sm:text-sm text-white/90 space-y-1">
+              <strong className="text-white text-base block mb-1 uppercase tracking-wide">
+                📌 ¿Qué tenés que hacer el día del evento?
+              </strong>
+              <p>
+                1. <strong>Guardá tus pases:</strong> Descargá la imagen o hacé clic en <strong>"Enviar Todos a WhatsApp"</strong> para tenerlos a mano.
+              </p>
+              <p>
+                2. <strong>En la entrada:</strong> Mostrás el código QR desde tu celular al personal de recepción para ingresar sin demoras.
+              </p>
+            </div>
           </div>
 
           {/* If multi-children, show tabs selector */}
@@ -288,11 +420,11 @@ export default function InfanciasForm() {
             <div className="flex flex-wrap items-center justify-center gap-2 mb-8 bg-white/5 p-2 rounded-2xl border border-white/10">
               {ticketResult.tickets.map((t, idx) => (
                 <button
-                  key={t.id || idx}
+                  key={t.id || t.ticketCode || idx}
                   onClick={() => setSelectedTicketIndex(idx)}
                   className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 ${
                     selectedTicketIndex === idx
-                      ? "bg-[#36b37e] text-white shadow-lg shadow-[#36b37e]/30 scale-105"
+                      ? "bg-[#36b37e] text-black font-black shadow-lg shadow-[#36b37e]/30 scale-105"
                       : "text-white/70 hover:text-white hover:bg-white/10"
                   }`}
                 >
@@ -447,16 +579,25 @@ export default function InfanciasForm() {
             </button>
           </div>
 
-          {/* Register another family */}
-          <div className="mt-8 pt-6 border-t border-white/10 text-center">
+          {/* Bottom Options: Add more or start from scratch */}
+          <div className="mt-8 pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs sm:text-sm">
             <button
-              onClick={handleReset}
-              className="inline-flex items-center gap-2 text-white/70 hover:text-white text-sm font-semibold transition-colors"
+              onClick={handleAddMoreChildrenKeepTutor}
+              className="inline-flex items-center gap-2 text-[#36b37e] hover:underline font-bold transition-colors"
             >
-              <FileCheck size={16} />
-              Realizar una nueva inscripción
+              <Plus size={16} />
+              Inscribir a otro hijo/a (mantener mis datos)
+            </button>
+
+            <button
+              onClick={handleStartFromScratch}
+              className="inline-flex items-center gap-2 text-white/50 hover:text-[#E74C3C] transition-colors"
+            >
+              <RotateCcw size={14} />
+              Empezar de cero para otra persona/familia
             </button>
           </div>
+
         </div>
       </div>
     );
@@ -465,6 +606,45 @@ export default function InfanciasForm() {
   // PUBLIC REGISTRATION FORM (MULTI-CHILD)
   return (
     <div className="max-w-4xl mx-auto px-4 py-6">
+      
+      {/* SAVED PASSES BANNER (If exists in LocalStorage) */}
+      {savedLocalData && savedLocalData.tickets && savedLocalData.tickets.length > 0 && (
+        <div className="mb-6 p-5 rounded-3xl bg-gradient-to-r from-[#2980B9]/20 via-[#36b37e]/20 to-[#E67E22]/20 border-2 border-[#36b37e]/50 text-white shadow-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 animate-fade-in">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-2xl bg-[#36b37e] text-black font-black flex items-center justify-center shrink-0 shadow-lg">
+              <QrCode size={24} />
+            </div>
+            <div>
+              <span className="text-[10px] font-black uppercase tracking-widest text-[#36b37e] block">
+                ¡Pases ya guardados en tu celular!
+              </span>
+              <h4 className="text-base sm:text-lg font-bold text-white">
+                Tenés {savedLocalData.tickets.length} {savedLocalData.tickets.length === 1 ? "inscripto" : "inscriptos"}:{" "}
+                <span className="text-white/80 font-normal">
+                  {savedLocalData.tickets.map((t) => t.childName.split(" ")[0]).join(", ")}
+                </span>
+              </h4>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap gap-2 w-full sm:w-auto">
+            <button
+              onClick={handleViewSavedTickets}
+              className="flex-1 sm:flex-initial bg-[#36b37e] hover:bg-[#2ecc71] text-black font-black text-xs uppercase px-4 py-2.5 rounded-xl transition-all shadow-md flex items-center justify-center gap-1.5 active:scale-95"
+            >
+              <Eye size={16} /> Ver mis Pases
+            </button>
+            <button
+              onClick={handleStartFromScratch}
+              className="bg-white/10 hover:bg-white/20 text-white/70 hover:text-white text-xs font-semibold px-3 py-2.5 rounded-xl transition-colors"
+              title="Empezar de cero para otra persona"
+            >
+              <RotateCcw size={14} />
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="bg-[#00132B]/95 border border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl backdrop-blur-xl">
         
         {/* Form Title & Info */}
@@ -476,7 +656,7 @@ export default function InfanciasForm() {
             Inscripción para el Día de las Infancias
           </h2>
           <p className="text-white/60 text-sm sm:text-base mt-2">
-            Podés inscribir a uno o varios hermanos/as en el mismo formulario sin tener que cargar los datos de contacto de nuevo.
+            Completá tus datos de contacto una sola vez y sumá a todos tus hijos/as para obtener sus pases de acceso con código QR.
           </p>
         </div>
 
@@ -740,11 +920,11 @@ export default function InfanciasForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-[#36b37e] to-[#27ae60] hover:from-[#2ecc71] hover:to-[#219653] text-white font-black uppercase tracking-wider py-4 sm:py-5 px-6 rounded-2xl shadow-[0_10px_30px_rgba(54,179,126,0.4)] hover:shadow-[0_15px_40px_rgba(54,179,126,0.6)] transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 text-base sm:text-lg"
+            className="w-full bg-gradient-to-r from-[#36b37e] to-[#27ae60] hover:from-[#2ecc71] hover:to-[#219653] text-black font-black uppercase tracking-wider py-4 sm:py-5 px-6 rounded-2xl shadow-[0_10px_30px_rgba(54,179,126,0.4)] hover:shadow-[0_15px_40px_rgba(54,179,126,0.6)] transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 text-base sm:text-lg"
           >
             {loading ? (
               <>
-                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
                 Generando pases con QR...
               </>
             ) : (
@@ -756,7 +936,7 @@ export default function InfanciasForm() {
           </button>
 
           <p className="text-center text-xs text-white/40">
-            Al hacer clic se generarán los códigos QR para cada uno de los chicos y podrás compartirlos o descargarlos al instante.
+            Al hacer clic se guardarán los pases en tu dispositivo y podrás descargarlos o compartírtelos por WhatsApp al instante.
           </p>
 
         </form>

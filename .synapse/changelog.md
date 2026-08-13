@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.8.2 — 2026-08-13
+- feat: Persistencia de pases familiares en localStorage para que los adultos responsables puedan consultar sus QRs en cualquier momento sin volver a rellenar el formulario.
+- feat: Opciones para añadir más hijos/as manteniendo los datos del tutor o reiniciar la inscripción para otra familia.
+- feat: Redacción completa con instrucciones detalladas para el día del evento en el mensaje compartido por WhatsApp y en la vista de confirmación.
+- fix: Invalidación forzada de caché (cache-busting ?v=3) y sustitución de todos los archivos de favicon con el logo oficial de Andar FC.
+
 ## v1.8.1 — 2026-08-13
 - fix: Reparadas las imágenes del footer en la sección del Complejo Deportivo y la columna de marca vinculando los recursos locales optimizados de Andar FC (/andarfc-logo.png) y Asociación Civil Andar (/logo.png).
 - feat: Implementado el logo de Andar FC como favicon oficial para todo el sitio (/icon.png, /apple-icon.png y etiquetas en layout.js).

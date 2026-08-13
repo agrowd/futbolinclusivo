@@ -20,9 +20,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="es">
       <head>
-        <link rel="icon" href="/andarfc-logo.png" type="image/png" />
-        <link rel="shortcut icon" href="/andarfc-logo.png" type="image/png" />
-        <link rel="apple-touch-icon" href="/andarfc-logo.png" />
+        <link rel="icon" href="/andarfc-logo.png?v=3" type="image/png" />
+        <link rel="shortcut icon" href="/andarfc-logo.png?v=3" type="image/png" />
+        <link rel="apple-touch-icon" href="/andarfc-logo.png?v=3" />
       </head>
       <body className={`${atkinson.variable} overflow-x-hidden`} style={{ fontFamily: "var(--font-atkinson), system-ui, sans-serif" }}>
         <SessionProvider>

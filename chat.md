@@ -1,5 +1,26 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 23: Persistencia en LocalStorage, Instrucciones de WhatsApp y Favicon (2026-08-13)
+
+### 📌 Contexto
+El usuario solicitó:
+1. Asegurar que el favicon de Andar FC se actualice correctamente en todos los navegadores.
+2. Guardar los pases y QRs en el `localStorage` del celular del adulto responsable para que pueda consultarlos cuando quiera.
+3. Brindar opciones de "Agregar más hijos/as manteniendo mis datos" o "Empezar de cero para otra persona/familia".
+4. Incluir en el mensaje de compartir por WhatsApp una explicación clara de qué deben hacer el día del evento.
+
+### 🛠️ Acciones Realizadas
+1. **Persistencia LocalStorage en `InfanciasForm.js`**:
+   - Guarda los pases bajo `infancias_saved_tickets` y `infancias_saved_tutor`.
+   - Banner inteligente al abrir el formulario: permite abrir los pases guardados con un toque o empezar de cero.
+2. **Mensaje de WhatsApp con Guía Paso a Paso**:
+   - Redacta el mensaje con todos los tickets, DNI, nombres y 3 pasos claros para el ingreso al predio.
+3. **Cache-Busting de Favicon**:
+   - Parámetros `?v=3` y sincronización de `public/favicon.ico`, `src/app/favicon.ico`, `public/icon.png` y `src/app/icon.png`.
+4. **Validación y Despliegue**: Compilación exitosa (59/59 rutas) y push a GitHub `main`.
+
+---
+
 ## ⚽ Sesión 22: Logos de Footer y Favicon de Andar FC (2026-08-13)
 
 ### 📌 Contexto
