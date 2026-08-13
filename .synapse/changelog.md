@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.7.0 — 2026-08-13
+- feat: Formulario de inscripción para el evento Día de las Infancias (/dia-de-las-infancias) con validación de campos obligatorios (nombre completo, teléfono/WhatsApp, autorización obligatoria de uso de imagen) y emisión instantánea de pases de acceso con código QR descargable e imprimible.
+- feat: Módulo de administración (/admin/infancias) con métricas en tiempo real, escáner de QR por cámara en vivo con feedback sonoro (Web Audio API) y detección de pases duplicados, buscador rápido por DNI/Código, edición completa, toggle de acreditación y exportación de inscriptos a formato CSV/Excel.
+- feat: Configuración de enrutamiento y reescritura de subdominios para admin.futbolinclusivo.org.ar y admin.futbolinclusivo.com.ar en next.config.mjs.
+
 ## v1.6.2 — 2026-07-24
 - edit: Actualización de los contenidos de la página de Propósito (/institucional/propósito), Misión y cmsFallbacks.js según nuevo texto oficial provisto por el usuario: "EL FÚTBOL COMO HERRAMIENTA DE EDUCACIÓN E INCLUSIÓN SOCIAL" y Misión "Promover la inclusión a través del fútbol." (removiendo "social" del final).
 

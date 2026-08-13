@@ -1,0 +1,543 @@
+"use client";
+
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState, useMemo } from "react";
+import Link from "next/link";
+import { 
+  ArrowLeft, 
+  Search, 
+  RefreshCw, 
+  Download, 
+  Camera, 
+  QrCode, 
+  Edit2, 
+  Trash2, 
+  CheckCircle2, 
+  Clock, 
+  Users, 
+  UserCheck, 
+  UserX, 
+  Sparkles,
+  Phone,
+  ShieldCheck,
+  AlertTriangle
+} from "lucide-react";
+import InfanciasScannerModal from "@/components/admin/InfanciasScannerModal";
+import InfanciasEditModal from "@/components/admin/InfanciasEditModal";
+import InfanciasTicketModal from "@/components/admin/InfanciasTicketModal";
+
+export default function AdminInfanciasPage() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  const [items, setItems] = useState([]);
+  const [stats, setStats] = useState({ total: 0, attended: 0, pending: 0 });
+  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterAttended, setFilterAttended] = useState("all"); // 'all', 'attended', 'pending'
+
+  // Modals state
+  const [scannerOpen, setScannerOpen] = useState(false);
+  const [editingItem, setEditingItem] = useState(null);
+  const [viewingTicket, setViewingTicket] = useState(null);
+  const [deletingId, setDeletingId] = useState(null);
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/admin/login");
+    }
+  }, [status, router]);
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/admin/infancias?limit=500");
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setItems(data.data || []);
+        setStats(data.stats || { total: 0, attended: 0, pending: 0 });
+      }
+    } catch (err) {
+      console.error("Error loading infancias:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      fetchData();
+    }
+  }, [status]);
+
+  // Toggle Attendance
+  const handleToggleAttended = async (item) => {
+    const newAttended = !item.attended;
+    try {
+      const res = await fetch(`/api/admin/infancias/${item._id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ attended: newAttended }),
+      });
+      if (res.ok) {
+        setItems((prev) =>
+          prev.map((i) =>
+            i._id === item._id
+              ? { ...i, attended: newAttended, attendedAt: newAttended ? new Date() : null }
+              : i
+          )
+        );
+        setStats((prev) => ({
+          ...prev,
+          attended: newAttended ? prev.attended + 1 : prev.attended - 1,
+          pending: newAttended ? prev.pending - 1 : prev.pending + 1,
+        }));
+      }
+    } catch (err) {
+      console.error("Error toggling attendance:", err);
+    }
+  };
+
+  // Delete Item
+  const handleDelete = async (id) => {
+    if (!confirm("¿Estás seguro de eliminar esta inscripción?")) return;
+    setDeletingId(id);
+    try {
+      const res = await fetch(`/api/admin/infancias/${id}`, {
+        method: "DELETE",
+      });
+      if (res.ok) {
+        setItems((prev) => prev.filter((i) => i._id !== id));
+        fetchData();
+      }
+    } catch (err) {
+      console.error("Error deleting:", err);
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
+  // Export to CSV
+  const handleExportCSV = () => {
+    if (items.length === 0) return;
+
+    const headers = [
+      "Código Ticket",
+      "Nombre Niño/a",
+      "DNI",
+      "Edad",
+      "Fecha Nacimiento",
+      "Nombre Tutor",
+      "Teléfono",
+      "Email",
+      "Localidad",
+      "Institución/Club",
+      "Observaciones Médicas",
+      "Autorización Imagen",
+      "Acreditado/Ingresó",
+      "Fecha Acreditación",
+      "Fecha Registro",
+    ];
+
+    const rows = items.map((i) => [
+      `"${i.ticketCode}"`,
+      `"${i.childName || ""}"`,
+      `"${i.childDni || ""}"`,
+      `"${i.childAge || ""}"`,
+      `"${i.childBirthDate || ""}"`,
+      `"${i.tutorName || ""}"`,
+      `"${i.tutorPhone || ""}"`,
+      `"${i.tutorEmail || ""}"`,
+      `"${i.locality || ""}"`,
+      `"${i.clubOrSchool || ""}"`,
+      `"${i.medicalNotes || ""}"`,
+      `"${i.imageConsent ? "SÍ" : "NO"}"`,
+      `"${i.attended ? "SÍ" : "NO"}"`,
+      `"${i.attendedAt ? new Date(i.attendedAt).toLocaleString("es-AR") : ""}"`,
+      `"${new Date(i.createdAt).toLocaleString("es-AR")}"`,
+    ]);
+
+    const csvContent = "\uFEFF" + [headers.join(","), ...rows.map((e) => e.join(","))].join("\n");
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `Inscriptos-Dia-de-las-Infancias-${new Date().toISOString().slice(0, 10)}.csv`;
+    link.click();
+  };
+
+  // Filtered List
+  const filteredItems = useMemo(() => {
+    return items.filter((item) => {
+      // Filter by attendance status
+      if (filterAttended === "attended" && !item.attended) return false;
+      if (filterAttended === "pending" && item.attended) return false;
+
+      // Filter by search query
+      if (searchQuery.trim()) {
+        const q = searchQuery.toLowerCase();
+        const matchCode = item.ticketCode?.toLowerCase().includes(q);
+        const matchName = item.childName?.toLowerCase().includes(q);
+        const matchDni = item.childDni?.toLowerCase().includes(q);
+        const matchTutor = item.tutorName?.toLowerCase().includes(q);
+        const matchPhone = item.tutorPhone?.toLowerCase().includes(q);
+        const matchLocality = item.locality?.toLowerCase().includes(q);
+        const matchClub = item.clubOrSchool?.toLowerCase().includes(q);
+        return matchCode || matchName || matchDni || matchTutor || matchPhone || matchLocality || matchClub;
+      }
+
+      return true;
+    });
+  }, [items, searchQuery, filterAttended]);
+
+  if (status === "loading") {
+    return (
+      <div className="min-h-screen bg-[#000B1A] flex items-center justify-center text-white">
+        Cargando panel...
+      </div>
+    );
+  }
+
+  if (!session) return null;
+
+  const attendanceRate = stats.total > 0 ? Math.round((stats.attended / stats.total) * 100) : 0;
+
+  return (
+    <div className="min-h-screen bg-[#000B1A] text-white">
+      
+      {/* Top Header */}
+      <header className="bg-white/5 border-b border-white/10 backdrop-blur-xl sticky top-0 z-40">
+        <div className="container mx-auto px-6 py-4 flex flex-wrap justify-between items-center gap-4">
+          <div className="flex items-center gap-4">
+            <Link
+              href="/admin/dashboard"
+              className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition-colors"
+              title="Volver al Dashboard"
+            >
+              <ArrowLeft size={20} />
+            </Link>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#E67E22]/20 text-[#E67E22] text-[10px] font-black uppercase tracking-wider">
+                  Evento Especial
+                </span>
+                <span className="text-white/40 text-xs">•</span>
+                <span className="text-white/50 text-xs font-mono">admin.futbolinclusivo.org.ar</span>
+              </div>
+              <h1 className="text-xl sm:text-2xl font-black tracking-tight uppercase">
+                Día de las Infancias
+              </h1>
+            </div>
+          </div>
+
+          {/* Quick Action Buttons */}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setScannerOpen(true)}
+              className="bg-gradient-to-r from-[#36b37e] to-[#27ae60] hover:from-[#2ecc71] hover:to-[#219653] text-white font-black px-5 py-2.5 rounded-xl shadow-[0_10px_25px_rgba(54,179,126,0.3)] transition-all flex items-center gap-2 text-sm uppercase active:scale-95"
+            >
+              <Camera size={18} />
+              <span className="hidden sm:inline">Escanear</span> QR de Puerta
+            </button>
+            <button
+              onClick={handleExportCSV}
+              disabled={items.length === 0}
+              className="bg-white/5 hover:bg-white/10 border border-white/10 text-white/90 px-4 py-2.5 rounded-xl transition-colors flex items-center gap-2 text-sm font-semibold disabled:opacity-50"
+              title="Exportar a Excel / CSV"
+            >
+              <Download size={16} />
+              <span className="hidden md:inline">Exportar</span>
+            </button>
+            <button
+              onClick={fetchData}
+              className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition-colors"
+              title="Actualizar listado"
+            >
+              <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main className="container mx-auto px-6 py-8">
+        
+        {/* KPI Metrics Strip */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          
+          <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-5 flex items-center justify-between">
+            <div>
+              <span className="text-xs uppercase font-bold text-white/50 block mb-1">
+                Total Inscriptos
+              </span>
+              <div className="text-3xl font-black text-white">{stats.total}</div>
+            </div>
+            <div className="w-12 h-12 rounded-xl bg-[#2980B9]/20 text-[#2980B9] flex items-center justify-center">
+              <Users size={24} />
+            </div>
+          </div>
+
+          <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-5 flex items-center justify-between">
+            <div>
+              <span className="text-xs uppercase font-bold text-white/50 block mb-1">
+                Acreditados (Ingresaron)
+              </span>
+              <div className="text-3xl font-black text-[#36b37e]">{stats.attended}</div>
+            </div>
+            <div className="w-12 h-12 rounded-xl bg-[#36b37e]/20 text-[#36b37e] flex items-center justify-center">
+              <UserCheck size={24} />
+            </div>
+          </div>
+
+          <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-5 flex items-center justify-between">
+            <div>
+              <span className="text-xs uppercase font-bold text-white/50 block mb-1">
+                Pendientes de Ingreso
+              </span>
+              <div className="text-3xl font-black text-[#E67E22]">{stats.pending}</div>
+            </div>
+            <div className="w-12 h-12 rounded-xl bg-[#E67E22]/20 text-[#E67E22] flex items-center justify-center">
+              <UserX size={24} />
+            </div>
+          </div>
+
+          <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-5 flex items-center justify-between">
+            <div>
+              <span className="text-xs uppercase font-bold text-white/50 block mb-1">
+                Asistencia
+              </span>
+              <div className="text-3xl font-black text-white">{attendanceRate}%</div>
+            </div>
+            <div className="w-12 h-12 rounded-xl bg-white/10 text-white/80 flex items-center justify-center">
+              <Sparkles size={24} />
+            </div>
+          </div>
+
+        </div>
+
+        {/* Filter & Search Bar */}
+        <div className="bg-white/[0.02] border border-white/10 rounded-2xl p-4 mb-6 flex flex-wrap items-center justify-between gap-4">
+          
+          {/* Search Box */}
+          <div className="relative flex-1 min-w-[260px]">
+            <Search size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Buscar por Nombre, DNI, Teléfono, Ticket (#INF)..."
+              className="w-full bg-white/5 border border-white/10 focus:border-[#36b37e] rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none"
+            />
+          </div>
+
+          {/* Status Tabs */}
+          <div className="flex items-center bg-white/5 p-1 rounded-xl border border-white/10 text-xs font-bold">
+            <button
+              onClick={() => setFilterAttended("all")}
+              className={`px-3 py-1.5 rounded-lg transition-colors ${
+                filterAttended === "all" ? "bg-[#36b37e] text-white" : "text-white/60 hover:text-white"
+              }`}
+            >
+              Todos ({items.length})
+            </button>
+            <button
+              onClick={() => setFilterAttended("attended")}
+              className={`px-3 py-1.5 rounded-lg transition-colors ${
+                filterAttended === "attended" ? "bg-[#36b37e] text-white" : "text-white/60 hover:text-white"
+              }`}
+            >
+              Acreditados ({stats.attended})
+            </button>
+            <button
+              onClick={() => setFilterAttended("pending")}
+              className={`px-3 py-1.5 rounded-lg transition-colors ${
+                filterAttended === "pending" ? "bg-[#36b37e] text-white" : "text-white/60 hover:text-white"
+              }`}
+            >
+              Pendientes ({stats.pending})
+            </button>
+          </div>
+
+        </div>
+
+        {/* Inscriptions Table */}
+        <div className="bg-white/[0.02] border border-white/10 rounded-2xl overflow-hidden shadow-xl">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm">
+              <thead className="bg-white/5 border-b border-white/10 text-xs uppercase tracking-wider text-white/50">
+                <tr>
+                  <th className="px-6 py-4">Ticket</th>
+                  <th className="px-6 py-4">Participante</th>
+                  <th className="px-6 py-4">Contacto / Tutor</th>
+                  <th className="px-6 py-4">Localidad / Club</th>
+                  <th className="px-6 py-4">Acreditación</th>
+                  <th className="px-6 py-4 text-right">Acciones</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/5">
+                {loading ? (
+                  <tr>
+                    <td colSpan={6} className="px-6 py-12 text-center text-white/40">
+                      Cargando inscriptos...
+                    </td>
+                  </tr>
+                ) : filteredItems.length === 0 ? (
+                  <tr>
+                    <td colSpan={6} className="px-6 py-12 text-center text-white/40">
+                      {searchQuery
+                        ? "No se encontraron inscripciones que coincidan con la búsqueda."
+                        : "Todavía no hay inscripciones registradas."}
+                    </td>
+                  </tr>
+                ) : (
+                  filteredItems.map((item) => (
+                    <tr key={item._id} className="hover:bg-white/[0.02] transition-colors">
+                      
+                      {/* Ticket Code */}
+                      <td className="px-6 py-4">
+                        <button
+                          onClick={() => setViewingTicket(item)}
+                          className="font-mono font-bold text-[#36b37e] hover:underline flex items-center gap-1.5"
+                          title="Ver QR del ticket"
+                        >
+                          <QrCode size={16} />
+                          {item.ticketCode}
+                        </button>
+                        <span className="text-[10px] text-white/40 block mt-0.5">
+                          {new Date(item.createdAt).toLocaleDateString("es-AR")}
+                        </span>
+                      </td>
+
+                      {/* Child Name & Details */}
+                      <td className="px-6 py-4">
+                        <div className="font-bold text-white text-base">
+                          {item.childName}
+                        </div>
+                        <div className="text-xs text-white/50 flex items-center gap-2 mt-0.5">
+                          {item.childDni && <span>DNI: {item.childDni}</span>}
+                          {item.childAge && <span>• {item.childAge} años</span>}
+                        </div>
+                        {item.medicalNotes && (
+                          <span className="inline-block mt-1 px-2 py-0.5 rounded bg-[#E74C3C]/20 border border-[#E74C3C]/40 text-[#ff7675] text-[10px] font-bold">
+                            ⚠️ {item.medicalNotes}
+                          </span>
+                        )}
+                      </td>
+
+                      {/* Tutor & Phone */}
+                      <td className="px-6 py-4">
+                        <div className="font-semibold text-white/90 text-sm">
+                          {item.tutorName || "—"}
+                        </div>
+                        <a
+                          href={`tel:${item.tutorPhone}`}
+                          className="text-xs text-[#2980B9] hover:underline flex items-center gap-1 mt-0.5"
+                        >
+                          <Phone size={12} /> {item.tutorPhone}
+                        </a>
+                      </td>
+
+                      {/* Locality & Club */}
+                      <td className="px-6 py-4 text-xs text-white/70">
+                        <div>{item.locality || "—"}</div>
+                        {item.clubOrSchool && (
+                          <div className="text-white/40 mt-0.5">{item.clubOrSchool}</div>
+                        )}
+                      </td>
+
+                      {/* Attendance Toggle */}
+                      <td className="px-6 py-4">
+                        <button
+                          onClick={() => handleToggleAttended(item)}
+                          className={`px-3 py-1.5 rounded-full text-xs font-black uppercase tracking-wider flex items-center gap-1.5 transition-all ${
+                            item.attended
+                              ? "bg-[#36b37e]/20 text-[#36b37e] border border-[#36b37e]/40 hover:bg-[#36b37e]/30"
+                              : "bg-[#E67E22]/20 text-[#E67E22] border border-[#E67E22]/40 hover:bg-[#E67E22]/30"
+                          }`}
+                          title="Hacé clic para cambiar estado"
+                        >
+                          {item.attended ? (
+                            <>
+                              <CheckCircle2 size={14} /> Ingresó
+                            </>
+                          ) : (
+                            <>
+                              <Clock size={14} /> Pendiente
+                            </>
+                          )}
+                        </button>
+                        {item.attendedAt && (
+                          <span className="text-[10px] text-white/40 block mt-1">
+                            {new Date(item.attendedAt).toLocaleTimeString("es-AR", {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })}{" "}
+                            hs
+                          </span>
+                        )}
+                      </td>
+
+                      {/* Actions */}
+                      <td className="px-6 py-4 text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          <button
+                            onClick={() => setViewingTicket(item)}
+                            className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition-colors"
+                            title="Ver pase con QR"
+                          >
+                            <QrCode size={16} />
+                          </button>
+                          <button
+                            onClick={() => setEditingItem(item)}
+                            className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-[#36b37e] hover:bg-[#36b37e]/20 transition-colors"
+                            title="Editar"
+                          >
+                            <Edit2 size={16} />
+                          </button>
+                          <button
+                            onClick={() => handleDelete(item._id)}
+                            disabled={deletingId === item._id}
+                            className="p-2 rounded-lg bg-white/5 hover:bg-[#E74C3C]/20 text-[#E74C3C] transition-colors disabled:opacity-50"
+                            title="Eliminar"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                      </td>
+
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </main>
+
+      {/* MODALS */}
+      <InfanciasScannerModal
+        isOpen={scannerOpen}
+        onClose={() => setScannerOpen(false)}
+        onCheckInSuccess={fetchData}
+      />
+
+      <InfanciasEditModal
+        isOpen={!!editingItem}
+        item={editingItem}
+        onClose={() => setEditingItem(null)}
+        onUpdated={(updated) => {
+          setItems((prev) => prev.map((i) => (i._id === updated._id ? updated : i)));
+          fetchData();
+        }}
+      />
+
+      <InfanciasTicketModal
+        isOpen={!!viewingTicket}
+        item={viewingTicket}
+        onClose={() => setViewingTicket(null)}
+      />
+
+    </div>
+  );
+}

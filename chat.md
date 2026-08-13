@@ -1,5 +1,34 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 19: Formulario Día de las Infancias, Pases con QR y Panel de Acreditación (2026-08-13)
+
+### 📌 Contexto
+El usuario solicitó:
+1. Crear una página pública `/dia-de-las-infancias` con un formulario de registro para chicos.
+2. Campos obligatorios no omitibles: Nombre completo, Teléfono completo (WhatsApp) y Checkbox obligatorio de *"Autorizo al uso de imagen de mi hijo"*.
+3. Campos de ejemplo complementarios: DNI, Edad, Fecha de nacimiento, Localidad, Escuela/Club, Observaciones médicas/alergias.
+4. Generación instantánea de pase digital con código de ticket único y código QR descargable / compartible por WhatsApp.
+5. Panel de administración en el subdominio `admin.futbolinclusivo.org.ar` y `admin.futbolinclusivo.com.ar` (`/admin/infancias`) para gestionar inscriptos, editar, eliminar, exportar a Excel y escanear el código QR con cámara para control de acceso al predio.
+
+### 🛠️ Acciones Realizadas
+1. **Modelo de Base de Datos**: Creado `src/lib/schemas/InfanciaRegistration.js` con soporte de indexación, ticketCode único, flags de autorización y trazabilidad de ingreso (`attended`, `attendedAt`).
+2. **APIs**:
+   - `POST /api/infancias`: Registro público y generación de código QR.
+   - `GET /api/infancias/ticket/[code]`: Consulta pública de ticket con QR.
+   - `GET, PUT, DELETE /api/admin/infancias/[id]`: Gestión administrativa protegida.
+   - `POST /api/admin/infancias/check-in`: Endpoint de validación y acreditación por escaneo de QR o ingreso manual de código/DNI.
+3. **Página Pública y Componentes**:
+   - `src/app/dia-de-las-infancias/page.js`: Landing con hero festivo, detalles de la jornada y formulario.
+   - `src/components/infancias/InfanciasForm.js`: Formulario con validación en vivo y emisión interactiva del pase con QR.
+4. **Módulo de Administración & Escáner**:
+   - `src/app/admin/infancias/page.js`: Panel con KPIs en vivo (Total, Ingresados, Pendientes, % Asistencia), buscador instantáneo, filtros de asistencia y exportación directa a Excel/CSV.
+   - `src/components/admin/InfanciasScannerModal.js`: Escáner con cámara en vivo (`html5-qrcode`), pitidos sonoros de confirmación/alerta con Web Audio API y validación de pases ya usados.
+   - `src/components/admin/InfanciasEditModal.js` y `src/components/admin/InfanciasTicketModal.js`.
+5. **Subdominios**: Configurada la reescritura de `admin.futbolinclusivo.org.ar` y `admin.futbolinclusivo.com.ar` hacia el panel de administración en `next.config.mjs`.
+6. **Validación y Despliegue**: Compilación `npm run build` 100% limpia (56/56 rutas) y push a GitHub.
+
+---
+
 ## ⚽ Sesión 18: Actualización de Textos de Propósito y Misión (2026-07-24)
 
 ### 📌 Contexto

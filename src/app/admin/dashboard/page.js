@@ -10,6 +10,7 @@ import {
   FileText, 
   Users, 
   Calendar,
+  Gift,
   TrendingUp,
   LogOut
 } from "lucide-react";
@@ -23,6 +24,7 @@ export default function AdminDashboard() {
     media: 0,
     teams: 0,
     reservations: 0,
+    infancias: 0,
   });
 
   useEffect(() => {
@@ -35,20 +37,20 @@ export default function AdminDashboard() {
   useEffect(() => {
     async function fetchStats() {
       try {
-        const [newsRes, mediaRes, teamsRes, reservationsRes, pagesRes] = await Promise.all([
+        const [newsRes, mediaRes, teamsRes, reservationsRes, infanciasRes] = await Promise.all([
           fetch("/api/news?limit=1"),
           fetch("/api/media?limit=1"),
           fetch("/api/inscripcion?limit=1"),
           fetch("/api/reservas?limit=1"),
-          fetch("/api/admin/pages"),
+          fetch("/api/admin/infancias?limit=1"),
         ]);
 
-        const [news, media, teams, reservations, pagesData] = await Promise.all([
+        const [news, media, teams, reservations, infanciasData] = await Promise.all([
           newsRes.json(),
           mediaRes.json(),
           teamsRes.json(),
           reservationsRes.json(),
-          pagesRes.json(),
+          infanciasRes.json(),
         ]);
 
         setStats({
@@ -56,7 +58,7 @@ export default function AdminDashboard() {
           media: media.pagination?.total || 0,
           teams: teams.pagination?.total || 0,
           reservations: reservations.pagination?.total || 0,
-          pages: pagesData.data?.length || 0,
+          infancias: infanciasData.stats?.total || 0,
         });
       } catch (error) {
         console.error("Error fetching stats:", error);
@@ -82,6 +84,7 @@ export default function AdminDashboard() {
   }
 
   const menuItems = [
+    { href: "/admin/infancias", label: "Día de las Infancias", icon: Gift, count: stats.infancias, color: "#E67E22" },
     { href: "/admin/news", label: "Noticias", icon: Newspaper, count: stats.news, color: "#36b37e" },
     { href: "/admin/media", label: "Multimedia", icon: ImageIcon, count: stats.media, color: "#2980B9" },
     { href: "/admin/teams", label: "Equipos", icon: Users, count: stats.teams, color: "#8E44AD" },

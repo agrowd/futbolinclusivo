@@ -58,6 +58,36 @@ const nextConfig = {
           ],
           destination: 'http://149.50.128.73:9191/:path*',
         },
+        {
+          source: '/',
+          has: [
+            {
+              type: 'host',
+              value: 'admin.futbolinclusivo.org.ar',
+            },
+          ],
+          destination: '/admin/dashboard',
+        },
+        {
+          source: '/',
+          has: [
+            {
+              type: 'host',
+              value: 'admin.futbolinclusivo.com.ar',
+            },
+          ],
+          destination: '/admin/dashboard',
+        },
+        {
+          source: '/',
+          has: [
+            {
+              type: 'host',
+              value: 'admin.localhost:3000',
+            },
+          ],
+          destination: '/admin/dashboard',
+        },
       ],
     };
   },

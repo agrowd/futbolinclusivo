@@ -266,3 +266,27 @@
 3. **Sincronización en Fallbacks**: Se actualizaron las entradas de `proposito` en `src/lib/cmsFallbacks.js` para mantener coherencia estática global.
 4. **Validación**: Compilación `npm run build` 100% limpia (51/51 páginas).
 5. **Despliegue**: Cambios subidos a GitHub.
+
+## 2026-08-13 — Sesión 19: Formulario Día de las Infancias, Pases QR y Panel de Acreditación
+
+### Qué se hizo:
+1. **Página Pública `/dia-de-las-infancias`**:
+   - Hero dinámico y llamativo del evento Día de las Infancias en Andar Fútbol Club.
+   - Formulario de inscripción (`InfanciasForm.js`) con validación de campos obligatorios:
+     - Nombre completo del niño/a (Obligatorio).
+     - Teléfono/WhatsApp de contacto (Obligatorio).
+     - Checkbox de Autorización de Uso de Imagen (Obligatorio e ineludible).
+     - Campos de ejemplo complementarios: DNI, Edad, Fecha de Nacimiento, Localidad, Institución/Club/Comedor y Observaciones Médicas.
+2. **Generación Instantánea de Pase con QR**:
+   - Al enviar el formulario se genera un código de ticket único `INF-XXXXX` y un código QR con `qrcode`.
+   - Comprobante digital interactivo con opciones de: Descargar QR, Compartir a WhatsApp, Imprimir o inscribir a otro participante.
+3. **Módulo de Administración y Escáner (`/admin/infancias`)**:
+   - Métricas y KPIs en vivo: Total Inscriptos, Total Acreditados (Ingresados), Pendientes de Ingreso y % de Asistencia.
+   - **Escáner QR de Puerta (`InfanciasScannerModal.js`)**: Lectura con cámara en vivo (`html5-qrcode`), pitidos de feedback sonoro (Web Audio API), advertencia si un pase ya fue ingresado previamente (con hora exacta) y búsqueda/acreditación manual instantánea por DNI/Código.
+   - **Tabla de Gestión**: Buscador en tiempo real, filtros por estado (Todos/Acreditados/Pendientes), toggle de acreditación en 1 clic, editor de datos (`InfanciasEditModal.js`), visualizador de pase (`InfanciasTicketModal.js`) y eliminación de registros.
+   - **Exportación**: Descarga completa a Excel / CSV con un solo clic.
+4. **Integración con Dashboard y Subdominios**:
+   - Añadida tarjeta "Día de las Infancias" al dashboard de administración (`/admin/dashboard`).
+   - Mapeo y reescritura de subdominios `admin.futbolinclusivo.org.ar` y `admin.futbolinclusivo.com.ar` en `next.config.mjs`.
+5. **Validación**: Compilación `npm run build` 100% exitosa (56/56 rutas compiladas).
+6. **Despliegue**: Cambios pusheados a GitHub `main`.
