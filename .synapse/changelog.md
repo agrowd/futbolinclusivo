@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.8.4 — 2026-08-13
+- feat: Añadida funcionalidad de alta manual desde el panel de administración (/admin/infancias) con el componente InfanciasCreateModal para registrar adultos y grupos de niños con generación instantánea de tickets QR y opción de auto-acreditación en puerta.
+
 ## v1.8.3 — 2026-08-13
 - feat: Establecidos todos los campos del formulario del Día de las Infancias como estrictamente obligatorios tanto en cliente como en backend (/api/infancias), dejando únicamente "Club o Institución" como campo opcional.
 

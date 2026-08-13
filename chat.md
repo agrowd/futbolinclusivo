@@ -1,5 +1,23 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 25: Alta Manual de Inscripción Familiar desde Admin (2026-08-13)
+
+### 📌 Contexto
+El usuario solicitó:
+1. Permitir dar de alta de la misma forma a un adulto con un niño o grupo de niños directamente desde el panel de administración.
+
+### 🛠️ Acciones Realizadas
+1. **Modal `InfanciasCreateModal.js`**:
+   - Creado modal de inscripción rápida para administradores con soporte multi-hijo, validaciones en tiempo real y anti-duplicados por DNI.
+   - Opción para marcar como ingresado/acreditado directamente al momento del registro.
+   - Muestra los códigos de tickets y códigos QR creados con opciones de descarga y compartir a WhatsApp.
+2. **Integración en `/admin/infancias/page.js`**:
+   - Botón `➕ Nueva Inscripción` en la cabecera.
+   - Refresco reactivo del listado y estadísticas.
+3. **Validación y Despliegue**: Compilación exitosa (59/59 rutas) y push a GitHub `main`.
+
+---
+
 ## ⚽ Sesión 24: Campos Obligatorios en Formulario Día de las Infancias (2026-08-13)
 
 ### 📌 Contexto

@@ -28,6 +28,7 @@ import {
 import InfanciasScannerModal from "@/components/admin/InfanciasScannerModal";
 import InfanciasEditModal from "@/components/admin/InfanciasEditModal";
 import InfanciasTicketModal from "@/components/admin/InfanciasTicketModal";
+import InfanciasCreateModal from "@/components/admin/InfanciasCreateModal";
 
 export default function AdminInfanciasPage() {
   const { data: session, status } = useSession();
@@ -40,6 +41,7 @@ export default function AdminInfanciasPage() {
   const [filterAttended, setFilterAttended] = useState("all"); // 'all', 'attended', 'pending'
 
   // Modals state
+  const [createOpen, setCreateOpen] = useState(false);
   const [scannerOpen, setScannerOpen] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
   const [viewingTicket, setViewingTicket] = useState(null);
@@ -237,10 +239,19 @@ export default function AdminInfanciasPage() {
           {/* Quick Action Buttons on Desktop */}
           <div className="flex items-center gap-2 sm:gap-3">
             <button
-              onClick={() => setScannerOpen(true)}
-              className="bg-gradient-to-r from-[#36b37e] to-[#27ae60] hover:from-[#2ecc71] hover:to-[#219653] text-black font-black px-4 sm:px-6 py-3 rounded-2xl shadow-[0_10px_30px_rgba(54,179,126,0.35)] transition-all flex items-center gap-2 text-sm uppercase active:scale-95"
+              onClick={() => setCreateOpen(true)}
+              className="bg-white/10 hover:bg-white/20 border border-white/15 text-white font-bold px-3.5 sm:px-5 py-3 rounded-2xl transition-all flex items-center gap-2 text-xs sm:text-sm uppercase active:scale-95 shadow-lg"
+              title="Dar de alta una nueva inscripción"
             >
-              <Camera size={20} />
+              <Plus size={18} className="text-[#36b37e]" />
+              <span className="hidden sm:inline">Nueva Inscripción</span>
+              <span className="sm:hidden">Inscribir</span>
+            </button>
+            <button
+              onClick={() => setScannerOpen(true)}
+              className="bg-gradient-to-r from-[#36b37e] to-[#27ae60] hover:from-[#2ecc71] hover:to-[#219653] text-black font-black px-4 sm:px-6 py-3 rounded-2xl shadow-[0_10px_30px_rgba(54,179,126,0.35)] transition-all flex items-center gap-2 text-xs sm:text-sm uppercase active:scale-95"
+            >
+              <Camera size={18} />
               <span>Escanear QR</span>
             </button>
             <button
@@ -632,6 +643,12 @@ export default function AdminInfanciasPage() {
       </div>
 
       {/* MODALS */}
+      <InfanciasCreateModal
+        isOpen={createOpen}
+        onClose={() => setCreateOpen(false)}
+        onCreated={fetchData}
+      />
+
       <InfanciasScannerModal
         isOpen={scannerOpen}
         onClose={() => setScannerOpen(false)}

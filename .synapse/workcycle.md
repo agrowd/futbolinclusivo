@@ -349,3 +349,17 @@
      - **Niño / Niña**: Nombre y Apellido (`childName`), DNI (`childDni`), Edad (`childAge`), Fecha de Nacimiento (`childBirthDate`), Observaciones Médicas / Alergias (`medicalNotes`).
    - El único campo opcional es **Club o Institución** (`clubOrSchool`).
 2. **Validación y Despliegue**: Compilación `npm run build` exitosa (59/59 rutas) y push a GitHub `main`.
+
+## 2026-08-13 — Sesión 25: Alta Manual de Adulto y Grupo de Niños desde el Panel de Administración
+
+### Qué se hizo:
+1. **Modal de Creación Manual (`InfanciasCreateModal.js`)**:
+   - Creado componente modal para dar de alta inscripciones individuales o familiares directamente desde `/admin/infancias`.
+   - Soporte para datos del tutor + array dinámico de niños/as con botón `+ Agregar otro niño/a`.
+   - Comprobación anti-duplicados en tiempo real mientras se escribe el DNI o nombre.
+   - Opción `[x] Acreditar / Marcar como ingresado en puerta directamente ahora` para acreditaciones rápidas in situ.
+   - Visualizador de pases QR generados, descarga de imagen y botón para compartir por WhatsApp.
+2. **Integración en Panel Admin (`/admin/infancias/page.js`)**:
+   - Botón `➕ Nueva Inscripción` / `Inscribir` en la barra superior.
+   - Actualización inmediata del listado y contadores KPI sin recargar la página.
+3. **Validación y Despliegue**: Compilación `npm run build` exitosa (59/59 rutas) y push a GitHub `main`.
