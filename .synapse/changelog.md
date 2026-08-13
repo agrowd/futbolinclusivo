@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.8.1 — 2026-08-13
+- fix: Reparadas las imágenes del footer en la sección del Complejo Deportivo y la columna de marca vinculando los recursos locales optimizados de Andar FC (/andarfc-logo.png) y Asociación Civil Andar (/logo.png).
+- feat: Implementado el logo de Andar FC como favicon oficial para todo el sitio (/icon.png, /apple-icon.png y etiquetas en layout.js).
+
 ## v1.8.0 — 2026-08-13
 - feat: Soporte para inscripción multi-niño en el formulario del Día de las Infancias con carga de datos de contacto una sola vez y generación agrupada de pases QR familiares.
 - feat: Verificación en tiempo real contra la base de datos para prevenir duplicados por DNI o Nombre + Teléfono con alertas directas en los inputs.

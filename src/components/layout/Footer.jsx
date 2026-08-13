@@ -88,7 +88,7 @@ export default function Footer() {
                 marginBottom: "24px",
               }}
             >
-              <Image src="/logo.png" alt="Logo Andar FC" width={50} height={50} />
+              <Image src="/andarfc-logo.png" alt="Logo Andar FC" width={52} height={52} style={{ objectFit: "contain" }} />
               <div>
                 <span style={{ fontWeight: 900, fontSize: "1.4rem", color: "#fff", display: "block", letterSpacing: "-0.5px" }}>
                   Fútbol Inclusivo
@@ -265,30 +265,31 @@ export default function Footer() {
             style={{
               display: "flex",
               justifyContent: "center",
-              gap: "24px",
+              gap: "32px",
               flexWrap: "wrap",
               alignItems: "center"
             }}
           >
+            {/* Logo Andar FC */}
             <div
               style={{
                 position: "relative",
-                width: "clamp(80px, 15vw, 120px)",
-                height: "clamp(80px, 15vw, 120px)",
+                width: "clamp(90px, 16vw, 130px)",
+                height: "clamp(90px, 16vw, 130px)",
                 cursor: "pointer",
                 transition: "all 0.3s",
                 flexShrink: 0
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "scale(1.05)";
+                e.currentTarget.style.transform = "scale(1.08)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = "scale(1)";
               }}
             >
               <Image
-                src="https://futbolinclusivo.org.ar/app/uploads/2024/02/ANDAR-AFC-ESCUDO-2-e1708535283345.png"
-                alt="ANDAR AFC ESCUDO"
+                src="/andarfc-logo.png"
+                alt="Logo Andar FC"
                 fill
                 style={{
                   objectFit: "contain",
@@ -296,25 +297,27 @@ export default function Footer() {
                 }}
               />
             </div>
+
+            {/* Logo Asociación Civil Andar */}
             <div
               style={{
                 position: "relative",
-                width: "clamp(60px, 12vw, 80px)",
-                height: "clamp(48px, 10vw, 64px)",
+                width: "clamp(80px, 14vw, 115px)",
+                height: "clamp(80px, 14vw, 115px)",
                 cursor: "pointer",
                 transition: "all 0.3s",
                 flexShrink: 0
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "scale(1.05)";
+                e.currentTarget.style.transform = "scale(1.08)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = "scale(1)";
               }}
             >
               <Image
-                src="https://futbolinclusivo.org.ar/app/uploads/2017/10/andar@2x.png"
-                alt="Andar Logo"
+                src="/logo.png"
+                alt="Logo Asociación Civil Andar"
                 fill
                 style={{
                   objectFit: "contain",

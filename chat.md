@@ -1,5 +1,22 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 22: Logos de Footer y Favicon de Andar FC (2026-08-13)
+
+### 📌 Contexto
+El usuario solicitó:
+1. Poner los logos de Andar FC y de la Asociación Civil Andar en el footer porque las imágenes antiguas no cargaban.
+2. Poner como favicon para todo el sitio el logo oficial de Andar FC.
+
+### 🛠️ Acciones Realizadas
+1. **Restauración de Logos en el Footer (`Footer.jsx`)**:
+   - Se vincularon los assets locales `/andarfc-logo.png` (Logo oficial de Andar FC) y `/logo.png` (Logo oficial de la Asociación Civil Andar) con tamaño optimizado y animaciones de hover.
+2. **Configuración de Favicon para todo el sitio**:
+   - Se crearon `src/app/icon.png` y `src/app/apple-icon.png` a partir de `andarfc-logo.png`.
+   - Se agregaron las etiquetas `<link rel="icon" ...>` en `<head>` de `src/app/layout.js`.
+3. **Validación y Despliegue**: Compilación exitosa (59/59 rutas) y push a GitHub `main`.
+
+---
+
 ## ⚽ Sesión 21: Multi-Chico Familiar, Anti-Duplicados en Vivo y Escáner Móvil Ágil (2026-08-13)
 
 ### 📌 Contexto

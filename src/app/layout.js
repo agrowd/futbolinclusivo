@@ -19,6 +19,11 @@ const atkinson = Atkinson_Hyperlegible({
 export default function RootLayout({ children }) {
   return (
     <html lang="es">
+      <head>
+        <link rel="icon" href="/andarfc-logo.png" type="image/png" />
+        <link rel="shortcut icon" href="/andarfc-logo.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/andarfc-logo.png" />
+      </head>
       <body className={`${atkinson.variable} overflow-x-hidden`} style={{ fontFamily: "var(--font-atkinson), system-ui, sans-serif" }}>
         <SessionProvider>
           <SkipLink />

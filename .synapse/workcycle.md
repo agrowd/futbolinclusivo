@@ -310,3 +310,16 @@
 4. **Optimización Mobile del Panel Admin (`/admin/infancias`)**:
    - Rediseño mobile-first con tarjetas táctiles, botones grandes de acreditación en 1 clic y botón flotante FAB para abrir el escáner de cámara con una mano.
 5. **Validación y Despliegue**: Compilación exitosa (57/57 rutas) y push a GitHub.
+
+## 2026-08-13 — Sesión 22: Logos de Footer y Favicon de Andar FC
+
+### Qué se hizo:
+1. **Restauración de Logos en el Footer (`Footer.jsx`)**:
+   - Se reemplazaron las URLs remotas caídas por los recursos estáticos locales optimizados:
+     - Logo oficial de **Andar FC**: `/andarfc-logo.png`
+     - Logo oficial de la **Asociación Civil Andar**: `/logo.png`
+   - Se actualizó también el logotipo de la columna principal de marca para usar `/andarfc-logo.png`.
+2. **Configuración de Favicon para todo el sitio**:
+   - Se copió el logo de Andar FC a `src/app/icon.png` y `src/app/apple-icon.png` (generados automáticamente por Next.js).
+   - Se incluyeron las etiquetas `<link rel="icon" ...>` y `<link rel="apple-touch-icon" ...>` en `<head>` de `src/app/layout.js`.
+3. **Validación y Despliegue**: Compilación `npm run build` exitosa (59/59 rutas estáticas/dinámicas) y push a GitHub `main`.
