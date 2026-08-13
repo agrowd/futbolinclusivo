@@ -10,6 +10,12 @@ const InfanciaRegistrationSchema = new mongoose.Schema(
       trim: true,
       uppercase: true,
     },
+    familyGroupId: {
+      type: String,
+      index: true,
+      trim: true,
+      default: "",
+    },
     childName: {
       type: String,
       required: [true, "El nombre del niño/a es obligatorio"],

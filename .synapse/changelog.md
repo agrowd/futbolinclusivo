@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.8.0 — 2026-08-13
+- feat: Soporte para inscripción multi-niño en el formulario del Día de las Infancias con carga de datos de contacto una sola vez y generación agrupada de pases QR familiares.
+- feat: Verificación en tiempo real contra la base de datos para prevenir duplicados por DNI o Nombre + Teléfono con alertas directas en los inputs.
+- feat: Rediseño del escáner de control de acceso de puerta con modo pantalla completa, feedback sonoro alegre y de advertencia, cambio de cámara frontal/trasera y contador en vivo.
+- feat: Optimización mobile del panel de administración (/admin/infancias) con vista en tarjetas táctiles, tipografías amplias y botón flotante de escaneo rápido.
+
 ## v1.7.1 — 2026-08-13
 - feat: Configuración de credenciales de acceso para el usuario `juanchi` con contraseña `admin123` en NextAuth y auto-sembrado en base de datos.
 - edit: Actualizado el formulario de login administrativo (/admin/login) para aceptar nombres de usuario o correos con placeholder de `juanchi`.

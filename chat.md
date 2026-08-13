@@ -1,5 +1,28 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 21: Multi-Chico Familiar, Anti-Duplicados en Vivo y Escáner Móvil Ágil (2026-08-13)
+
+### 📌 Contexto
+El usuario solicitó:
+1. Reordenar y agrandar la interfaz del panel de administración para que sea 100% cómoda y operable desde celulares.
+2. Permitir que los padres inscriban a varios hijos en un solo formulario familiar sin tener que volver a ingresar sus datos de contacto.
+3. Comprobar en tiempo real contra la base de datos que no se inscriban chicos duplicados (por DNI o Nombre + Teléfono).
+4. Hacer el escáner de QR mucho más didáctico, cómodo y ágil para el ingreso en puerta.
+
+### 🛠️ Acciones Realizadas
+1. **Formulario Multi-Hijos y Pases Familiares**:
+   - `src/components/infancias/InfanciasForm.js`: Sección de contacto del tutor una sola vez + selector dinámico para añadir 1, 2, 3 o más chicos con el botón `+ Agregar otro hermano/a`.
+   - Generación de todos los pases con QR individuales bajo un identificador familiar y visualización en carrusel/tabs con opción de compartir todos los pases juntos por WhatsApp o descargar los QR.
+2. **Endpoint de Verificación en Tiempo Real**:
+   - `src/app/api/infancias/check-duplicate/route.js`: Comprueba al escribir el DNI o Nombre si ya existe un inscripto y muestra una alerta amarilla inmediata.
+3. **Escáner Didáctico y Rápido de Puerta**:
+   - `src/components/admin/InfanciasScannerModal.js`: Pantalla completa, cambio de cámara frontal/trasera, pitidos sonoros con Web Audio API y carteles gigantes (Verde = Bienvenido, Amarillo = Ya ingresó, Rojo = No encontrado).
+4. **Optimización Mobile del Panel**:
+   - `src/app/admin/infancias/page.js`: Vista responsive en tarjetas grandes y botón flotante de escáner para usar con una mano.
+5. **Validación y Despliegue**: Compilación exitosa (57/57 rutas) y push a GitHub.
+
+---
+
 ## ⚽ Sesión 20: Habilitación de Usuario Juanchi y Acceso Directo Admin (2026-08-13)
 
 ### 📌 Contexto

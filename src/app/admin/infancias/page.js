@@ -21,7 +21,9 @@ import {
   Sparkles,
   Phone,
   ShieldCheck,
-  AlertTriangle
+  AlertTriangle,
+  FileSpreadsheet,
+  Plus
 } from "lucide-react";
 import InfanciasScannerModal from "@/components/admin/InfanciasScannerModal";
 import InfanciasEditModal from "@/components/admin/InfanciasEditModal";
@@ -71,7 +73,7 @@ export default function AdminInfanciasPage() {
     }
   }, [status]);
 
-  // Toggle Attendance
+  // Toggle Attendance with instant state update
   const handleToggleAttended = async (item) => {
     const newAttended = !item.attended;
     try {
@@ -118,12 +120,13 @@ export default function AdminInfanciasPage() {
     }
   };
 
-  // Export to CSV
+  // Export to CSV / Excel
   const handleExportCSV = () => {
     if (items.length === 0) return;
 
     const headers = [
       "Código Ticket",
+      "Grupo Familiar",
       "Nombre Niño/a",
       "DNI",
       "Edad",
@@ -142,6 +145,7 @@ export default function AdminInfanciasPage() {
 
     const rows = items.map((i) => [
       `"${i.ticketCode}"`,
+      `"${i.familyGroupId || ""}"`,
       `"${i.childName || ""}"`,
       `"${i.childDni || ""}"`,
       `"${i.childAge || ""}"`,
@@ -204,15 +208,16 @@ export default function AdminInfanciasPage() {
   const attendanceRate = stats.total > 0 ? Math.round((stats.attended / stats.total) * 100) : 0;
 
   return (
-    <div className="min-h-screen bg-[#000B1A] text-white">
+    <div className="min-h-screen bg-[#000B1A] text-white pb-24 sm:pb-12">
       
       {/* Top Header */}
       <header className="bg-white/5 border-b border-white/10 backdrop-blur-xl sticky top-0 z-40">
-        <div className="container mx-auto px-6 py-4 flex flex-wrap justify-between items-center gap-4">
-          <div className="flex items-center gap-4">
+        <div className="container mx-auto px-4 sm:px-6 py-4 flex flex-wrap justify-between items-center gap-3">
+          
+          <div className="flex items-center gap-3">
             <Link
               href="/admin/dashboard"
-              className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition-colors"
+              className="p-2.5 rounded-2xl bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition-colors"
               title="Volver al Dashboard"
             >
               <ArrowLeft size={20} />
@@ -220,138 +225,136 @@ export default function AdminInfanciasPage() {
             <div>
               <div className="flex items-center gap-2">
                 <span className="px-2.5 py-0.5 rounded-full bg-[#E67E22]/20 text-[#E67E22] text-[10px] font-black uppercase tracking-wider">
-                  Evento Especial
+                  Día de las Infancias
                 </span>
-                <span className="text-white/40 text-xs">•</span>
-                <span className="text-white/50 text-xs font-mono">admin.futbolinclusivo.org.ar</span>
               </div>
-              <h1 className="text-xl sm:text-2xl font-black tracking-tight uppercase">
-                Día de las Infancias
+              <h1 className="text-lg sm:text-2xl font-black tracking-tight uppercase">
+                Panel de Inscripciones
               </h1>
             </div>
           </div>
 
-          {/* Quick Action Buttons */}
-          <div className="flex items-center gap-3">
+          {/* Quick Action Buttons on Desktop */}
+          <div className="flex items-center gap-2 sm:gap-3">
             <button
               onClick={() => setScannerOpen(true)}
-              className="bg-gradient-to-r from-[#36b37e] to-[#27ae60] hover:from-[#2ecc71] hover:to-[#219653] text-white font-black px-5 py-2.5 rounded-xl shadow-[0_10px_25px_rgba(54,179,126,0.3)] transition-all flex items-center gap-2 text-sm uppercase active:scale-95"
+              className="bg-gradient-to-r from-[#36b37e] to-[#27ae60] hover:from-[#2ecc71] hover:to-[#219653] text-black font-black px-4 sm:px-6 py-3 rounded-2xl shadow-[0_10px_30px_rgba(54,179,126,0.35)] transition-all flex items-center gap-2 text-sm uppercase active:scale-95"
             >
-              <Camera size={18} />
-              <span className="hidden sm:inline">Escanear</span> QR de Puerta
+              <Camera size={20} />
+              <span>Escanear QR</span>
             </button>
             <button
               onClick={handleExportCSV}
               disabled={items.length === 0}
-              className="bg-white/5 hover:bg-white/10 border border-white/10 text-white/90 px-4 py-2.5 rounded-xl transition-colors flex items-center gap-2 text-sm font-semibold disabled:opacity-50"
-              title="Exportar a Excel / CSV"
+              className="bg-white/5 hover:bg-white/10 border border-white/10 text-white px-3.5 py-3 rounded-2xl transition-colors flex items-center gap-2 text-sm font-bold disabled:opacity-50"
+              title="Exportar a Excel"
             >
-              <Download size={16} />
-              <span className="hidden md:inline">Exportar</span>
+              <FileSpreadsheet size={18} className="text-[#36b37e]" />
+              <span className="hidden md:inline">Excel</span>
             </button>
             <button
               onClick={fetchData}
-              className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition-colors"
+              className="p-3 rounded-2xl bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition-colors"
               title="Actualizar listado"
             >
-              <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
+              <RefreshCw size={18} className={loading ? "animate-spin" : ""} />
             </button>
           </div>
         </div>
       </header>
 
-      <main className="container mx-auto px-6 py-8">
+      <main className="container mx-auto px-4 sm:px-6 py-6">
         
-        {/* KPI Metrics Strip */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        {/* KPI Metrics Cards - Large & Touch Friendly */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
           
-          <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-5 flex items-center justify-between">
-            <div>
-              <span className="text-xs uppercase font-bold text-white/50 block mb-1">
-                Total Inscriptos
+          <div className="bg-white/[0.03] border border-white/10 rounded-2xl sm:rounded-3xl p-4 sm:p-5 flex flex-col justify-between shadow-lg">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[11px] uppercase font-black tracking-wider text-white/50">
+                Inscriptos
               </span>
-              <div className="text-3xl font-black text-white">{stats.total}</div>
+              <div className="w-8 h-8 rounded-xl bg-[#2980B9]/20 text-[#2980B9] flex items-center justify-center">
+                <Users size={16} />
+              </div>
             </div>
-            <div className="w-12 h-12 rounded-xl bg-[#2980B9]/20 text-[#2980B9] flex items-center justify-center">
-              <Users size={24} />
-            </div>
+            <div className="text-2xl sm:text-4xl font-black text-white">{stats.total}</div>
           </div>
 
-          <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-5 flex items-center justify-between">
-            <div>
-              <span className="text-xs uppercase font-bold text-white/50 block mb-1">
-                Acreditados (Ingresaron)
+          <div className="bg-white/[0.03] border border-white/10 rounded-2xl sm:rounded-3xl p-4 sm:p-5 flex flex-col justify-between shadow-lg">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[11px] uppercase font-black tracking-wider text-[#36b37e]">
+                Ingresaron
               </span>
-              <div className="text-3xl font-black text-[#36b37e]">{stats.attended}</div>
+              <div className="w-8 h-8 rounded-xl bg-[#36b37e]/20 text-[#36b37e] flex items-center justify-center">
+                <UserCheck size={16} />
+              </div>
             </div>
-            <div className="w-12 h-12 rounded-xl bg-[#36b37e]/20 text-[#36b37e] flex items-center justify-center">
-              <UserCheck size={24} />
-            </div>
+            <div className="text-2xl sm:text-4xl font-black text-[#36b37e]">{stats.attended}</div>
           </div>
 
-          <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-5 flex items-center justify-between">
-            <div>
-              <span className="text-xs uppercase font-bold text-white/50 block mb-1">
-                Pendientes de Ingreso
+          <div className="bg-white/[0.03] border border-white/10 rounded-2xl sm:rounded-3xl p-4 sm:p-5 flex flex-col justify-between shadow-lg">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[11px] uppercase font-black tracking-wider text-[#E67E22]">
+                Pendientes
               </span>
-              <div className="text-3xl font-black text-[#E67E22]">{stats.pending}</div>
+              <div className="w-8 h-8 rounded-xl bg-[#E67E22]/20 text-[#E67E22] flex items-center justify-center">
+                <UserX size={16} />
+              </div>
             </div>
-            <div className="w-12 h-12 rounded-xl bg-[#E67E22]/20 text-[#E67E22] flex items-center justify-center">
-              <UserX size={24} />
-            </div>
+            <div className="text-2xl sm:text-4xl font-black text-[#E67E22]">{stats.pending}</div>
           </div>
 
-          <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-5 flex items-center justify-between">
-            <div>
-              <span className="text-xs uppercase font-bold text-white/50 block mb-1">
+          <div className="bg-white/[0.03] border border-white/10 rounded-2xl sm:rounded-3xl p-4 sm:p-5 flex flex-col justify-between shadow-lg">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[11px] uppercase font-black tracking-wider text-white/50">
                 Asistencia
               </span>
-              <div className="text-3xl font-black text-white">{attendanceRate}%</div>
+              <div className="w-8 h-8 rounded-xl bg-white/10 text-white/80 flex items-center justify-center">
+                <Sparkles size={16} />
+              </div>
             </div>
-            <div className="w-12 h-12 rounded-xl bg-white/10 text-white/80 flex items-center justify-center">
-              <Sparkles size={24} />
-            </div>
+            <div className="text-2xl sm:text-4xl font-black text-white">{attendanceRate}%</div>
           </div>
 
         </div>
 
         {/* Filter & Search Bar */}
-        <div className="bg-white/[0.02] border border-white/10 rounded-2xl p-4 mb-6 flex flex-wrap items-center justify-between gap-4">
+        <div className="bg-white/[0.02] border border-white/10 rounded-2xl sm:rounded-3xl p-3 sm:p-4 mb-6 space-y-3">
           
           {/* Search Box */}
-          <div className="relative flex-1 min-w-[260px]">
-            <Search size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40" />
+          <div className="relative w-full">
+            <Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Buscar por Nombre, DNI, Teléfono, Ticket (#INF)..."
-              className="w-full bg-white/5 border border-white/10 focus:border-[#36b37e] rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none"
+              className="w-full bg-white/5 border border-white/10 focus:border-[#36b37e] rounded-2xl pl-12 pr-4 py-3 text-sm sm:text-base text-white placeholder-white/40 focus:outline-none"
             />
           </div>
 
           {/* Status Tabs */}
-          <div className="flex items-center bg-white/5 p-1 rounded-xl border border-white/10 text-xs font-bold">
+          <div className="grid grid-cols-3 gap-2 bg-white/5 p-1 rounded-2xl border border-white/10 text-xs sm:text-sm font-bold text-center">
             <button
               onClick={() => setFilterAttended("all")}
-              className={`px-3 py-1.5 rounded-lg transition-colors ${
-                filterAttended === "all" ? "bg-[#36b37e] text-white" : "text-white/60 hover:text-white"
+              className={`py-2 rounded-xl transition-all ${
+                filterAttended === "all" ? "bg-[#36b37e] text-black font-black" : "text-white/60 hover:text-white"
               }`}
             >
               Todos ({items.length})
             </button>
             <button
               onClick={() => setFilterAttended("attended")}
-              className={`px-3 py-1.5 rounded-lg transition-colors ${
-                filterAttended === "attended" ? "bg-[#36b37e] text-white" : "text-white/60 hover:text-white"
+              className={`py-2 rounded-xl transition-all ${
+                filterAttended === "attended" ? "bg-[#36b37e] text-black font-black" : "text-white/60 hover:text-white"
               }`}
             >
               Acreditados ({stats.attended})
             </button>
             <button
               onClick={() => setFilterAttended("pending")}
-              className={`px-3 py-1.5 rounded-lg transition-colors ${
-                filterAttended === "pending" ? "bg-[#36b37e] text-white" : "text-white/60 hover:text-white"
+              className={`py-2 rounded-xl transition-all ${
+                filterAttended === "pending" ? "bg-[#E67E22] text-black font-black" : "text-white/60 hover:text-white"
               }`}
             >
               Pendientes ({stats.pending})
@@ -360,8 +363,110 @@ export default function AdminInfanciasPage() {
 
         </div>
 
-        {/* Inscriptions Table */}
-        <div className="bg-white/[0.02] border border-white/10 rounded-2xl overflow-hidden shadow-xl">
+        {/* MOBILE CARD VIEW (Visible on small screens) */}
+        <div className="block lg:hidden space-y-3">
+          {loading ? (
+            <div className="text-center py-12 text-white/40">Cargando inscriptos...</div>
+          ) : filteredItems.length === 0 ? (
+            <div className="text-center py-12 text-white/40">
+              {searchQuery ? "No se encontraron resultados para la búsqueda." : "No hay inscripciones registradas aún."}
+            </div>
+          ) : (
+            filteredItems.map((item) => (
+              <div
+                key={item._id}
+                className="bg-white/[0.03] border border-white/10 rounded-2xl p-4 space-y-3 shadow-lg"
+              >
+                {/* Header row */}
+                <div className="flex justify-between items-start">
+                  <div>
+                    <button
+                      onClick={() => setViewingTicket(item)}
+                      className="font-mono text-xs font-bold text-[#36b37e] flex items-center gap-1 mb-1"
+                    >
+                      <QrCode size={14} /> #{item.ticketCode}
+                    </button>
+                    <h3 className="text-lg font-bold text-white leading-tight">
+                      {item.childName}
+                    </h3>
+                  </div>
+
+                  {/* Attendance Toggle Button */}
+                  <button
+                    onClick={() => handleToggleAttended(item)}
+                    className={`px-3 py-2 rounded-xl text-xs font-black uppercase tracking-wider flex items-center gap-1.5 transition-all active:scale-95 ${
+                      item.attended
+                        ? "bg-[#36b37e] text-black shadow-lg shadow-[#36b37e]/30"
+                        : "bg-white/10 text-white/70 hover:bg-white/20"
+                    }`}
+                  >
+                    {item.attended ? (
+                      <>
+                        <CheckCircle2 size={16} /> Ingresó
+                      </>
+                    ) : (
+                      <>
+                        <Clock size={16} /> Marcar Ingreso
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                {/* Details grid */}
+                <div className="grid grid-cols-2 gap-2 text-xs text-white/70 bg-black/20 p-3 rounded-xl">
+                  {item.childDni && <div>DNI: <strong className="text-white font-mono">{item.childDni}</strong></div>}
+                  {item.childAge && <div>Edad: <strong className="text-white">{item.childAge} años</strong></div>}
+                  {item.tutorPhone && (
+                    <div className="col-span-2 flex items-center gap-1 text-[#2980B9]">
+                      <Phone size={12} /> Contacto: <a href={`tel:${item.tutorPhone}`} className="underline font-bold text-white">{item.tutorPhone}</a>
+                    </div>
+                  )}
+                  {item.locality && <div className="col-span-2">Localidad: <span className="text-white">{item.locality}</span></div>}
+                </div>
+
+                {item.medicalNotes && (
+                  <div className="p-2.5 rounded-xl bg-[#E74C3C]/20 border border-[#E74C3C]/40 text-[#ff7675] text-xs font-bold">
+                    ⚠️ {item.medicalNotes}
+                  </div>
+                )}
+
+                {/* Actions row */}
+                <div className="flex items-center justify-between pt-2 border-t border-white/5 text-xs">
+                  <span className="text-white/40 text-[11px]">
+                    {new Date(item.createdAt).toLocaleDateString("es-AR")}
+                  </span>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setViewingTicket(item)}
+                      className="p-2 rounded-xl bg-white/5 text-white/80"
+                      title="Ver Pase QR"
+                    >
+                      <QrCode size={16} />
+                    </button>
+                    <button
+                      onClick={() => setEditingItem(item)}
+                      className="p-2 rounded-xl bg-white/5 text-[#36b37e]"
+                      title="Editar"
+                    >
+                      <Edit2 size={16} />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(item._id)}
+                      className="p-2 rounded-xl bg-white/5 text-[#E74C3C]"
+                      title="Eliminar"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            ))
+          )}
+        </div>
+
+        {/* DESKTOP TABLE VIEW (Visible on larger screens) */}
+        <div className="hidden lg:block bg-white/[0.02] border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead className="bg-white/5 border-b border-white/10 text-xs uppercase tracking-wider text-white/50">
@@ -449,25 +554,25 @@ export default function AdminInfanciasPage() {
                       <td className="px-6 py-4">
                         <button
                           onClick={() => handleToggleAttended(item)}
-                          className={`px-3 py-1.5 rounded-full text-xs font-black uppercase tracking-wider flex items-center gap-1.5 transition-all ${
+                          className={`px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider flex items-center gap-1.5 transition-all ${
                             item.attended
-                              ? "bg-[#36b37e]/20 text-[#36b37e] border border-[#36b37e]/40 hover:bg-[#36b37e]/30"
-                              : "bg-[#E67E22]/20 text-[#E67E22] border border-[#E67E22]/40 hover:bg-[#E67E22]/30"
+                              ? "bg-[#36b37e] text-black shadow-lg shadow-[#36b37e]/20 hover:bg-[#2ecc71]"
+                              : "bg-white/10 text-white/70 hover:bg-white/20"
                           }`}
                           title="Hacé clic para cambiar estado"
                         >
                           {item.attended ? (
                             <>
-                              <CheckCircle2 size={14} /> Ingresó
+                              <CheckCircle2 size={16} /> Ingresó
                             </>
                           ) : (
                             <>
-                              <Clock size={14} /> Pendiente
+                              <Clock size={16} /> Pendiente
                             </>
                           )}
                         </button>
                         {item.attendedAt && (
-                          <span className="text-[10px] text-white/40 block mt-1">
+                          <span className="text-[10px] text-white/40 block mt-1 font-mono">
                             {new Date(item.attendedAt).toLocaleTimeString("es-AR", {
                               hour: "2-digit",
                               minute: "2-digit",
@@ -482,25 +587,25 @@ export default function AdminInfanciasPage() {
                         <div className="flex items-center justify-end gap-2">
                           <button
                             onClick={() => setViewingTicket(item)}
-                            className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition-colors"
+                            className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition-colors"
                             title="Ver pase con QR"
                           >
-                            <QrCode size={16} />
+                            <QrCode size={18} />
                           </button>
                           <button
                             onClick={() => setEditingItem(item)}
-                            className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-[#36b37e] hover:bg-[#36b37e]/20 transition-colors"
+                            className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-[#36b37e] hover:bg-[#36b37e]/20 transition-colors"
                             title="Editar"
                           >
-                            <Edit2 size={16} />
+                            <Edit2 size={18} />
                           </button>
                           <button
                             onClick={() => handleDelete(item._id)}
                             disabled={deletingId === item._id}
-                            className="p-2 rounded-lg bg-white/5 hover:bg-[#E74C3C]/20 text-[#E74C3C] transition-colors disabled:opacity-50"
+                            className="p-2.5 rounded-xl bg-white/5 hover:bg-[#E74C3C]/20 text-[#E74C3C] transition-colors disabled:opacity-50"
                             title="Eliminar"
                           >
-                            <Trash2 size={16} />
+                            <Trash2 size={18} />
                           </button>
                         </div>
                       </td>
@@ -515,11 +620,23 @@ export default function AdminInfanciasPage() {
 
       </main>
 
+      {/* MOBILE FLOATING ACTION BUTTON (FAB) FOR SCANNER */}
+      <div className="fixed bottom-5 right-5 z-50 block sm:hidden">
+        <button
+          onClick={() => setScannerOpen(true)}
+          className="w-16 h-16 rounded-full bg-[#36b37e] text-black shadow-[0_10px_35px_rgba(54,179,126,0.6)] flex items-center justify-center active:scale-90 transition-transform"
+          title="Abrir Escáner QR"
+        >
+          <Camera size={28} />
+        </button>
+      </div>
+
       {/* MODALS */}
       <InfanciasScannerModal
         isOpen={scannerOpen}
         onClose={() => setScannerOpen(false)}
         onCheckInSuccess={fetchData}
+        stats={stats}
       />
 
       <InfanciasEditModal

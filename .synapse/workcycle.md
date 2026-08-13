@@ -291,15 +291,22 @@
 5. **Validación**: Compilación `npm run build` 100% exitosa (56/56 rutas compiladas).
 6. **Despliegue**: Cambios pusheados a GitHub `main`.
 
-## 2026-08-13 — Sesión 20: Habilitación de Usuario Juanchi y Acceso Directo Admin
+## 2026-08-13 — Sesión 21: Formulario Familiar Multi-Chico, Verificación Anti-Duplicados en Tiempo Real y Escáner Móvil Rápido
 
 ### Qué se hizo:
-1. **Configuración de Autenticación (`[...nextauth]/route.js`)**:
-   - Soporte para inicio de sesión con nombre de usuario `juanchi` o email `juanchi@futbolinclusivo.org.ar`.
-   - Auto-sembrado/creación en base de datos del usuario `juanchi` con rol `admin` y contraseña `admin123`.
-2. **Formulario de Login (`/admin/login`)**:
-   - Entrada de texto flexible para usuario o correo.
-   - Placeholder predeterminado `"juanchi"`.
-3. **Endpoint `/api/setup` y Script de Inicialización**:
-   - Actualizado para sembrar `juanchi` / `admin123`.
-4. **Validación y Despliegue**: Compilación exitosa (56/56 rutas) y push a GitHub.
+1. **Inscripción Multi-Chico Familiar (`InfanciasForm.js`)**:
+   - Permite que los padres completen sus datos de contacto y tutor una sola vez y agreguen múltiples hijos/as con el botón `+ Agregar otro hermano/a`.
+   - Genera los códigos de tickets y códigos QR individuales para cada chico bajo un mismo `familyGroupId`.
+   - Pantalla de confirmación con vista de todos los pases QR familiares y botón para compartir todos los pases juntos por WhatsApp o descargar los QR.
+2. **Verificación Anti-Duplicados en Tiempo Real (`/api/infancias/check-duplicate`)**:
+   - A medida que el padre escribe el DNI o el Nombre + Teléfono, el sistema verifica contra MongoDB con debounce y alerta en vivo si el chico ya fue inscripto para evitar duplicados o errores.
+3. **Escáner de Puerta Didáctico y Móvil (`InfanciasScannerModal.js`)**:
+   - Vistas a pantalla completa adaptativas con feedback sonoro (Web Audio API) y banners gigantes de colores:
+     - 🟢 **PANTALLA VERDE GIGANTE (OK)**: Nombre grande, edad, DNI, ticket y alertas médicas.
+     - 🟡 **PANTALLA AMARILLA (ATENCIÓN)**: Alerta si el pase ya ingresó a una hora específica.
+     - 🔴 **PANTALLA ROJA (ERROR)**: Código no encontrado.
+   - Cambio de cámara trasera/frontal con un toque y soporte de búsqueda manual por DNI.
+   - Contador en vivo de chicos ingresados en la barra superior.
+4. **Optimización Mobile del Panel Admin (`/admin/infancias`)**:
+   - Rediseño mobile-first con tarjetas táctiles, botones grandes de acreditación en 1 clic y botón flotante FAB para abrir el escáner de cámara con una mano.
+5. **Validación y Despliegue**: Compilación exitosa (57/57 rutas) y push a GitHub.
