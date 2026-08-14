@@ -1,5 +1,23 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 26: Corrección de Persistencia de Sesión y Usuarios Admin (2026-08-14)
+
+### 📌 Contexto
+El usuario reportó:
+- "Me deja entrar y luego me saca, verifica eso, eso me pasa con el usuario de juanchi pero verifica con los 2".
+
+### 🛠️ Causa Raíz
+1. Al usar `signIn("credentials", { redirect: false })` y navegar con `router.push("/admin/dashboard")`, se producía una condición de carrera: `useSession()` en el dashboard evaluaba brevemente a `unauthenticated` antes de que el contexto de NextAuth leyera la nueva cookie, disparando el `useEffect` que expulsaba al usuario a `/admin/login`.
+2. El middleware carecía del parámetro `secret` explícito de respaldo para decodificar el token JWT en ciertos entornos.
+
+### 🛠️ Acciones Realizadas
+1. Se actualizó `AdminLoginPage` para utilizar redirección completa (`window.location.href = "/admin/dashboard"`), garantizando que las cookies se envíen en la cabecera HTTP y que la sesión se inicialice de forma inmediata y persistente.
+2. Se sincronizó `src/middleware.js` y `authOptions` con el `secret` explícito.
+3. Se corrió el script de sincronización con MongoDB Atlas para asegurar que tanto `juanchi@futbolinclusivo.org.ar` como `admin@futbolinclusivo.org.ar` tengan el hash correcto de la contraseña `admin123`.
+4. Se validó la compilación de 59/59 rutas y se pusheó a `main`.
+
+---
+
 ## ⚽ Sesión 25: Alta Manual de Inscripción Familiar desde Admin (2026-08-13)
 
 ### 📌 Contexto

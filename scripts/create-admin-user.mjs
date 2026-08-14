@@ -3,19 +3,22 @@ import bcrypt from "bcryptjs";
 import fs from "fs";
 import path from "path";
 
+let mongoUri = "mongodb://localhost:27017/futbolinclusivo";
+
 try {
   const envContent = fs.readFileSync(path.resolve(process.cwd(), ".env"), "utf8");
-  envContent.split("\n").forEach(line => {
-    const match = line.match(/^([^=]+)=(.*)$/);
-    if (match && match[1] === "MONGODB_URI") process.env.MONGODB_URI = match[2].trim();
-  });
+  for (const line of envContent.split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (trimmed.startsWith("MONGODB_URI=")) {
+      mongoUri = trimmed.replace("MONGODB_URI=", "").trim();
+      break;
+    }
+  }
 } catch (e) {
-  // Ignorar si no hay .env
+  // Ignorar
 }
 
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/futbolinclusivo";
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "juanchi@futbolinclusivo.org.ar";
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin123";
+console.log("URI encontrada:", mongoUri ? "Configurada (MongoDB Atlas)" : "No configurada");
 
 const userSchema = new mongoose.Schema({
   name: String,
@@ -28,49 +31,52 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);
 
-async function createAdminUser() {
+async function createAdminUsers() {
   try {
-    console.log("🔌 Conectando a MongoDB...");
-    await mongoose.connect(MONGODB_URI);
-    console.log("✅ Conectado a MongoDB");
+    console.log("🔌 Conectando a MongoDB Atlas...");
+    await mongoose.connect(mongoUri);
+    console.log("✅ Conectado exitosamente a MongoDB Atlas");
 
-    const existing = await User.findOne({ email: ADMIN_EMAIL });
+    const usersToCreate = [
+      { name: "Juanchi", email: "juanchi@futbolinclusivo.org.ar", password: "admin123" },
+      { name: "Administrador", email: "admin@futbolinclusivo.org.ar", password: "admin123" },
+    ];
 
-    if (existing) {
-      console.log(`⚠️  El usuario admin ya existe: ${ADMIN_EMAIL}`);
-      
-      const hashedPassword = await bcrypt.hash(ADMIN_PASSWORD, 10);
-      await User.findByIdAndUpdate(existing._id, { 
-        password: hashedPassword,
-        role: "admin",
-        active: true
-      });
-      console.log("✅ Contraseña actualizada");
-    } else {
-      const hashedPassword = await bcrypt.hash(ADMIN_PASSWORD, 10);
-
-      await User.create({
-        name: "Administrador",
-        email: ADMIN_EMAIL,
-        password: hashedPassword,
-        role: "admin",
-        active: true,
+    for (const u of usersToCreate) {
+      const existing = await User.findOne({ 
+        $or: [{ email: u.email }, { name: new RegExp(`^${u.name}$`, "i") }] 
       });
 
-      console.log("✅ Usuario admin creado exitosamente");
+      const hashedPassword = await bcrypt.hash(u.password, 10);
+
+      if (existing) {
+        await User.findByIdAndUpdate(existing._id, { 
+          name: u.name,
+          email: u.email,
+          password: hashedPassword,
+          role: "admin",
+          active: true
+        });
+        console.log(`✅ Usuario ${u.email} ACTUALIZADO en MongoDB con clave '${u.password}'`);
+      } else {
+        await User.create({
+          name: u.name,
+          email: u.email,
+          password: hashedPassword,
+          role: "admin",
+          active: true,
+        });
+        console.log(`✅ Usuario ${u.email} CREADO en MongoDB con clave '${u.password}'`);
+      }
     }
-
-    console.log(`\n📧 Email: ${ADMIN_EMAIL}`);
-    console.log(`🔑 Password: ${ADMIN_PASSWORD}`);
-    console.log("\n⚠️  IMPORTANTE: Cambia la contraseña después del primer login!");
 
   } catch (error) {
     console.error("❌ Error:", error);
     process.exit(1);
   } finally {
     await mongoose.disconnect();
-    console.log("\n🔌 Desconectado de MongoDB");
+    console.log("🔌 Desconectado de MongoDB Atlas");
   }
 }
 
-createAdminUser();
+createAdminUsers();

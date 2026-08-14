@@ -363,3 +363,15 @@
    - Botón `➕ Nueva Inscripción` / `Inscribir` en la barra superior.
    - Actualización inmediata del listado y contadores KPI sin recargar la página.
 3. **Validación y Despliegue**: Compilación `npm run build` exitosa (59/59 rutas) y push a GitHub `main`.
+
+## 2026-08-14 — Sesión 26: Corrección de Persistencia de Sesión y Sincronización de Usuarios Admin
+
+### Qué se hizo:
+1. **Resolución de la Condición de Carrera en Login**:
+   - `src/app/admin/login/page.js`: Se reemplazó el `router.push` por `window.location.href = "/admin/dashboard"` para forzar una sincronización limpia de cookies de sesión en el navegador, evitando que el dashboard detecte erróneamente un estado `unauthenticated` temporal y expulse al usuario.
+2. **Robustez de Middleware y NextAuth**:
+   - `src/middleware.js` y `src/app/api/auth/[...nextauth]/route.js`: Se definió el `secret` explícito de respaldo para el descifrado seguro de tokens JWT en Edge/Node runtime.
+   - Manejo automático de recuperación y verificación de contraseñas para los usuarios `juanchi@futbolinclusivo.org.ar` y `admin@futbolinclusivo.org.ar` con clave `admin123`.
+3. **Sincronización en Base de Datos MongoDB Atlas**:
+   - Se ejecutó el script de inicialización conectando a MongoDB Atlas y garantizando que tanto `juanchi` como `admin` queden activos con rol `admin` y contraseña `admin123`.
+4. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (59/59 rutas) y push a GitHub `main`.

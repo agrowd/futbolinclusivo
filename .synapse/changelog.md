@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.8.5 — 2026-08-14
+- fix: Resuelto el problema de cierre de sesión involuntario post-login mediante sincronización completa de sesión en cookies de navegador, inclusión de secret explícito en middleware y auto-sincronización de credenciales de juanchi y admin en MongoDB Atlas.
+
 ## v1.8.4 — 2026-08-13
 - feat: Añadida funcionalidad de alta manual desde el panel de administración (/admin/infancias) con el componente InfanciasCreateModal para registrar adultos y grupos de niños con generación instantánea de tickets QR y opción de auto-acreditación en puerta.
 
