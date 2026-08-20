@@ -1,5 +1,19 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 28: Configuración e Integración con Gmail / Google Account (2026-08-20)
+
+### 📌 Contexto
+El usuario preguntó:
+- "esa info puede ser de un correo de google? como lo hago paso a paso"
+
+### 🛠️ Acciones Realizadas
+1. Se instaló e integró `nodemailer` para permitir el envío directo desde cualquier cuenta `@gmail.com` o correo institucional de Google Workspace (`@futbolinclusivo.org.ar`) usando SMTP.
+2. Se actualizó `src/lib/email.js` con soporte híbrido: si detecta `GMAIL_USER` y `GMAIL_APP_PASSWORD` envía usando Gmail; si detecta `RESEND_API_KEY` envía usando Resend.
+3. Se documentó la guía detallada paso a paso para generar la Contraseña de Aplicación en la cuenta de Google.
+4. Compilación 100% exitosa y push a GitHub `main`.
+
+---
+
 ## ⚽ Sesión 27: Envío Automático y Reenvío de Pases QR por Email (2026-08-20)
 
 ### 📌 Contexto

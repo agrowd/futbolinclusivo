@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.8.7 — 2026-08-20
+- feat: Añadido soporte para envío de correos con cuentas de Gmail / Google Workspace mediante Nodemailer y contraseñas de aplicación SMTP.
+
 ## v1.8.6 — 2026-08-20
 - feat: Implementado el envío automático de correos de confirmación con pases QR adjuntos e incrustados utilizando Resend, así como un endpoint y botón de reenvío manual desde el panel de administración (/admin/infancias).
 

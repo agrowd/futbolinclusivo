@@ -1,15 +1,37 @@
 import { Resend } from "resend";
+import nodemailer from "nodemailer";
 import QRCode from "qrcode";
 
 const resendApiKey = process.env.RESEND_API_KEY;
 const resendFromEmail = process.env.RESEND_FROM_EMAIL || "Fútbol Inclusivo <onboarding@resend.dev>";
 
-const resend = resendApiKey && resendApiKey !== "re_xxxxxxxxxxxxx" 
+// Gmail / Custom SMTP Environment Variables
+const smtpUser = process.env.GMAIL_USER || process.env.SMTP_USER || process.env.EMAIL_USER;
+const smtpPass = process.env.GMAIL_APP_PASSWORD || process.env.SMTP_PASSWORD || process.env.EMAIL_PASS;
+const smtpFrom = process.env.GMAIL_FROM || process.env.SMTP_FROM || smtpUser;
+
+// Resend client (if API key present)
+const resendClient = resendApiKey && resendApiKey !== "re_xxxxxxxxxxxxx" 
   ? new Resend(resendApiKey) 
+  : null;
+
+// Nodemailer SMTP transport (if Gmail / SMTP credentials present)
+const smtpTransport = (smtpUser && smtpPass)
+  ? nodemailer.createTransport({
+      service: "gmail",
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: smtpUser,
+        pass: smtpPass,
+      },
+    })
   : null;
 
 /**
  * Sends a confirmation email to the parent/tutor containing their QR passes and tickets
+ * Supports both Gmail (via SMTP / App Password) and Resend API.
  * 
  * @param {Object} params
  * @param {string} params.tutorEmail - Recipient email
@@ -59,7 +81,6 @@ export async function sendInfanciasEmail({
           });
         }
 
-        // Convert base64 data URL to Buffer for Resend attachment
         const base64Data = base64Image.replace(/^data:image\/png;base64,/, "");
         const buffer = Buffer.from(base64Data, "base64");
 
@@ -95,15 +116,12 @@ export async function sendInfanciasEmail({
     <tr>
       <td align="center">
         
-        <!-- Main Card Container -->
         <table role="presentation" width="100%" max-width="600" border="0" cellspacing="0" cellpadding="0" style="max-width: 600px; background-color: #00132B; border: 1px solid rgba(255,255,255,0.15); border-radius: 24px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
           
-          <!-- Top Accent Bar -->
           <tr>
             <td style="height: 6px; background: linear-gradient(90deg, #36b37e, #2980B9, #E67E22);"></td>
           </tr>
 
-          <!-- Header Section -->
           <tr>
             <td style="padding: 35px 30px 25px 30px; text-align: center; background-color: rgba(255,255,255,0.02);">
               <span style="background-color: rgba(54,179,126,0.2); color: #36b37e; padding: 6px 16px; border-radius: 50px; font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px;">
@@ -118,7 +136,6 @@ export async function sendInfanciasEmail({
             </td>
           </tr>
 
-          <!-- Greeting & Details -->
           <tr>
             <td style="padding: 25px 30px; border-top: 1px solid rgba(255,255,255,0.08);">
               <p style="margin: 0 0 12px 0; font-size: 16px; font-weight: 700; color: #FFFFFF;">
@@ -128,7 +145,6 @@ export async function sendInfanciasEmail({
                 ¡Ya están listos los pases de tu familia! A continuación te adjuntamos los pases individuales con sus códigos QR de acceso. Presentalos desde tu celular en la mesa de entrada el día del evento.
               </p>
 
-              <!-- Family Info Box -->
               <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 15px;">
                 <tr>
                   <td style="font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.8;">
@@ -142,32 +158,27 @@ export async function sendInfanciasEmail({
             </td>
           </tr>
 
-          <!-- Individual Tickets & QRs Section -->
           <tr>
             <td style="padding: 10px 30px 25px 30px;">
               <h2 style="margin: 0 0 20px 0; font-size: 14px; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; color: #36b37e; text-align: center;">
                 🎟️ Pases y Códigos de Ingreso (${ticketsCount})
               </h2>
 
-              ${ticketsWithCid.map((t, i) => `
+              ${ticketsWithCid.map((t) => `
                 <div style="background-color: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); border-radius: 20px; padding: 20px; margin-bottom: 20px; text-align: center;">
                   
-                  <!-- QR Image -->
                   <div style="background-color: #FFFFFF; border-radius: 16px; padding: 12px; display: inline-block; margin-bottom: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
                     <img src="cid:${t.cid}" alt="QR Ticket ${t.ticketCode}" width="200" height="200" style="display: block; width: 200px; height: 200px; border: 0;" />
                   </div>
 
-                  <!-- Ticket Code -->
                   <div style="font-family: monospace; font-size: 22px; font-weight: 900; color: #36b37e; letter-spacing: 2px; margin-bottom: 4px;">
                     ${t.ticketCode}
                   </div>
 
-                  <!-- Child Name -->
                   <div style="font-size: 18px; font-weight: 800; color: #FFFFFF; margin-bottom: 10px;">
                     ${t.childName}
                   </div>
 
-                  <!-- Details -->
                   <div style="font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.6;">
                     ${t.childDni ? `<strong>DNI:</strong> ${t.childDni} &nbsp;•&nbsp; ` : ""}
                     ${t.childAge ? `<strong>Edad:</strong> ${t.childAge} años` : ""}
@@ -180,7 +191,6 @@ export async function sendInfanciasEmail({
             </td>
           </tr>
 
-          <!-- Event Day Instructions -->
           <tr>
             <td style="padding: 25px 30px; background-color: rgba(41,128,185,0.15); border-top: 1px solid rgba(255,255,255,0.1);">
               <h3 style="margin: 0 0 12px 0; font-size: 14px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; color: #2980B9;">
@@ -194,7 +204,6 @@ export async function sendInfanciasEmail({
             </td>
           </tr>
 
-          <!-- Footer -->
           <tr>
             <td style="padding: 25px 30px; text-align: center; background-color: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.05); font-size: 12px; color: rgba(255,255,255,0.4);">
               <p style="margin: 0 0 8px 0; font-weight: 700; color: rgba(255,255,255,0.7);">
@@ -217,9 +226,25 @@ export async function sendInfanciasEmail({
 </html>
     `;
 
-    if (resend) {
-      console.log(`[EMAIL] Enviando correo con ${tickets.length} pases QR a ${tutorEmail} vía Resend...`);
-      const response = await resend.emails.send({
+    // 1. Try Gmail / Nodemailer SMTP first if configured
+    if (smtpTransport) {
+      console.log(`[EMAIL] Enviando correo a ${tutorEmail} vía Gmail / SMTP (${smtpUser})...`);
+      const info = await smtpTransport.sendMail({
+        from: `Fútbol Inclusivo <${smtpFrom}>`,
+        to: tutorEmail,
+        subject: subject,
+        html: htmlContent,
+        attachments: attachments,
+      });
+
+      console.log("[EMAIL] Gmail SMTP enviado con éxito:", info.messageId);
+      return { success: true, method: "gmail_smtp", messageId: info.messageId };
+    }
+
+    // 2. Try Resend if API key configured
+    if (resendClient) {
+      console.log(`[EMAIL] Enviando correo a ${tutorEmail} vía Resend...`);
+      const response = await resendClient.emails.send({
         from: resendFromEmail,
         to: [tutorEmail],
         subject: subject,
@@ -227,14 +252,15 @@ export async function sendInfanciasEmail({
         attachments: attachments,
       });
 
-      console.log("[EMAIL] Resend response:", response);
-      return { success: true, resendId: response.id || response.data?.id };
-    } else {
-      console.log(`[EMAIL] (SIMULACIÓN - Sin RESEND_API_KEY) Email listo para ${tutorEmail} con ${tickets.length} pases QR.`);
-      return { success: true, simulated: true };
+      console.log("[EMAIL] Resend enviado con éxito:", response);
+      return { success: true, method: "resend", resendId: response.id || response.data?.id };
     }
+
+    // 3. Fallback simulation if no credentials set
+    console.log(`[EMAIL] (SIMULACIÓN - Configurar GMAIL_USER y GMAIL_APP_PASSWORD en .env) Mail listo para ${tutorEmail} con ${tickets.length} pases QR.`);
+    return { success: true, simulated: true };
   } catch (err) {
-    console.error("[EMAIL] Error al enviar email con Resend:", err);
+    console.error("[EMAIL] Error al enviar email:", err);
     return { success: false, error: err.message };
   }
 }

@@ -391,3 +391,12 @@
    - Agregado botón `✉️ Email` en `InfanciasTicketModal.js` con indicador de estado (enviando/éxito/error).
    - Agregado aviso informativo en la vista de confirmación pública de `InfanciasForm.js`.
 5. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (60/60 rutas) y push a GitHub `main`.
+
+## 2026-08-20 — Sesión 28: Soporte para Cuentas de Google / Gmail (Nodemailer SMTP)
+
+### Qué se hizo:
+1. **Instalación e Integración de Nodemailer**:
+   - Se añadió la dependencia `nodemailer` para enviar correos directamente utilizando cualquier cuenta de Gmail o Google Workspace (`GMAIL_USER` + `GMAIL_APP_PASSWORD`).
+2. **Soporte Híbrido en `src/lib/email.js`**:
+   - Detecta automáticamente las credenciales de entorno: si hay configuradas credenciales de Google/Gmail (`GMAIL_USER` y `GMAIL_APP_PASSWORD`), utiliza Nodemailer vía SMTP (`smtp.gmail.com:465`). De lo contrario, utiliza la API de `Resend`.
+3. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (60/60 rutas) y push a GitHub `main`.
