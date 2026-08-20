@@ -375,3 +375,19 @@
 3. **Sincronización en Base de Datos MongoDB Atlas**:
    - Se ejecutó el script de inicialización conectando a MongoDB Atlas y garantizando que tanto `juanchi` como `admin` queden activos con rol `admin` y contraseña `admin123`.
 4. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (59/59 rutas) y push a GitHub `main`.
+
+## 2026-08-20 — Sesión 27: Envío Automático y Reenvío de Pases QR por Email con Resend
+
+### Qué se hizo:
+1. **Módulo de Servicio de Email (`src/lib/email.js`)**:
+   - Creada función `sendInfanciasEmail` utilizando la librería oficial de `Resend`.
+   - Generación de plantilla HTML personalizada de alta calidad con branding oscuro/verde de Fútbol Inclusivo & Andar FC.
+   - Adjuntos de imágenes de códigos QR en línea mediante CIDs (`cid:qr-INF-XXXXX-X`) para visualizar los códigos QR directamente dentro de cualquier cliente de correo (Gmail, Outlook, Apple Mail).
+2. **Envío Automático en Registro (`/api/infancias/route.js`)**:
+   - Disparo asíncrono no bloqueante al finalizar cada inscripción individual o familiar desde la web o el panel.
+3. **Endpoint de Reenvío en Admin (`/api/admin/infancias/send-email/route.js`)**:
+   - Permite a los administradores reenviar el correo de confirmación con los pases QR a cualquier tutor con un solo clic.
+4. **Integración UI**:
+   - Agregado botón `✉️ Email` en `InfanciasTicketModal.js` con indicador de estado (enviando/éxito/error).
+   - Agregado aviso informativo en la vista de confirmación pública de `InfanciasForm.js`.
+5. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (60/60 rutas) y push a GitHub `main`.

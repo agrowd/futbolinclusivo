@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.8.6 — 2026-08-20
+- feat: Implementado el envío automático de correos de confirmación con pases QR adjuntos e incrustados utilizando Resend, así como un endpoint y botón de reenvío manual desde el panel de administración (/admin/infancias).
+
 ## v1.8.5 — 2026-08-14
 - fix: Resuelto el problema de cierre de sesión involuntario post-login mediante sincronización completa de sesión en cookies de navegador, inclusión de secret explícito en middleware y auto-sincronización de credenciales de juanchi y admin en MongoDB Atlas.
 

@@ -1,14 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { X, QrCode, Download, Printer, ShieldCheck } from "lucide-react";
+import { X, QrCode, Download, Printer, ShieldCheck, Mail, CheckCircle2, AlertCircle } from "lucide-react";
 import QRCode from "qrcode";
 
 export default function InfanciasTicketModal({ isOpen, item, onClose }) {
   const [qrDataUrl, setQrDataUrl] = useState("");
+  const [sendingEmail, setSendingEmail] = useState(false);
+  const [emailStatus, setEmailStatus] = useState(null); // { type: 'success'|'error', text: '' }
 
   useEffect(() => {
     if (item) {
+      setEmailStatus(null);
       const qrPayload = JSON.stringify({
         code: item.ticketCode,
         id: item._id,
@@ -38,6 +41,37 @@ export default function InfanciasTicketModal({ isOpen, item, onClose }) {
 
   const handlePrint = () => {
     window.print();
+  };
+
+  const handleSendEmail = async () => {
+    setSendingEmail(true);
+    setEmailStatus(null);
+    try {
+      const res = await fetch("/api/admin/infancias/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ticketCode: item.ticketCode }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setEmailStatus({
+          type: "success",
+          text: `Email enviado a ${data.recipient || "tutor"}.`,
+        });
+      } else {
+        setEmailStatus({
+          type: "error",
+          text: data.error || "No se pudo enviar el correo.",
+        });
+      }
+    } catch (err) {
+      setEmailStatus({
+        type: "error",
+        text: "Error al comunicar con el servidor.",
+      });
+    } finally {
+      setSendingEmail(false);
+    }
   };
 
   return (
@@ -77,7 +111,7 @@ export default function InfanciasTicketModal({ isOpen, item, onClose }) {
             {item.childName}
           </div>
 
-          <div className="bg-white/5 rounded-xl p-3 text-xs text-white/70 space-y-1.5 text-left mb-6">
+          <div className="bg-white/5 rounded-xl p-3 text-xs text-white/70 space-y-1.5 text-left mb-4">
             {item.childDni && (
               <div className="flex justify-between">
                 <span>DNI:</span>
@@ -94,6 +128,12 @@ export default function InfanciasTicketModal({ isOpen, item, onClose }) {
               <span>Contacto:</span>
               <span className="font-bold text-white">{item.tutorPhone}</span>
             </div>
+            {item.tutorEmail && (
+              <div className="flex justify-between">
+                <span>Email:</span>
+                <span className="font-bold text-white">{item.tutorEmail}</span>
+              </div>
+            )}
             <div className="flex justify-between">
               <span>Acreditado:</span>
               <span className={`font-bold ${item.attended ? "text-[#36b37e]" : "text-[#E67E22]"}`}>
@@ -102,19 +142,40 @@ export default function InfanciasTicketModal({ isOpen, item, onClose }) {
             </div>
           </div>
 
+          {emailStatus && (
+            <div
+              className={`mb-4 p-2.5 rounded-xl text-xs flex items-center justify-center gap-2 ${
+                emailStatus.type === "success"
+                  ? "bg-[#36b37e]/20 border border-[#36b37e]/40 text-[#36b37e]"
+                  : "bg-red-500/20 border border-red-500/40 text-red-400"
+              }`}
+            >
+              {emailStatus.type === "success" ? <CheckCircle2 size={14} /> : <AlertCircle size={14} />}
+              <span>{emailStatus.text}</span>
+            </div>
+          )}
+
           {/* Action buttons */}
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-3 gap-2">
             <button
               onClick={handleDownloadQR}
-              className="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white font-bold py-2.5 px-4 rounded-xl text-xs uppercase transition-all"
+              className="flex items-center justify-center gap-1.5 bg-white/10 hover:bg-white/20 text-white font-bold py-2.5 px-2 rounded-xl text-[11px] uppercase transition-all"
             >
-              <Download size={14} /> Descargar QR
+              <Download size={13} /> QR
+            </button>
+            <button
+              onClick={handleSendEmail}
+              disabled={sendingEmail || !item.tutorEmail}
+              className="flex items-center justify-center gap-1.5 bg-[#2980B9] hover:bg-[#3498db] text-white font-bold py-2.5 px-2 rounded-xl text-[11px] uppercase transition-all disabled:opacity-50"
+              title="Reenviar comprobante por correo electrónico"
+            >
+              <Mail size={13} /> {sendingEmail ? "Enviando..." : "Email"}
             </button>
             <button
               onClick={handlePrint}
-              className="flex items-center justify-center gap-2 bg-[#36b37e] hover:bg-[#2ecc71] text-white font-bold py-2.5 px-4 rounded-xl text-xs uppercase transition-all"
+              className="flex items-center justify-center gap-1.5 bg-[#36b37e] hover:bg-[#2ecc71] text-black font-black py-2.5 px-2 rounded-xl text-[11px] uppercase transition-all"
             >
-              <Printer size={14} /> Imprimir
+              <Printer size={13} /> Imprimir
             </button>
           </div>
 

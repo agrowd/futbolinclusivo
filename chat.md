@@ -1,5 +1,23 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 27: Envío Automático y Reenvío de Pases QR por Email (2026-08-20)
+
+### 📌 Contexto
+El usuario solicitó:
+- "hay que hacer que se les envie el qr por un mail, como hacemos?"
+
+### 🛠️ Acciones Realizadas
+1. **Módulo de Email (`src/lib/email.js`)**:
+   - Integrado `Resend` con plantilla HTML responsiva con diseño oscuro y elegante del evento Día de las Infancias.
+   - Los pases con código QR se incluyen tanto embebidos en el cuerpo del mail como en archivos adjuntos para máxima compatibilidad con lectores de correo.
+2. **Envío Automático (`/api/infancias/route.js`)**:
+   - Al registrarse una familia o niño/a (desde la web o desde el panel admin), se dispara automáticamente el envío del correo al `tutorEmail`.
+3. **Endpoint y Botón de Reenvío en Admin (`/api/admin/infancias/send-email/route.js` y `InfanciasTicketModal.js`)**:
+   - Botón `✉️ Email` en el modal de tickets para que los administradores puedan reenviar la confirmación con 1 solo clic.
+4. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa y push a GitHub `main`.
+
+---
+
 ## ⚽ Sesión 26: Corrección de Persistencia de Sesión y Usuarios Admin (2026-08-14)
 
 ### 📌 Contexto

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import dbConnect from "@/lib/mongodb";
 import InfanciaRegistration from "@/lib/schemas/InfanciaRegistration";
 import QRCode from "qrcode";
+import { sendInfanciasEmail } from "@/lib/email";
 
 function generateTicketCode() {
   const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -196,8 +197,20 @@ export async function POST(req) {
         tutorPhone: registration.tutorPhone,
         locality: registration.locality,
         medicalNotes: registration.medicalNotes,
-        createdAt: registration.createdAt,
-        qrDataUrl,
+      });
+    }
+
+    // Trigger async email dispatch (non-blocking)
+    if (tutorEmail && tutorEmail.trim()) {
+      sendInfanciasEmail({
+        tutorEmail: tutorEmail.trim().toLowerCase(),
+        tutorName: tutorName ? tutorName.trim() : "",
+        tutorPhone: tutorPhone ? tutorPhone.trim() : "",
+        locality: locality ? locality.trim() : "",
+        familyGroupId,
+        tickets: createdTickets,
+      }).catch((emailErr) => {
+        console.error("[EMAIL] Error sending async email:", emailErr);
       });
     }
 

@@ -450,6 +450,9 @@ export default function InfanciasForm() {
               <p>
                 2. <strong>En la entrada:</strong> Mostrás el código QR desde tu celular al personal de recepción para ingresar sin demoras.
               </p>
+              <p>
+                3. 📧 <strong>Revisá tu correo:</strong> Enviamos una copia de respaldo con todos los pases y códigos QR adjuntos a tu email.
+              </p>
             </div>
           </div>
 
