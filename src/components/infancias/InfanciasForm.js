@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import QRCode from "qrcode";
 import { 
   Sparkles, 
   CheckCircle2, 
@@ -84,6 +85,33 @@ export default function InfanciasForm() {
       console.warn("Error reading localStorage:", e);
     }
   }, []);
+
+  // On-the-fly QR code fallback generator for any tickets missing qrDataUrl
+  const [generatedQrs, setGeneratedQrs] = useState({});
+
+  useEffect(() => {
+    const list = ticketResult?.tickets || savedLocalData?.tickets || [];
+    list.forEach((t) => {
+      if (t && t.ticketCode && !t.qrDataUrl && !generatedQrs[t.ticketCode]) {
+        const qrPayload = JSON.stringify({
+          code: t.ticketCode,
+          id: t.id || t._id,
+          name: t.childName,
+        });
+
+        QRCode.toDataURL(qrPayload, {
+          errorCorrectionLevel: "M",
+          margin: 2,
+          width: 320,
+          color: { dark: "#000B1A", light: "#FFFFFF" },
+        })
+          .then((url) => {
+            setGeneratedQrs((prev) => ({ ...prev, [t.ticketCode]: url }));
+          })
+          .catch((err) => console.error("Error generating client QR:", err));
+      }
+    });
+  }, [ticketResult, savedLocalData, generatedQrs]);
 
   const handleTutorChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -332,9 +360,10 @@ export default function InfanciasForm() {
   const handleDownloadSelectedQR = () => {
     const tickets = ticketResult?.tickets || savedLocalData?.tickets || [];
     const ticket = tickets[selectedTicketIndex];
-    if (!ticket?.qrDataUrl) return;
+    const qrUrl = ticket?.qrDataUrl || generatedQrs[ticket?.ticketCode];
+    if (!qrUrl) return;
     const link = document.createElement("a");
-    link.href = ticket.qrDataUrl;
+    link.href = qrUrl;
     link.download = `Pase-QR-${ticket.ticketCode}-${ticket.childName}.png`;
     link.click();
   };
@@ -483,14 +512,14 @@ export default function InfanciasForm() {
               
               {/* QR Image Box */}
               <div className="flex flex-col items-center justify-center p-4 bg-white rounded-2xl shadow-2xl">
-                {currentTicket.qrDataUrl ? (
+                {currentTicket.qrDataUrl || generatedQrs[currentTicket.ticketCode] ? (
                   <img 
-                    src={currentTicket.qrDataUrl} 
+                    src={currentTicket.qrDataUrl || generatedQrs[currentTicket.ticketCode]} 
                     alt={`QR Ticket ${currentTicket.ticketCode}`}
                     className="w-52 h-52 object-contain"
                   />
                 ) : (
-                  <div className="w-52 h-52 flex items-center justify-center bg-gray-100 text-gray-400">
+                  <div className="w-52 h-52 flex items-center justify-center bg-gray-100 text-gray-400 animate-pulse">
                     <QrCode size={56} />
                   </div>
                 )}

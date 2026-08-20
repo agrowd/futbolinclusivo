@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.8.8 — 2026-08-20
+- fix: Resuelto el problema de visualización de imagen del código QR mediante la inclusión del atributo qrDataUrl en la respuesta de la API y un generador dinámico de respaldo en el navegador (InfanciasForm.js).
+
 ## v1.8.7 — 2026-08-20
 - feat: Añadido soporte para envío de correos con cuentas de Gmail / Google Workspace mediante Nodemailer y contraseñas de aplicación SMTP.
 

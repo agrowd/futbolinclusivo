@@ -197,6 +197,8 @@ export async function POST(req) {
         tutorPhone: registration.tutorPhone,
         locality: registration.locality,
         medicalNotes: registration.medicalNotes,
+        createdAt: registration.createdAt,
+        qrDataUrl,
       });
     }
 

@@ -1,5 +1,20 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 29: Corrección de Imagen del Código QR (2026-08-20)
+
+### 📌 Contexto
+El usuario envió una captura de pantalla mostrando que la tarjeta del ticket mostraba el icono gris de reemplazo y no la imagen del código QR.
+
+### 🛠️ Causa Raíz
+En la actualización de la API de infancias (`/api/infancias/route.js`), la propiedad `qrDataUrl` había sido omitida accidentalmente en el objeto de respuesta devuelto al cliente (`createdTickets.push`).
+
+### 🛠️ Acciones Realizadas
+1. Se restituyó la propiedad `qrDataUrl` en la respuesta de `/api/infancias/route.js`.
+2. Se implementó en `InfanciasForm.js` un generador dinámico de respaldo en tiempo real usando `QRCode.toDataURL(...)` que autogenera la imagen del QR en el navegador en caso de que cualquier ticket en `localStorage` o en la API carezca de ella.
+3. Compilación 100% exitosa y push a GitHub `main`.
+
+---
+
 ## ⚽ Sesión 28: Configuración e Integración con Gmail / Google Account (2026-08-20)
 
 ### 📌 Contexto

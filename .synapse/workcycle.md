@@ -400,3 +400,12 @@
 2. **Soporte Híbrido en `src/lib/email.js`**:
    - Detecta automáticamente las credenciales de entorno: si hay configuradas credenciales de Google/Gmail (`GMAIL_USER` y `GMAIL_APP_PASSWORD`), utiliza Nodemailer vía SMTP (`smtp.gmail.com:465`). De lo contrario, utiliza la API de `Resend`.
 3. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (60/60 rutas) y push a GitHub `main`.
+
+## 2026-08-20 — Sesión 29: Corrección de Generación y Renderizado de QR en Frontend y API
+
+### Qué se hizo:
+1. **Restauración de `qrDataUrl` en la Respuesta de la API (`/api/infancias/route.js`)**:
+   - Se añadió el atributo `qrDataUrl` al objeto devuelto en `createdTickets.push({...})` que había sido omitido por error en el envío de respuesta.
+2. **Generador Dinámico de Respaldo en Cliente (`InfanciasForm.js`)**:
+   - Se integró `QRCode` en el cliente con un estado `generatedQrs` y un `useEffect` reactivo que detecta si a algún ticket (guardado en `localStorage` o recibido de la API) le falta el Data URL del QR, generándolo al instante en el navegador.
+3. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (60/60 rutas) y push a GitHub `main`.
