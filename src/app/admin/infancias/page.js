@@ -23,12 +23,14 @@ import {
   ShieldCheck,
   AlertTriangle,
   FileSpreadsheet,
-  Plus
+  Plus,
+  Mail
 } from "lucide-react";
 import InfanciasScannerModal from "@/components/admin/InfanciasScannerModal";
 import InfanciasEditModal from "@/components/admin/InfanciasEditModal";
 import InfanciasTicketModal from "@/components/admin/InfanciasTicketModal";
 import InfanciasCreateModal from "@/components/admin/InfanciasCreateModal";
+import InfanciasBatchEmailModal from "@/components/admin/InfanciasBatchEmailModal";
 
 export default function AdminInfanciasPage() {
   const { data: session, status } = useSession();
@@ -42,6 +44,7 @@ export default function AdminInfanciasPage() {
 
   // Modals state
   const [createOpen, setCreateOpen] = useState(false);
+  const [batchEmailOpen, setBatchEmailOpen] = useState(false);
   const [scannerOpen, setScannerOpen] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
   const [viewingTicket, setViewingTicket] = useState(null);
@@ -246,6 +249,14 @@ export default function AdminInfanciasPage() {
               <Plus size={18} className="text-[#36b37e]" />
               <span className="hidden sm:inline">Nueva Inscripción</span>
               <span className="sm:hidden">Inscribir</span>
+            </button>
+            <button
+              onClick={() => setBatchEmailOpen(true)}
+              className="bg-white/10 hover:bg-white/20 border border-white/15 text-white font-bold px-3.5 sm:px-4 py-3 rounded-2xl transition-all flex items-center gap-2 text-xs sm:text-sm uppercase active:scale-95 shadow-md"
+              title="Enviar pases QR por correo electrónico masivo a los inscriptos"
+            >
+              <Mail size={18} className="text-[#2980B9]" />
+              <span className="hidden lg:inline">Enviar Mails</span>
             </button>
             <button
               onClick={() => setScannerOpen(true)}
@@ -551,6 +562,13 @@ export default function AdminInfanciasPage() {
                         >
                           <Phone size={12} /> {item.tutorPhone}
                         </a>
+                        {item.tutorEmail ? (
+                          <span className={`text-[10px] font-bold mt-1 flex items-center gap-1 ${item.emailSent ? "text-[#36b37e]" : "text-[#E67E22]"}`}>
+                            <Mail size={11} /> {item.emailSent ? "Mail enviado" : "Mail pendiente"}
+                          </span>
+                        ) : (
+                          <span className="text-[10px] text-white/40 font-semibold block mt-1">Sin mail</span>
+                        )}
                       </td>
 
                       {/* Locality & Club */}
@@ -647,6 +665,13 @@ export default function AdminInfanciasPage() {
         isOpen={createOpen}
         onClose={() => setCreateOpen(false)}
         onCreated={fetchData}
+      />
+
+      <InfanciasBatchEmailModal
+        isOpen={batchEmailOpen}
+        onClose={() => setBatchEmailOpen(false)}
+        onCompleted={fetchData}
+        items={items}
       />
 
       <InfanciasScannerModal

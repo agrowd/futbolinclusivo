@@ -92,6 +92,15 @@ const InfanciaRegistrationSchema = new mongoose.Schema(
       trim: true,
       default: "",
     },
+    emailSent: {
+      type: Boolean,
+      default: false,
+      index: true,
+    },
+    emailSentAt: {
+      type: Date,
+      default: null,
+    },
   },
   {
     timestamps: true,

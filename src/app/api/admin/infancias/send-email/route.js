@@ -101,10 +101,17 @@ export async function POST(req) {
 
     if (emailResult.error) {
       return NextResponse.json(
-        { error: `Error al enviar correo con Resend: ${emailResult.error}` },
+        { error: `Error al enviar correo: ${emailResult.error}` },
         { status: 500 }
       );
     }
+
+    // Mark as emailSent in DB
+    const ticketIds = familyRegistrations.map((r) => r._id);
+    await InfanciaRegistration.updateMany(
+      { _id: { $in: ticketIds } },
+      { $set: { emailSent: true, emailSentAt: new Date() } }
+    );
 
     return NextResponse.json({
       success: true,

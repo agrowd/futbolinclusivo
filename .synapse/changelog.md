@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.9.1 — 2026-08-21
+- feat: Implementado el sistema de envío masivo de pases QR por correo electrónico para inscripciones anteriores en el panel de administración (/admin/infancias) con agrupación familiar y seguimiento de estado de envío.
+
 ## v1.9.0 — 2026-08-21
 - feat: Reforzada la validación obligatoria y estricta de formato de correo electrónico tanto en cliente como en backend API y modal de creación manual admin.
 

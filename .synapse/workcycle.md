@@ -428,3 +428,18 @@
 2. **Despliegue y Re-despliegue en Vercel**:
    - Realizado commit y push a GitHub `main` para forzar la actualización automática en vivo (re-deploy) en Vercel.
 3. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (60/60 rutas) y push a GitHub `main`.
+
+## 2026-08-21 — Sesión 32: Sistema de Envío Masivo de Pases QR para Inscriptos Previos (`/admin/infancias`)
+
+### Qué se hizo:
+1. **Endpoint de Envío Masivo por Grupos Familiares (`/api/admin/infancias/batch-email/route.js`)**:
+   - Agrupa automáticamente las inscripciones por `familyGroupId` o `tutorEmail` para enviar **1 solo correo por familia** con todos sus pases QR adjuntos.
+   - Opción para procesar solo a familias pendientes (`onlyPending: true`) o a la totalidad de inscriptos.
+   - Marca automáticamente `emailSent: true` y `emailSentAt: new Date()` en la base de datos al enviar con éxito.
+2. **Modal de Envío Masivo (`InfanciasBatchEmailModal.js`)**:
+   - Creado modal administrativo interactivo con conteo en vivo de familias, inscriptos y registrados sin email.
+   - Muestra el registro de progreso con resultados detallados por familia.
+3. **Integración UI en Tabla y Barra Superior (`/admin/infancias/page.js`)**:
+   - Botón `✉️ Enviar Mails` en la barra superior.
+   - Indicador de estado por fila (`✉️ Mail enviado` / `✉️ Mail pendiente` / `Sin mail`).
+4. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (61/61 rutas) y push a GitHub `main`.

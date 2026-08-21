@@ -1,5 +1,19 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 32: Sistema de Envío Masivo de Pases QR para Inscriptos Previos (2026-08-21)
+
+### 📌 Contexto
+El usuario preguntó cómo enviarle los pases QR a las familias que ya se habían inscripto antes de configurar el correo de Google.
+
+### 🛠️ Acciones Realizadas
+1. Se añadió el campo `emailSent` y `emailSentAt` al esquema de MongoDB (`InfanciaRegistration.js`).
+2. Se creó el endpoint de envío masivo por grupos familiares (`/api/admin/infancias/batch-email/route.js`).
+3. Se diseñó el componente interactivo `InfanciasBatchEmailModal.js` para ejecutar envíos masivos con seguimiento de familias notificadas y pendientes.
+4. Se incorporó el botón `✉️ Enviar Mails` en el header del panel de administración (`/admin/infancias`) e indicadores visuales de estado por fila (`✉️ Mail enviado` / `✉️ Mail pendiente`).
+5. Compilación 100% exitosa (61/61 rutas) y push a `main`.
+
+---
+
 ## ⚽ Sesión 31: Email Obligatorio y Re-despliegue en Vercel (2026-08-21)
 
 ### 📌 Contexto
