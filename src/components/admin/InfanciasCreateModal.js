@@ -171,8 +171,8 @@ export default function InfanciasCreateModal({ isOpen, onClose, onCreated }) {
       setError("El teléfono / WhatsApp de contacto es obligatorio.");
       return;
     }
-    if (!tutorData.tutorEmail.trim()) {
-      setError("El correo electrónico es obligatorio.");
+    if (!tutorData.tutorEmail.trim() || !tutorData.tutorEmail.includes("@") || !tutorData.tutorEmail.includes(".")) {
+      setError("El correo electrónico es obligatorio y debe tener un formato válido (ejemplo: usuario@gmail.com).");
       return;
     }
     if (!tutorData.locality.trim()) {

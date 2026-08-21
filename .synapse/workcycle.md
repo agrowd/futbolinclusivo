@@ -419,3 +419,12 @@
 2. **Verificación de Envío Real**:
    - Probado exitosamente el envío SMTP mediante Nodemailer recibiendo confirmación directa de Google Gmail (`<bfca7ed4-41e4-b075-2b1f-5b14d58ea7b4@gmail.com>`).
 3. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (60/60 rutas) y push a GitHub `main`.
+
+## 2026-08-21 — Sesión 31: Validación Estricta de Formato de Email Obligatorio
+
+### Qué se hizo:
+1. **Validación Estricta de Email en Cliente y Backend**:
+   - `src/components/infancias/InfanciasForm.js`, `src/app/api/infancias/route.js` y `src/components/admin/InfanciasCreateModal.js`: Se actualizó la regla de validaciones para exigir obligatoriamente que `tutorEmail` esté presente y posea un formato válido (contenga `@` y `.`).
+2. **Despliegue y Re-despliegue en Vercel**:
+   - Realizado commit y push a GitHub `main` para forzar la actualización automática en vivo (re-deploy) en Vercel.
+3. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (60/60 rutas) y push a GitHub `main`.

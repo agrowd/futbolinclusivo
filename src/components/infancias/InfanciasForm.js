@@ -214,8 +214,8 @@ export default function InfanciasForm() {
       return;
     }
 
-    if (!tutorData.tutorEmail.trim()) {
-      setError("Por favor ingresá un correo electrónico de contacto.");
+    if (!tutorData.tutorEmail.trim() || !tutorData.tutorEmail.includes("@") || !tutorData.tutorEmail.includes(".")) {
+      setError("Por favor ingresá un correo electrónico válido (ejemplo: usuario@gmail.com) para poder enviarte los pases QR.");
       return;
     }
 

@@ -57,9 +57,9 @@ export async function POST(req) {
       );
     }
 
-    if (!tutorEmail || !tutorEmail.trim()) {
+    if (!tutorEmail || !tutorEmail.trim() || !tutorEmail.includes("@") || !tutorEmail.includes(".")) {
       return NextResponse.json(
-        { error: "El correo electrónico es obligatorio." },
+        { error: "El correo electrónico es obligatorio y debe tener un formato válido (ejemplo: usuario@gmail.com)." },
         { status: 400 }
       );
     }

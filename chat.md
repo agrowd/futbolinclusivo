@@ -1,5 +1,18 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 31: Email Obligatorio y Re-despliegue en Vercel (2026-08-21)
+
+### 📌 Contexto
+El usuario solicitó:
+- "hace un commit y pone que la gente tenga que poner si o si el mail, ya que eso tendria que haber estado desde el principio"
+
+### 🛠️ Acciones Realizadas
+1. Se configuró la validación obligatoria y estricta de formato de correo electrónico (`@` y `.`) en `InfanciasForm.js`, `/api/infancias/route.js` y `InfanciasCreateModal.js`.
+2. Se realizó el commit y push a GitHub `main` para gatillar el re-despliegue automático en Vercel de forma transparente.
+3. Compilación 100% exitosa (60/60 rutas) y push a `main`.
+
+---
+
 ## ⚽ Sesión 30: Configuración y Verificación Real de Gmail SMTP (2026-08-21)
 
 ### 📌 Contexto

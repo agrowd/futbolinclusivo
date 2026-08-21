@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.9.0 — 2026-08-21
+- feat: Reforzada la validación obligatoria y estricta de formato de correo electrónico tanto en cliente como en backend API y modal de creación manual admin.
+
 ## v1.8.9 — 2026-08-21
 - feat: Configurado el envío directo de correos electrónicos desde la cuenta diadelasinfancias.andar@gmail.com mediante Nodemailer y contraseña de aplicación SMTP verificada.
 
