@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.8.9 — 2026-08-21
+- feat: Configurado el envío directo de correos electrónicos desde la cuenta diadelasinfancias.andar@gmail.com mediante Nodemailer y contraseña de aplicación SMTP verificada.
+
 ## v1.8.8 — 2026-08-20
 - fix: Resuelto el problema de visualización de imagen del código QR mediante la inclusión del atributo qrDataUrl en la respuesta de la API y un generador dinámico de respaldo en el navegador (InfanciasForm.js).
 

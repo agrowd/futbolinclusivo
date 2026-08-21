@@ -1,5 +1,20 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 30: Configuración y Verificación Real de Gmail SMTP (2026-08-21)
+
+### 📌 Contexto
+El usuario proporcionó la Contraseña de Aplicación de Google para la cuenta `diadelasinfancias.andar@gmail.com`: `zory urpr psve mgzm`.
+
+### 🛠️ Acciones Realizadas
+1. Se configuraron las credenciales en `.env`:
+   - `GMAIL_USER=diadelasinfancias.andar@gmail.com`
+   - `GMAIL_APP_PASSWORD=zoryurprpsvemgzm`
+2. Se actualizó `src/lib/email.js` para leer de forma dinámica las variables de entorno y sanear espacios automáticamente.
+3. Se realizó la prueba de envío real con Nodemailer confirmando la recepción en Gmail con el ID de mensaje `<bfca7ed4-41e4-b075-2b1f-5b14d58ea7b4@gmail.com>`.
+4. Compilación 100% exitosa y push a GitHub `main`.
+
+---
+
 ## ⚽ Sesión 29: Corrección de Imagen del Código QR (2026-08-20)
 
 ### 📌 Contexto

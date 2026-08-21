@@ -409,3 +409,13 @@
 2. **Generador Dinámico de Respaldo en Cliente (`InfanciasForm.js`)**:
    - Se integró `QRCode` en el cliente con un estado `generatedQrs` y un `useEffect` reactivo que detecta si a algún ticket (guardado en `localStorage` o recibido de la API) le falta el Data URL del QR, generándolo al instante en el navegador.
 3. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (60/60 rutas) y push a GitHub `main`.
+
+## 2026-08-21 — Sesión 30: Configuración y Validación Exitosa de Gmail SMTP (`diadelasinfancias.andar@gmail.com`)
+
+### Qué se hizo:
+1. **Configuración de Credenciales de Aplicación Google**:
+   - Configurado `GMAIL_USER=diadelasinfancias.andar@gmail.com` y `GMAIL_APP_PASSWORD=zoryurprpsvemgzm` en `.env` local.
+   - En `src/lib/email.js` se agregó limpieza automática de espacios en blanco en la clave (`rawSmtpPass.replace(/\s+/g, "")`) y lectura dinámica de variables de entorno para prevenir errores de formato.
+2. **Verificación de Envío Real**:
+   - Probado exitosamente el envío SMTP mediante Nodemailer recibiendo confirmación directa de Google Gmail (`<bfca7ed4-41e4-b075-2b1f-5b14d58ea7b4@gmail.com>`).
+3. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (60/60 rutas) y push a GitHub `main`.

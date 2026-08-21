@@ -2,33 +2,6 @@ import { Resend } from "resend";
 import nodemailer from "nodemailer";
 import QRCode from "qrcode";
 
-const resendApiKey = process.env.RESEND_API_KEY;
-const resendFromEmail = process.env.RESEND_FROM_EMAIL || "Fútbol Inclusivo <onboarding@resend.dev>";
-
-// Gmail / Custom SMTP Environment Variables
-const smtpUser = process.env.GMAIL_USER || process.env.SMTP_USER || process.env.EMAIL_USER;
-const smtpPass = process.env.GMAIL_APP_PASSWORD || process.env.SMTP_PASSWORD || process.env.EMAIL_PASS;
-const smtpFrom = process.env.GMAIL_FROM || process.env.SMTP_FROM || smtpUser;
-
-// Resend client (if API key present)
-const resendClient = resendApiKey && resendApiKey !== "re_xxxxxxxxxxxxx" 
-  ? new Resend(resendApiKey) 
-  : null;
-
-// Nodemailer SMTP transport (if Gmail / SMTP credentials present)
-const smtpTransport = (smtpUser && smtpPass)
-  ? nodemailer.createTransport({
-      service: "gmail",
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
-      auth: {
-        user: smtpUser,
-        pass: smtpPass,
-      },
-    })
-  : null;
-
 /**
  * Sends a confirmation email to the parent/tutor containing their QR passes and tickets
  * Supports both Gmail (via SMTP / App Password) and Resend API.
@@ -58,6 +31,16 @@ export async function sendInfanciasEmail({
     console.warn("[EMAIL] No tickets provided for email");
     return { success: false, reason: "no_tickets" };
   }
+
+  // Dynamic read of environment variables
+  const resendApiKey = process.env.RESEND_API_KEY;
+  const resendFromEmail = process.env.RESEND_FROM_EMAIL || "Fútbol Inclusivo <onboarding@resend.dev>";
+
+  const smtpUser = process.env.GMAIL_USER || process.env.SMTP_USER || process.env.EMAIL_USER;
+  const rawSmtpPass = process.env.GMAIL_APP_PASSWORD || process.env.SMTP_PASSWORD || process.env.EMAIL_PASS;
+  // Automatically strip spaces if user copied "zory urpr psve mgzm"
+  const smtpPass = rawSmtpPass ? rawSmtpPass.replace(/\s+/g, "") : "";
+  const smtpFrom = process.env.GMAIL_FROM || process.env.SMTP_FROM || smtpUser;
 
   try {
     // Generate inline QR images for email attachments
@@ -226,10 +209,21 @@ export async function sendInfanciasEmail({
 </html>
     `;
 
-    // 1. Try Gmail / Nodemailer SMTP first if configured
-    if (smtpTransport) {
+    // 1. Try Gmail / Nodemailer SMTP first if credentials present
+    if (smtpUser && smtpPass) {
       console.log(`[EMAIL] Enviando correo a ${tutorEmail} vía Gmail / SMTP (${smtpUser})...`);
-      const info = await smtpTransport.sendMail({
+      const transport = nodemailer.createTransport({
+        service: "gmail",
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true,
+        auth: {
+          user: smtpUser,
+          pass: smtpPass,
+        },
+      });
+
+      const info = await transport.sendMail({
         from: `Fútbol Inclusivo <${smtpFrom}>`,
         to: tutorEmail,
         subject: subject,
@@ -242,8 +236,9 @@ export async function sendInfanciasEmail({
     }
 
     // 2. Try Resend if API key configured
-    if (resendClient) {
+    if (resendApiKey && resendApiKey !== "re_xxxxxxxxxxxxx") {
       console.log(`[EMAIL] Enviando correo a ${tutorEmail} vía Resend...`);
+      const resendClient = new Resend(resendApiKey);
       const response = await resendClient.emails.send({
         from: resendFromEmail,
         to: [tutorEmail],
