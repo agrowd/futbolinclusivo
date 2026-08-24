@@ -443,3 +443,16 @@
    - Botón `✉️ Enviar Mails` en la barra superior.
    - Indicador de estado por fila (`✉️ Mail enviado` / `✉️ Mail pendiente` / `Sin mail`).
 4. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (61/61 rutas) y push a GitHub `main`.
+
+## 2026-08-24 — Sesión 33: Integración de Acciones WhatsApp y Generador de Plantilla de Mensajes (`/admin/infancias`)
+
+### Qué se hizo:
+1. **Utilidades de WhatsApp (`src/lib/whatsapp.js`)**:
+   - `formatWhatsAppPhone`: Formatea cualquier número argentino/internacional al estándar internacional de WhatsApp (`549XXXXXXXXXX`).
+   - `buildWhatsAppMessage`: Genera el mensaje de texto de bienvenida y pase de ingreso con códigos QR y recomendaciones.
+   - `getWhatsAppLink`: Construye el enlace directo `https://wa.me/...` con el mensaje precargado.
+2. **Acciones Directas en Tabla y Modal de Ticket (`InfanciasTicketModal.js` y `page.js`)**:
+   - Botón directo `💬 WhatsApp` para abrir el chat con el tutor.
+   - Botón `📋 Copiar Nro` para copiar el teléfono limpio en formato WhatsApp.
+   - Botón `📝 Copiar Texto WA` para copiar la plantilla de mensaje personalizada lista para enviar.
+3. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (61/61 rutas) y push a GitHub `main`.

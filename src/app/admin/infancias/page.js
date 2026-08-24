@@ -24,13 +24,17 @@ import {
   AlertTriangle,
   FileSpreadsheet,
   Plus,
-  Mail
+  Mail,
+  MessageSquare,
+  Copy,
+  Check
 } from "lucide-react";
 import InfanciasScannerModal from "@/components/admin/InfanciasScannerModal";
 import InfanciasEditModal from "@/components/admin/InfanciasEditModal";
 import InfanciasTicketModal from "@/components/admin/InfanciasTicketModal";
 import InfanciasCreateModal from "@/components/admin/InfanciasCreateModal";
 import InfanciasBatchEmailModal from "@/components/admin/InfanciasBatchEmailModal";
+import { formatWhatsAppPhone, getWhatsAppLink } from "@/lib/whatsapp";
 
 export default function AdminInfanciasPage() {
   const { data: session, status } = useSession();
@@ -41,6 +45,7 @@ export default function AdminInfanciasPage() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterAttended, setFilterAttended] = useState("all"); // 'all', 'attended', 'pending'
+  const [copiedId, setCopiedId] = useState(null);
 
   // Modals state
   const [createOpen, setCreateOpen] = useState(false);
@@ -439,8 +444,34 @@ export default function AdminInfanciasPage() {
                   {item.childDni && <div>DNI: <strong className="text-white font-mono">{item.childDni}</strong></div>}
                   {item.childAge && <div>Edad: <strong className="text-white">{item.childAge} años</strong></div>}
                   {item.tutorPhone && (
-                    <div className="col-span-2 flex items-center gap-1 text-[#2980B9]">
-                      <Phone size={12} /> Contacto: <a href={`tel:${item.tutorPhone}`} className="underline font-bold text-white">{item.tutorPhone}</a>
+                    <div className="col-span-2 flex items-center justify-between text-[#2980B9]">
+                      <div className="flex items-center gap-1">
+                        <Phone size={12} /> <a href={`tel:${item.tutorPhone}`} className="underline font-bold text-white font-mono">{item.tutorPhone}</a>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <a
+                          href={getWhatsAppLink(item.tutorPhone, { tutorName: item.tutorName, ticketCode: item.ticketCode, childName: item.childName })}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-2 py-0.5 rounded-lg bg-[#25D366]/20 text-[#25D366] font-bold text-[10px] flex items-center gap-1"
+                        >
+                          <MessageSquare size={11} /> WhatsApp
+                        </a>
+                        <button
+                          onClick={() => {
+                            const clean = formatWhatsAppPhone(item.tutorPhone);
+                            if (clean) {
+                              navigator.clipboard.writeText(clean);
+                              setCopiedId(item._id);
+                              setTimeout(() => setCopiedId(null), 2000);
+                            }
+                          }}
+                          className="px-2 py-0.5 rounded-lg bg-white/10 text-white font-bold text-[10px] flex items-center gap-1"
+                        >
+                          {copiedId === item._id ? <Check size={11} className="text-[#36b37e]" /> : <Copy size={11} />}
+                          <span>{copiedId === item._id ? "Copiado" : "Copiar"}</span>
+                        </button>
+                      </div>
                     </div>
                   )}
                   {item.locality && <div className="col-span-2">Localidad: <span className="text-white">{item.locality}</span></div>}
@@ -556,12 +587,37 @@ export default function AdminInfanciasPage() {
                         <div className="font-semibold text-white/90 text-sm">
                           {item.tutorName || "—"}
                         </div>
-                        <a
-                          href={`tel:${item.tutorPhone}`}
-                          className="text-xs text-[#2980B9] hover:underline flex items-center gap-1 mt-0.5"
-                        >
-                          <Phone size={12} /> {item.tutorPhone}
-                        </a>
+                        <div className="flex items-center gap-2 mt-1">
+                          <a
+                            href={`tel:${item.tutorPhone}`}
+                            className="text-xs text-[#2980B9] hover:underline flex items-center gap-1 font-mono"
+                          >
+                            <Phone size={12} /> {item.tutorPhone}
+                          </a>
+                          <a
+                            href={getWhatsAppLink(item.tutorPhone, { tutorName: item.tutorName, ticketCode: item.ticketCode, childName: item.childName })}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-1 rounded-lg bg-[#25D366]/20 hover:bg-[#25D366]/30 text-[#25D366] transition-colors"
+                            title="Abrir chat de WhatsApp con mensaje listo"
+                          >
+                            <MessageSquare size={13} />
+                          </a>
+                          <button
+                            onClick={() => {
+                              const clean = formatWhatsAppPhone(item.tutorPhone);
+                              if (clean) {
+                                navigator.clipboard.writeText(clean);
+                                setCopiedId(item._id);
+                                setTimeout(() => setCopiedId(null), 2000);
+                              }
+                            }}
+                            className="p-1 rounded-lg bg-white/5 hover:bg-white/10 text-white/60 hover:text-white transition-colors"
+                            title="Copiar número en formato WhatsApp (549...)"
+                          >
+                            {copiedId === item._id ? <Check size={13} className="text-[#36b37e]" /> : <Copy size={13} />}
+                          </button>
+                        </div>
                         {item.tutorEmail ? (
                           <span className={`text-[10px] font-bold mt-1 flex items-center gap-1 ${item.emailSent ? "text-[#36b37e]" : "text-[#E67E22]"}`}>
                             <Mail size={11} /> {item.emailSent ? "Mail enviado" : "Mail pendiente"}

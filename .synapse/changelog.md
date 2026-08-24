@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.9.2 — 2026-08-24
+- feat: Agregada integración directa de WhatsApp en el panel de administración (/admin/infancias) con formateador de números al estándar 549, botones de apertura directa de chat y copiado rápido de plantilla de mensaje para envío manual de pases QR.
+
 ## v1.9.1 — 2026-08-21
 - feat: Implementado el sistema de envío masivo de pases QR por correo electrónico para inscripciones anteriores en el panel de administración (/admin/infancias) con agrupación familiar y seguimiento de estado de envío.
 

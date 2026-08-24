@@ -1,5 +1,21 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 33: Integración de WhatsApp y Copiado de Teléfono/Plantilla (2026-08-24)
+
+### 📌 Contexto
+El usuario solicitó:
+- "agregar una funcion para copiar los numeros de telefono en formato whatsapp asi le envio los qr a mano, ademas generame el texto para enviarle a todos"
+
+### 🛠️ Acciones Realizadas
+1. Se creó `src/lib/whatsapp.js` con formateador al código `549...`, generador de plantillas de texto y enlaces directos `https://wa.me/...`.
+2. Se actualizaron la tabla principal de `/admin/infancias`, las tarjetas móviles y el modal `InfanciasTicketModal.js` con botones directos:
+   - `💬 WhatsApp`: Abre el chat en WhatsApp con el mensaje listo.
+   - `📋 Copiar Nro`: Copia el teléfono en formato `549...`.
+   - `📝 Copiar Texto WA`: Copia la plantilla completa del mensaje.
+3. Compilación 100% exitosa (61/61 rutas) y push a `main`.
+
+---
+
 ## ⚽ Sesión 32: Sistema de Envío Masivo de Pases QR para Inscriptos Previos (2026-08-21)
 
 ### 📌 Contexto

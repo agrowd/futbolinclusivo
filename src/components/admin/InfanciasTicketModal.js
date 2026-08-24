@@ -1,17 +1,32 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { X, QrCode, Download, Printer, ShieldCheck, Mail, CheckCircle2, AlertCircle } from "lucide-react";
+import { 
+  X, 
+  QrCode, 
+  Download, 
+  Printer, 
+  ShieldCheck, 
+  Mail, 
+  CheckCircle2, 
+  AlertCircle,
+  MessageSquare,
+  Copy,
+  Check
+} from "lucide-react";
 import QRCode from "qrcode";
+import { formatWhatsAppPhone, buildWhatsAppMessage, getWhatsAppLink } from "@/lib/whatsapp";
 
 export default function InfanciasTicketModal({ isOpen, item, onClose }) {
   const [qrDataUrl, setQrDataUrl] = useState("");
   const [sendingEmail, setSendingEmail] = useState(false);
   const [emailStatus, setEmailStatus] = useState(null); // { type: 'success'|'error', text: '' }
+  const [copiedType, setCopiedType] = useState(null); // 'phone' | 'text' | null
 
   useEffect(() => {
     if (item) {
       setEmailStatus(null);
+      setCopiedType(null);
       const qrPayload = JSON.stringify({
         code: item.ticketCode,
         id: item._id,
@@ -41,6 +56,25 @@ export default function InfanciasTicketModal({ isOpen, item, onClose }) {
 
   const handlePrint = () => {
     window.print();
+  };
+
+  const handleCopyPhone = () => {
+    const cleanPhone = formatWhatsAppPhone(item.tutorPhone);
+    if (!cleanPhone) return;
+    navigator.clipboard.writeText(cleanPhone);
+    setCopiedType("phone");
+    setTimeout(() => setCopiedType(null), 2500);
+  };
+
+  const handleCopyText = () => {
+    const msg = buildWhatsAppMessage({
+      tutorName: item.tutorName,
+      ticketCode: item.ticketCode,
+      childName: item.childName,
+    });
+    navigator.clipboard.writeText(msg);
+    setCopiedType("text");
+    setTimeout(() => setCopiedType(null), 2500);
   };
 
   const handleSendEmail = async () => {
@@ -73,6 +107,12 @@ export default function InfanciasTicketModal({ isOpen, item, onClose }) {
       setSendingEmail(false);
     }
   };
+
+  const waLink = getWhatsAppLink(item.tutorPhone, {
+    tutorName: item.tutorName,
+    ticketCode: item.ticketCode,
+    childName: item.childName,
+  });
 
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
@@ -124,9 +164,26 @@ export default function InfanciasTicketModal({ isOpen, item, onClose }) {
                 <span className="font-bold text-white">{item.childAge} años</span>
               </div>
             )}
-            <div className="flex justify-between">
+            <div className="flex justify-between items-center">
               <span>Contacto:</span>
-              <span className="font-bold text-white">{item.tutorPhone}</span>
+              <div className="flex items-center gap-2">
+                <span className="font-bold text-white">{item.tutorPhone}</span>
+                <button
+                  onClick={handleCopyPhone}
+                  className="text-[11px] text-[#2980B9] hover:underline flex items-center gap-0.5"
+                  title="Copiar número en formato WhatsApp (549...)"
+                >
+                  {copiedType === "phone" ? (
+                    <span className="text-[#36b37e] font-bold flex items-center gap-0.5">
+                      <Check size={12} /> Copiado
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-0.5">
+                      <Copy size={12} /> WhatsApp Nro
+                    </span>
+                  )}
+                </button>
+              </div>
             </div>
             {item.tutorEmail && (
               <div className="flex justify-between">
@@ -155,7 +212,33 @@ export default function InfanciasTicketModal({ isOpen, item, onClose }) {
             </div>
           )}
 
-          {/* Action buttons */}
+          {/* Quick WhatsApp Actions */}
+          <div className="grid grid-cols-2 gap-2 mb-3">
+            <a
+              href={waLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-1.5 bg-[#25D366] hover:bg-[#20ba5a] text-black font-black py-2.5 px-3 rounded-xl text-xs uppercase transition-all shadow-md"
+            >
+              <MessageSquare size={14} /> Abrir WhatsApp
+            </a>
+            <button
+              onClick={handleCopyText}
+              className="flex items-center justify-center gap-1.5 bg-white/10 hover:bg-white/20 text-white font-bold py-2.5 px-3 rounded-xl text-xs uppercase transition-all"
+            >
+              {copiedType === "text" ? (
+                <>
+                  <Check size={14} className="text-[#36b37e]" /> Copiado
+                </>
+              ) : (
+                <>
+                  <Copy size={14} /> Copiar Texto WA
+                </>
+              )}
+            </button>
+          </div>
+
+          {/* Download, Email & Print */}
           <div className="grid grid-cols-3 gap-2">
             <button
               onClick={handleDownloadQR}
