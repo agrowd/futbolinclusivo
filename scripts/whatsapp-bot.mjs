@@ -1,7 +1,11 @@
 import fs from "fs";
 import path from "path";
 import QRCode from "qrcode";
+import qrcodeTerminal from "qrcode-terminal";
+import mongoose from "mongoose";
 import { formatWhatsAppPhone, buildWhatsAppMessage } from "../src/lib/whatsapp.js";
+import { makeWASocket, useMultiFileAuthState, DisconnectReason } from "@whiskeysockets/baileys";
+import pino from "pino";
 
 // Load environment variables from .env
 try {
@@ -15,8 +19,6 @@ try {
   }
 } catch (e) {}
 
-import mongoose from "mongoose";
-
 const InfanciaRegistrationSchema = new mongoose.Schema(
   {
     ticketCode: String,
@@ -24,17 +26,12 @@ const InfanciaRegistrationSchema = new mongoose.Schema(
     childName: String,
     childDni: String,
     childAge: String,
-    childBirthDate: String,
     tutorName: String,
     tutorPhone: String,
     tutorEmail: String,
     locality: String,
-    clubOrSchool: String,
     medicalNotes: String,
-    imageConsent: Boolean,
-    attended: Boolean,
     status: String,
-    emailSent: Boolean,
   },
   { timestamps: true }
 );
@@ -43,25 +40,40 @@ const InfanciaRegistration =
   mongoose.models.InfanciaRegistration ||
   mongoose.model("InfanciaRegistration", InfanciaRegistrationSchema);
 
-async function runWhatsAppBot() {
+// Helper for random delay (ms)
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const getRandomDelayMs = (minSec = 10, maxSec = 22) => {
+  return Math.floor(Math.random() * (maxSec - minSec + 1) + minSec) * 1000;
+};
+
+async function main() {
+  const args = process.argv.slice(2);
+  const isSendMode = args.includes("--send");
+  const isDryRun = !isSendMode;
+
   console.log("=================================================================");
-  console.log("🤖 BOT DE WHATSAPP — DÍA DE LAS INFANCIAS (ANDAR FC)");
+  console.log("🤖 BOT AUTOMATIZADO DE WHATSAPP — DÍA DE LAS INFANCIAS (ANDAR FC)");
   console.log("=================================================================\n");
+
+  if (isDryRun) {
+    console.log("⚠️ MODO SIMULACIÓN / VISTA PREVIA ACTIVO.");
+    console.log("👉 Para realizar los envíos reales por WhatsApp ejecutá: npm run bot:whatsapp -- --send\n");
+  } else {
+    console.log("🚀 MODO ENVÍO REAL ACTIVADO VÍA WHATSAPP WEB SOCKET.\n");
+  }
 
   const mongoUri = process.env.MONGODB_URI;
   if (!mongoUri) {
-    console.error("❌ Error: No se encontró MONGODB_URI en el archivo .env");
+    console.error("❌ Error: MONGODB_URI no encontrada en .env");
     process.exit(1);
   }
 
-  console.log("📡 Conectando a la base de datos de MongoDB Atlas...");
   await mongoose.connect(mongoUri);
-  console.log("✅ Conexión exitosa.\n");
 
+  // Fetch active registrations ordered by creation (newest first)
   const allRegistrations = await InfanciaRegistration.find({ status: "active" }).sort({ createdAt: -1 });
-  console.log(`📊 Total de inscriptos individuales en base de datos: ${allRegistrations.length}`);
 
-  // Group by family
+  // Group registrations by family
   const familyMap = new Map();
   allRegistrations.forEach((reg) => {
     const key = reg.familyGroupId || reg.tutorPhone || reg._id.toString();
@@ -71,24 +83,43 @@ async function runWhatsAppBot() {
     familyMap.get(key).push(reg);
   });
 
-  console.log(`👨‍👩‍👧 Total de grupos familiares detectados: ${familyMap.size}\n`);
+  const allFamiliesList = Array.from(familyMap.values());
 
-  // Create output directory for QR images & previews
+  // Locate index for "Rivero clara agustina"
+  const startFilterTerm = "rivero clara agustina";
+  let startIndex = allFamiliesList.findIndex((members) => {
+    const tutor = (members[0].tutorName || "").toLowerCase();
+    const child = members.some((m) => (m.childName || "").toLowerCase().includes("caceres santino") || (m.childName || "").toLowerCase().includes("bautista barreto"));
+    return tutor.includes(startFilterTerm) || child;
+  });
+
+  if (startIndex === -1) {
+    console.log(`⚠️ No se encontró la familia con nombre "${startFilterTerm}". Se procesarán todos los registros.`);
+    startIndex = 0;
+  } else {
+    console.log(`🎯 Filtro activado: Se omiten las primeras ${startIndex} familias (ya enviadas a mano).`);
+    console.log(`📌 Punto de inicio encontrado: Familia de "${allFamiliesList[startIndex][0].tutorName}" (Inscriptos: ${allFamiliesList[startIndex].map(m => m.childName).join(", ")})\n`);
+  }
+
+  const targetFamilies = allFamiliesList.slice(startIndex);
+
+  console.log(`📋 Total de familias a enviar en este lote: ${targetFamilies.length} familias.`);
+
+  // Create local output folder for QR files
   const outputDir = path.resolve(process.cwd(), "output_qrs");
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
   }
 
-  const familiesData = [];
+  // Pre-generate QR image files for target families
+  const preparedFamilies = [];
+  for (const members of targetFamilies) {
+    const first = members[0];
+    const cleanPhone = formatWhatsAppPhone(first.tutorPhone);
 
-  for (const [familyKey, members] of familyMap.entries()) {
-    const tutor = members[0];
-    const cleanPhone = formatWhatsAppPhone(tutor.tutorPhone);
-
-    const familyTickets = [];
-    for (let i = 0; i < members.length; i++) {
-      const m = members[i];
-      const filename = `QR-${m.ticketCode}-${m.childName.replace(/[^a-zA-Z0-9]/g, "_")}.png`;
+    const ticketsData = [];
+    for (const m of members) {
+      const filename = `QR-${m.ticketCode}-${(m.childName || "niño").replace(/[^a-zA-Z0-9]/g, "_")}.png`;
       const filePath = path.join(outputDir, filename);
 
       const qrPayload = JSON.stringify({
@@ -97,145 +128,146 @@ async function runWhatsAppBot() {
         name: m.childName,
       });
 
-      // Generate PNG file
       await QRCode.toFile(filePath, qrPayload, {
         errorCorrectionLevel: "M",
         margin: 2,
-        width: 400,
+        width: 450,
         color: { dark: "#000B1A", light: "#FFFFFF" },
       });
 
-      // Also get base64 data for HTML preview
-      const base64Qr = await QRCode.toDataURL(qrPayload, {
-        errorCorrectionLevel: "M",
-        margin: 2,
-        width: 320,
-        color: { dark: "#000B1A", light: "#FFFFFF" },
-      });
-
-      familyTickets.push({
+      ticketsData.push({
         code: m.ticketCode,
         childName: m.childName,
-        childDni: m.childDni,
-        childAge: m.childAge,
         filePath,
-        filename,
-        base64Qr,
       });
     }
 
     const messageText = buildWhatsAppMessage({
-      tutorName: tutor.tutorName,
+      tutorName: first.tutorName,
       ticketsCount: members.length,
       tickets: members.map((m) => ({ childName: m.childName, ticketCode: m.ticketCode })),
     });
 
-    familiesData.push({
-      familyKey,
-      tutorName: tutor.tutorName || "Familia",
-      tutorPhone: tutor.tutorPhone,
+    preparedFamilies.push({
+      tutorName: first.tutorName || "Familia",
+      rawPhone: first.tutorPhone,
       cleanPhone,
-      ticketsCount: members.length,
-      tickets: familyTickets,
+      jid: `${cleanPhone}@s.whatsapp.net`,
+      tickets: ticketsData,
       messageText,
     });
   }
 
-  // Generate HTML Live Preview File
-  const htmlContent = `
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VISTA PREVIA — Bot WhatsApp Día de las Infancias</title>
-  <style>
-    body { background-color: #0b141a; color: #e9edef; font-family: 'Segoe UI', Helvetica, Arial, sans-serif; margin: 0; padding: 20px; }
-    .header { text-align: center; margin-bottom: 30px; border-b: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px; }
-    .header h1 { color: #00a884; margin: 0 0 10px 0; font-size: 28px; }
-    .badge { background: #00a884; color: #111b21; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 13px; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 24px; max-width: 1400px; margin: 0 auto; }
-    .card { background: #111b21; border: 1px solid #222d34; border-radius: 16px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-    .card-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222d34; padding-bottom: 12px; margin-bottom: 15px; }
-    .tutor { font-size: 18px; font-weight: bold; color: #ffffff; }
-    .phone { color: #00a884; font-family: monospace; font-size: 14px; text-decoration: none; }
-    .wa-bubble { background: #005c4b; color: #e9edef; padding: 15px; border-radius: 12px; font-size: 13px; line-height: 1.6; white-space: pre-wrap; margin-bottom: 15px; border-left: 4px solid #00a884; }
-    .qrs-container { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
-    .qr-item { background: #ffffff; padding: 10px; border-radius: 12px; text-align: center; color: #111b21; width: 140px; }
-    .qr-item img { width: 120px; height: 120px; display: block; margin: 0 auto; }
-    .qr-code { font-family: monospace; font-weight: bold; font-size: 12px; margin-top: 6px; color: #005c4b; }
-    .qr-child { font-size: 11px; font-weight: bold; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .btn-wa { display: inline-block; background: #00a884; color: #111b21; text-decoration: none; font-weight: bold; padding: 10px 18px; border-radius: 8px; font-size: 13px; text-transform: uppercase; margin-top: 15px; width: 100%; text-align: center; box-sizing: border-box; }
-  </style>
-</head>
-<body>
-  <div class="header">
-    <h1>📱 BOT DE WHATSAPP — VISTA PREVIA DE ENVÍO</h1>
-    <p>Se generaron <strong>${familiesData.length} mensajes familiares</strong> con sus respectivos códigos QR para <strong>Andar FC</strong>.</p>
-    <span class="badge">Total de Pases QR Generados: ${allRegistrations.length}</span>
-  </div>
+  if (isDryRun) {
+    console.log("\n=================================================================");
+    console.log("📝 RESUMEN DE LOTE DE ENVÍO (DRY-RUN):");
+    console.log("=================================================================");
+    preparedFamilies.forEach((f, idx) => {
+      console.log(`\n#${idx + 1} | Tutor: ${f.tutorName} | Teléfono WA: ${f.cleanPhone || f.rawPhone} | Pases QR: ${f.tickets.length}`);
+      f.tickets.forEach((t) => {
+        console.log(`    - [${t.code}] ${t.childName} (Archivo QR: ${t.filePath})`);
+      });
+    });
 
-  <div class="grid">
-    ${familiesData
-      .map(
-        (f, idx) => `
-      <div class="card">
-        <div class="card-header">
-          <div>
-            <div class="tutor">#${idx + 1} — ${f.tutorName}</div>
-            <a href="https://wa.me/${f.cleanPhone}" target="_blank" class="phone">📱 ${f.cleanPhone || f.tutorPhone}</a>
-          </div>
-          <span class="badge">${f.ticketsCount} ${f.ticketsCount === 1 ? "pase" : "pases"}</span>
-        </div>
+    console.log("\n=================================================================");
+    console.log("👉 Para iniciar el envío automático real vía WhatsApp Web:");
+    console.log("   Ejecutá: npm run bot:whatsapp -- --send");
+    console.log("=================================================================\n");
+    await mongoose.disconnect();
+    return;
+  }
 
-        <div class="wa-bubble">${f.messageText}</div>
+  // SEND MODE: Initialize Baileys WhatsApp Socket
+  console.log("📱 Inicializando cliente de WhatsApp Web (Baileys)...");
+  const authFolder = path.resolve(process.cwd(), ".baileys_auth");
+  const { state, saveCreds } = await useMultiFileAuthState(authFolder);
 
-        <div style="font-size: 12px; color: #8696a0; margin-bottom: 8px; font-weight: bold;">🖼️ IMÁGENES DE ADJUNTAS (${f.tickets.length}):</div>
-        <div class="qrs-container">
-          ${f.tickets
-            .map(
-              (t) => `
-            <div class="qr-item">
-              <img src="${t.base64Qr}" alt="${t.code}" />
-              <div class="qr-code">${t.code}</div>
-              <div class="qr-child">${t.childName}</div>
-            </div>
-          `
-            )
-            .join("")}
-        </div>
+  const sock = makeWASocket({
+    auth: state,
+    logger: pino({ level: "silent" }),
+    printQRInTerminal: true,
+  });
 
-        <a href="https://wa.me/${f.cleanPhone}?text=${encodeURIComponent(f.messageText)}" target="_blank" class="btn-wa">
-          💬 Abrir Chat de WhatsApp con Mensaje Pre-cargado
-        </a>
-      </div>
-    `
-      )
-      .join("")}
-  </div>
-</body>
-</html>
-  `;
+  sock.ev.on("creds.update", saveCreds);
 
-  const previewPath = path.join(outputDir, "preview.html");
-  fs.writeFileSync(previewPath, htmlContent, "utf8");
+  await new Promise((resolve) => {
+    sock.ev.on("connection.update", async (update) => {
+      const { connection, lastDisconnect, qr } = update;
+      if (qr) {
+        console.log("\n📲 ESCANEA ESTE CÓDIGO QR CON TU WHATSAPP (Dispositivos Vinculados):\n");
+        qrcodeTerminal.generate(qr, { small: true });
+      }
 
-  console.log(`🎉 ¡PROCESO COMPLETADO EXITOSAMENTE!`);
-  console.log(`-----------------------------------------------------------------`);
-  console.log(`📁 Imágenes de códigos QR generadas en:`);
-  console.log(`   ${outputDir}`);
-  console.log(`🌐 Vista previa interactiva de mensajes generada en:`);
-  console.log(`   ${previewPath}\n`);
+      if (connection === "close") {
+        const shouldReconnect =
+          lastDisconnect?.error?.output?.statusCode !== DisconnectReason.loggedOut;
+        console.log("🔌 Conexión cerrada. ¿Reconectar?:", shouldReconnect);
+        if (!shouldReconnect) {
+          process.exit(1);
+        }
+      } else if (connection === "open") {
+        console.log("\n✅ Conexión con WhatsApp establecida exitosamente con el teléfono.\n");
+        resolve();
+      }
+    });
+  });
 
-  console.log(`💡 PUNTOS CLAVE DE LA VISTA PREVIA:`);
-  console.log(`1. Se asignó la ubicación oficial: "Andar FC (Moreno)"`);
-  console.log(`2. Cada familia con 1, 2 o 3 niños recibe SUS 3 CÓDIGOS QR correspondientes.`);
-  console.log(`3. El archivo preview.html se puede abrir en tu navegador para revisar todos los mensajes.\n`);
+  console.log("🚀 Iniciando envío masivo con delay aleatorio entre 10s y 22s por familia...\n");
+
+  let countSuccess = 0;
+  let countError = 0;
+
+  for (let i = 0; i < preparedFamilies.length; i++) {
+    const f = preparedFamilies[i];
+    console.log(`-----------------------------------------------------------------`);
+    console.log(`[${i + 1}/${preparedFamilies.length}] Enviando a: ${f.tutorName} (${f.cleanPhone})...`);
+
+    if (!f.cleanPhone) {
+      console.log(`⚠️ Omitido: Número de teléfono no válido (${f.rawPhone})`);
+      countError++;
+      continue;
+    }
+
+    try {
+      // 1. Send main text message
+      await sock.sendMessage(f.jid, { text: f.messageText });
+      console.log(`  ✅ Texto enviado.`);
+
+      // 2. Send each child's QR image ticket attachment
+      for (const t of f.tickets) {
+        const imageBuffer = fs.readFileSync(t.filePath);
+        await sock.sendMessage(f.jid, {
+          image: imageBuffer,
+          caption: `🎟️ *Pase QR*: ${t.code}\n👤 *Participante*: ${t.childName}\n📍 *Lugar*: Andar FC`,
+        });
+        console.log(`  🖼️ Imagen QR enviada: [${t.code}] ${t.childName}`);
+        await sleep(1500); // 1.5s delay between multiple images of same family
+      }
+
+      countSuccess++;
+
+      // 3. Apply randomized delay before next family send (if not the last family)
+      if (i < preparedFamilies.length - 1) {
+        const delayMs = getRandomDelayMs(10, 22);
+        console.log(`  ⏳ Delay aleatorio anti-spam: esperando ${(delayMs / 1000).toFixed(1)}s antes del próximo envío...`);
+        await sleep(delayMs);
+      }
+    } catch (err) {
+      console.error(`  ❌ Error al enviar a ${f.tutorName} (${f.cleanPhone}):`, err.message || err);
+      countError++;
+    }
+  }
+
+  console.log("\n=================================================================");
+  console.log("🎉 PROCESO DE ENVÍO DE BOT FINALIZADO");
+  console.log(`✅ Familias notificadas con éxito: ${countSuccess}`);
+  console.log(`❌ Familias con error/sin número: ${countError}`);
+  console.log("=================================================================\n");
 
   await mongoose.disconnect();
 }
 
-runWhatsAppBot().catch((err) => {
-  console.error("❌ Error en la ejecución del bot:", err);
+main().catch((err) => {
+  console.error("❌ Error fatal en bot:", err);
   process.exit(1);
 });

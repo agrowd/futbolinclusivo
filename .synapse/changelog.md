@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.9.4 — 2026-08-24
+- feat: Configurado el filtro de envío en el bot de WhatsApp para iniciar desde "Rivero clara agustina" hacia abajo con delay aleatorio anti-spam (10s-22s) y soporte de transmisión automática de mensajes e imágenes de pases QR.
+
 ## v1.9.3 — 2026-08-24
 - feat: Creado bot local de WhatsApp (scripts/whatsapp-bot.mjs), generador de archivos PNG de pases QR e informe de vista previa HTML, modal interactivo de exploración familiar (/admin/infancias) y actualización de ubicación oficial a Andar FC.
 

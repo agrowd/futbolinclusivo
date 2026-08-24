@@ -61,7 +61,12 @@ export default function InfanciasWhatsAppModal({ isOpen, onClose, items = [] }) 
       });
 
       setFamilyGroups(groups);
-      setSelectedIndex(0);
+      const riveroIndex = groups.findIndex(
+        (g) =>
+          (g.tutorName || "").toLowerCase().includes("rivero clara") ||
+          g.members.some((m) => (m.childName || "").toLowerCase().includes("caceres santino"))
+      );
+      setSelectedIndex(riveroIndex !== -1 ? riveroIndex : 0);
 
       // Generate Base64 QRs for all tickets
       const qrsObj = {};

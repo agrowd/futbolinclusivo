@@ -1,5 +1,19 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 35: Filtro de Inicio ("Rivero clara agustina"), Delay Aleatorio y Envíos por WhatsApp Socket (2026-08-24)
+
+### 📌 Contexto
+El usuario solicitó:
+- "Tiene que enviarse desde Rivero clara agustina para abajo, todos los nuevos de arriba ya los envie a mano, ademas pone delay aleatorio entre cada uno"
+
+### 🛠️ Acciones Realizadas
+1. Se configuró el bot (`scripts/whatsapp-bot.mjs`) para detectar a **Rivero clara agustina**, omitiendo las 7 familias más recientes (ya enviadas manualmente) y tomando exactamente las 19 familias siguientes.
+2. Se programó un **delay aleatorio** de entre 10 y 22 segundos entre cada envío para evitar sanciones o bloqueos por spam en WhatsApp.
+3. Se integró la librería `@whiskeysockets/baileys` para vincular WhatsApp escaneando el QR en terminal y transmitir de forma directa texto e imágenes PNG de los pases QR.
+4. Compilación 100% exitosa (61/61 rutas) y push a `main`.
+
+---
+
 ## ⚽ Sesión 34: Bot de WhatsApp Local, Generador de QR PNG y Vista Previa para "Andar FC" (2026-08-24)
 
 ### 📌 Contexto

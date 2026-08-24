@@ -469,3 +469,14 @@
 3. **Modal de Vista Previa de WhatsApp en Panel Admin (`InfanciasWhatsAppModal.js`)**:
    - Permite explorar familia por familia con sus 1, 2 o 3 imágenes de código QR generadas y el texto del mensaje listo para enviar o copiar.
 4. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (61/61 rutas) y push a GitHub `main`.
+
+## 2026-08-24 — Sesión 35: Filtro de Inicio ("Rivero clara agustina"), Delay Aleatorio Anti-Spam e Envíos Automáticos con Baileys
+
+### Qué se hizo:
+1. **Filtro Estricto de Inicio de Envío**:
+   - `scripts/whatsapp-bot.mjs` y `InfanciasWhatsAppModal.js`: Se implementó el filtrado dinámico para iniciar los envíos a partir de **"Rivero clara agustina"** hacia abajo (19 familias, 24 participantes), omitiendo automáticamente las 7 familias anteriores que ya fueron notificadas manualmente.
+2. **Delay Aleatorio Anti-Spam (10s a 22s)**:
+   - Se añadió una pausa con delay aleatorio de 10 a 22 segundos entre cada envío familiar en `scripts/whatsapp-bot.mjs` para evitar el bloqueo o tasa límite por parte de WhatsApp.
+3. **Automatización con Baileys WhatsApp Socket**:
+   - Integrado `@whiskeysockets/baileys` en `scripts/whatsapp-bot.mjs` para escaneo de QR y envío automático directo de texto + imágenes adjuntas PNG del pase QR a cada número de WhatsApp.
+4. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (61/61 rutas) y push a GitHub `main`.
