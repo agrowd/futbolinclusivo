@@ -115,8 +115,14 @@ export default function InfanciasTicketModal({ isOpen, item, onClose }) {
   });
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
-      <div className="bg-[#00132B] border-2 border-[#36b37e]/40 rounded-3xl w-full max-w-md text-white shadow-2xl overflow-hidden relative">
+    <div 
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in cursor-pointer"
+      onClick={onClose}
+    >
+      <div 
+        className="bg-[#00132B] border-2 border-[#36b37e]/40 rounded-3xl w-full max-w-md max-h-[90vh] overflow-y-auto text-white shadow-2xl relative cursor-default"
+        onClick={(e) => e.stopPropagation()}
+      >
         
         {/* Top Banner */}
         <div className="h-2 bg-gradient-to-r from-[#36b37e] via-[#2980B9] to-[#E67E22]" />

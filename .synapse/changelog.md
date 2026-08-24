@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.9.6 — 2026-08-24
+- feat: Mejorados todos los modales del sistema con cierre automático por clic exterior en backdrop y ajuste adaptativo max-h-[90vh] con scroll vertical fluido.
+
 ## v1.9.5 — 2026-08-24
 - feat: Actualizada la base de datos marcando las 36 inscripciones activas con emailSent: true y agregada la 5ta tarjeta de métrica KPI (Mails/QRs 100%) en el panel de administración (/admin/infancias).
 

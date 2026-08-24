@@ -490,3 +490,12 @@
    - Añadida la 5ta tarjeta métrica KPI `Mails / QRs (36 - 100%)` en el encabezado del panel de administración para reflejar visualmente el 100% de pases enviados.
    - Verificado que cada fila de la tabla y tarjeta móvil muestre la etiqueta verde `✉️ Mail enviado`.
 3. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (61/61 rutas) y push a GitHub `main`.
+
+## 2026-08-24 — Sesión 37: Optimización de Modales (Cierre por Clic Exterior y Ajuste Adaptativo a Pantalla)
+
+### Qué se hizo:
+1. **Cierre Automático por Clic en Fondo (Backdrop)**:
+   - Se actualizó el contenedor exterior de todos los modales (`InfanciasCreateModal`, `InfanciasEditModal`, `InfanciasTicketModal`, `InfanciasScannerModal`, `InfanciasBatchEmailModal`, `InfanciasWhatsAppModal` y `Media Upload Modal`) agregando `onClick={onClose}` en el backdrop y `onClick={(e) => e.stopPropagation()}` en la tarjeta interior.
+2. **Ajuste y Scroll Adaptativo (`max-h-[90vh]` / `max-h-[92vh]`)**:
+   - Se aplicó límite de altura `max-h-[90vh]` y scroll vertical con `overflow-y-auto` a todos los contenidos de modales para evitar que sobresalgan de la pantalla en dispositivos móviles y de escritorio.
+3. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (61/61 rutas) y push a GitHub `main`.

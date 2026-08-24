@@ -1,5 +1,18 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 37: Modales Adaptativos y Cierre Automático al Clic Exterior (2026-08-24)
+
+### 📌 Contexto
+El usuario solicitó:
+- "mejora los modales para que entren en la pantalla y cuando se presiona fuera del modal este mismo se cierre"
+
+### 🛠️ Acciones Realizadas
+1. Se configuró el evento `onClick={onClose}` en la capa de fondo opaco (backdrop) de los modales y `onClick={(e) => e.stopPropagation()}` en la tarjeta interior para garantizar el cierre al hacer clic afuera.
+2. Se aplicó restricción de altura adaptativa `max-h-[90vh]` / `max-h-[92vh]` y scroll interno `overflow-y-auto` en `InfanciasCreateModal`, `InfanciasEditModal`, `InfanciasTicketModal`, `InfanciasScannerModal`, `InfanciasBatchEmailModal`, `InfanciasWhatsAppModal` y en el administrador multimedia.
+3. Compilación 100% exitosa (61/61 rutas) y push a `main`.
+
+---
+
 ## ⚽ Sesión 36: Marcado Masivo de Registros como Enviados (`emailSent: true`) en DB y Visualización en Panel (2026-08-24)
 
 ### 📌 Contexto

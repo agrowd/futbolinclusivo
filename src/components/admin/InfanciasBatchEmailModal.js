@@ -68,9 +68,12 @@ export default function InfanciasBatchEmailModal({ isOpen, onClose, onCompleted,
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in cursor-pointer"
+      onClick={onClose}
+    >
       <div 
-        className="bg-[#00132B] border border-white/15 rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto text-white shadow-2xl flex flex-col"
+        className="bg-[#00132B] border border-white/15 rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto text-white shadow-2xl flex flex-col cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
         

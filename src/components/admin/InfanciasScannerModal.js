@@ -232,8 +232,14 @@ export default function InfanciasScannerModal({ isOpen, onClose, onCheckInSucces
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-2 sm:p-4 bg-black/90 backdrop-blur-lg animate-fade-in">
-      <div className="bg-[#000E21] border border-white/15 rounded-3xl w-full max-w-2xl text-white shadow-2xl overflow-hidden flex flex-col max-h-[96vh] h-full sm:h-auto">
+    <div 
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-2 sm:p-4 bg-black/90 backdrop-blur-lg animate-fade-in cursor-pointer"
+      onClick={onClose}
+    >
+      <div 
+        className="bg-[#000E21] border border-white/15 rounded-3xl w-full max-w-2xl text-white shadow-2xl overflow-hidden flex flex-col max-h-[92vh] cursor-default"
+        onClick={(e) => e.stopPropagation()}
+      >
         
         {/* Header - Mobile friendly with live counter */}
         <div className="p-4 sm:p-5 border-b border-white/10 flex items-center justify-between bg-white/[0.03]">

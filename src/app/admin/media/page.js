@@ -373,8 +373,14 @@ export default function AdminMediaPage() {
 
       {/* Upload Modal */}
       {isUploadModalOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-[#000B1A]/80 backdrop-blur-xl transition-all">
-           <div className="bg-white/5 border border-white/10 w-full max-w-xl rounded-[40px] overflow-hidden shadow-2xl relative">
+        <div 
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-[#000B1A]/80 backdrop-blur-xl transition-all cursor-pointer"
+          onClick={() => setIsUploadModalOpen(false)}
+        >
+           <div 
+             className="bg-[#00132B] border border-white/10 w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-[40px] shadow-2xl relative cursor-default"
+             onClick={(e) => e.stopPropagation()}
+           >
               <button 
                 onClick={() => setIsUploadModalOpen(false)}
                 className="absolute top-8 right-8 text-white/30 hover:text-white transition-colors"
