@@ -4,7 +4,12 @@ import QRCode from "qrcode";
 import qrcodeTerminal from "qrcode-terminal";
 import mongoose from "mongoose";
 import { formatWhatsAppPhone, buildWhatsAppMessage } from "../src/lib/whatsapp.js";
-import { makeWASocket, useMultiFileAuthState, DisconnectReason } from "@whiskeysockets/baileys";
+import { 
+  makeWASocket, 
+  useMultiFileAuthState, 
+  DisconnectReason, 
+  fetchLatestBaileysVersion 
+} from "@whiskeysockets/baileys";
 import pino from "pino";
 
 // Load environment variables from .env
@@ -46,6 +51,49 @@ const getRandomDelayMs = (minSec = 10, maxSec = 22) => {
   return Math.floor(Math.random() * (maxSec - minSec + 1) + minSec) * 1000;
 };
 
+// Robust WhatsApp Socket connection initializer
+async function connectToWhatsApp() {
+  const authFolder = path.resolve(process.cwd(), ".baileys_auth");
+  const { state, saveCreds } = await useMultiFileAuthState(authFolder);
+  const { version } = await fetchLatestBaileysVersion().catch(() => ({ version: [2, 3000, 1015901307] }));
+
+  return new Promise((resolve, reject) => {
+    const sock = makeWASocket({
+      version,
+      auth: state,
+      logger: pino({ level: "silent" }),
+      printQRInTerminal: true,
+      browser: ["Andar FC Bot", "Chrome", "1.0.0"],
+    });
+
+    sock.ev.on("creds.update", saveCreds);
+
+    sock.ev.on("connection.update", async (update) => {
+      const { connection, lastDisconnect, qr } = update;
+
+      if (qr) {
+        console.log("\n📲 ESCANEA ESTE CÓDIGO QR CON TU WHATSAPP (Dispositivos Vinculados):\n");
+        qrcodeTerminal.generate(qr, { small: true });
+      }
+
+      if (connection === "close") {
+        const statusCode = lastDisconnect?.error?.output?.statusCode;
+        if (statusCode === DisconnectReason.loggedOut) {
+          console.log("⚠️ Sesión de WhatsApp cerrada o expirada. Limpiando credenciales previas...");
+          try {
+            fs.rmSync(authFolder, { recursive: true, force: true });
+          } catch (e) {}
+        }
+        console.log(`🔌 Conexión de WhatsApp reiniciada (Código: ${statusCode || "red"}). Reconectando...`);
+        connectToWhatsApp().then(resolve).catch(reject);
+      } else if (connection === "open") {
+        console.log("\n✅ Conexión con WhatsApp establecida exitosamente.\n");
+        resolve(sock);
+      }
+    });
+  });
+}
+
 async function main() {
   const args = process.argv.slice(2);
   const isSendMode = args.some((a) => a.toLowerCase().includes("send"));
@@ -57,7 +105,7 @@ async function main() {
 
   if (isDryRun) {
     console.log("⚠️ MODO SIMULACIÓN / VISTA PREVIA ACTIVO.");
-    console.log("👉 Para realizar los envíos reales por WhatsApp ejecutá: npm run bot:whatsapp -- --send\n");
+    console.log("👉 Para realizar los envíos reales por WhatsApp ejecutá: npm run bot:send\n");
   } else {
     console.log("🚀 MODO ENVÍO REAL ACTIVADO VÍA WHATSAPP WEB SOCKET.\n");
   }
@@ -171,46 +219,15 @@ async function main() {
 
     console.log("\n=================================================================");
     console.log("👉 Para iniciar el envío automático real vía WhatsApp Web:");
-    console.log("   Ejecutá: npm run bot:whatsapp -- --send");
+    console.log("   Ejecutá: npm run bot:send");
     console.log("=================================================================\n");
     await mongoose.disconnect();
     return;
   }
 
-  // SEND MODE: Initialize Baileys WhatsApp Socket
+  // SEND MODE: Initialize WhatsApp Socket
   console.log("📱 Inicializando cliente de WhatsApp Web (Baileys)...");
-  const authFolder = path.resolve(process.cwd(), ".baileys_auth");
-  const { state, saveCreds } = await useMultiFileAuthState(authFolder);
-
-  const sock = makeWASocket({
-    auth: state,
-    logger: pino({ level: "silent" }),
-    printQRInTerminal: true,
-  });
-
-  sock.ev.on("creds.update", saveCreds);
-
-  await new Promise((resolve) => {
-    sock.ev.on("connection.update", async (update) => {
-      const { connection, lastDisconnect, qr } = update;
-      if (qr) {
-        console.log("\n📲 ESCANEA ESTE CÓDIGO QR CON TU WHATSAPP (Dispositivos Vinculados):\n");
-        qrcodeTerminal.generate(qr, { small: true });
-      }
-
-      if (connection === "close") {
-        const shouldReconnect =
-          lastDisconnect?.error?.output?.statusCode !== DisconnectReason.loggedOut;
-        console.log("🔌 Conexión cerrada. ¿Reconectar?:", shouldReconnect);
-        if (!shouldReconnect) {
-          process.exit(1);
-        }
-      } else if (connection === "open") {
-        console.log("\n✅ Conexión con WhatsApp establecida exitosamente con el teléfono.\n");
-        resolve();
-      }
-    });
-  });
+  const sock = await connectToWhatsApp();
 
   console.log("🚀 Iniciando envío masivo con delay aleatorio entre 10s y 22s por familia...\n");
 
