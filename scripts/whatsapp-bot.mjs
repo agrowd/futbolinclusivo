@@ -48,7 +48,7 @@ const getRandomDelayMs = (minSec = 10, maxSec = 22) => {
 
 async function main() {
   const args = process.argv.slice(2);
-  const isSendMode = args.includes("--send");
+  const isSendMode = args.some((a) => a.toLowerCase().includes("send"));
   const isDryRun = !isSendMode;
 
   console.log("=================================================================");
