@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.9.5 — 2026-08-24
+- feat: Actualizada la base de datos marcando las 36 inscripciones activas con emailSent: true y agregada la 5ta tarjeta de métrica KPI (Mails/QRs 100%) en el panel de administración (/admin/infancias).
+
 ## v1.9.4 — 2026-08-24
 - feat: Configurado el filtro de envío en el bot de WhatsApp para iniciar desde "Rivero clara agustina" hacia abajo con delay aleatorio anti-spam (10s-22s) y soporte de transmisión automática de mensajes e imágenes de pases QR.
 

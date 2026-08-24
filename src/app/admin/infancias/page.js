@@ -303,7 +303,7 @@ export default function AdminInfanciasPage() {
       <main className="container mx-auto px-4 sm:px-6 py-6">
         
         {/* KPI Metrics Cards - Large & Touch Friendly */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4 mb-6">
           
           <div className="bg-white/[0.03] border border-white/10 rounded-2xl sm:rounded-3xl p-4 sm:p-5 flex flex-col justify-between shadow-lg">
             <div className="flex items-center justify-between mb-2">
@@ -315,6 +315,20 @@ export default function AdminInfanciasPage() {
               </div>
             </div>
             <div className="text-2xl sm:text-4xl font-black text-white">{stats.total}</div>
+          </div>
+
+          <div className="bg-white/[0.03] border border-white/10 rounded-2xl sm:rounded-3xl p-4 sm:p-5 flex flex-col justify-between shadow-lg">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[11px] uppercase font-black tracking-wider text-[#36b37e]">
+                Mails / QRs
+              </span>
+              <div className="w-8 h-8 rounded-xl bg-[#36b37e]/20 text-[#36b37e] flex items-center justify-center">
+                <Mail size={16} />
+              </div>
+            </div>
+            <div className="text-2xl sm:text-4xl font-black text-[#36b37e]">
+              {items.filter((i) => i.emailSent).length} <span className="text-xs font-normal text-white/40">({items.length > 0 ? Math.round((items.filter((i) => i.emailSent).length / items.length) * 100) : 0}%)</span>
+            </div>
           </div>
 
           <div className="bg-white/[0.03] border border-white/10 rounded-2xl sm:rounded-3xl p-4 sm:p-5 flex flex-col justify-between shadow-lg">

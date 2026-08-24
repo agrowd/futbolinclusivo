@@ -1,5 +1,19 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 36: Marcado Masivo de Registros como Enviados (`emailSent: true`) en DB y Visualización en Panel (2026-08-24)
+
+### 📌 Contexto
+El usuario solicitó:
+- "poner en la base de datos que se le envio el qr a todos, y que se vea en el front"
+
+### 🛠️ Acciones Realizadas
+1. Se actualizaron los 36 registros inscriptos en MongoDB Atlas asignando `emailSent: true` y la fecha de envío `emailSentAt: new Date()`.
+2. Se añadió en `/admin/infancias` la tarjeta métrica KPI **"Mails / QRs (36 - 100%)"** en el encabezado.
+3. Se verificó la visualización de la etiqueta verde `✉️ Mail enviado` en las tarjetas y filas de la tabla del panel.
+4. Compilación 100% exitosa (61/61 rutas) y push a `main`.
+
+---
+
 ## ⚽ Sesión 35: Filtro de Inicio ("Rivero clara agustina"), Delay Aleatorio y Envíos por WhatsApp Socket (2026-08-24)
 
 ### 📌 Contexto

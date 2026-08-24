@@ -52,6 +52,7 @@ next-env.d.ts
 /dynamic_routes.txt
 /test-db.mjs
 /output_qrs/
+/.baileys_auth/
 /*.png
 /*.txt
 /*.md

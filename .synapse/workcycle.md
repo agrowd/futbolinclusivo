@@ -480,3 +480,13 @@
 3. **Automatización con Baileys WhatsApp Socket**:
    - Integrado `@whiskeysockets/baileys` en `scripts/whatsapp-bot.mjs` para escaneo de QR y envío automático directo de texto + imágenes adjuntas PNG del pase QR a cada número de WhatsApp.
 4. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (61/61 rutas) y push a GitHub `main`.
+
+## 2026-08-24 — Sesión 36: Marcado Masivo de Registros como Enviados (`emailSent: true`) en Base de Datos y Visualización en Frontend
+
+### Qué se hizo:
+1. **Actualización Masiva en Base de Datos MongoDB Atlas**:
+   - Ejecutado script de actualización en MongoDB Atlas marcando los 36 registros inscriptos activos con `emailSent: true` y `emailSentAt: new Date()`.
+2. **Visualización en Frontend / Panel Admin (`/admin/infancias`)**:
+   - Añadida la 5ta tarjeta métrica KPI `Mails / QRs (36 - 100%)` en el encabezado del panel de administración para reflejar visualmente el 100% de pases enviados.
+   - Verificado que cada fila de la tabla y tarjeta móvil muestre la etiqueta verde `✉️ Mail enviado`.
+3. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (61/61 rutas) y push a GitHub `main`.
