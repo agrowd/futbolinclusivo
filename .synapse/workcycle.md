@@ -456,3 +456,16 @@
    - Botón `📋 Copiar Nro` para copiar el teléfono limpio en formato WhatsApp.
    - Botón `📝 Copiar Texto WA` para copiar la plantilla de mensaje personalizada lista para enviar.
 3. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (61/61 rutas) y push a GitHub `main`.
+
+## 2026-08-24 — Sesión 34: Bot de WhatsApp Local, Generador de Imágenes QR y Modal de Vista Previa para "Andar FC"
+
+### Qué se hizo:
+1. **Actualización de Ubicación Oficial**:
+   - Actualizada la plantilla de texto en `src/lib/whatsapp.js` y `src/lib/email.js` a **"Andar FC (Moreno)"**.
+2. **Bot de WhatsApp Local (`scripts/whatsapp-bot.mjs`)**:
+   - Conecta a MongoDB, agrupa a los inscriptos por familia y genera los archivos PNG individuales de los pases QR (`output_qrs/QR-INF-XXXXX.png`).
+   - Construye el informe de vista previa interactivo `output_qrs/preview.html` para revisar los mensajes y pases familiares.
+   - Script ejecutable mediante `npm run bot:whatsapp`.
+3. **Modal de Vista Previa de WhatsApp en Panel Admin (`InfanciasWhatsAppModal.js`)**:
+   - Permite explorar familia por familia con sus 1, 2 o 3 imágenes de código QR generadas y el texto del mensaje listo para enviar o copiar.
+4. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (61/61 rutas) y push a GitHub `main`.

@@ -114,7 +114,7 @@ export async function sendInfanciasEmail({
                 Día de las Infancias
               </h1>
               <p style="margin: 0; font-size: 14px; color: rgba(255,255,255,0.6);">
-                Asociación Civil Andar • Complejo Deportivo Fútbol por la Inclusión
+                Asociación Civil Andar • Andar FC
               </p>
             </td>
           </tr>

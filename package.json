@@ -10,7 +10,8 @@
     "legacy:download-assets": "node scripts/download-legacy-assets.mjs",
     "legacy:extract-content": "node scripts/extract-legacy-content.mjs",
     "db:import": "node scripts/import-legacy-to-db.mjs",
-    "db:create-admin": "node scripts/create-admin-user.mjs"
+    "db:create-admin": "node scripts/create-admin-user.mjs",
+    "bot:whatsapp": "node scripts/whatsapp-bot.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

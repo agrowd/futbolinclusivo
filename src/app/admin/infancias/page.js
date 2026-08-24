@@ -34,6 +34,7 @@ import InfanciasEditModal from "@/components/admin/InfanciasEditModal";
 import InfanciasTicketModal from "@/components/admin/InfanciasTicketModal";
 import InfanciasCreateModal from "@/components/admin/InfanciasCreateModal";
 import InfanciasBatchEmailModal from "@/components/admin/InfanciasBatchEmailModal";
+import InfanciasWhatsAppModal from "@/components/admin/InfanciasWhatsAppModal";
 import { formatWhatsAppPhone, getWhatsAppLink } from "@/lib/whatsapp";
 
 export default function AdminInfanciasPage() {
@@ -50,6 +51,7 @@ export default function AdminInfanciasPage() {
   // Modals state
   const [createOpen, setCreateOpen] = useState(false);
   const [batchEmailOpen, setBatchEmailOpen] = useState(false);
+  const [whatsAppModalOpen, setWhatsAppModalOpen] = useState(false);
   const [scannerOpen, setScannerOpen] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
   const [viewingTicket, setViewingTicket] = useState(null);
@@ -262,6 +264,14 @@ export default function AdminInfanciasPage() {
             >
               <Mail size={18} className="text-[#2980B9]" />
               <span className="hidden lg:inline">Enviar Mails</span>
+            </button>
+            <button
+              onClick={() => setWhatsAppModalOpen(true)}
+              className="bg-[#25D366]/20 hover:bg-[#25D366]/30 border border-[#25D366]/40 text-[#25D366] font-bold px-3.5 sm:px-4 py-3 rounded-2xl transition-all flex items-center gap-2 text-xs sm:text-sm uppercase active:scale-95 shadow-md"
+              title="Ver pases QR por familias y abrir chats de WhatsApp"
+            >
+              <MessageSquare size={18} />
+              <span className="hidden md:inline">WhatsApp</span>
             </button>
             <button
               onClick={() => setScannerOpen(true)}
@@ -727,6 +737,12 @@ export default function AdminInfanciasPage() {
         isOpen={batchEmailOpen}
         onClose={() => setBatchEmailOpen(false)}
         onCompleted={fetchData}
+        items={items}
+      />
+
+      <InfanciasWhatsAppModal
+        isOpen={whatsAppModalOpen}
+        onClose={() => setWhatsAppModalOpen(false)}
         items={items}
       />
 

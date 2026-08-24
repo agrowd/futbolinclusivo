@@ -51,6 +51,7 @@ next-env.d.ts
 /tmp_pages.txt
 /dynamic_routes.txt
 /test-db.mjs
+/output_qrs/
 /*.png
 /*.txt
 /*.md

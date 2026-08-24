@@ -1,5 +1,19 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 34: Bot de WhatsApp Local, Generador de QR PNG y Vista Previa para "Andar FC" (2026-08-24)
+
+### 📌 Contexto
+El usuario solicitó:
+- "El lugar es Andar FC, y se le tiene que enviar los 3 qrs que se generaron para cada persona. Genera un bot aca en la pc para enviarlo , mostrame como se envia(con el qr como imagen y todo) asi te doy el ok"
+
+### 🛠️ Acciones Realizadas
+1. Se actualizó la ubicación oficial en plantillas a **"Andar FC (Moreno)"**.
+2. Se creó `scripts/whatsapp-bot.mjs` (`npm run bot:whatsapp`) que genera automáticamente los archivos de imagen PNG de los pases QR (`output_qrs/`) y un informe de vista previa HTML (`output_qrs/preview.html`).
+3. Se integró `InfanciasWhatsAppModal.js` en `/admin/infancias` con el botón **`💬 WhatsApp`** para navegar familia por familia, viendo sus 1, 2 o 3 pases QR y enviándolos con 1 clic.
+4. Compilación 100% exitosa (61/61 rutas) y push a `main`.
+
+---
+
 ## ⚽ Sesión 33: Integración de WhatsApp y Copiado de Teléfono/Plantilla (2026-08-24)
 
 ### 📌 Contexto

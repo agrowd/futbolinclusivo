@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.9.3 — 2026-08-24
+- feat: Creado bot local de WhatsApp (scripts/whatsapp-bot.mjs), generador de archivos PNG de pases QR e informe de vista previa HTML, modal interactivo de exploración familiar (/admin/infancias) y actualización de ubicación oficial a Andar FC.
+
 ## v1.9.2 — 2026-08-24
 - feat: Agregada integración directa de WhatsApp en el panel de administración (/admin/infancias) con formateador de números al estándar 549, botones de apertura directa de chat y copiado rápido de plantilla de mensaje para envío manual de pases QR.
 

@@ -50,7 +50,7 @@ ${passesListText}
 2️⃣ El equipo de acreditaciones escaneará el pase para tu ingreso directo.
 3️⃣ ¡Vengan listos para disfrutar de los inflables, torneo, actividades recreativas y sorpresas! 🎈🥳
 
-📍 *Lugar:* Complejo Deportivo Fútbol por la Inclusión (Moreno)
+📍 *Lugar:* Andar FC (Moreno)
 🌐 *Más información y consulta de pases:* ${siteUrl}/dia-de-las-infancias
 
 ¡Los esperamos con mucha alegría! 🙌😊`;
