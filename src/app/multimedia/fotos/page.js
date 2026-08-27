@@ -179,45 +179,6 @@ export default async function MultimediaFotosPage({ searchParams }) {
           </div>
         )}
 
-        {/* HISTORICAL ARCHIVE SECTION (Legacy photos) */}
-        {legacyUrls.length > 0 && (
-          <section className="pt-12 border-t border-white/10">
-            <div className="mb-6">
-              <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight">
-                Archivo Histórico de Imágenes
-              </h2>
-              <p className="text-xs sm:text-sm text-white/50 mt-1">
-                Registros de ediciones anteriores y jornadas históricas de la institución.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-              {legacyUrls.map((remoteUrl) => {
-                const src = mapLegacyImage(urlToLocal, remoteUrl);
-                return (
-                  <a
-                    key={remoteUrl}
-                    href={src}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="group relative block rounded-2xl overflow-hidden border border-white/10 bg-white/5"
-                  >
-                    <div className="relative w-full aspect-4/3">
-                      <Image
-                        src={src}
-                        alt="Foto histórica"
-                        fill
-                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                  </a>
-                );
-              })}
-            </div>
-          </section>
-        )}
-
       </div>
     </div>
   );
