@@ -514,3 +514,16 @@
    - Tarjetas de álbumes por evento con filtros por categoría.
    - Visor pantalla completa (Lightbox) con navegación por teclado/flechas, botón `📥 Descargar Foto` y botón `💬 Compartir por WhatsApp`.
 5. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (63/63 rutas) y push a GitHub `main`.
+
+## 2026-08-27 — Sesión 39: Corrección de Carga de Archivos Múltiples (Superando Límite de Payload Vercel con Chunking Concurrente)
+
+### Qué se hizo:
+1. **Problema Detectado**:
+   - Al intentar subir 36 fotos (51.1 MB) en una sola petición HTTP (`/api/upload/batch`), Vercel o el servidor rechazaba la petición por exceder el límite de payload (4.5 MB máximo por request), congelando la barra en 30%.
+2. **Solución con Pool Concurrente de Subida Individual**:
+   - `AlbumCreateModal.js`: Se actualizó el mecanismo para enviar las imágenes de forma individual mediante `POST /api/upload` con un pool de concurrencia de 3 peticiones paralelas.
+   - Cada petición pesa 1-2 MB (muy por debajo del límite), evitando errores 413.
+   - Se actualizó la barra de progreso en tiempo real con mensaje detallado: *"Subiendo foto X de 36... (X%)"*.
+3. **Endpoint `/api/upload` con Fallback Híbrido**:
+   - Maneja subidas tanto a Cloudinary como a almacenamiento local seguro.
+4. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (63/63 rutas) y push a GitHub `main`.

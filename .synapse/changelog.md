@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.10.1 — 2026-08-27
+- fix: Optimizado el proceso de subida masiva de fotos con pool concurrente de peticiones individuales (/api/upload), evitando el límite de tamaño de petición de Vercel (4.5MB) y mostrando progreso en vivo foto por foto.
+
 ## v1.10.0 — 2026-08-27
 - feat: Creado sistema de Galería de Fotos por Evento y Fecha (/multimedia/fotos), con gestor de carga masiva drag & drop en el panel admin (/admin/media), visor lightbox interactivo pantalla completa, descarga individual de fotos y botones de compartir por WhatsApp.
 

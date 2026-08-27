@@ -1,5 +1,20 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 39: Corrección de Subida Masiva con Chunking y Progreso en Tiempo Real (2026-08-27)
+
+### 📌 Contexto
+El usuario reportó:
+- "Cuando quiero cargar se queda trabada la carga en 30%, despues se sale eso y se activa el boton de subir otra vez cuando ya se deberia de haber subido"
+- Se intentaba subir 36 fotos en un solo lote (51.1 MB).
+
+### 🛠️ Acciones Realizadas
+1. Se diagnosticó que enviar 51.1 MB en un solo request chocaba con el límite de payload de Vercel (4.5 MB máximo por petición).
+2. Se rediseñó la subida en `AlbumCreateModal.js` para enviar las imágenes de forma individual en un pool de 3 peticiones paralelas.
+3. Se integró la barra de progreso dinámico en tiempo real (`Subiendo foto X de 36...`).
+4. Compilación 100% exitosa (63/63 rutas) y push a `main`.
+
+---
+
 ## ⚽ Sesión 38: Galería de Fotos por Evento / Fecha & Gestor de Carga Masiva (2026-08-27)
 
 ### 📌 Contexto
