@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.10.3 — 2026-08-27
+- feat: Añadida la sección destacada de Álbumes y Galerías de Fotos en la página principal (/), con tarjetas interactivas, conteo de fotos, previsualización de thumbnails y acceso directo al visor completo.
+
 ## v1.10.2 — 2026-08-27
 - feat: Integrada la vista de gestión de Álbumes de Eventos en el panel de administración (/admin/media) con selector de pestañas, previsualización de portadas, conteo de fotos, botón de ver en web y eliminación de álbumes.
 

@@ -14,6 +14,8 @@ import {
   ArrowRight,
   Shield,
   Goal,
+  Folder,
+  Sparkles,
 } from "lucide-react";
 
 // Standard action buttons from legacy design
@@ -22,7 +24,7 @@ const actionButtons = [
   { label: "RESULTADOS", icon: Goal, href: "/novedades", color: "#001A3D", desc: "Últimos partidos" },
   { label: "EQUIPOS", icon: Shield, href: "/institucional/comision", color: "#001A3D", desc: "Los protagonistas" },
   { label: "VIDEOS", icon: MonitorPlay, href: "/multimedia", color: "#001A3D", desc: "Momentos únicos" },
-  { label: "FOTOS", icon: Camera, href: "/multimedia", color: "#001A3D", desc: "Capturas del juego" },
+  { label: "FOTOS", icon: Camera, href: "/multimedia/fotos", color: "#001A3D", desc: "Galería de eventos" },
   { label: "INSCRIPCIÓN", icon: Ticket, href: "/inscripcion", color: "#E67E22", desc: "Sumate a jugar" },
 ];
 
@@ -36,7 +38,7 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
 };
 
-export default function HomeClient({ dynamicNews = [] }) {
+export default function HomeClient({ dynamicNews = [], dynamicAlbums = [] }) {
   // Format Date for legacy UI
   const formatDate = (date) => {
     if (!date) return "";
@@ -321,6 +323,143 @@ export default function HomeClient({ dynamicNews = [] }) {
               </motion.div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ===== PHOTO GALLERIES & EVENT ALBUMS SECTION ===== */}
+      <section className="py-12 md:py-20 bg-gradient-to-b from-[#000814] via-[#001229]/60 to-[#000B1A] border-t border-white/5 relative overflow-hidden">
+        {/* Glow background accent */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[#36b37e]/10 rounded-full blur-[140px] pointer-events-none" />
+
+        <div className="container mx-auto px-4 md:px-6 relative z-10">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-8 md:mb-12 border-b border-white/10 pb-6">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#36b37e]/15 border border-[#36b37e]/30 text-[#36b37e] text-[11px] font-black uppercase tracking-wider mb-3">
+                <Camera size={14} />
+                <span>Galerías de Fotos Oficiales</span>
+              </div>
+              <h2 className="text-2xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight text-white">
+                Momentos de las Jornadas
+              </h2>
+              <p className="text-white/50 text-xs sm:text-sm mt-1.5 max-w-xl">
+                Reviví cada fecha disputada, mirá las fotos oficiales de los partidos y descargalas en alta calidad.
+              </p>
+            </div>
+
+            <Link
+              href="/multimedia/fotos"
+              className="group inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-[#36b37e] hover:bg-[#2ecc71] text-black font-black text-xs uppercase tracking-wider transition-all shadow-lg shadow-[#36b37e]/20"
+            >
+              <span>Ver Todas las Galerías</span>
+              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+
+          {/* ALBUM CARDS GRID */}
+          {dynamicAlbums.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {dynamicAlbums.map((album, idx) => {
+                const dateStr = album.eventDate
+                  ? new Date(album.eventDate).toLocaleDateString("es-AR", {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                    })
+                  : "";
+
+                return (
+                  <motion.div
+                    key={album._id || idx}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.1, duration: 0.6 }}
+                  >
+                    <Link
+                      href={`/multimedia/fotos/${album.slug}`}
+                      className="group flex flex-col h-full bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-[#36b37e]/50 rounded-3xl overflow-hidden transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1.5"
+                    >
+                      {/* Cover Photo */}
+                      <div className="relative w-full aspect-16/10 bg-black/60 overflow-hidden">
+                        {album.coverImage ? (
+                          <Image
+                            src={album.coverImage}
+                            alt={album.title}
+                            fill
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                            className="object-cover group-hover:scale-108 transition-transform duration-700"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-white/20">
+                            <Folder size={48} />
+                          </div>
+                        )}
+
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
+
+                        {/* Top Badges */}
+                        <div className="absolute top-3 left-3 bg-[#00132B]/90 backdrop-blur-md border border-white/15 text-[#36b37e] text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-wider">
+                          {album.category}
+                        </div>
+
+                        {/* Photo count badge */}
+                        <div className="absolute bottom-3 right-3 bg-black/80 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5 border border-white/15">
+                          <Camera size={13} className="text-[#36b37e]" />
+                          <span>{album.photoCount || (album.photos ? album.photos.length : 0)} fotos</span>
+                        </div>
+                      </div>
+
+                      {/* Info & Micro-Thumbnails */}
+                      <div className="p-5 flex-1 flex flex-col justify-between">
+                        <div>
+                          {dateStr && (
+                            <p className="text-[11px] text-white/50 mb-1.5 font-bold flex items-center gap-1.5 uppercase tracking-wider">
+                              <Calendar size={13} className="text-[#36b37e]" />
+                              <span>{dateStr}</span>
+                            </p>
+                          )}
+                          <h3 className="text-base sm:text-lg font-black uppercase text-white tracking-tight group-hover:text-[#36b37e] transition-colors line-clamp-2 leading-snug">
+                            {album.title}
+                          </h3>
+                        </div>
+
+                        {/* Sub-thumbnails preview bar */}
+                        {album.photos && album.photos.length > 1 && (
+                          <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
+                            <div className="flex items-center -space-x-2 overflow-hidden">
+                              {album.photos.slice(1, 4).map((p, pIdx) => (
+                                <div
+                                  key={pIdx}
+                                  className="w-8 h-8 rounded-full border-2 border-[#00132B] overflow-hidden bg-black/50 relative shrink-0"
+                                >
+                                  <img src={p.url} alt="" className="w-full h-full object-cover" />
+                                </div>
+                              ))}
+                              {album.photoCount > 4 && (
+                                <div className="w-8 h-8 rounded-full border-2 border-[#00132B] bg-[#36b37e] text-black text-[10px] font-black flex items-center justify-center shrink-0">
+                                  +{album.photoCount - 4}
+                                </div>
+                              )}
+                            </div>
+
+                            <span className="text-xs font-bold text-[#36b37e] flex items-center gap-1 group-hover:gap-2 transition-all">
+                              <span>Ver Fotos</span>
+                              <ArrowRight size={14} />
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </Link>
+                  </motion.div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="bg-white/[0.02] border border-white/10 rounded-3xl p-10 text-center">
+              <Camera size={48} className="mx-auto text-white/20 mb-3" />
+              <p className="text-sm font-bold text-white uppercase">Próximamente estaremos publicando las galerías oficiales</p>
+            </div>
+          )}
         </div>
       </section>
 

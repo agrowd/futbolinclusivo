@@ -1,5 +1,19 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 41: Galerías y Álbumes de Fotos en la Portada / Inicio (2026-08-27)
+
+### 📌 Contexto
+El usuario solicitó:
+- "Que aparezcan en el inicio de la mejor manera posible las galerias"
+
+### 🛠️ Acciones Realizadas
+1. Se actualizó `src/app/page.js` para consultar los álbumes más recientes en la base de datos de MongoDB.
+2. Se integró una sección en `HomeClient.js` con el título *"Momentos de las Jornadas"*, badge oficial, efecto hover dinámico, micro-thumbnails de fotos del álbum y enlace directo a ver cada evento.
+3. Se actualizó el botón rápido `FOTOS` del Hero para redirigir directamente a `/multimedia/fotos`.
+4. Compilación 100% exitosa (63/63 rutas) y push a `main`.
+
+---
+
 ## ⚽ Sesión 40: Visualización de Álbumes en el Panel de Administración (2026-08-27)
 
 ### 📌 Contexto

@@ -537,3 +537,14 @@
 2. **Eliminación de Álbumes**:
    - Creado manejador `handleDeleteAlbum(slug, title)` conectado al endpoint `DELETE /api/albums/[slug]`.
 3. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (63/63 rutas) y push a GitHub `main`.
+
+## 2026-08-27 — Sesión 41: Sección de Galerías y Álbumes de Eventos en la Portada / Inicio (`/`)
+
+### Qué se hizo:
+1. **Fetch de Álbumes en Servidor (`src/app/page.js`)**:
+   - `HomePage` consulta la base de datos de álbumes ordenados por fecha y entrega los últimos 4 álbumes a `HomeClient`.
+2. **Sección Visual de Álbumes en la Portada (`HomeClient.js`)**:
+   - Sección con badge oficial `📸 REGISTRO VISUAL OFICIAL`, título *"Momentos de las Jornadas"* y botón de acceso a la galería completa.
+   - Tarjetas interactivas con foto de portada, efecto zoom al hover, badge de categoría, fecha, conteo de fotos, previsualización de micro-thumbnails y enlace directo a `/multimedia/fotos/[slug]`.
+   - Actualizado el botón de acción rápida `FOTOS` del Hero para redirigir directamente a `/multimedia/fotos`.
+3. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (63/63 rutas) y push a GitHub `main`.
