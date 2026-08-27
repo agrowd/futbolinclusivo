@@ -579,3 +579,11 @@
 2. **Eliminación Total de URLs Rotas de WordPress**:
    - Reemplazadas imágenes caídas en `GenericCmsPage`, `aliados`, `campo`, `equipo`, `impacto`, `propósito`, `festival-latam`, `liga-ba`, `dia-de-las-infancias`, `novedades` e `inicio` por fondos vectoriales, gradientes temáticos, tarjetas con insignias e íconos SVG de alta nitidez.
 3. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (67/67 rutas) y push a GitHub `main`.
+
+## 2026-08-27 — Sesión 45: Configuración de la Foto Oficial del Plantel como Hero Principal
+
+### Qué se hizo:
+1. **Foto Oficial de Portada**:
+   - Se guardó la imagen del plantel con la bandera conmemorativa en `public/hero.jpg`.
+   - Se actualizó `HomeClient.js` para renderizar `public/hero.jpg` como fondo principal del Hero con degradado de alto contraste y centrado optimizado (`object-[center_35%]`).
+2. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (67/67 rutas) y push a GitHub `main`.

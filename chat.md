@@ -1,5 +1,18 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 45: Foto Oficial del Plantel como Hero (2026-08-27)
+
+### 📌 Contexto
+El usuario envió la foto del plantel con la bandera conmemorativa y solicitó:
+- "usa esta foto como hero"
+
+### 🛠️ Acciones Realizadas
+1. Se guardó la imagen en `public/hero.jpg` con alta resolución.
+2. Se configuró en `HomeClient.js` como la imagen de fondo del Hero con degradado de alto contraste y enfoque centrado en los jugadores.
+3. Compilación 100% exitosa (67/67 rutas) y push a `main`.
+
+---
+
 ## ⚽ Sesión 44: Enlace a Canchas y Eliminación de Imágenes Caídas (2026-08-27)
 
 ### 📌 Contexto

@@ -51,26 +51,23 @@ export default function HomeClient({ dynamicNews = [], dynamicAlbums = [] }) {
     <div className="bg-[#000B1A] text-white min-h-screen">
       
       {/* ===== HERO SECTION ===== */}
-      <section className="relative min-h-[70vh] md:min-h-[80vh] flex items-center overflow-hidden py-16 md:py-0">
+      <section className="relative min-h-[75vh] md:min-h-[85vh] flex items-center overflow-hidden py-20 md:py-0">
         <motion.div 
-          initial={{ scale: 1.1, opacity: 0 }}
-          animate={{ scale: 1, opacity: 0.45 }}
-          transition={{ duration: 1.5 }}
+          initial={{ scale: 1.08, opacity: 0 }}
+          animate={{ scale: 1, opacity: 0.55 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
           className="absolute inset-0 z-[1]"
         >
-          {dynamicAlbums[0]?.coverImage ? (
-            <Image 
-              src={dynamicAlbums[0].coverImage}
-              alt="Fútbol Inclusivo Hero"
-              fill
-              className="object-cover"
-              priority
-            />
-          ) : (
-            <div className="w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002B5C] via-[#00132B] to-[#000B1A]" />
-          )}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#000B1A] via-[#000B1A]/40 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#000B1A] to-transparent" />
+          <Image 
+            src="/hero.jpg"
+            alt="La Superliga Inclusiva AFA - Fútbol Inclusivo"
+            fill
+            className="object-cover object-[center_35%]"
+            priority
+            quality={90}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#000B1A] via-[#000B1A]/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#000B1A] via-[#000B1A]/20 to-transparent" />
         </motion.div>
 
         <div className="container mx-auto px-6 relative z-[2]">
