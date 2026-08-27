@@ -39,6 +39,7 @@ const CATEGORIES = [
 export default function AdminMediaPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const [activeTab, setActiveTab] = useState("albums"); // "albums" or "files"
   const [media, setMedia] = useState([]);
   const [albums, setAlbums] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -248,6 +249,23 @@ export default function AdminMediaPage() {
     }
   };
 
+  const handleDeleteAlbum = async (slug, title) => {
+    if (!confirm(`¿Estás seguro de eliminar el álbum "${title}"?`)) return;
+
+    try {
+      const res = await fetch(`/api/albums/${slug}`, { method: "DELETE" });
+      const data = await res.json();
+      if (data.success) {
+        setAlbums(albums.filter((a) => a.slug !== slug));
+        setMessage({ type: "success", text: "Álbum eliminado correctamente" });
+      } else {
+        alert("Error: " + data.message);
+      }
+    } catch (error) {
+      console.error("Error deleting album:", error);
+    }
+  };
+
   if (status === "loading" || (loading && media.length === 0)) {
     return (
       <div className="min-h-screen bg-[#000B1A] flex items-center justify-center">
@@ -296,45 +314,174 @@ export default function AdminMediaPage() {
       </header>
 
       <main className="container mx-auto px-6 py-12">
-        {/* Filters and Stats */}
-        <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-10">
-           <div className="flex items-center gap-3 bg-white/5 p-1.5 rounded-2xl border border-white/10">
-              <button 
-                onClick={() => setFilter("all")}
-                className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${filter === 'all' ? 'bg-[#36b37e] text-white' : 'text-white/40 hover:text-white'}`}
-              >
-                Todos
-              </button>
-              <button 
-                onClick={() => setFilter("image")}
-                className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${filter === 'image' ? 'bg-[#36b37e] text-white' : 'text-white/40 hover:text-white'}`}
-              >
-                Fotos
-              </button>
-              <button 
-                onClick={() => setFilter("video")}
-                className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${filter === 'video' ? 'bg-[#36b37e] text-white' : 'text-white/40 hover:text-white'}`}
-              >
-                Videos
-              </button>
-           </div>
-           
-           <div className="text-right">
-              <p className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-1">Archivos Encontrados</p>
-              <p className="text-3xl font-black text-[#36b37e]">
-                 {media.length} <span className="text-white/20 text-sm font-bold uppercase">Items</span>
-              </p>
-           </div>
+        {/* Main Tab Navigation */}
+        <div className="flex items-center gap-3 border-b border-white/10 pb-6 mb-8">
+          <button
+            onClick={() => setActiveTab("albums")}
+            className={`flex items-center gap-2 px-6 py-3 rounded-2xl text-xs sm:text-sm font-black uppercase tracking-wider transition-all ${
+              activeTab === "albums"
+                ? "bg-[#36b37e] text-black shadow-lg shadow-[#36b37e]/20"
+                : "bg-white/5 text-white/60 hover:text-white border border-white/10"
+            }`}
+          >
+            <FolderPlus size={18} />
+            <span>Álbumes de Eventos ({albums.length})</span>
+          </button>
+          <button
+            onClick={() => setActiveTab("files")}
+            className={`flex items-center gap-2 px-6 py-3 rounded-2xl text-xs sm:text-sm font-black uppercase tracking-wider transition-all ${
+              activeTab === "files"
+                ? "bg-[#36b37e] text-black shadow-lg shadow-[#36b37e]/20"
+                : "bg-white/5 text-white/60 hover:text-white border border-white/10"
+            }`}
+          >
+            <ImageIcon size={18} />
+            <span>Archivos Sueltos ({media.length})</span>
+          </button>
         </div>
 
-        {/* Media Grid */}
-        {media.length === 0 && !loading ? (
-          <div className="flex flex-col items-center justify-center py-32 bg-white/2 border-2 border-dashed border-white/5 rounded-[40px]">
-             <ImageIcon size={64} className="text-white/10 mb-6" />
-             <h3 className="text-xl font-black text-white/40 uppercase tracking-tight">No se encontraron archivos</h3>
-             <p className="text-white/20 text-sm font-bold uppercase mt-2">Prueba cambiando el filtro o sube uno nuevo</p>
+        {/* TAB 1: ALBUMS VIEW */}
+        {activeTab === "albums" && (
+          <div>
+            {albums.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-24 bg-white/[0.02] border-2 border-dashed border-white/10 rounded-[32px] text-center p-6">
+                <FolderPlus size={56} className="text-white/20 mb-4" />
+                <h3 className="text-xl font-black uppercase text-white/60">No hay álbumes creados todavía</h3>
+                <p className="text-white/40 text-xs mt-2 max-w-sm">
+                  Creá tu primer álbum para organizar las fotos de los eventos y fechas disputadas.
+                </p>
+                <button
+                  onClick={() => setIsAlbumModalOpen(true)}
+                  className="mt-6 px-6 py-3 rounded-2xl bg-[#36b37e] text-black font-black text-xs uppercase tracking-wider hover:bg-[#2ecc71] transition-all"
+                >
+                  + Crear Primer Álbum
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {albums.map((album) => {
+                  const photoCount = album.photos?.length || 0;
+                  const dateStr = album.eventDate
+                    ? new Date(album.eventDate).toLocaleDateString("es-AR", {
+                        day: "2-digit",
+                        month: "long",
+                        year: "numeric",
+                      })
+                    : "";
+
+                  return (
+                    <div
+                      key={album._id}
+                      className="bg-white/[0.03] border border-white/10 rounded-3xl overflow-hidden shadow-xl flex flex-col justify-between group hover:border-[#36b37e]/40 transition-all"
+                    >
+                      {/* Album Cover */}
+                      <div className="relative w-full aspect-16/10 bg-black/50 overflow-hidden">
+                        {album.coverImage ? (
+                          <img
+                            src={album.coverImage}
+                            alt={album.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-white/20">
+                            <ImageIcon size={48} />
+                          </div>
+                        )}
+                        <span className="absolute top-3 left-3 bg-[#00132B]/90 backdrop-blur-md text-[#36b37e] text-[10px] font-black uppercase px-3 py-1 rounded-full border border-white/15">
+                          {album.category}
+                        </span>
+                        <span className="absolute bottom-3 right-3 bg-black/80 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-full border border-white/15">
+                          📸 {photoCount} fotos
+                        </span>
+                      </div>
+
+                      {/* Info & Actions */}
+                      <div className="p-5 flex-1 flex flex-col justify-between">
+                        <div>
+                          {dateStr && (
+                            <p className="text-xs text-white/50 mb-1 flex items-center gap-1.5 font-bold">
+                              <Calendar size={13} className="text-[#36b37e]" />
+                              <span>{dateStr}</span>
+                            </p>
+                          )}
+                          <h4 className="text-lg font-black uppercase text-white tracking-tight line-clamp-2">
+                            {album.title}
+                          </h4>
+                          {album.description && (
+                            <p className="text-xs text-white/60 mt-2 line-clamp-2">
+                              {album.description}
+                            </p>
+                          )}
+                        </div>
+
+                        <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between gap-2">
+                          <Link
+                            href={`/multimedia/fotos/${album.slug}`}
+                            target="_blank"
+                            className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white/5 hover:bg-[#36b37e] text-white hover:text-black font-black text-xs uppercase tracking-wider transition-all border border-white/10"
+                          >
+                            <ExternalLink size={14} />
+                            <span>Ver en Web</span>
+                          </Link>
+                          <button
+                            onClick={() => handleDeleteAlbum(album.slug, album.title)}
+                            className="p-2.5 rounded-xl bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white transition-colors"
+                            title="Eliminar álbum"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
-        ) : (
+        )}
+
+        {/* TAB 2: LOOSE MEDIA FILES */}
+        {activeTab === "files" && (
+          <div>
+            {/* Filters and Stats */}
+            <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-8">
+               <div className="flex items-center gap-3 bg-white/5 p-1.5 rounded-2xl border border-white/10">
+                  <button 
+                    onClick={() => setFilter("all")}
+                    className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${filter === 'all' ? 'bg-[#36b37e] text-white' : 'text-white/40 hover:text-white'}`}
+                  >
+                    Todos
+                  </button>
+                  <button 
+                    onClick={() => setFilter("image")}
+                    className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${filter === 'image' ? 'bg-[#36b37e] text-white' : 'text-white/40 hover:text-white'}`}
+                  >
+                    Fotos
+                  </button>
+                  <button 
+                    onClick={() => setFilter("video")}
+                    className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${filter === 'video' ? 'bg-[#36b37e] text-white' : 'text-white/40 hover:text-white'}`}
+                  >
+                    Videos
+                  </button>
+               </div>
+               
+               <div className="text-right">
+                  <p className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-1">Archivos Encontrados</p>
+                  <p className="text-3xl font-black text-[#36b37e]">
+                     {media.length} <span className="text-white/20 text-sm font-bold uppercase">Items</span>
+                  </p>
+               </div>
+            </div>
+
+            {/* Media Grid */}
+            {media.length === 0 && !loading ? (
+              <div className="flex flex-col items-center justify-center py-32 bg-white/2 border-2 border-dashed border-white/5 rounded-[40px]">
+                 <ImageIcon size={64} className="text-white/10 mb-6" />
+                 <h3 className="text-xl font-black text-white/40 uppercase tracking-tight">No se encontraron archivos</h3>
+                 <p className="text-white/20 text-sm font-bold uppercase mt-2">Prueba cambiando el filtro o sube uno nuevo</p>
+              </div>
+            ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
             {media.map((item) => (
               <div 
@@ -397,7 +544,9 @@ export default function AdminMediaPage() {
             ))}
           </div>
         )}
-      </main>
+      </div>
+    )}
+  </main>
 
       {/* Upload Modal */}
       {isUploadModalOpen && (

@@ -527,3 +527,13 @@
 3. **Endpoint `/api/upload` con Fallback Híbrido**:
    - Maneja subidas tanto a Cloudinary como a almacenamiento local seguro.
 4. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (63/63 rutas) y push a GitHub `main`.
+
+## 2026-08-27 — Sesión 40: Visualización y Gestión de Álbumes en Panel de Administración (`/admin/media`)
+
+### Qué se hizo:
+1. **Navegación por Pestañas en `/admin/media`**:
+   - Pestaña **`📁 Álbumes de Eventos`**: Muestra las tarjetas con portada, categoría, fecha, conteo de fotos, botón de ver en web y botón de eliminar álbum.
+   - Pestaña **`🖼️ Archivos Sueltos`**: Muestra los archivos multimedia individuales.
+2. **Eliminación de Álbumes**:
+   - Creado manejador `handleDeleteAlbum(slug, title)` conectado al endpoint `DELETE /api/albums/[slug]`.
+3. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (63/63 rutas) y push a GitHub `main`.

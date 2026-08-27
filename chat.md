@@ -1,5 +1,19 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 40: Visualización de Álbumes en el Panel de Administración (2026-08-27)
+
+### 📌 Contexto
+El usuario reportó:
+- "Termino de cargar y quedo asi" (mostraba "No se encontraron archivos").
+- El álbum se había subido 100% con éxito a la base de datos (con 36 fotos en Cloudinary), pero el panel admin solo mostraba la grilla de archivos sueltos y no la de álbumes.
+
+### 🛠️ Acciones Realizadas
+1. Se añadieron pestañas en `/admin/media`: **`📁 Álbumes de Eventos`** y **`🖼️ Archivos Sueltos`**.
+2. Se construyó la grilla de álbumes en el panel con portada, badges, conteo de fotos, botón para ver directamente en la web y botón para eliminar.
+3. Compilación 100% exitosa (63/63 rutas) y push a `main`.
+
+---
+
 ## ⚽ Sesión 39: Corrección de Subida Masiva con Chunking y Progreso en Tiempo Real (2026-08-27)
 
 ### 📌 Contexto

@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.10.2 — 2026-08-27
+- feat: Integrada la vista de gestión de Álbumes de Eventos en el panel de administración (/admin/media) con selector de pestañas, previsualización de portadas, conteo de fotos, botón de ver en web y eliminación de álbumes.
+
 ## v1.10.1 — 2026-08-27
 - fix: Optimizado el proceso de subida masiva de fotos con pool concurrente de peticiones individuales (/api/upload), evitando el límite de tamaño de petición de Vercel (4.5MB) y mostrando progreso en vivo foto por foto.
 
