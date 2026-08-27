@@ -598,3 +598,15 @@
    - Sustituido `readAsDataURL` por `URL.createObjectURL` eliminando el congelamiento de memoria al arrastrar más de 100 fotos.
    - Implementado sistema de auto-reintento (hasta 2 intentos adicionales con backoff y timeout de 60s) para evitar que una falla transitoria de red aborte el lote.
 3. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (67/67 rutas) y push a GitHub `main`.
+
+## 2026-08-27 — Sesión 47: Subida Exitosa del Álbum Sede CASLA y Compresión Automática con Sharp
+
+### Qué se hizo:
+1. **Causa Raíz de Bloqueo**:
+   - Las fotos de la fotógrafa pesaban más de 18 MB cada una, superando el límite de 10 MB de Cloudinary y bloqueando las peticiones directas.
+2. **Implementación de Sharp**:
+   - Se integró `sharp` en `api/upload/route.js` y scripts de carga para redimensionar (2200px max) y optimizar imágenes a JPEGs progresivos de ~1.5 MB en tiempo real.
+3. **Subida y Creación del Álbum**:
+   - Se subieron las 44 fotos de `C:\Users\Try Hard\Desktop\Fecha 2 - Sede CASLA - Superliga 2026` a Cloudinary (`futbolinclusivo/galeria/casla-2026-08-01`).
+   - Se creó el documento en MongoDB Atlas: *Superliga Inclusiva en AFA - Sábado 01/08 - San Lorenzo de Almagro - Fotografa Karo Nuñez* (ID `6a90822aa36b00f5622b7835`).
+4. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (67/67 rutas) y push a GitHub `main`.

@@ -1,5 +1,19 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 47: Subida de Álbum Sede CASLA y Sharp Auto-Compresión (2026-08-27)
+
+### 📌 Contexto
+El usuario solicitó:
+- "Sigue sin subirse, subilo vos, ponele de nombre Superliga Inclusiva en AFA - Sábado 01/08 - San Lorenzo de Almagro - Fotografa Karo Nuñez en superliga afa, fecha primero de agosto de este año y subi las fotos de esta carpeta C:\Users\Try Hard\Desktop\Fecha 2 - Sede CASLA - Superliga 2026"
+
+### 🛠️ Acciones Realizadas
+1. Se detectó la causa del error: las fotos de la fotógrafa pesaban más de 18.6 MB cada una, superando el límite de 10 MB de Cloudinary.
+2. Se instaló e integró `sharp` en `api/upload/route.js` para comprimir/redimensionar automáticamente en el backend cualquier foto pesada a ~1.5 MB en alta resolución.
+3. Se procesaron y subieron las 44 fotos de la carpeta local a Cloudinary y se guardó el álbum en MongoDB Atlas con fecha `01/08/2026` y categoría `Superliga AFA`.
+4. Compilación 100% exitosa (67/67 rutas) y push a `main`.
+
+---
+
 ## ⚽ Sesión 46: Diagnóstico de Álbumes en DB y Optimización de Subida Masiva (2026-08-27)
 
 ### 📌 Contexto

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { v2 as cloudinary } from "cloudinary";
+import sharp from "sharp";
 import fs from "fs";
 import path from "path";
 
@@ -39,15 +40,28 @@ export async function POST(request) {
       );
     }
 
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
+    const rawBytes = await file.arrayBuffer();
+    const rawBuffer = Buffer.from(rawBytes);
+
+    // Optimize image with sharp to guarantee fast upload (< 3MB) and prevent Cloudinary 10MB limits
+    let buffer = rawBuffer;
+    try {
+      buffer = await sharp(rawBuffer)
+        .rotate() // auto-orient from EXIF
+        .resize({ width: 2200, height: 2200, fit: "inside", withoutEnlargement: true })
+        .jpeg({ quality: 86, progressive: true })
+        .toBuffer();
+    } catch (sharpError) {
+      console.warn("Sharp optimization skipped/failed, using raw buffer:", sharpError.message);
+      buffer = rawBuffer;
+    }
 
     if (isCloudinaryConfigured) {
       const result = await new Promise((resolve, reject) => {
         const uploadStream = cloudinary.uploader.upload_stream(
           {
             folder: "futbolinclusivo/galeria",
-            resource_type: "auto",
+            resource_type: "image",
           },
           (error, result) => {
             if (error) reject(error);
@@ -75,8 +89,7 @@ export async function POST(request) {
         fs.mkdirSync(uploadDir, { recursive: true });
       }
 
-      const ext = path.extname(file.name || "") || ".jpg";
-      const filename = `img-${Date.now()}-${Math.random().toString(36).substring(2, 8)}${ext}`;
+      const filename = `img-${Date.now()}-${Math.random().toString(36).substring(2, 8)}.jpg`;
       const filePath = path.join(uploadDir, filename);
 
       fs.writeFileSync(filePath, buffer);
@@ -87,9 +100,9 @@ export async function POST(request) {
         data: {
           url: publicUrl,
           publicId: filename,
-          width: 1200,
-          height: 800,
-          format: ext.replace(".", ""),
+          width: 1920,
+          height: 1080,
+          format: "jpg",
           size: buffer.length,
         },
       });
