@@ -1,5 +1,20 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 38: Galería de Fotos por Evento / Fecha & Gestor de Carga Masiva (2026-08-27)
+
+### 📌 Contexto
+El usuario solicitó:
+- "Analiza lo que me piden y sin tocar el codigo, solo proponiendome decime que podes hacer... Me parece bien, sobre todo lo de arrastrar multiples fotos y que se suban. Procede"
+
+### 🛠️ Acciones Realizadas
+1. Se creó el modelo Mongoose `Album.js` para categorizar fotos por Evento/Fecha (Superliga AFA, Liga BA, Liga Nacional, Escuela, etc.).
+2. Se construyeron los endpoints de API (`/api/albums`, `/api/albums/[slug]` y `/api/upload/batch`) para permitir subidas en lote de múltiples fotos en paralelo.
+3. Se implementó en el panel admin (`/admin/media`) el botón y modal **`📁 Crear Álbum`** con zona Drag & Drop para arrastrar decenas de fotos a la vez y barra de progreso.
+4. Se renovó la vista pública (`/multimedia/fotos` y `/multimedia/fotos/[slug]`) con tarjetas de álbumes por evento, filtros por categoría, visor pantalla completa (Lightbox), descarga de imágenes y botones de compartir por WhatsApp.
+5. Compilación 100% exitosa (63/63 rutas) y push a `main`.
+
+---
+
 ## ⚽ Sesión 37: Modales Adaptativos y Cierre Automático al Clic Exterior (2026-08-24)
 
 ### 📌 Contexto

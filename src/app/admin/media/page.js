@@ -22,7 +22,11 @@ import {
   Loader2
 } from "lucide-react";
 
+import AlbumCreateModal from "@/components/admin/AlbumCreateModal";
+import { FolderPlus, ExternalLink, Calendar } from "lucide-react";
+
 const CATEGORIES = [
+  "Superliga AFA",
   "Liga BA",
   "Liga Nacional",
   "Escuela",
@@ -36,9 +40,11 @@ export default function AdminMediaPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [media, setMedia] = useState([]);
+  const [albums, setAlbums] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+  const [isAlbumModalOpen, setIsAlbumModalOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadData, setUploadData] = useState({
     title: "",
@@ -62,8 +68,21 @@ export default function AdminMediaPage() {
   useEffect(() => {
     if (status === "authenticated") {
       fetchMedia();
+      fetchAlbums();
     }
   }, [status, filter]);
+
+  const fetchAlbums = async () => {
+    try {
+      const res = await fetch("/api/albums");
+      const data = await res.json();
+      if (data.success) {
+        setAlbums(data.data);
+      }
+    } catch (err) {
+      console.error("Error fetching albums:", err);
+    }
+  };
 
   const fetchMedia = async () => {
     try {
@@ -257,13 +276,22 @@ export default function AdminMediaPage() {
             </div>
           </div>
 
-          <button 
-            onClick={() => setIsUploadModalOpen(true)}
-            className="flex items-center gap-2 bg-[#36b37e] hover:bg-[#2da372] text-white px-8 py-3 rounded-xl text-sm font-black tracking-widest transition-all uppercase shadow-lg shadow-[#36b37e]/20"
-          >
-            <Upload size={18} />
-            Subir Archivo
-          </button>
+          <div className="flex items-center gap-3">
+            <button 
+              onClick={() => setIsAlbumModalOpen(true)}
+              className="flex items-center gap-2 bg-[#2980B9] hover:bg-[#1f6694] text-white px-6 py-3 rounded-xl text-xs sm:text-sm font-black tracking-widest transition-all uppercase shadow-lg shadow-[#2980B9]/20"
+            >
+              <FolderPlus size={18} />
+              <span>Crear Álbum</span>
+            </button>
+            <button 
+              onClick={() => setIsUploadModalOpen(true)}
+              className="flex items-center gap-2 bg-[#36b37e] hover:bg-[#2da372] text-white px-6 py-3 rounded-xl text-xs sm:text-sm font-black tracking-widest transition-all uppercase shadow-lg shadow-[#36b37e]/20"
+            >
+              <Upload size={18} />
+              <span>Subir Archivo</span>
+            </button>
+          </div>
         </div>
       </header>
 
@@ -526,20 +554,30 @@ export default function AdminMediaPage() {
                     </div>
                  )}
 
-                 <button 
-                   disabled={!uploadData.file || uploading}
-                   className="w-full bg-[#36b37e] hover:bg-[#2da372] disabled:opacity-50 disabled:grayscale text-white py-4 rounded-2xl text-sm font-black tracking-widest transition-all uppercase shadow-xl shadow-[#36b37e]/20"
-                 >
+                  <button 
+                    disabled={!uploadData.file || uploading}
+                    className="w-full bg-[#36b37e] hover:bg-[#2da372] disabled:opacity-50 disabled:grayscale text-white py-4 rounded-2xl text-sm font-black tracking-widest transition-all uppercase shadow-xl shadow-[#36b37e]/20"
+                  >
                     {uploading ? (
                       <span className="flex items-center justify-center gap-3">
                          <Loader2 size={18} className="animate-spin" /> PROCESANDO...
                       </span>
                     ) : "Confirmar Subida"}
-                 </button>
-              </form>
-           </div>
-        </div>
+                  </button>
+               </form>
+            </div>
+         </div>
       )}
+
+      {/* Album Create Modal */}
+      <AlbumCreateModal
+        isOpen={isAlbumModalOpen}
+        onClose={() => setIsAlbumModalOpen(false)}
+        onCreated={() => {
+          fetchAlbums();
+          setMessage({ type: "success", text: "¡Álbum creado exitosamente!" });
+        }}
+      />
     </div>
   );
 }

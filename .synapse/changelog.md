@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.10.0 — 2026-08-27
+- feat: Creado sistema de Galería de Fotos por Evento y Fecha (/multimedia/fotos), con gestor de carga masiva drag & drop en el panel admin (/admin/media), visor lightbox interactivo pantalla completa, descarga individual de fotos y botones de compartir por WhatsApp.
+
 ## v1.9.6 — 2026-08-24
 - feat: Mejorados todos los modales del sistema con cierre automático por clic exterior en backdrop y ajuste adaptativo max-h-[90vh] con scroll vertical fluido.
 

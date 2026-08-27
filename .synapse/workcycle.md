@@ -499,3 +499,18 @@
 2. **Ajuste y Scroll Adaptativo (`max-h-[90vh]` / `max-h-[92vh]`)**:
    - Se aplicó límite de altura `max-h-[90vh]` y scroll vertical con `overflow-y-auto` a todos los contenidos de modales para evitar que sobresalgan de la pantalla en dispositivos móviles y de escritorio.
 3. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (61/61 rutas) y push a GitHub `main`.
+
+## 2026-08-27 — Sesión 38: Galería de Fotos por Evento / Fecha & Carga Masiva (Drag & Drop)
+
+### Qué se hizo:
+1. **Modelo de Álbumes (`src/lib/schemas/Album.js`)**:
+   - Mongoose Schema para álbumes con `title`, `slug`, `category` (Superliga AFA, Liga BA, Liga Nacional, Escuela, etc.), `eventDate`, `description`, `coverImage`, `driveLink` y array de `photos`.
+2. **Endpoints de API (`/api/albums`, `/api/albums/[slug]`, `/api/upload/batch`)**:
+   - `GET /api/albums`: Lista álbumes filtrados por categoría.
+   - `POST /api/upload/batch`: Endpoint de procesamiento masivo en lote para decenas de imágenes simultáneas (Cloudinary + fallback local).
+3. **Carga Masiva Drag & Drop en Panel Admin (`AlbumCreateModal.js` & `/admin/media`)**:
+   - Modal interactivo para arrastrar y soltar múltiples fotos juntas, con barra de progreso y vista previa de thumbnails.
+4. **Galería Pública Responsiva y Visor Lightbox (`/multimedia/fotos` & `/multimedia/fotos/[slug]`)**:
+   - Tarjetas de álbumes por evento con filtros por categoría.
+   - Visor pantalla completa (Lightbox) con navegación por teclado/flechas, botón `📥 Descargar Foto` y botón `💬 Compartir por WhatsApp`.
+5. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (63/63 rutas) y push a GitHub `main`.
