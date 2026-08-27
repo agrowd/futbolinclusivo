@@ -13,17 +13,7 @@ export default function DiaDeLasInfanciasPage() {
     <div className="min-h-screen bg-[#000B1A] text-white">
       {/* HERO SECTION */}
       <section className="relative pt-36 pb-16 md:pt-44 md:pb-24 overflow-hidden border-b border-white/5">
-        {/* Background Image / Glow */}
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="https://futbolinclusivo.org.ar/app/uploads/2017/12/nosotros-campo4.jpg"
-            alt="Día de las Infancias - Fútbol Inclusivo"
-            fill
-            className="object-cover opacity-15"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#000B1A]/80 via-[#000B1A]/95 to-[#000B1A]" />
-        </div>
+        <div className="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(#36b37e_1px,transparent_1px)] [background-size:24px_24px]" />
 
         {/* Ambient Glows */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-[#36b37e]/15 rounded-full blur-3xl pointer-events-none" />

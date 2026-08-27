@@ -17,10 +17,7 @@ export default function InstitucionalPage() {
     <div style={{ background: "#000B1A", color: "#fff", minHeight: "100vh" }}>
       {/* Hero Section */}
       <section style={{ background: "linear-gradient(to bottom, #001A3D, #000B1A)", padding: "180px 0 100px", borderBottom: "1px solid rgba(255,255,255,0.05)", position: "relative" }}>
-        <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
-          <Image src={heroImage} alt="Hero" fill style={{ objectFit: "cover", opacity: 0.3 }} priority />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,26,61,0.4) 0%, rgba(0,11,26,0.6) 100%)" }} />
-        </div>
+        <div className="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(#36b37e_1px,transparent_1px)] [background-size:24px_24px]" />
         
         <div className="container" style={{ textAlign: "center", position: "relative", zIndex: 1 }}>
           <div style={{ display: "inline-flex", background: "rgba(0,141,77,0.1)", color: "#36b37e", padding: "8px 16px", borderRadius: "4px", marginBottom: "24px", fontSize: "0.75rem", fontWeight: 800, letterSpacing: "2px" }}>

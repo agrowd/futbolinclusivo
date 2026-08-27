@@ -78,7 +78,7 @@ export default function FloatingButtons() {
 
   const buttons = [
     {
-      href: "/canchas",
+      href: "https://canchas.futbolinclusivo.org.ar/disponibilidad",
       icon: MapPin,
       label: "Alquilar Cancha",
       color: "from-blue-500 to-blue-600",

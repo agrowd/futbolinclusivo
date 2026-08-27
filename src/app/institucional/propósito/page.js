@@ -17,25 +17,7 @@ export default function PropositoPage() {
         borderBottom: "1px solid rgba(255,255,255,0.05)",
         position: "relative"
       }}>
-        {/* Background Image */}
-        <div style={{
-          position: "absolute",
-          inset: 0,
-          zIndex: 0
-        }}>
-          <Image 
-            src="https://futbolinclusivo.org.ar/app/uploads/2017/12/nosotros-campo4.jpg"
-            alt="Nuestro propósito - Fútbol Inclusivo"
-            fill
-            style={{ objectFit: "cover", opacity: 0.3 }}
-            sizes="100vw"
-          />
-          <div style={{
-            position: "absolute",
-            inset: 0,
-            background: "linear-gradient(to bottom, rgba(0,26,61,0.4) 0%, rgba(0,11,26,0.6) 100%)"
-          }} />
-        </div>
+        <div className="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(#36b37e_1px,transparent_1px)] [background-size:24px_24px]" />
         
         <div className="container" style={{ textAlign: "center", position: "relative", zIndex: 1 }}>
           <div style={{ 

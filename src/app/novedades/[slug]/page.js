@@ -69,11 +69,11 @@ export default async function BlogPostPage(props) {
                 <div className="mb-12 rounded-2xl overflow-hidden shadow-sm bg-white/5 border border-white/10">
                     <div className="relative w-full h-[240px] sm:h-[320px] md:h-[420px]">
                       <Image
-                        src={post.image || "https://futbolinclusivo.org.ar/app/uploads/2018/12/MG_0325.jpg"}
+                        src={post.image || "/andarfc-logo.png"}
                         alt={post.title}
                         fill
                         sizes="(max-width: 768px) 100vw, 768px"
-                        className="object-cover"
+                        className="object-contain bg-white/5"
                       />
                     </div>
                 </div>

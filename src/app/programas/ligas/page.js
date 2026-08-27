@@ -189,14 +189,17 @@ export default function LigasPage() {
                             <Image src="/logo-afa.png" alt="AFA" width={56} height={56} style={{ objectFit: "contain" }} />
                           </div>
                           <div style={{
-                            width: "85px",
-                            height: "85px",
+                            width: "75px",
+                            height: "75px",
+                            borderRadius: "50%",
+                            background: "rgba(255,255,255,0.08)",
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
-                            filter: "drop-shadow(0 10px 20px rgba(0,0,0,0.4))"
+                            border: "2px solid rgba(255,255,255,0.2)",
+                            boxShadow: "0 10px 30px rgba(0,0,0,0.3)"
                           }}>
-                            <Image src="https://upload.wikimedia.org/wikipedia/commons/c/c4/Afa_gold_logo24.svg" alt="AFA" width={75} height={75} style={{ objectFit: "contain" }} />
+                            <Image src="/satlogo.png" alt="SAT" width={56} height={56} style={{ objectFit: "contain" }} />
                           </div>
                         </div>
                       ) : (

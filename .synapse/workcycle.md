@@ -570,3 +570,12 @@
    - Reemplazo de imágenes estáticas de WordPress caídas por tarjetas vectoriales con Tailwind y Lucide Icons.
    - Conexión a la base de datos de álbumes para mostrar el archivo visual actualizado con miniaturas y lightbox.
 3. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (67/67 rutas) y push a GitHub `main`.
+
+## 2026-08-27 — Sesión 44: Enlace Directo a Sistema de Canchas y Reemplazo de Imágenes Caídas
+
+### Qué se hizo:
+1. **Redirección y Enlaces de "Alquiler de Canchas"**:
+   - Header, Footer, Floating Buttons y la ruta `/canchas` ahora dirigen a `https://canchas.futbolinclusivo.org.ar/disponibilidad`.
+2. **Eliminación Total de URLs Rotas de WordPress**:
+   - Reemplazadas imágenes caídas en `GenericCmsPage`, `aliados`, `campo`, `equipo`, `impacto`, `propósito`, `festival-latam`, `liga-ba`, `dia-de-las-infancias`, `novedades` e `inicio` por fondos vectoriales, gradientes temáticos, tarjetas con insignias e íconos SVG de alta nitidez.
+3. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (67/67 rutas) y push a GitHub `main`.

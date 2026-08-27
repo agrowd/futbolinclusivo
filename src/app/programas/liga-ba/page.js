@@ -76,8 +76,14 @@ export default function LigaBA() {
                      Cabe señalar que la inclusión con equipos integrados por personas con y sin discapacidad es un eje central de este movimiento.
                   </div>
                 </div>
-                <div style={{ position: "relative", height: "300px", borderRadius: "16px", overflow: "hidden" }}>
-                  <Image src="https://futbolinclusivo.org.ar/app/uploads/2018/12/MG_0325.jpg" alt="Testeo" fill style={{ objectFit: "cover", opacity: 0.8 }} />
+                <div className="bg-gradient-to-br from-[#36b37e]/15 to-transparent border border-[#36b37e]/30 rounded-3xl p-8 flex flex-col justify-center items-center text-center shadow-xl">
+                  <div className="w-16 h-16 rounded-2xl bg-[#36b37e]/20 text-[#36b37e] flex items-center justify-center mb-4">
+                    <Trophy size={32} />
+                  </div>
+                  <h3 className="text-xl font-black uppercase text-white mb-2">Equidad y Convivencia</h3>
+                  <p className="text-xs text-white/60 leading-relaxed max-w-xs">
+                    El sistema de testeo garantiza que cada jugador y equipo compita en un entorno adaptado y formativo.
+                  </p>
                 </div>
               </div>
             </FadeIn>

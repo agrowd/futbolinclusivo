@@ -26,7 +26,7 @@ const mainNav = [
   { href: "/programas/escuela", label: "ESCUELA", icon: Users, highlight: true },
   { href: "/novedades", label: "NOVEDADES", icon: Newspaper },
   { href: "/inscripcion", label: "INSCRIPCIÓN", icon: Trophy, special: true },
-  { href: "/canchas", label: "ALQUILER DE CANCHAS", icon: MapPin },
+  { href: "https://canchas.futbolinclusivo.org.ar/disponibilidad", label: "ALQUILER DE CANCHAS", icon: MapPin, external: true },
   { href: "/sumate", label: "¡SUMATE!", icon: Heart },
 ];
 
@@ -97,6 +97,8 @@ export default function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
+                  target={item.external ? "_blank" : undefined}
+                  rel={item.external ? "noopener noreferrer" : undefined}
                   className={`group relative py-2 font-black text-sm tracking-wider uppercase no-underline transition-all ${
                     item.highlight 
                       ? "text-[#36b37e] hover:text-white" 
@@ -186,6 +188,8 @@ export default function Header() {
               <li key={item.href}>
                 <Link
                   href={item.href}
+                  target={item.external ? "_blank" : undefined}
+                  rel={item.external ? "noopener noreferrer" : undefined}
                   onClick={() => setIsSidebarOpen(false)}
                   className="flex items-center justify-between px-8 py-5 text-white no-underline font-black text-base md:text-lg transition-all hover:bg-white/5 hover:pl-10 group border-b border-white/2"
                 >

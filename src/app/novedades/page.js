@@ -190,10 +190,10 @@ export default async function NovedadesPage(props) {
                   border: "2px solid rgba(255,255,255,0.1)"
                 }}>
                   <Image 
-                    src={news.image || "https://futbolinclusivo.org.ar/app/uploads/2018/12/MG_0325.jpg"}
+                    src={news.image || "/andarfc-logo.png"}
                     alt={news.title}
                     fill
-                    style={{ objectFit: "cover" }}
+                    style={{ objectFit: "contain", background: "rgba(255,255,255,0.03)" }}
                     sizes="(max-width: 768px) 100vw, 50vw"
                   />
                 </div>
@@ -296,10 +296,10 @@ export default async function NovedadesPage(props) {
                   flexShrink: 0
                 }}>
                   <Image 
-                    src={news.image || "https://futbolinclusivo.org.ar/app/uploads/2018/12/MG_0325.jpg"}
+                    src={news.image || "/andarfc-logo.png"}
                     alt={news.title}
                     fill
-                    style={{ objectFit: "cover" }}
+                    style={{ objectFit: "contain", background: "rgba(255,255,255,0.03)" }}
                     sizes="200px"
                   />
                 </div>

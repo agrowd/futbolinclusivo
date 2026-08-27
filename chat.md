@@ -1,5 +1,18 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 44: Enlace a Canchas y Eliminación de Imágenes Caídas (2026-08-27)
+
+### 📌 Contexto
+El usuario solicitó:
+- "Que alquilar canchas te lleve a https://canchas.futbolinclusivo.org.ar/disponibilidad y revisa las imagenes que no van a ningun lado y reemplazalos por otra cosa hasta que pongamos imagenes"
+
+### 🛠️ Acciones Realizadas
+1. Se actualizaron los accesos de "Alquiler de Canchas" en Header, Footer, Floating Buttons y la ruta `/canchas` redirige inmediatamente a `https://canchas.futbolinclusivo.org.ar/disponibilidad`.
+2. Se revisaron y reemplazaron todas las imágenes viejas de WordPress en páginas institucionales, programas, novedades y home por fondos limpios de alta estética con gradientes, patrones de puntos y tarjetas con insignias vectoriales.
+3. Compilación 100% exitosa (67/67 rutas) y push a `main`.
+
+---
+
 ## ⚽ Sesión 43: Corrección de 404s en Canales Multimedia e Imágenes Rotas (2026-08-27)
 
 ### 📌 Contexto

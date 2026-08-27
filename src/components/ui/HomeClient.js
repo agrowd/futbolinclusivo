@@ -54,18 +54,22 @@ export default function HomeClient({ dynamicNews = [], dynamicAlbums = [] }) {
       <section className="relative min-h-[70vh] md:min-h-[80vh] flex items-center overflow-hidden py-16 md:py-0">
         <motion.div 
           initial={{ scale: 1.1, opacity: 0 }}
-          animate={{ scale: 1, opacity: 0.5 }}
+          animate={{ scale: 1, opacity: 0.45 }}
           transition={{ duration: 1.5 }}
           className="absolute inset-0 z-[1]"
         >
-          <Image 
-            src="https://futbolinclusivo.org.ar/app/uploads/2018/12/MG_0325.jpg"
-            alt="Fútbol Inclusivo Hero"
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#000B1A] via-[#000B1A]/20 to-transparent" />
+          {dynamicAlbums[0]?.coverImage ? (
+            <Image 
+              src={dynamicAlbums[0].coverImage}
+              alt="Fútbol Inclusivo Hero"
+              fill
+              className="object-cover"
+              priority
+            />
+          ) : (
+            <div className="w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002B5C] via-[#00132B] to-[#000B1A]" />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#000B1A] via-[#000B1A]/40 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#000B1A] to-transparent" />
         </motion.div>
 
@@ -203,11 +207,13 @@ export default function HomeClient({ dynamicNews = [], dynamicAlbums = [] }) {
             >
               <div className="absolute inset-0 opacity-30" style={{background: 'radial-gradient(circle at 20% 20%, transparent 8%, #000 8%, #000 12%, transparent 12%), radial-gradient(circle at 50% 10%, transparent 8%, #000 8%, #000 12%, transparent 12%), radial-gradient(circle at 80% 20%, transparent 8%, #000 8%, #000 12%, transparent 12%), radial-gradient(circle at 10% 50%, transparent 8%, #000 8%, #000 12%, transparent 12%), radial-gradient(circle at 90% 50%, transparent 8%, #000 8%, #000 12%, transparent 12%), radial-gradient(circle at 20% 80%, transparent 8%, #000 8%, #000 12%, transparent 12%), radial-gradient(circle at 50% 90%, transparent 8%, #000 8%, #000 12%, transparent 12%), radial-gradient(circle at 80% 80%, transparent 8%, #000 8%, #000 12%, transparent 12%), radial-gradient(circle at 35% 35%, transparent 6%, #000 6%, #000 10%, transparent 10%), radial-gradient(circle at 65% 35%, transparent 6%, #000 6%, #000 10%, transparent 10%), radial-gradient(circle at 35% 65%, transparent 6%, #000 6%, #000 10%, transparent 10%), radial-gradient(circle at 65% 65%, transparent 6%, #000 6%, #000 10%, transparent 10%)'}} />
               <div className="relative z-10 flex flex-col items-center">
-                <div className="flex -space-x-2 mb-3">
-                  <div className="w-12 h-12 rounded-full bg-white/10 border border-white/30 flex items-center justify-center z-10">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-12 h-12 rounded-full bg-white/10 border border-white/30 flex items-center justify-center">
                     <Image src="/logo-afa.png" alt="AFA" width={32} height={32} className="object-contain" />
                   </div>
-                  <Image src="https://upload.wikimedia.org/wikipedia/commons/c/c4/Afa_gold_logo24.svg" alt="AFA" width={40} height={40} className="object-contain" />
+                  <div className="w-12 h-12 rounded-full bg-white/10 border border-white/30 flex items-center justify-center">
+                    <Image src="/satlogo.png" alt="SAT" width={32} height={32} className="object-contain" />
+                  </div>
                 </div>
                 <h3 className="text-xl md:text-2xl font-black tracking-tight text-white mb-1">Super Liga</h3>
                 <p className="text-[#75AADB] text-xs font-bold uppercase tracking-wider mb-3">AFA</p>

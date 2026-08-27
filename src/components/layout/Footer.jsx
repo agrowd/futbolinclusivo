@@ -8,7 +8,7 @@ const aliados = [
   { name: "FIFA Foundation", logo: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/commons/a/aa/FIFA_logo_without_slogan.svg&n=-1" },
   { name: "Common Goal", logo: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/commons/8/84/Logo_Common_Goal.svg&n=-1" },
   { name: "UEFA Foundation", logo: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/commons/e/ef/Uefa_logo.svg&n=-1" },
-  { name: "AFA", logo: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/commons/c/c4/Afa_gold_logo24.svg&n=-1" }
+  { name: "AFA", logo: "/logo-afa.png" }
 ];
 
 const footerLinks = [
@@ -16,7 +16,7 @@ const footerLinks = [
     title: "Programas",
     links: [
       { href: "/inscripcion", label: "Inscripción a Torneos" },
-      { href: "/canchas", label: "Alquiler de Canchas" },
+      { href: "https://canchas.futbolinclusivo.org.ar/disponibilidad", label: "Alquiler de Canchas", external: true },
       { href: "/novedades", label: "Novedades" },
     ],
   },

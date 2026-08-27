@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.10.6 — 2026-08-27
+- feat: Redirección y enlaces de "Alquiler de Canchas" vinculados a https://canchas.futbolinclusivo.org.ar/disponibilidad.
+- fix: Eliminadas todas las imágenes estáticas y enlaces caídos de WordPress, reemplazándolos por fondos vectoriales con gradientes y tarjetas de íconos temáticos.
+
 ## v1.10.5 — 2026-08-27
 - fix: Solucionados errores 404 en todas las secciones multimedia (/multimedia/fotos-videos, /multimedia/revista, /multimedia/prensa, /multimedia/documentos-utiles) y eliminadas imágenes rotas en el hub central (/multimedia).
 
