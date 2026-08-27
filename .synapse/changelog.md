@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.10.4 — 2026-08-27
+- feat: Integrados los Álbumes de Fotos en el listado de "Últimas Novedades" de la Portada (/), con badge de Álbum, conteo de fotos y enlace directo a la galería.
+
 ## v1.10.3 — 2026-08-27
 - feat: Añadida la sección destacada de Álbumes y Galerías de Fotos en la página principal (/), con tarjetas interactivas, conteo de fotos, previsualización de thumbnails y acceso directo al visor completo.
 

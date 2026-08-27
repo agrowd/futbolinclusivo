@@ -548,3 +548,12 @@
    - Tarjetas interactivas con foto de portada, efecto zoom al hover, badge de categoría, fecha, conteo de fotos, previsualización de micro-thumbnails y enlace directo a `/multimedia/fotos/[slug]`.
    - Actualizado el botón de acción rápida `FOTOS` del Hero para redirigir directamente a `/multimedia/fotos`.
 3. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (63/63 rutas) y push a GitHub `main`.
+
+## 2026-08-27 — Sesión 42: Integración de Álbumes en el Feed de "Últimas Novedades" de la Portada
+
+### Qué se hizo:
+1. **Feed Unificado en Servidor (`src/app/page.js`)**:
+   - Se unificaron las noticias y los álbumes de fotos en un único feed cronológico ordenado por fecha de publicación/evento.
+2. **Renderizado de Álbumes en "Últimas Novedades" (`HomeClient.js`)**:
+   - Los álbumes aparecen integrados en la lista de novedades con badge verde `📸 ÁLBUM DE FOTOS`, categoría, conteo de fotos (`📸 36 fotos`), fecha y enlace directo al visor del álbum.
+3. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (63/63 rutas) y push a GitHub `main`.

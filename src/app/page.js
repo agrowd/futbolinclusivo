@@ -6,18 +6,23 @@ import HomeClient from "@/components/ui/HomeClient";
 export default async function HomePage() {
   await dbConnect();
 
-  // Fetch the 3 most recent published news
+  // 1. Fetch the most recent published news
   let dynamicNews = [];
   try {
-    dynamicNews = await News.find({ published: true })
+    const rawNews = await News.find({ published: true })
       .sort({ publishedAt: -1, createdAt: -1 })
-      .limit(3)
+      .limit(6)
       .lean();
     
-    // Serialize MongoDB objects for Client Component
-    dynamicNews = dynamicNews.map(news => ({
-      ...news,
+    dynamicNews = rawNews.map(news => ({
       _id: news._id.toString(),
+      type: "news",
+      title: news.title,
+      slug: news.slug,
+      href: `/novedades/${news.slug}`,
+      category: news.category || "Novedad",
+      image: news.image || "https://futbolinclusivo.org.ar/app/uploads/2018/12/MG_0325.jpg",
+      date: news.publishedAt?.toISOString() || news.createdAt?.toISOString(),
       createdAt: news.createdAt?.toISOString(),
       updatedAt: news.updatedAt?.toISOString(),
       publishedAt: news.publishedAt?.toISOString(),
@@ -26,20 +31,27 @@ export default async function HomePage() {
     console.error("Error fetching news for home page:", error);
   }
 
-  // Fetch the 4 most recent photo albums
+  // 2. Fetch the most recent photo albums
   let dynamicAlbums = [];
   try {
-    dynamicAlbums = await Album.find({})
+    const rawAlbums = await Album.find({})
       .sort({ eventDate: -1, createdAt: -1 })
-      .limit(4)
+      .limit(6)
       .lean();
 
-    dynamicAlbums = dynamicAlbums.map(album => ({
-      ...album,
+    dynamicAlbums = rawAlbums.map(album => ({
       _id: album._id.toString(),
+      type: "album",
+      title: album.title,
+      slug: album.slug,
+      href: `/multimedia/fotos/${album.slug}`,
+      category: album.category || "Galería",
+      coverImage: album.coverImage || album.photos?.[0]?.url || "https://futbolinclusivo.org.ar/app/uploads/2018/12/MG_0325.jpg",
+      image: album.coverImage || album.photos?.[0]?.url || "https://futbolinclusivo.org.ar/app/uploads/2018/12/MG_0325.jpg",
+      date: album.eventDate ? (album.eventDate.toISOString ? album.eventDate.toISOString() : String(album.eventDate)) : album.createdAt?.toISOString(),
+      eventDate: album.eventDate ? (album.eventDate.toISOString ? album.eventDate.toISOString() : String(album.eventDate)) : null,
       createdAt: album.createdAt?.toISOString(),
       updatedAt: album.updatedAt?.toISOString(),
-      eventDate: album.eventDate ? (album.eventDate.toISOString ? album.eventDate.toISOString() : String(album.eventDate)) : null,
       photos: (album.photos || []).slice(0, 4).map(p => ({
         url: p.url,
         publicId: p.publicId,
@@ -51,5 +63,15 @@ export default async function HomePage() {
     console.error("Error fetching albums for home page:", error);
   }
 
-  return <HomeClient dynamicNews={dynamicNews} dynamicAlbums={dynamicAlbums} />;
+  // 3. Combined latest feed for "Últimas Novedades" (News + Albums)
+  const combinedFeed = [...dynamicNews, ...dynamicAlbums]
+    .sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0))
+    .slice(0, 5);
+
+  return (
+    <HomeClient
+      dynamicNews={combinedFeed}
+      dynamicAlbums={dynamicAlbums.slice(0, 4)}
+    />
+  );
 }

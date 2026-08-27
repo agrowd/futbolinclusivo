@@ -235,33 +235,57 @@ export default function HomeClient({ dynamicNews = [], dynamicAlbums = [] }) {
 
               <div className="grid gap-5 md:gap-8">
                 {dynamicNews.length > 0 ? (
-                  dynamicNews.map((news, idx) => (
-                    <motion.div 
-                      key={news._id || idx}
-                      initial={{ x: -20, opacity: 0 }}
-                      whileInView={{ x: 0, opacity: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: idx * 0.1, duration: 0.6 }}
-                    >
-                      <Link href={`/novedades/${news.slug}`} className="group flex flex-col sm:flex-row gap-4 bg-white/[0.02] rounded-xl md:rounded-2xl overflow-hidden border border-white/5 transition-all hover:bg-white/[0.05] hover:border-white/20 shadow-lg p-3 md:p-5">
-                        <div className="relative w-full sm:w-48 md:w-56 h-40 sm:h-36 md:h-40 shrink-0 overflow-hidden rounded-lg md:rounded-xl">
-                          <Image 
-                            src={news.image || "https://futbolinclusivo.org.ar/app/uploads/2018/12/MG_0325.jpg"} 
-                            alt={news.title} 
-                            fill 
-                            className="object-cover transition-transform duration-500 group-hover:scale-110" 
-                          />
-                        </div>
-                        <div className="p-1 md:p-2 flex flex-col justify-center min-w-0">
-                          <span className="text-[#36b37e] font-black text-xs tracking-wider uppercase mb-2 md:mb-3">{news.category}</span>
-                          <h3 className="text-white text-base md:text-lg font-black leading-tight group-hover:text-[#36b37e] transition-colors line-clamp-3">{news.title}</h3>
-                          <p className="text-white/50 text-xs md:text-sm mt-2 md:mt-3 font-bold flex items-center gap-2">
-                            <Calendar size={16} /> {formatDate(news.publishedAt || news.createdAt)}
-                          </p>
-                        </div>
-                      </Link>
-                    </motion.div>
-                  ))
+                  dynamicNews.map((item, idx) => {
+                    const isAlbum = item.type === "album";
+                    const targetHref = item.href || (isAlbum ? `/multimedia/fotos/${item.slug}` : `/novedades/${item.slug}`);
+                    const itemDate = item.date || item.publishedAt || item.eventDate || item.createdAt;
+
+                    return (
+                      <motion.div 
+                        key={item._id || idx}
+                        initial={{ x: -20, opacity: 0 }}
+                        whileInView={{ x: 0, opacity: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: idx * 0.1, duration: 0.6 }}
+                      >
+                        <Link href={targetHref} className="group flex flex-col sm:flex-row gap-4 bg-white/[0.02] rounded-xl md:rounded-2xl overflow-hidden border border-white/5 transition-all hover:bg-white/[0.05] hover:border-white/20 shadow-lg p-3 md:p-5">
+                          <div className="relative w-full sm:w-48 md:w-56 h-40 sm:h-36 md:h-40 shrink-0 overflow-hidden rounded-lg md:rounded-xl bg-black/40">
+                            <Image 
+                              src={item.image || item.coverImage || "https://futbolinclusivo.org.ar/app/uploads/2018/12/MG_0325.jpg"} 
+                              alt={item.title} 
+                              fill 
+                              sizes="(max-width: 640px) 100vw, 224px"
+                              className="object-cover transition-transform duration-500 group-hover:scale-110" 
+                            />
+                            {isAlbum && (
+                              <div className="absolute bottom-2 right-2 bg-black/80 backdrop-blur-md text-white text-[11px] font-black px-2.5 py-0.5 rounded-full flex items-center gap-1 border border-white/15">
+                                <Camera size={12} className="text-[#36b37e]" />
+                                <span>{item.photoCount || 0} fotos</span>
+                              </div>
+                            )}
+                          </div>
+                          <div className="p-1 md:p-2 flex flex-col justify-center min-w-0">
+                            {isAlbum ? (
+                              <div className="flex items-center gap-2 mb-2 md:mb-3 flex-wrap">
+                                <span className="bg-[#36b37e]/15 border border-[#36b37e]/30 text-[#36b37e] text-[10px] font-black tracking-wider uppercase px-2.5 py-0.5 rounded-full inline-flex items-center gap-1">
+                                  <Camera size={11} /> ÁLBUM DE FOTOS
+                                </span>
+                                <span className="text-white/40 text-[10px] font-bold uppercase tracking-wider">
+                                  {item.category}
+                                </span>
+                              </div>
+                            ) : (
+                              <span className="text-[#36b37e] font-black text-xs tracking-wider uppercase mb-2 md:mb-3">{item.category}</span>
+                            )}
+                            <h3 className="text-white text-base md:text-lg font-black leading-tight group-hover:text-[#36b37e] transition-colors line-clamp-3">{item.title}</h3>
+                            <p className="text-white/50 text-xs md:text-sm mt-2 md:mt-3 font-bold flex items-center gap-2">
+                              <Calendar size={16} /> {formatDate(itemDate)}
+                            </p>
+                          </div>
+                        </Link>
+                      </motion.div>
+                    );
+                  })
                 ) : (
                   <div className="text-center py-20 bg-white/5 rounded-3xl border border-white/10 border-dashed">
                     <p className="text-white/20 font-black uppercase tracking-widest text-xs">Cargando novedades...</p>

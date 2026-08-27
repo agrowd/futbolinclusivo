@@ -1,5 +1,18 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 42: Álbumes en el Feed de "Últimas Novedades" (2026-08-27)
+
+### 📌 Contexto
+El usuario solicitó:
+- "Que aparezca en ultimas novedades tambien, en el inicio, cada album"
+
+### 🛠️ Acciones Realizadas
+1. Se fusionaron las noticias y los álbumes en `src/app/page.js` para crear un feed unificado y cronológico.
+2. En `HomeClient.js`, los álbumes aparecen en la lista de novedades con badge verde `📸 ÁLBUM DE FOTOS`, categoría, conteo de fotos (`📸 36 fotos`) y enlace directo al visor del álbum.
+3. Compilación 100% exitosa (63/63 rutas) y push a `main`.
+
+---
+
 ## ⚽ Sesión 41: Galerías y Álbumes de Fotos en la Portada / Inicio (2026-08-27)
 
 ### 📌 Contexto
