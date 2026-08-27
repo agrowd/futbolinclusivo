@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.10.5 — 2026-08-27
+- fix: Solucionados errores 404 en todas las secciones multimedia (/multimedia/fotos-videos, /multimedia/revista, /multimedia/prensa, /multimedia/documentos-utiles) y eliminadas imágenes rotas en el hub central (/multimedia).
+
 ## v1.10.4 — 2026-08-27
 - feat: Integrados los Álbumes de Fotos en el listado de "Últimas Novedades" de la Portada (/), con badge de Álbum, conteo de fotos y enlace directo a la galería.
 

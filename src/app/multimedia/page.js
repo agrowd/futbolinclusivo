@@ -4,571 +4,303 @@ import Link from "next/link";
 import Image from "next/image";
 import { 
   Camera, Video, FileText, Newspaper, Download, 
-  Play, Eye, Heart, Share2, Calendar, Star, 
-  ArrowRight, Youtube, ExternalLink, Loader2,
-  X, ChevronLeft, ChevronRight, Maximize2
+  Play, Calendar, ArrowRight, Youtube, ExternalLink, Loader2,
+  X, ChevronLeft, ChevronRight, Maximize2, Folder
 } from "lucide-react";
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// The top categories remain static
+// Clean, working multimedia categories with working routes and modern visual cards
 const multimediaCategories = [
   {
-    title: "Fotos y Videos",
-    description: "Galería completa de imágenes y videos de nuestros eventos, torneos y actividades",
+    title: "Galería de Fotos",
+    description: "Álbumes oficiales por fecha y evento de la Superliga AFA, Liga BA y competencias",
     icon: Camera,
-    image: "https://futbolinclusivo.org.ar/app/uploads/2022/03/multimedia-fotos-videos-480x360.jpg",
-    href: "/multimedia/fotos-videos",
-    featured: true,
+    color: "#36b37e",
+    href: "/multimedia/fotos",
+    tag: "Actualizado",
   },
   {
-    title: "Revista",
+    title: "Videos y Partidos",
+    description: "Resúmenes de encuentros, transmisiones en vivo, notas y material audiovisual",
+    icon: Video,
+    color: "#e74c3c",
+    href: "/multimedia/videos",
+    tag: "Audiovisual",
+  },
+  {
+    title: "Revista Digital",
     description: "Publicaciones digitales con historias, entrevistas y artículos destacados",
     icon: FileText,
-    image: "https://futbolinclusivo.org.ar/app/uploads/2022/03/nosotros-nuestro-proposito-480x360.jpg",
+    color: "#3498db",
     href: "/multimedia/revista",
-    featured: false,
+    tag: "Editorial",
   },
   {
-    title: "Prensa",
-    description: "Noticias, artículos y cobertura mediática del Fútbol Inclusivo",
+    title: "Prensa y Difusión",
+    description: "Cobertura periodística en medios de comunicación y comunicados oficiales",
     icon: Newspaper,
-    image: "https://futbolinclusivo.org.ar/app/uploads/2022/03/liga-ba-institucional-480x360.jpg",
+    color: "#f39c12",
     href: "/multimedia/prensa",
-    featured: false,
+    tag: "Medios",
   },
   {
     title: "Documentos Útiles",
-    description: "Formularios, reglamentos y documentos oficiales para descargar",
+    description: "Reglamentos oficiales, formularios de inscripción y planillas de salud",
     icon: Download,
-    image: "https://futbolinclusivo.org.ar/app/uploads/2022/03/liga-nacional-proyecto-480x360.jpg",
+    color: "#9b59b6",
     href: "/multimedia/documentos-utiles",
-    featured: false,
-  }
+    tag: "Descargas",
+  },
 ];
 
 export default function MultimediaPage() {
   const [filter, setFilter] = React.useState('all'); 
+  const [albums, setAlbums] = React.useState([]);
   const [media, setMedia] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
-  const [stats, setStats] = React.useState({ total: 0, photos: 0, videos: 0 });
   
   // Lightbox State
-  const [selectedItem, setSelectedItem] = React.useState(null);
-  const [selectedIndex, setSelectedIndex] = React.useState(-1);
+  const [selectedPhoto, setSelectedPhoto] = React.useState(null);
 
   React.useEffect(() => {
-    async function fetchMedia() {
+    async function loadData() {
       try {
-        const res = await fetch("/api/media?limit=100");
-        const data = await res.json();
-        if (data.success) {
-          const items = data.data;
-          const sortedItems = [...items].sort((a, b) => {
-            if (a.featured && !b.featured) return -1;
-            if (!a.featured && b.featured) return 1;
-            return new Date(b.createdAt) - new Date(a.createdAt);
-          });
-          setMedia(sortedItems);
-          setStats({
-            total: items.length,
-            photos: items.filter(m => m.type === 'image' || m.type === 'gallery').length,
-            videos: items.filter(m => m.type === 'video').length,
-          });
+        const [resAlbums, resMedia] = await Promise.all([
+          fetch("/api/albums"),
+          fetch("/api/media?limit=50"),
+        ]);
+        
+        const albumsData = await resAlbums.json();
+        const mediaData = await resMedia.json();
+
+        if (albumsData.success) {
+          setAlbums(albumsData.data || []);
+        }
+        if (mediaData.success) {
+          setMedia(mediaData.data || []);
         }
       } catch (error) {
-        console.error("Error fetching media:", error);
+        console.error("Error loading multimedia data:", error);
       } finally {
         setLoading(false);
       }
     }
-    fetchMedia();
+    loadData();
   }, []);
 
-  // Keyboard navigation
-  React.useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (!selectedItem) return;
-      if (e.key === "Escape") closeLightbox();
-      if (e.key === "ArrowLeft") handlePrev();
-      if (e.key === "ArrowRight") handleNext();
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [selectedItem, selectedIndex]);
-
-  const filteredItems = media.filter(item => {
-    if (filter === 'all') return true;
-    if (filter === 'videos') return item.type === 'video';
-    if (filter === 'photos') return item.type === 'image' || item.type === 'gallery';
-    return true;
-  });
-
-  const openLightbox = (item, index) => {
-    setSelectedItem(item);
-    setSelectedIndex(index);
-    document.body.style.overflow = "hidden";
-  };
-
-  const closeLightbox = () => {
-    setSelectedItem(null);
-    setSelectedIndex(-1);
-    document.body.style.overflow = "auto";
-  };
-
-  const handleNext = () => {
-    if (selectedIndex < filteredItems.length - 1) {
-      const nextIndex = selectedIndex + 1;
-      setSelectedIndex(nextIndex);
-      setSelectedItem(filteredItems[nextIndex]);
-    }
-  };
-
-  const handlePrev = () => {
-    if (selectedIndex > 0) {
-      const prevIndex = selectedIndex - 1;
-      setSelectedIndex(prevIndex);
-      setSelectedItem(filteredItems[prevIndex]);
-    }
-  };
-
-  const getYoutubeId = (url) => {
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-    const match = url.match(regExp);
-    return (match && match[2].length === 11) ? match[2] : null;
-  };
+  const totalPhotosCount = albums.reduce((acc, curr) => acc + (curr.photos?.length || 0), 0);
 
   return (
-    <div style={{ background: "#000B1A", color: "#fff", minHeight: "100vh" }}>
-      {/* Lightbox Modal */}
-      <AnimatePresence>
-        {selectedItem && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            style={{
-              position: "fixed",
-              inset: 0,
-              zIndex: 1000,
-              background: "rgba(0,11,26,0.95)",
-              backdropFilter: "blur(15px)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "20px"
-            }}
-            onClick={closeLightbox}
-          >
-            {/* Close Button */}
-            <button 
-              onClick={closeLightbox}
-              style={{
-                position: "absolute",
-                top: "30px",
-                right: "30px",
-                background: "rgba(255,255,255,0.1)",
-                border: "none",
-                borderRadius: "50%",
-                width: "50px",
-                height: "50px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                cursor: "pointer",
-                color: "#fff",
-                zIndex: 10
-              }}
-            >
-              <X size={24} />
-            </button>
-
-            {/* Navigation Buttons */}
-            <div style={{
-              position: "absolute",
-              inset: "0",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              padding: "0 20px",
-              pointerEvents: "none"
-            }}>
-              <button 
-                onClick={(e) => { e.stopPropagation(); handlePrev(); }}
-                disabled={selectedIndex === 0}
-                style={{
-                  pointerEvents: "auto",
-                  background: "rgba(255,255,255,0.05)",
-                  border: "none",
-                  borderRadius: "50%",
-                  width: "60px",
-                  height: "60px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                  color: "#fff",
-                  opacity: selectedIndex === 0 ? 0.2 : 1,
-                  transition: "all 0.3s"
-                }}
-              >
-                <ChevronLeft size={32} />
-              </button>
-              <button 
-                onClick={(e) => { e.stopPropagation(); handleNext(); }}
-                disabled={selectedIndex === filteredItems.length - 1}
-                style={{
-                  pointerEvents: "auto",
-                  background: "rgba(255,255,255,0.05)",
-                  border: "none",
-                  borderRadius: "50%",
-                  width: "60px",
-                  height: "60px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                  color: "#fff",
-                  opacity: selectedIndex === filteredItems.length - 1 ? 0.2 : 1,
-                  transition: "all 0.3s"
-                }}
-              >
-                <ChevronRight size={32} />
-              </button>
-            </div>
-
-            {/* Content Container */}
-            <motion.div 
-              layoutId={selectedItem._id}
-              initial={{ scale: 0.9, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              style={{
-                width: "100%",
-                maxWidth: "1200px",
-                maxHeight: "85vh",
-                position: "relative",
-                display: "flex",
-                flexDirection: "column",
-                gap: "20px"
-              }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              {selectedItem.type === 'video' ? (
-                <div style={{ position: "relative", width: "100%", paddingTop: "56.25%", borderRadius: "20px", overflow: "hidden", boxShadow: "0 25px 50px -12px rgba(0,0,0,0.5)" }}>
-                   <iframe
-                      style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: 0 }}
-                      src={`https://www.youtube.com/embed/${getYoutubeId(selectedItem.url)}?autoplay=1`}
-                      title={selectedItem.title}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                   ></iframe>
-                </div>
-              ) : (
-                <div style={{ position: "relative", width: "100%", height: "80vh", boxShadow: "0 25px 50px -12px rgba(0,0,0,0.5)" }}>
-                  <Image 
-                    src={selectedItem.url}
-                    alt={selectedItem.title}
-                    fill
-                    style={{ objectFit: "contain", borderRadius: "20px" }}
-                  />
-                </div>
-              )}
-
-              {/* Info Overlay */}
-              <div style={{ textAlign: "center", paddingBottom: "20px" }}>
-                <h2 style={{ fontSize: "1.5rem", fontWeight: 900, marginBottom: "8px" }}>{selectedItem.title}</h2>
-                <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.9rem", maxWidth: "800px", margin: "0 auto" }}>{selectedItem.description}</p>
-                {selectedItem.type === 'gallery' && (
-                  <Link 
-                    href={selectedItem.url} 
-                    target="_blank"
-                    style={{ 
-                      marginTop: "20px", 
-                      display: "inline-flex", 
-                      alignItems: "center", 
-                      gap: "10px", 
-                      background: "#36b37e", 
-                      color: "#fff", 
-                      padding: "12px 24px", 
-                      borderRadius: "12px", 
-                      fontWeight: 800, 
-                      textDecoration: "none" 
-                    }}
-                  >
-                    ABRIR ÁLBUM COMPLETO <ExternalLink size={16} />
-                  </Link>
-                )}
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
+    <div className="bg-[#000B1A] text-white min-h-screen">
       {/* Hero Section */}
-      <section style={{ 
-        background: "linear-gradient(to bottom, #001A3D, #000B1A)", 
-        padding: "180px 0 100px",
-        borderBottom: "1px solid rgba(255,255,255,0.05)",
-        position: "relative"
-      }}>
-        <div style={{
-          position: "absolute",
-          inset: 0,
-          backgroundImage: "radial-gradient(circle at 20% 50%, rgba(0,141,77,0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(230,126,34,0.1) 0%, transparent 50%)",
-          zIndex: 0
-        }} />
+      <section className="relative pt-40 sm:pt-48 pb-20 overflow-hidden border-b border-white/10 bg-gradient-to-b from-[#001A3D] to-[#000B1A]">
+        <div className="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(#36b37e_1px,transparent_1px)] [background-size:24px_24px]" />
         
-        <div className="container" style={{ textAlign: "center", position: "relative", zIndex: 1 }}>
-          <div style={{ 
-            display: "inline-flex", 
-            background: "rgba(0,141,77,0.1)", 
-            color: "#36b37e",
-            padding: "8px 16px", 
-            borderRadius: "4px", 
-            marginBottom: "24px", 
-            fontSize: "0.75rem", 
-            fontWeight: 800, 
-            letterSpacing: "2px" 
-          }}>
-            <Camera size={14} style={{ marginRight: "8px" }} />
-            MULTIMEDIA
+        <div className="container mx-auto px-4 sm:px-6 relative z-10 text-center max-w-4xl">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#36b37e]/15 border border-[#36b37e]/30 text-[#36b37e] text-xs font-black uppercase tracking-widest mb-6">
+            <Camera size={14} />
+            <span>CENTRO MULTIMEDIA OFICIAL</span>
           </div>
-          <h1 style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", fontWeight: 900, marginBottom: "24px", letterSpacing: "-1.5px" }}>
+
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black uppercase tracking-tight text-white leading-none">
             Multimedia
           </h1>
-          <p style={{ fontSize: "1.2rem", color: "rgba(255,255,255,0.6)", maxWidth: "800px", margin: "0 auto", lineHeight: 1.6 }}>
-            Explora la historia y el presente del Fútbol Inclusivo. Todo el contenido es gestionado dinámicamente desde nuestro panel de administración.
+          <p className="text-white/60 text-base sm:text-lg mt-4 max-w-2xl mx-auto leading-relaxed">
+            Explorá el archivo visual, álbumes de fotos de cada jornada, videos de torneos, revistas y documentos de Fútbol Inclusivo.
           </p>
+
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <Link
+              href="/multimedia/fotos"
+              className="px-6 py-3.5 rounded-2xl bg-[#36b37e] hover:bg-[#2ecc71] text-black font-black text-xs uppercase tracking-wider transition-all shadow-lg shadow-[#36b37e]/20"
+            >
+              Ver Galerías de Fotos ({albums.length} Álbumes)
+            </Link>
+            <Link
+              href="/multimedia/videos"
+              className="px-6 py-3.5 rounded-2xl bg-white/10 hover:bg-white/20 text-white font-black text-xs uppercase tracking-wider transition-all border border-white/20"
+            >
+              Ver Videos y Resúmenes
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* Sections Grid */}
-      <section style={{ padding: "80px 0" }}>
-        <div className="container">
-          <h2 style={{ fontSize: "2.5rem", fontWeight: 900, color: "#fff", marginBottom: "50px", textAlign: "center" }}>
-            Secciones
+      {/* Sections Cards Grid */}
+      <section className="py-16 sm:py-24 container mx-auto px-4 sm:px-6 max-w-6xl">
+        <div className="text-center mb-12">
+          <span className="text-[#36b37e] text-xs font-black uppercase tracking-widest block mb-2">Canales de Contenido</span>
+          <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tight">
+            Secciones Multimedia
           </h2>
-          
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "30px" }}>
-            {multimediaCategories.map((category, index) => (
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {multimediaCategories.map((cat, idx) => {
+            const Icon = cat.icon;
+            return (
               <Link
-                key={index}
-                href={category.href}
-                style={{
-                  display: "block",
-                  background: "rgba(255,255,255,0.02)",
-                  border: "1px solid rgba(255,255,255,0.05)",
-                  borderRadius: "20px",
-                  overflow: "hidden",
-                  textDecoration: "none",
-                  color: "inherit",
-                  transition: "all 0.3s"
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "rgba(255,255,255,0.05)";
-                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
-                  e.currentTarget.style.transform = "translateY(-5px)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "rgba(255,255,255,0.02)";
-                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)";
-                  e.currentTarget.style.transform = "translateY(0)";
-                }}
+                key={idx}
+                href={cat.href}
+                className="group relative bg-white/[0.03] hover:bg-white/[0.06] border border-white/10 hover:border-[#36b37e]/50 rounded-3xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 shadow-xl"
               >
-                <div style={{ position: "relative", height: "200px", overflow: "hidden" }}>
-                  <Image
-                    src={category.image}
-                    alt={category.title}
-                    fill
-                    style={{ objectFit: "cover" }}
-                    sizes="(max-width: 768px) 100vw, 300px"
-                  />
-                </div>
-                
-                <div style={{ padding: "25px" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "15px" }}>
-                    <div style={{
-                      width: "50px",
-                      height: "50px",
-                      borderRadius: "50%",
-                      background: "rgba(0,141,77,0.2)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center"
-                    }}>
-                      <category.icon size={24} color="#36b37e" />
+                <div>
+                  <div className="flex items-center justify-between gap-3 mb-6">
+                    <div
+                      className="w-14 h-14 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 shadow-lg"
+                      style={{ backgroundColor: `${cat.color}20`, color: cat.color }}
+                    >
+                      <Icon size={28} />
                     </div>
-                    <h3 style={{ fontSize: "1.3rem", fontWeight: 900, color: "#fff", margin: 0 }}>
-                      {category.title}
-                    </h3>
+                    <span
+                      className="text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full border"
+                      style={{ backgroundColor: `${cat.color}15`, color: cat.color, borderColor: `${cat.color}30` }}
+                    >
+                      {cat.tag}
+                    </span>
                   </div>
-                  <p style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.6, marginBottom: "20px" }}>
-                    {category.description}
+
+                  <h3 className="text-xl font-black uppercase text-white tracking-tight mb-2 group-hover:text-[#36b37e] transition-colors">
+                    {cat.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-white/60 leading-relaxed">
+                    {cat.description}
                   </p>
-                  <div style={{ display: "flex", alignItems: "center", gap: "8px", color: "#36b37e", fontWeight: 700 }}>
-                    Explorar <ArrowRight size={16} />
-                  </div>
+                </div>
+
+                <div className="mt-8 pt-4 border-t border-white/10 flex items-center justify-between">
+                  <span className="text-xs font-black uppercase tracking-wider text-[#36b37e] flex items-center gap-1 group-hover:gap-2 transition-all">
+                    <span>Explorar</span>
+                    <ArrowRight size={14} />
+                  </span>
                 </div>
               </Link>
-            ))}
-          </div>
+            );
+          })}
         </div>
       </section>
 
-      {/* Filters */}
-      <section style={{ padding: "60px 0", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-        <div className="container">
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "20px", flexWrap: "wrap" }}>
-            {['all', 'videos', 'photos'].map((f) => (
-              <button
-                key={f}
-                onClick={() => setFilter(f)}
-                style={{
-                  padding: f === 'all' ? "12px 24px" : "12px 28px",
-                  borderRadius: "25px",
-                  border: filter === f ? "2px solid #36b37e" : "2px solid rgba(255,255,255,0.1)",
-                  background: filter === f ? "#36b37e" : "transparent",
-                  color: "#fff",
-                  fontWeight: 700,
-                  fontSize: "0.9rem",
-                  cursor: "pointer",
-                  transition: "all 0.3s",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "10px"
-                }}
-              >
-                {f === 'videos' && <Video size={16} />}
-                {f === 'photos' && <Camera size={16} />}
-                {f === 'all' ? `TODOS (${stats.total})` : f === 'videos' ? `VIDEOS (${stats.videos})` : `FOTOS (${stats.photos})`}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Dynamic Grid */}
-      <section style={{ padding: "80px 0" }}>
-        <div className="container">
-          {loading ? (
-            <div style={{ textAlign: "center", padding: "100px 0" }}>
-              <Loader2 className="animate-spin text-[#36b37e] mx-auto mb-4" size={48} />
-              <p className="text-white/40 font-bold uppercase tracking-widest text-xs">Cargando Galería Interactiva...</p>
+      {/* RECENT EVENT ALBUMS SHOWCASE */}
+      <section className="py-16 sm:py-24 border-t border-white/10 bg-gradient-to-b from-[#000814] to-[#000B1A]">
+        <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
+          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-10">
+            <div>
+              <span className="text-[#36b37e] text-xs font-black uppercase tracking-widest block mb-2">Fotos de las Fechas</span>
+              <h2 className="text-2xl sm:text-4xl font-black uppercase tracking-tight">
+                Últimos Álbumes de Eventos
+              </h2>
             </div>
-          ) : filteredItems.length === 0 ? (
-            <div style={{ textAlign: "center", padding: "100px 20px", color: "rgba(255,255,255,0.3)", background: "rgba(255,255,255,0.02)", borderRadius: "40px", border: "2px dashed rgba(255,255,255,0.05)" }}>
-               <Camera size={64} className="mx-auto mb-6 opacity-20" />
-               <h3 className="text-xl font-black uppercase tracking-tight">No hay contenido disponible</h3>
-               <p className="text-xs font-bold uppercase mt-2 opacity-50">Sube contenido desde el panel de administración</p>
+            <Link
+              href="/multimedia/fotos"
+              className="text-[#36b37e] hover:text-[#2ecc71] font-black text-xs uppercase tracking-wider flex items-center gap-1.5 transition-colors"
+            >
+              <span>Ver todos los álbumes ({albums.length})</span>
+              <ArrowRight size={14} />
+            </Link>
+          </div>
+
+          {loading ? (
+            <div className="text-center py-24">
+              <Loader2 className="animate-spin text-[#36b37e] mx-auto mb-3" size={40} />
+              <p className="text-xs font-bold uppercase tracking-widest text-white/40">Cargando álbumes...</p>
+            </div>
+          ) : albums.length === 0 ? (
+            <div className="text-center py-20 bg-white/[0.02] border-2 border-dashed border-white/10 rounded-3xl p-6">
+              <Camera size={48} className="mx-auto text-white/20 mb-3" />
+              <h4 className="text-lg font-black uppercase text-white/70">No hay álbumes creados todavía</h4>
+              <p className="text-xs text-white/40 mt-1 max-w-sm mx-auto">
+                Próximamente estaremos publicando las fotos oficiales de los partidos y torneos.
+              </p>
             </div>
           ) : (
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))", gap: "30px" }}>
-              {filteredItems.map((item, index) => (
-                <motion.div
-                  layoutId={item._id}
-                  key={item._id}
-                  onClick={() => openLightbox(item, index)}
-                  style={{
-                    background: "rgba(255,255,255,0.02)",
-                    border: item.featured ? "2px solid rgba(54,179,126,0.3)" : "1px solid rgba(255,255,255,0.05)",
-                    borderRadius: "24px",
-                    overflow: "hidden",
-                    transition: "all 0.3s",
-                    position: "relative",
-                    cursor: "pointer"
-                  }}
-                  whileHover={{ y: -8, background: "rgba(255,255,255,0.05)" }}
-                >
-                  <div style={{ position: "relative", height: "250px", overflow: "hidden" }}>
-                    <Image
-                      src={item.thumbnailUrl || item.url}
-                      alt={item.title}
-                      fill
-                      style={{ objectFit: "cover" }}
-                      sizes="(max-width: 768px) 100vw, 350px"
-                    />
-                    
-                    <div style={{
-                      position: "absolute",
-                      inset: 0,
-                      background: "linear-gradient(to top, rgba(0,0,0,0.8), transparent)",
-                      opacity: 0,
-                      transition: "opacity 0.3s",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center"
-                    }} className="hover-overlay">
-                       <Maximize2 size={40} className="text-white opacity-50" />
-                    </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {albums.slice(0, 6).map((album) => {
+                const photoCount = album.photos?.length || 0;
+                const dateStr = album.eventDate
+                  ? new Date(album.eventDate).toLocaleDateString("es-AR", {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                    })
+                  : "";
 
-                    <style jsx>{`.hover-overlay:hover { opacity: 1; }`}</style>
+                return (
+                  <Link
+                    key={album._id}
+                    href={`/multimedia/fotos/${album.slug}`}
+                    className="group flex flex-col bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-[#36b37e]/50 rounded-3xl overflow-hidden transition-all duration-300 shadow-xl hover:-translate-y-1.5"
+                  >
+                    <div className="relative w-full aspect-16/10 bg-black/50 overflow-hidden">
+                      {album.coverImage ? (
+                        <Image
+                          src={album.coverImage}
+                          alt={album.title}
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          className="object-cover group-hover:scale-108 transition-transform duration-700"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-white/20">
+                          <Folder size={48} />
+                        </div>
+                      )}
 
-                    {item.featured && (
-                      <div style={{
-                        position: "absolute", top: "15px", left: "15px",
-                        background: "#36b37e", color: "#fff",
-                        padding: "5px 12px", borderRadius: "10px",
-                        fontSize: "0.7rem", fontWeight: 900,
-                        display: "flex", alignItems: "center", gap: "5px", zIndex: 10
-                      }}>
-                        <Star size={12} fill="white" /> DESTACADO
+                      <div className="absolute top-3 left-3 bg-[#00132B]/90 backdrop-blur-md text-[#36b37e] text-[10px] font-black uppercase px-3 py-1 rounded-full border border-white/15">
+                        {album.category}
                       </div>
-                    )}
 
-                    <div style={{
-                      position: "absolute", bottom: "15px", left: "15px",
-                      background: item.type === 'video' ? "rgba(255,0,0,0.8)" : "rgba(54,179,126,0.9)",
-                      color: "#fff", padding: "5px 12px", borderRadius: "10px",
-                      fontSize: "0.7rem", fontWeight: 900,
-                      display: "flex", alignItems: "center", gap: "5px"
-                    }}>
-                      {item.type === 'video' ? <Youtube size={14} /> : <Camera size={14} />}
-                      {item.category.toUpperCase()}
+                      <div className="absolute bottom-3 right-3 bg-black/80 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-full border border-white/15 flex items-center gap-1.5">
+                        <Camera size={13} className="text-[#36b37e]" />
+                        <span>{photoCount} fotos</span>
+                      </div>
                     </div>
-                  </div>
-                  
-                  <div style={{ padding: "28px" }}>
-                    <h3 style={{ fontSize: "1.25rem", fontWeight: 900, color: "#fff", marginBottom: "12px", lineHeight: 1.2 }}>
-                      {item.title}
-                    </h3>
-                    <p style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.6, fontSize: "0.9rem", height: "3em", overflow: "hidden" }}>
-                      {item.description}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
+
+                    <div className="p-5 flex-1 flex flex-col justify-between">
+                      <div>
+                        {dateStr && (
+                          <p className="text-[11px] text-white/50 mb-1 font-bold flex items-center gap-1.5 uppercase">
+                            <Calendar size={13} className="text-[#36b37e]" />
+                            <span>{dateStr}</span>
+                          </p>
+                        )}
+                        <h3 className="text-base font-black uppercase text-white tracking-tight group-hover:text-[#36b37e] transition-colors line-clamp-2">
+                          {album.title}
+                        </h3>
+                      </div>
+
+                      <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs font-bold text-[#36b37e]">
+                        <span>Ver Fotos</span>
+                        <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           )}
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section style={{ padding: "100px 0", background: "rgba(255,255,255,0.01)" }}>
-        <div className="container">
-          <div style={{ 
-            background: "linear-gradient(135deg, rgba(54,179,126,0.1) 0%, rgba(54,179,126,0.05) 100%)",
-            padding: "80px 40px", borderRadius: "40px", border: "1px solid rgba(54,179,126,0.2)", textAlign: "center"
-          }}>
-            <h2 style={{ fontSize: "2.25rem", fontWeight: 900, color: "#fff", marginBottom: "60px" }}>
-              Nuestra Historia Visual
-            </h2>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "50px" }}>
-              <div>
-                <div style={{ fontSize: "3.5rem", fontWeight: 900, color: "#36b37e", marginBottom: "12px" }}>{stats.total}</div>
-                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.9rem", fontWeight: 800, textTransform: "uppercase" }}>Items Totales</div>
-              </div>
-              <div>
-                <div style={{ fontSize: "3.5rem", fontWeight: 900, color: "#36b37e", marginBottom: "12px" }}>{stats.videos}</div>
-                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.9rem", fontWeight: 800, textTransform: "uppercase" }}>Videos</div>
-              </div>
-              <div>
-                <div style={{ fontSize: "3.5rem", fontWeight: 900, color: "#36b37e", marginBottom: "12px" }}>{stats.photos}</div>
-                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.9rem", fontWeight: 800, textTransform: "uppercase" }}>Fotos</div>
-              </div>
-              <div>
-                <div style={{ fontSize: "3.5rem", fontWeight: 900, color: "#36b37e", marginBottom: "12px" }}>{new Date().getFullYear()}</div>
-                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.9rem", fontWeight: 800, textTransform: "uppercase" }}>Año Actual</div>
-              </div>
+      {/* Stats Counter Section */}
+      <section className="py-16 border-t border-white/10 bg-[#000814]/50">
+        <div className="container mx-auto px-4 max-w-5xl">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div className="p-6 bg-white/[0.02] border border-white/10 rounded-2xl">
+              <div className="text-3xl sm:text-4xl font-black text-[#36b37e] mb-1">{albums.length}</div>
+              <div className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-white/50">Álbumes de Torneo</div>
+            </div>
+            <div className="p-6 bg-white/[0.02] border border-white/10 rounded-2xl">
+              <div className="text-3xl sm:text-4xl font-black text-[#36b37e] mb-1">{totalPhotosCount}</div>
+              <div className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-white/50">Fotos Publicadas</div>
+            </div>
+            <div className="p-6 bg-white/[0.02] border border-white/10 rounded-2xl">
+              <div className="text-3xl sm:text-4xl font-black text-[#36b37e] mb-1">1998</div>
+              <div className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-white/50">Año de Fundación</div>
+            </div>
+            <div className="p-6 bg-white/[0.02] border border-white/10 rounded-2xl">
+              <div className="text-3xl sm:text-4xl font-black text-[#36b37e] mb-1">100%</div>
+              <div className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-white/50">Fútbol Inclusivo</div>
             </div>
           </div>
         </div>
