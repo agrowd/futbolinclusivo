@@ -44,14 +44,12 @@ export default function AlbumCreateModal({ isOpen, onClose, onCreated }) {
 
     setSelectedFiles((prev) => [...prev, ...validFiles]);
 
-    // Generate thumbnails
-    validFiles.forEach((file) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviews((prev) => [...prev, { name: file.name, src: reader.result }]);
-      };
-      reader.readAsDataURL(file);
-    });
+    // Fast instant previews without memory leak
+    const newPreviews = validFiles.map((file) => ({
+      name: file.name,
+      src: URL.createObjectURL(file),
+    }));
+    setPreviews((prev) => [...prev, ...newPreviews]);
   };
 
   const handleDragOver = (e) => {
@@ -99,48 +97,63 @@ export default function AlbumCreateModal({ isOpen, onClose, onCreated }) {
       let uploadedPhotos = [];
       const totalFiles = selectedFiles.length;
 
-      // Upload files individually using concurrency pool of 3
+      // Upload files individually using concurrency pool of 3 with auto-retry
       if (totalFiles > 0) {
         let completedCount = 0;
         const concurrency = 3;
 
-        const uploadSingleFile = async (file, index) => {
-          const fileFormData = new FormData();
-          fileFormData.append("file", file);
+        const uploadSingleFileWithRetry = async (file, index, retries = 2) => {
+          for (let attempt = 0; attempt <= retries; attempt++) {
+            try {
+              const fileFormData = new FormData();
+              fileFormData.append("file", file);
 
-          const uploadRes = await fetch("/api/upload", {
-            method: "POST",
-            body: fileFormData,
-          });
+              const controller = new AbortController();
+              const timeoutId = setTimeout(() => controller.abort(), 60000); // 60s timeout
 
-          const uploadData = await uploadRes.json();
+              const uploadRes = await fetch("/api/upload", {
+                method: "POST",
+                body: fileFormData,
+                signal: controller.signal,
+              });
+              clearTimeout(timeoutId);
 
-          if (!uploadRes.ok || !uploadData.success) {
-            throw new Error(uploadData.message || `Error al subir ${file.name}`);
+              const uploadData = await uploadRes.json();
+
+              if (!uploadRes.ok || !uploadData.success) {
+                throw new Error(uploadData.message || `Error al subir ${file.name}`);
+              }
+
+              completedCount++;
+              const percent = Math.round((completedCount / totalFiles) * 85);
+              setUploadProgress(percent);
+              setUploadStatusText(`Subiendo foto ${completedCount} de ${totalFiles}... (${percent}%)`);
+
+              return {
+                index,
+                data: {
+                  url: uploadData.data.url,
+                  publicId: uploadData.data.publicId,
+                  caption: `${title} - Foto #${index + 1}`,
+                  width: uploadData.data.width,
+                  height: uploadData.data.height,
+                  size: uploadData.data.size,
+                },
+              };
+            } catch (err) {
+              if (attempt >= retries) {
+                throw new Error(`Falló la subida de ${file.name}: ${err.message}`);
+              }
+              console.warn(`Reintentando foto ${file.name} (intento ${attempt + 2}/${retries + 1})...`);
+              await new Promise((resolve) => setTimeout(resolve, 1500));
+            }
           }
-
-          completedCount++;
-          const percent = Math.round((completedCount / totalFiles) * 85);
-          setUploadProgress(percent);
-          setUploadStatusText(`Subiendo foto ${completedCount} de ${totalFiles}... (${percent}%)`);
-
-          return {
-            index,
-            data: {
-              url: uploadData.data.url,
-              publicId: uploadData.data.publicId,
-              caption: `${title} - Foto #${index + 1}`,
-              width: uploadData.data.width,
-              height: uploadData.data.height,
-              size: uploadData.data.size,
-            },
-          };
         };
 
         const results = [];
         const executing = [];
         for (let i = 0; i < selectedFiles.length; i++) {
-          const p = uploadSingleFile(selectedFiles[i], i).then((res) => {
+          const p = uploadSingleFileWithRetry(selectedFiles[i], i).then((res) => {
             executing.splice(executing.indexOf(p), 1);
             return res;
           });

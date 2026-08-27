@@ -1,5 +1,18 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 46: Diagnóstico de Álbumes en DB y Optimización de Subida Masiva (2026-08-27)
+
+### 📌 Contexto
+El usuario consultó:
+- "Quiero cargar un tercer album y se queda cargando, fijate si se subio, deberia estar en la base de datos, se llama Superliga Inclusiva en AFA - Sábado 01/08 - San Lorenzo de Almagro - Fotografa Karo Nuñez"
+
+### 🛠️ Acciones Realizadas
+1. Se consultó MongoDB Atlas: se confirmó que existen 2 álbumes guardados correctamente (36 y 136 fotos). El 3er álbum no alcanzó a guardarse porque la pestaña del navegador se saturó de memoria al procesar tantas fotos pesadas en Base64.
+2. Se optimizó `AlbumCreateModal.js` usando `URL.createObjectURL` en lugar de `FileReader.readAsDataURL` para eliminar la sobrecarga de RAM en lotes de 100+ fotos, y se añadieron auto-reintentos resilientes con timeout de 60s por foto.
+3. Compilación 100% exitosa (67/67 rutas) y push a `main`.
+
+---
+
 ## ⚽ Sesión 45: Foto Oficial del Plantel como Hero (2026-08-27)
 
 ### 📌 Contexto

@@ -587,3 +587,14 @@
    - Se guardó la imagen del plantel con la bandera conmemorativa en `public/hero.jpg`.
    - Se actualizó `HomeClient.js` para renderizar `public/hero.jpg` como fondo principal del Hero con degradado de alto contraste y centrado optimizado (`object-[center_35%]`).
 2. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (67/67 rutas) y push a GitHub `main`.
+
+## 2026-08-27 — Sesión 46: Optimización de Subida de Lotes Masivos de Álbumes y Diagnóstico de Base de Datos
+
+### Qué se hizo:
+1. **Diagnóstico de MongoDB Atlas**:
+   - Se verificaron los álbumes en la base de datos: existen actualmente 2 álbumes subidos con éxito (*Sábado 22/08 - Dirección de Deporte Social* con 36 fotos y *Sábado 22/08 - Fotógrafo Sebastián* con 136 fotos).
+   - El tercer álbum (*Sábado 01/08 - San Lorenzo de Almagro - Fotógrafa Karo Nuñez*) no se completó en la base de datos debido a saturación de memoria por Base64 de miniaturas y timeouts en subidas individuales.
+2. **Optimizaciones en `AlbumCreateModal.js`**:
+   - Sustituido `readAsDataURL` por `URL.createObjectURL` eliminando el congelamiento de memoria al arrastrar más de 100 fotos.
+   - Implementado sistema de auto-reintento (hasta 2 intentos adicionales con backoff y timeout de 60s) para evitar que una falla transitoria de red aborte el lote.
+3. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (67/67 rutas) y push a GitHub `main`.

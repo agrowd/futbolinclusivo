@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.10.8 — 2026-08-27
+- perf: Optimizada la subida masiva de fotos con URL.createObjectURL para evitar sobrecarga de RAM en el navegador y añadido sistema de auto-reintentos resiliente por foto en AlbumCreateModal.
+
 ## v1.10.7 — 2026-08-27
 - feat: Actualizada la imagen principal del Hero con la foto oficial del equipo y bandera conmemorativa (public/hero.jpg).
 
