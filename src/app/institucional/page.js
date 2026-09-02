@@ -8,7 +8,7 @@ export const metadata = {
 };
 
 export default function InstitucionalPage() {
-  const heroImage = "https://futbolinclusivo.org.ar/app/uploads/2017/12/nosotros-campo4.jpg";
+  const heroImage = "/hero.jpg";
   const heroLabel = "Institucional";
   const heroTitle = "Andar Fútbol Club";
   const heroDescription = "Promoviendo la Inclusión a través del fútbol";

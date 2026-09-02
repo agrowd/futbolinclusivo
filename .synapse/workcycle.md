@@ -638,3 +638,19 @@
    - Barra de filtros interactiva con chips de fotógrafos activos que filtra álbumes sin perder la categoría seleccionada.
    - Badge distintivo flotante con gradiente estilo Instagram en tarjetas de portada, visor lightbox y cabecera de detalle de álbum.
 4. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (67/67 rutas) y push a GitHub `main`.
+
+## 2026-09-02 — Sesión 50: Reemplazo de Imágenes Caídas en Ligas con Fotos Reales Optimizadas
+
+### Qué se hizo:
+1. **Identificación de Imágenes Caídas**:
+   - En `/programas/ligas`, las tarjetas de *Liga BA*, *Super Liga AFA* y *Liga Nacional* intentaban cargar imágenes de WordPress viejas que arrojaban 404.
+2. **Descarga y Optimización de Fotos Reales**:
+   - Se guardaron fotos reales de las jornadas en `/public/ligas/`:
+     - `/ligas/liga-ba.jpg`: Foto de la jornada en Sede CASLA San Lorenzo.
+     - `/ligas/superliga-afa.jpg`: Foto de la jornada Superliga en Predio AFA Ezeiza.
+     - `/ligas/liga-nacional.jpg`: Foto de acción y disputa de partidos.
+   - Procesadas y optimizadas con `sharp` a 1400x900px (~380 KB, JPEG progresivo).
+3. **Limpieza Completa del Código**:
+   - Se reemplazaron todas las referencias a URLs viejas en `src/app/programas/ligas/page.js`, `HomeClient.js` e `institucional/page.js`.
+   - Búsqueda global confirma 0 URLs de WordPress caídas en todo `src/`.
+4. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (67/67 rutas) y push a GitHub `main`.

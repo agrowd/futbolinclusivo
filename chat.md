@@ -1,5 +1,19 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 50: Reemplazo de Fotos Caídas en Ligas por Fotos Reales (2026-09-02)
+
+### 📌 Contexto
+El usuario compartió captura de `/programas/ligas` donde las tarjetas de las ligas mostraban icono de imagen rota:
+- "Agrega fotos aca que no hay"
+
+### 🛠️ Acciones Realizadas
+1. Se detectaron URLs viejas de WordPress que fallaban en `/programas/ligas`.
+2. Se extrajeron y optimizaron fotos reales de las jornadas en `/public/ligas/` (`liga-ba.jpg`, `superliga-afa.jpg`, `liga-nacional.jpg`) a ~380 KB en 1400x900 con Sharp.
+3. Se actualizaron las tarjetas de torneos y se limpiaron todos los fallbacks de imágenes rotas en el código.
+4. Compilación 100% exitosa (67/67 rutas) y push a `main`.
+
+---
+
 ## ⚽ Sesión 49: Filtro por Fotógrafo y Badges Distintivos (2026-09-02)
 
 ### 📌 Contexto

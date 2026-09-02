@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.10.12 — 2026-09-02
+- fix: Reemplazadas las imágenes caídas en las tarjetas de torneos (/programas/ligas) por fotos reales de alta definición optimizadas con Sharp en /public/ligas/.
+
 ## v1.10.11 — 2026-09-02
 - feat: Incorporado filtro por fotógrafo/cobertura en /multimedia/fotos, selector de fotógrafo en AlbumCreateModal y badges con gradiente Instagram en la web.
 

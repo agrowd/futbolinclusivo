@@ -15,7 +15,7 @@ const programs = [
     href: "https://futbolinclusivo.mygol.es/tournaments",
     icon: Trophy,
     color: "#E67E22",
-    image: "https://futbolinclusivo.org.ar/app/uploads/2017/12/Liga-d-1.jpg",
+    image: "/ligas/liga-ba.jpg",
     stats: {
       equipos: "100+ equipos",
       zonas: "20+ zonas",
@@ -36,7 +36,7 @@ const programs = [
     icon: Trophy,
     color: "#6B1026",
     isAfa: true,
-    image: "https://futbolinclusivo.org.ar/app/uploads/2018/12/MG_0325.jpg",
+    image: "/ligas/superliga-afa.jpg",
     stats: {
       sede: "Predio AFA Ezeiza",
       coordinacion: "AFA / SAT",
@@ -56,7 +56,7 @@ const programs = [
     href: "/programas/liga-nacional",
     icon: Trophy,
     color: "#2980B9",
-    image: "https://futbolinclusivo.org.ar/app/uploads/2018/03/liga-nacional-b.jpg",
+    image: "/ligas/liga-nacional.jpg",
     stats: {
       provincias: "6 sedes activas",
       crecimiento: "En expansión",

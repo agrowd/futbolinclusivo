@@ -254,7 +254,7 @@ export default function HomeClient({ dynamicNews = [], dynamicAlbums = [] }) {
                         <Link href={targetHref} className="group flex flex-col sm:flex-row gap-4 bg-white/[0.02] rounded-xl md:rounded-2xl overflow-hidden border border-white/5 transition-all hover:bg-white/[0.05] hover:border-white/20 shadow-lg p-3 md:p-5">
                           <div className="relative w-full sm:w-48 md:w-56 h-40 sm:h-36 md:h-40 shrink-0 overflow-hidden rounded-lg md:rounded-xl bg-black/40">
                             <Image 
-                              src={item.image || item.coverImage || "https://futbolinclusivo.org.ar/app/uploads/2018/12/MG_0325.jpg"} 
+                              src={item.image || item.coverImage || "/hero.jpg"} 
                               alt={item.title} 
                               fill 
                               sizes="(max-width: 640px) 100vw, 224px"
