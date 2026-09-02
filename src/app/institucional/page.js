@@ -49,7 +49,7 @@ export default function InstitucionalPage() {
             <div style={{ display: "grid", gap: "16px" }}>
                <Link href="/institucional/nosotros" className="bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-all uppercase font-black text-xs tracking-widest text-white flex justify-between items-center">Sobre Nosotros <ArrowRight size={16} /></Link>
                <Link href="/institucional/historia" className="bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-all uppercase font-black text-xs tracking-widest text-white flex justify-between items-center">Nuestra Historia <ArrowRight size={16} /></Link>
-               <Link href="/institucional/comision" className="bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-all uppercase font-black text-xs tracking-widest text-white flex justify-between items-center">Comisión Directiva <ArrowRight size={16} /></Link>
+               <Link href="/institucional/staff" className="bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-all uppercase font-black text-xs tracking-widest text-white flex justify-between items-center">Staff Andar FC <ArrowRight size={16} /></Link>
             </div>
           </div>
         </div>

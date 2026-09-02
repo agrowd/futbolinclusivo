@@ -15,7 +15,7 @@ export default function GenericCmsPage({ slug, fallbackTitle, fallbackSubtitle }
     { href: "/institucional/nosotros", title: "Nuestro Propósito", desc: "Misión y visión institucional.", icon: Target, color: "#36b37e" },
     { href: "/institucional/historia", title: "Nuestra Historia", desc: "Hitos desde 1998.", icon: History, color: "#2ecc71" },
     { href: "/institucional/campo", title: "Nuestro Campo", desc: "Instalaciones deportivas.", icon: Shield, color: "#E67E22" },
-    { href: "/institucional/comision", title: "Nuestro Equipo", desc: "Profesionales y voluntarios.", icon: Users, color: "#f39c12" },
+    { href: "/institucional/staff", title: "Staff Andar FC", desc: "Equipo y estructura profesional.", icon: Users, color: "#f39c12" },
     { href: "/institucional/aliados", title: "Aliados", desc: "Nuestras redes de apoyo.", icon: Heart, color: "#2980B9" },
     { href: "/institucional/impacto", title: "Impacto", desc: "Resultados de nuestro trabajo.", icon: Award, color: "#9b59b6" },
   ];

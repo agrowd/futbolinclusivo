@@ -1,5 +1,19 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 51: Transformación a Staff Andar FC y Organigrama (2026-09-02)
+
+### 📌 Contexto
+El usuario solicitó:
+- "En https://www.futbolinclusivo.org.ar/institucional/comision ya no se va a llamar comision ni va a hablar de la comision directiva, va a ser Staff. Vamos a hablar exlusivamente de Andar FC..." con jerarquía de Director (Prof. Juan Rivas), Coordinaciones (MEL, Fútbol Inclusivo, Fútbol Infantil, Administración, Sistemas), Entrenadores y sección especial de Ligas y Competencias.
+
+### 🛠️ Acciones Realizadas
+1. Se rediseñó `/institucional/comision` y se creó `/institucional/staff` con el organigrama y jerarquía solicitada.
+2. Se generaron 11 imágenes de relleno de alta resolución en `/public/staff/` con iniciales y estilo profesional para que luego se puedan sustituir por las fotos reales.
+3. Se actualizaron los enlaces de la web para referenciar "Staff Andar FC".
+4. Compilación 100% exitosa (68/68 rutas) y push a `main`.
+
+---
+
 ## ⚽ Sesión 50: Reemplazo de Fotos Caídas en Ligas por Fotos Reales (2026-09-02)
 
 ### 📌 Contexto

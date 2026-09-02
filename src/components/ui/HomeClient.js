@@ -22,7 +22,7 @@ import {
 const actionButtons = [
   { label: "NOTICIAS", icon: Newspaper, href: "/novedades", color: "#008D4D", desc: "Enterate de todo" },
   { label: "RESULTADOS", icon: Goal, href: "/novedades", color: "#001A3D", desc: "Últimos partidos" },
-  { label: "EQUIPOS", icon: Shield, href: "/institucional/comision", color: "#001A3D", desc: "Los protagonistas" },
+  { label: "EQUIPOS", icon: Shield, href: "/institucional/staff", color: "#001A3D", desc: "Staff y protagonistas" },
   { label: "VIDEOS", icon: MonitorPlay, href: "/multimedia", color: "#001A3D", desc: "Momentos únicos" },
   { label: "FOTOS", icon: Camera, href: "/multimedia/fotos", color: "#001A3D", desc: "Galería de eventos" },
   { label: "INSCRIPCIÓN", icon: Ticket, href: "/inscripcion", color: "#E67E22", desc: "Sumate a jugar" },

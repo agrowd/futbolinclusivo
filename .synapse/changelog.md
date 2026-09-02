@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.10.13 — 2026-09-02
+- feat: Transformada la página de Comisión Directiva a Staff Andar FC (/institucional/comision y /institucional/staff), con organigrama jerárquico completo, sección dedicada de Ligas y Competencias y fotos de relleno en /public/staff/.
+
 ## v1.10.12 — 2026-09-02
 - fix: Reemplazadas las imágenes caídas en las tarjetas de torneos (/programas/ligas) por fotos reales de alta definición optimizadas con Sharp en /public/ligas/.
 

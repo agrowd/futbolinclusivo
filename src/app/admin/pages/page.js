@@ -115,7 +115,7 @@ export default function AdminPagesPage() {
                // Institucional
                { slug: "nosotros", name: "Nosotros", group: "Institucional", path: "/institucional/nosotros" },
                { slug: "historia", name: "Nuestra Historia", group: "Institucional", path: "/institucional/historia" },
-               { slug: "comision", name: "Comisión Directiva", group: "Institucional", path: "/institucional/comision" },
+               { slug: "comision", name: "Staff Andar FC", group: "Institucional", path: "/institucional/staff" },
                { slug: "equipo", name: "Nuestro Equipo", group: "Institucional", path: "/institucional/equipo" },
                { slug: "aliados", name: "Aliados e Instituciones", group: "Institucional", path: "/institucional/aliados" },
                { slug: "impacto", name: "Impacto Social", group: "Institucional", path: "/institucional/impacto" },

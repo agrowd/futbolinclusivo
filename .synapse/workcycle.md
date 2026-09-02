@@ -654,3 +654,25 @@
    - Se reemplazaron todas las referencias a URLs viejas en `src/app/programas/ligas/page.js`, `HomeClient.js` e `institucional/page.js`.
    - Búsqueda global confirma 0 URLs de WordPress caídas en todo `src/`.
 4. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (67/67 rutas) y push a GitHub `main`.
+
+## 2026-09-02 — Sesión 51: Transformación de Comisión Directiva a Staff Andar FC con Organigrama Completo
+
+### Qué se hizo:
+1. **Rediseño Completo de `/institucional/comision` y Creación de `/institucional/staff`**:
+   - Se transformó la sección para hablar exclusivamente de **Andar FC** y su estructura funcional/deportiva, eliminando el concepto de comisión directiva.
+2. **Organigrama Jerárquico Implementado**:
+   - **Nivel Directivo**:
+     - Prof. Juan Rivas (Director de Andar FC)
+   - **Nivel Coordinaciones & Responsables**:
+     - Pablo Lucero (Coordinador de Monitoreo, Evaluación y Aprendizaje - MEL)
+     - Rocío Di Nicola (Coordinadora de Fútbol Inclusivo) -> Luciano Filippini (Entrenador)
+     - Roberto Salazar (Coordinador de Fútbol Infantil) -> Santiago Conde y Sebastián Subirá (Entrenadores)
+     - Guido Oliva (Coordinador Administrativo)
+     - Federico Romero (Coordinador de Sistemas e Innovación Digital)
+   - **Sección Especial: Staff de Ligas y Competencias**:
+     - Pablo Lucero (Coordinador de Ligas y Competencias)
+     - Yuliana Servián y Marcos López (Equipo Técnico con Dedicación Exclusiva)
+     - Equipo Funcional de Ligas (Cuerpo operativo de árbitros, veedores, testeadores y logística)
+3. **Imágenes de Relleno Generadas (`/public/staff/`)**:
+   - Se crearon 11 avatares SVG estilizados de alta resolución procesados a JPEG con iniciales y roles correspondientes para fácil sustitución futura.
+4. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (68/68 rutas) y push a GitHub `main`.
