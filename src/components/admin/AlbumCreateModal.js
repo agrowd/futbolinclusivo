@@ -264,13 +264,16 @@ export default function AlbumCreateModal({ isOpen, onClose, onCreated }) {
               </label>
               <input
                 type="text"
-                placeholder="Ej: Superliga Inclusiva en AFA - Sábado 23/08"
+                placeholder="Ej: Superliga Inclusiva en AFA - Sábado 22/08 - @sebastianacevedo.ar"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 required
                 disabled={uploading}
                 className="w-full bg-white/5 border border-white/10 rounded-2xl px-4 py-3.5 text-white placeholder:text-white/30 text-sm focus:outline-none focus:border-[#36b37e] transition-colors disabled:opacity-50"
               />
+              <p className="text-[11px] text-white/40 mt-1.5 flex items-center gap-1">
+                <span>💡 Tip: Podés incluir el arroba del fotógrafo (ej: <strong className="text-white/70">@karoniniez_ph</strong> o <strong className="text-white/70">@sebastianacevedo.ar</strong>) al final del título para darle los créditos automáticamente.</span>
+              </p>
             </div>
 
             <div>

@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.10.10 — 2026-09-02
+- feat: Actualizados los créditos y títulos de álbumes con los @handles solicitados (@karoniniez_ph y @sebastianacevedo.ar), con badges con enlace a Instagram y soporte de aliases retrocompatibles.
+
 ## v1.10.9 — 2026-08-27
 - feat: Añadido el álbum 'Superliga Inclusiva en AFA - Sábado 01/08 - San Lorenzo de Almagro - Fotografa Karo Nuñez' con 44 fotos en alta resolución e integrado Sharp en api/upload para auto-optimizar fotos mayores a 10MB.
 

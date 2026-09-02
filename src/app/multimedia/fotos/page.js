@@ -144,12 +144,20 @@ export default async function MultimediaFotosPage({ searchParams }) {
                   {/* Album Info */}
                   <div className="p-5 flex-1 flex flex-col justify-between">
                     <div>
-                      {dateStr && (
-                        <div className="flex items-center gap-1.5 text-xs text-white/50 mb-2">
-                          <Calendar size={13} className="text-[#36b37e]" />
-                          <span>{dateStr}</span>
-                        </div>
-                      )}
+                      <div className="flex flex-wrap items-center gap-2 mb-2">
+                        {dateStr && (
+                          <div className="flex items-center gap-1.5 text-xs text-white/50">
+                            <Calendar size={13} className="text-[#36b37e]" />
+                            <span>{dateStr}</span>
+                          </div>
+                        )}
+                        {album.title && album.title.includes("@") && (
+                          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#E1306C] bg-[#E1306C]/10 px-2.5 py-0.5 rounded-full border border-[#E1306C]/20">
+                            <Camera size={11} />
+                            <span>{album.title.match(/@([a-zA-Z0-9_.]+)/)?.[0]}</span>
+                          </span>
+                        )}
+                      </div>
                       <h3 className="text-lg font-black text-white group-hover:text-[#36b37e] transition-colors uppercase tracking-tight line-clamp-2">
                         {album.title}
                       </h3>

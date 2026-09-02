@@ -4,12 +4,25 @@ import { notFound } from "next/navigation";
 import dbConnect from "@/lib/mongodb";
 import Album from "@/lib/schemas/Album";
 import AlbumViewerClient from "./AlbumViewerClient";
-import { ArrowLeft, Calendar, Folder, ExternalLink, Share2 } from "lucide-react";
+import { ArrowLeft, Calendar, Folder, ExternalLink, Share2, Camera } from "lucide-react";
 
 async function getAlbumBySlug(slug) {
   try {
     await dbConnect();
-    const album = await Album.findOne({ slug }).lean();
+    // 1. Direct match by slug
+    let album = await Album.findOne({ slug }).lean();
+    if (album) return JSON.parse(JSON.stringify(album));
+
+    // 2. Legacy alias fallback
+    const legacyAliases = {
+      "superliga-inclusiva-en-afa-sabado-2208-fotografo-sebastian": "superliga-inclusiva-en-afa-sabado-2208-sebastianacevedo-ar",
+      "superliga-inclusiva-en-afa-sabado-0108-san-lorenzo-de-almagro-fotografa-karo-nunez": "superliga-inclusiva-en-afa-sabado-0108-san-lorenzo-de-almagro-karoniniez-ph",
+    };
+
+    if (legacyAliases[slug]) {
+      album = await Album.findOne({ slug: legacyAliases[slug] }).lean();
+    }
+
     if (!album) return null;
     return JSON.parse(JSON.stringify(album));
   } catch (error) {
@@ -52,6 +65,10 @@ export default async function AlbumDetailPage({ params }) {
       })
     : "";
 
+  const handleMatch = album.title ? album.title.match(/@([a-zA-Z0-9_.]+)/) : null;
+  const photographerHandle = handleMatch ? handleMatch[0] : null;
+  const photographerUsername = handleMatch ? handleMatch[1] : null;
+
   return (
     <div className="bg-[#000B1A] text-white min-h-screen pt-36 pb-24">
       <div className="container mx-auto px-4 max-w-6xl">
@@ -82,6 +99,18 @@ export default async function AlbumDetailPage({ params }) {
             <span className="text-xs text-white/50 font-bold bg-white/5 px-3 py-1 rounded-full border border-white/10">
               📸 {album.photos?.length || 0} fotos cargadas
             </span>
+            {photographerHandle && (
+              <a
+                href={`https://instagram.com/${photographerUsername}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs text-[#E1306C] hover:text-white font-bold bg-[#E1306C]/10 hover:bg-[#E1306C]/25 px-3 py-1 rounded-full border border-[#E1306C]/30 transition-colors"
+                title={`Ver perfil de ${photographerHandle} en Instagram`}
+              >
+                <Camera size={14} />
+                <span>Créditos: {photographerHandle}</span>
+              </a>
+            )}
           </div>
 
           <h1 className="text-2xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight text-white">

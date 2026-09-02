@@ -439,12 +439,20 @@ export default function HomeClient({ dynamicNews = [], dynamicAlbums = [] }) {
                       {/* Info & Micro-Thumbnails */}
                       <div className="p-5 flex-1 flex flex-col justify-between">
                         <div>
-                          {dateStr && (
-                            <p className="text-[11px] text-white/50 mb-1.5 font-bold flex items-center gap-1.5 uppercase tracking-wider">
-                              <Calendar size={13} className="text-[#36b37e]" />
-                              <span>{dateStr}</span>
-                            </p>
-                          )}
+                          <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                            {dateStr && (
+                              <p className="text-[11px] text-white/50 font-bold flex items-center gap-1.5 uppercase tracking-wider">
+                                <Calendar size={13} className="text-[#36b37e]" />
+                                <span>{dateStr}</span>
+                              </p>
+                            )}
+                            {album.title && album.title.includes("@") && (
+                              <span className="inline-flex items-center gap-1 text-[10px] font-bold text-[#E1306C] bg-[#E1306C]/10 px-2 py-0.5 rounded-full border border-[#E1306C]/20">
+                                <Camera size={10} />
+                                <span>{album.title.match(/@([a-zA-Z0-9_.]+)/)?.[0]}</span>
+                              </span>
+                            )}
+                          </div>
                           <h3 className="text-base sm:text-lg font-black uppercase text-white tracking-tight group-hover:text-[#36b37e] transition-colors line-clamp-2 leading-snug">
                             {album.title}
                           </h3>

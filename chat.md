@@ -1,5 +1,22 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 48: Créditos de Fotógrafos con @Handles en Álbumes (2026-09-02)
+
+### 📌 Contexto
+El usuario compartió audio/instrucciones del cliente Pablo Lucero:
+- Cambiar títulos para acreditar a los fotógrafos por su @ (@karoniniez_ph y @sebastianacevedo.ar) en vez de "Fotógrafo tal".
+- Dejar intacto Dirección de Deporte Social y AFA.
+
+### 🛠️ Acciones Realizadas
+1. Se actualizaron los títulos en MongoDB Atlas a:
+   - `Superliga Inclusiva en AFA - Sábado 22/08 - @sebastianacevedo.ar`
+   - `Superliga Inclusiva en AFA - Sábado 01/08 - San Lorenzo de Almagro - @karoniniez_ph`
+2. Se implementó detección automática de `@handle` para mostrar badge de fotógrafo con icono y enlace a Instagram en el visor de álbumes, en `/multimedia/fotos` y en la portada.
+3. Se garantizó compatibilidad para que los enlaces compartidos con los slugs viejos sigan abriendo sin 404.
+4. Compilación 100% exitosa (67/67 rutas) y push a `main`.
+
+---
+
 ## ⚽ Sesión 47: Subida de Álbum Sede CASLA y Sharp Auto-Compresión (2026-08-27)
 
 ### 📌 Contexto

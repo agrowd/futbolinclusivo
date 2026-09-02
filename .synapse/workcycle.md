@@ -610,3 +610,17 @@
    - Se subieron las 44 fotos de `C:\Users\Try Hard\Desktop\Fecha 2 - Sede CASLA - Superliga 2026` a Cloudinary (`futbolinclusivo/galeria/casla-2026-08-01`).
    - Se creó el documento en MongoDB Atlas: *Superliga Inclusiva en AFA - Sábado 01/08 - San Lorenzo de Almagro - Fotografa Karo Nuñez* (ID `6a90822aa36b00f5622b7835`).
 4. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (67/67 rutas) y push a GitHub `main`.
+
+## 2026-09-02 — Sesión 48: Estandarización de Créditos de Fotógrafos con @Handles en Álbumes
+
+### Qué se hizo:
+1. **Actualización de Títulos en MongoDB Atlas**:
+   - `Superliga Inclusiva en AFA - Sábado 22/08 - Fotografo Sebastian` -> `Superliga Inclusiva en AFA - Sábado 22/08 - @sebastianacevedo.ar`.
+   - `Superliga Inclusiva en AFA - Sábado 01/08 - San Lorenzo de Almagro - Fotografa Karo Nuñez` -> `Superliga Inclusiva en AFA - Sábado 01/08 - San Lorenzo de Almagro - @karoniniez_ph`.
+   - Mantenido intacto el álbum de *Dirección de Deporte Social* según instrucción del cliente.
+2. **Soporte de Compatibilidad y Enlace a Instagram**:
+   - `getAlbumBySlug` incluye redirección/alias transparente para las URLs anteriores, evitando 404s.
+   - En la página del visor (`/multimedia/fotos/[slug]`), se detecta el arroba y se renderiza un badge directo con el ícono de cámara y enlace a su Instagram.
+   - En las tarjetas de `/multimedia/fotos` y en la portada (`/`), se destaca la insignia del fotógrafo acreditado.
+   - En `AlbumCreateModal.js`, se actualizó el placeholder e instrucción para que futuros álbumes carguen el arroba directamente.
+3. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (67/67 rutas) y push a GitHub `main`.
