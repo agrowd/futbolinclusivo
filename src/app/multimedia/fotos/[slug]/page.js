@@ -65,9 +65,9 @@ export default async function AlbumDetailPage({ params }) {
       })
     : "";
 
-  const handleMatch = album.title ? album.title.match(/@([a-zA-Z0-9_.]+)/) : null;
-  const photographerHandle = handleMatch ? handleMatch[0] : null;
-  const photographerUsername = handleMatch ? handleMatch[1] : null;
+  const photographer = album.photographer || (album.title ? album.title.match(/@([a-zA-Z0-9_.]+)/)?.[0] : null);
+  const isInstagram = photographer && photographer.startsWith("@");
+  const instagramUsername = isInstagram ? photographer.replace("@", "") : null;
 
   return (
     <div className="bg-[#000B1A] text-white min-h-screen pt-36 pb-24">
@@ -99,17 +99,24 @@ export default async function AlbumDetailPage({ params }) {
             <span className="text-xs text-white/50 font-bold bg-white/5 px-3 py-1 rounded-full border border-white/10">
               📸 {album.photos?.length || 0} fotos cargadas
             </span>
-            {photographerHandle && (
-              <a
-                href={`https://instagram.com/${photographerUsername}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs text-[#E1306C] hover:text-white font-bold bg-[#E1306C]/10 hover:bg-[#E1306C]/25 px-3 py-1 rounded-full border border-[#E1306C]/30 transition-colors"
-                title={`Ver perfil de ${photographerHandle} en Instagram`}
-              >
-                <Camera size={14} />
-                <span>Créditos: {photographerHandle}</span>
-              </a>
+            {photographer && (
+              isInstagram ? (
+                <a
+                  href={`https://instagram.com/${instagramUsername}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs text-white font-black bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-90 px-3.5 py-1 rounded-full border border-white/20 shadow-md shadow-pink-500/20 hover:scale-105 transition-all"
+                  title={`Ver perfil de ${photographer} en Instagram`}
+                >
+                  <Camera size={13} className="text-white" />
+                  <span>Cobertura Fotográfica: {photographer}</span>
+                </a>
+              ) : (
+                <span className="inline-flex items-center gap-1.5 text-xs text-[#36b37e] font-black bg-[#36b37e]/15 px-3.5 py-1 rounded-full border border-[#36b37e]/30">
+                  <Camera size={13} />
+                  <span>Cobertura: {photographer}</span>
+                </span>
+              )
             )}
           </div>
 

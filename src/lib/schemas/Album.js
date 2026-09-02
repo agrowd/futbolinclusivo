@@ -58,6 +58,11 @@ const albumSchema = new mongoose.Schema(
         size: Number,
       },
     ],
+    photographer: {
+      type: String,
+      default: "",
+      trim: true,
+    },
     uploadedBy: {
       type: String,
       default: "admin",
@@ -68,7 +73,7 @@ const albumSchema = new mongoose.Schema(
   }
 );
 
-albumSchema.index({ slug: 1 });
 albumSchema.index({ category: 1, eventDate: -1 });
+albumSchema.index({ photographer: 1 });
 
 export default mongoose.models.Album || mongoose.model("Album", albumSchema);

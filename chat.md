@@ -1,5 +1,20 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 49: Filtro por Fotógrafo y Badges Distintivos (2026-09-02)
+
+### 📌 Contexto
+El usuario solicitó:
+- "Que el fotografo sea un filtro en si que se pueda seleccionar cuando se suban los albumes y que aparezca mas distintivo en la web"
+
+### 🛠️ Acciones Realizadas
+1. Se agregó el campo `photographer` en el esquema `Album` y en el endpoint `/api/albums`.
+2. Se actualizó el modal de subida de álbumes (`AlbumCreateModal`) con un selector desplegable específico para fotógrafos (`@karoniniez_ph`, `@sebastianacevedo.ar`, etc.) y opción personalizada.
+3. Se integró una barra de filtrado por fotógrafo en `/multimedia/fotos` que permite ver los álbumes de un fotógrafo en particular.
+4. Se diseñaron badges visuales distintivos (con degradado estilo Instagram, icono de cámara y enlaces a perfiles) en las portadas de álbumes, en la cabecera y en el lightbox.
+5. Compilación 100% exitosa (67/67 rutas) y push a `main`.
+
+---
+
 ## ⚽ Sesión 48: Créditos de Fotógrafos con @Handles en Álbumes (2026-09-02)
 
 ### 📌 Contexto

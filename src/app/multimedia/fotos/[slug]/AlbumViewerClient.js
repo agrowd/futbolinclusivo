@@ -2,13 +2,14 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { X, ChevronLeft, ChevronRight, Download, Share2, Check, ZoomIn } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Download, Share2, Check, ZoomIn, Camera } from "lucide-react";
 
 export default function AlbumViewerClient({ album }) {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [copied, setCopied] = useState(false);
 
   const photos = album.photos || [];
+  const photographer = album.photographer || (album.title ? album.title.match(/@([a-zA-Z0-9_.]+)/)?.[0] : null);
 
   // Keyboard navigation for Lightbox
   useEffect(() => {
@@ -130,9 +131,17 @@ export default function AlbumViewerClient({ album }) {
               <span className="text-xs font-black uppercase text-[#36b37e] tracking-widest block">
                 {album.title}
               </span>
-              <span className="text-xs text-white/50">
-                Foto {selectedIndex + 1} de {photos.length}
-              </span>
+              <div className="flex flex-wrap items-center gap-2 mt-0.5">
+                <span className="text-xs text-white/50">
+                  Foto {selectedIndex + 1} de {photos.length}
+                </span>
+                {photographer && (
+                  <span className="inline-flex items-center gap-1 text-[11px] font-black text-pink-300 bg-pink-500/20 px-2 py-0.5 rounded-full border border-pink-500/30">
+                    <Camera size={11} />
+                    <span>{photographer}</span>
+                  </span>
+                )}
+              </div>
             </div>
             <div className="flex items-center gap-3">
               <button

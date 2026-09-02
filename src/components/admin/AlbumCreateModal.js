@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { X, Upload, Image as ImageIcon, Sparkles, CheckCircle2, AlertCircle, Trash2, FolderPlus, Link as LinkIcon, Loader2 } from "lucide-react";
+import { X, Upload, Image as ImageIcon, Sparkles, CheckCircle2, AlertCircle, Trash2, FolderPlus, Link as LinkIcon, Loader2, Camera } from "lucide-react";
 
 const CATEGORIES = [
   "Superliga AFA",
@@ -14,9 +14,20 @@ const CATEGORIES = [
   "Otros",
 ];
 
+const PHOTOGRAPHERS = [
+  { label: "Sin mención / Institucional", value: "" },
+  { label: "@karoniniez_ph (Karo Núñez)", value: "@karoniniez_ph" },
+  { label: "@sebastianacevedo.ar (Sebastián Acevedo)", value: "@sebastianacevedo.ar" },
+  { label: "Dirección de Deporte Social", value: "Dirección de Deporte Social" },
+  { label: "AFA", value: "AFA" },
+  { label: "+ Otro (personalizado)", value: "custom" },
+];
+
 export default function AlbumCreateModal({ isOpen, onClose, onCreated }) {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("Superliga AFA");
+  const [selectedPhotographer, setSelectedPhotographer] = useState("");
+  const [customPhotographer, setCustomPhotographer] = useState("");
   const [eventDate, setEventDate] = useState(new Date().toISOString().split("T")[0]);
   const [description, setDescription] = useState("");
   const [driveLink, setDriveLink] = useState("");
@@ -169,12 +180,15 @@ export default function AlbumCreateModal({ isOpen, onClose, onCreated }) {
       }
 
       setUploadProgress(92);
-      setUploadStatusText("Guardando álbum en la base de datos...");
+      const finalPhotographer = selectedPhotographer === "custom"
+        ? customPhotographer.trim()
+        : selectedPhotographer.trim();
 
       // Create Album document
       const albumPayload = {
         title: title.trim(),
         category,
+        photographer: finalPhotographer,
         eventDate,
         description: description.trim(),
         driveLink: driveLink.trim(),
@@ -305,6 +319,51 @@ export default function AlbumCreateModal({ isOpen, onClose, onCreated }) {
                 disabled={uploading}
                 className="w-full bg-white/5 border border-white/10 rounded-2xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-[#36b37e] transition-colors disabled:opacity-50"
               />
+            </div>
+
+            {/* Photographer Selector */}
+            <div className="sm:col-span-2 bg-white/[0.02] border border-white/10 rounded-2xl p-4">
+              <label className="block text-xs font-black uppercase text-white/80 tracking-wider mb-2 flex items-center gap-2">
+                <Camera size={14} className="text-[#36b37e]" />
+                <span>Fotógrafo / Cobertura Fotográfica</span>
+              </label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <select
+                  value={selectedPhotographer}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setSelectedPhotographer(val);
+                    if (val && val !== "custom" && val.startsWith("@") && !title.includes(val)) {
+                      // Optionally append to title if title exists
+                      if (title.trim()) {
+                        setTitle((prev) => `${prev.split(" - @")[0]} - ${val}`);
+                      }
+                    }
+                  }}
+                  disabled={uploading}
+                  className="w-full bg-[#001D3D] border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-[#36b37e] transition-colors disabled:opacity-50"
+                >
+                  {PHOTOGRAPHERS.map((p) => (
+                    <option key={p.label} value={p.value}>
+                      {p.label}
+                    </option>
+                  ))}
+                </select>
+
+                {selectedPhotographer === "custom" && (
+                  <input
+                    type="text"
+                    placeholder="Ej: @nombre_fotografo o Cobertura Especial"
+                    value={customPhotographer}
+                    onChange={(e) => setCustomPhotographer(e.target.value)}
+                    disabled={uploading}
+                    className="w-full bg-white/5 border border-[#36b37e]/50 rounded-xl px-4 py-3 text-white placeholder:text-white/30 text-sm focus:outline-none focus:border-[#36b37e] transition-colors"
+                  />
+                )}
+              </div>
+              <p className="text-[11px] text-white/40 mt-2">
+                Al seleccionar un fotógrafo, se le otorgará un badge distintivo con enlace directo a sus redes sociales en la web.
+              </p>
             </div>
 
             <div className="sm:col-span-2">

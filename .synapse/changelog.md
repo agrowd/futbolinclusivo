@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.10.11 — 2026-09-02
+- feat: Incorporado filtro por fotógrafo/cobertura en /multimedia/fotos, selector de fotógrafo en AlbumCreateModal y badges con gradiente Instagram en la web.
+
 ## v1.10.10 — 2026-09-02
 - feat: Actualizados los créditos y títulos de álbumes con los @handles solicitados (@karoniniez_ph y @sebastianacevedo.ar), con badges con enlace a Instagram y soporte de aliases retrocompatibles.
 

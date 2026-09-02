@@ -20,12 +20,18 @@ const CATEGORIES = [
   "Eventos",
 ];
 
-async function getAlbumsData(selectedCategory) {
+async function getAlbumsData(selectedCategory, selectedPhotographer) {
   try {
     await dbConnect();
     const query = {};
     if (selectedCategory && selectedCategory !== "Todos") {
       query.category = selectedCategory;
+    }
+    if (selectedPhotographer && selectedPhotographer !== "Todos") {
+      query.$or = [
+        { photographer: selectedPhotographer },
+        { title: { $regex: selectedPhotographer.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), $options: "i" } },
+      ];
     }
 
     const albums = await Album.find(query)
@@ -39,11 +45,49 @@ async function getAlbumsData(selectedCategory) {
   }
 }
 
+async function getAllPhotographers() {
+  try {
+    await dbConnect();
+    const raw = await Album.find({}).select("photographer title").lean();
+    const set = new Set();
+    raw.forEach((a) => {
+      if (a.photographer && a.photographer.trim()) {
+        set.add(a.photographer.trim());
+      } else {
+        const match = a.title ? a.title.match(/@([a-zA-Z0-9_.]+)/) : null;
+        if (match) set.add(match[0]);
+      }
+    });
+    // Ensure default ones exist if not yet in DB
+    const list = Array.from(set);
+    if (!list.includes("@karoniniez_ph")) list.push("@karoniniez_ph");
+    if (!list.includes("@sebastianacevedo.ar")) list.push("@sebastianacevedo.ar");
+    return list;
+  } catch (err) {
+    return ["@karoniniez_ph", "@sebastianacevedo.ar", "Dirección de Deporte Social"];
+  }
+}
+
 export default async function MultimediaFotosPage({ searchParams }) {
   const params = await searchParams;
   const currentCategory = params?.categoria || "Todos";
+  const currentPhotographer = params?.fotografo || "Todos";
 
-  const albums = await getAlbumsData(currentCategory);
+  const [albums, allPhotographers] = await Promise.all([
+    getAlbumsData(currentCategory, currentPhotographer),
+    getAllPhotographers(),
+  ]);
+
+  // Helper for filter links
+  const makeFilterUrl = (newCat, newPhoto) => {
+    const p = new URLSearchParams();
+    const cat = newCat !== undefined ? newCat : currentCategory;
+    const photo = newPhoto !== undefined ? newPhoto : currentPhotographer;
+    if (cat && cat !== "Todos") p.set("categoria", cat);
+    if (photo && photo !== "Todos") p.set("fotografo", photo);
+    const qs = p.toString();
+    return `/multimedia/fotos${qs ? `?${qs}` : ""}`;
+  };
 
   // Legacy photos fallback
   const { assets } = await getLegacyContent();
@@ -73,25 +117,68 @@ export default async function MultimediaFotosPage({ searchParams }) {
           </p>
         </header>
 
-        {/* Category Filters Bar */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-10 no-scrollbar">
-          {CATEGORIES.map((cat) => {
-            const isActive = currentCategory === cat;
-            const href = cat === "Todos" ? "/multimedia/fotos" : `/multimedia/fotos?categoria=${encodeURIComponent(cat)}`;
-            return (
+        {/* 1. Category Filters Bar */}
+        <div className="space-y-4 mb-10">
+          <div className="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar">
+            {CATEGORIES.map((cat) => {
+              const isActive = currentCategory === cat;
+              return (
+                <Link
+                  key={cat}
+                  href={makeFilterUrl(cat, undefined)}
+                  className={`px-5 py-2.5 rounded-2xl text-xs font-black uppercase tracking-wider transition-all shrink-0 border ${
+                    isActive
+                      ? "bg-[#36b37e] text-black border-[#36b37e] shadow-lg shadow-[#36b37e]/20"
+                      : "bg-white/5 text-white/70 border-white/10 hover:border-white/30 hover:text-white"
+                  }`}
+                >
+                  {cat}
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* 2. Distinctive Photographer Filter Bar */}
+          <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center gap-3">
+            <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-white/70 shrink-0">
+              <Camera size={16} className="text-[#E1306C]" />
+              <span>Filtrar por Fotógrafo:</span>
+            </div>
+            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
               <Link
-                key={cat}
-                href={href}
-                className={`px-5 py-2.5 rounded-2xl text-xs font-black uppercase tracking-wider transition-all shrink-0 border ${
-                  isActive
-                    ? "bg-[#36b37e] text-black border-[#36b37e] shadow-lg shadow-[#36b37e]/20"
-                    : "bg-white/5 text-white/70 border-white/10 hover:border-white/30 hover:text-white"
+                href={makeFilterUrl(undefined, "Todos")}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 border ${
+                  currentPhotographer === "Todos"
+                    ? "bg-white text-black border-white font-black shadow"
+                    : "bg-white/5 text-white/60 border-white/10 hover:text-white hover:border-white/30"
                 }`}
               >
-                {cat}
+                Todos
               </Link>
-            );
-          })}
+              {allPhotographers.map((photo) => {
+                const isActive = currentPhotographer === photo;
+                const isInsta = photo.startsWith("@");
+                return (
+                  <Link
+                    key={photo}
+                    href={makeFilterUrl(undefined, photo)}
+                    className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition-all shrink-0 flex items-center gap-1.5 border ${
+                      isActive
+                        ? isInsta
+                          ? "bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] text-white border-white/40 shadow-lg shadow-pink-500/25 scale-105"
+                          : "bg-[#36b37e] text-black border-[#36b37e] shadow-lg shadow-[#36b37e]/25 scale-105"
+                        : isInsta
+                        ? "bg-[#E1306C]/10 text-[#ff7799] border-[#E1306C]/30 hover:bg-[#E1306C]/20 hover:text-white"
+                        : "bg-white/5 text-white/70 border-white/10 hover:border-white/30 hover:text-white"
+                    }`}
+                  >
+                    <Camera size={12} />
+                    <span>{photo}</span>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
         </div>
 
         {/* ALBUMS GRID */}
@@ -106,6 +193,10 @@ export default async function MultimediaFotosPage({ searchParams }) {
                     year: "numeric",
                   })
                 : "";
+
+              // Detect photographer
+              const photographer = album.photographer || (album.title ? album.title.match(/@([a-zA-Z0-9_.]+)/)?.[0] : null);
+              const isInstagram = photographer && photographer.startsWith("@");
 
               return (
                 <Link
@@ -130,9 +221,21 @@ export default async function MultimediaFotosPage({ searchParams }) {
                     )}
 
                     {/* Category Badge */}
-                    <div className="absolute top-3 left-3 bg-[#00132B]/80 backdrop-blur-md border border-white/15 text-[#36b37e] text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-wider">
+                    <div className="absolute top-3 left-3 bg-[#00132B]/85 backdrop-blur-md border border-white/15 text-[#36b37e] text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-wider">
                       {album.category}
                     </div>
+
+                    {/* Distinctive Photographer Floating Badge */}
+                    {photographer && (
+                      <div className={`absolute top-3 right-3 backdrop-blur-md text-[11px] font-black px-3 py-1 rounded-full flex items-center gap-1.5 shadow-lg border ${
+                        isInstagram
+                          ? "bg-gradient-to-r from-[#833ab4]/90 via-[#fd1d1d]/90 to-[#fcb045]/90 text-white border-white/30 shadow-pink-500/30"
+                          : "bg-[#002B5C]/90 text-[#36b37e] border-[#36b37e]/40"
+                      }`}>
+                        <Camera size={12} />
+                        <span>{photographer}</span>
+                      </div>
+                    )}
 
                     {/* Photo Count Badge */}
                     <div className="absolute bottom-3 right-3 bg-black/80 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5 border border-white/15">
@@ -150,12 +253,6 @@ export default async function MultimediaFotosPage({ searchParams }) {
                             <Calendar size={13} className="text-[#36b37e]" />
                             <span>{dateStr}</span>
                           </div>
-                        )}
-                        {album.title && album.title.includes("@") && (
-                          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#E1306C] bg-[#E1306C]/10 px-2.5 py-0.5 rounded-full border border-[#E1306C]/20">
-                            <Camera size={11} />
-                            <span>{album.title.match(/@([a-zA-Z0-9_.]+)/)?.[0]}</span>
-                          </span>
                         )}
                       </div>
                       <h3 className="text-lg font-black text-white group-hover:text-[#36b37e] transition-colors uppercase tracking-tight line-clamp-2">
@@ -180,10 +277,16 @@ export default async function MultimediaFotosPage({ searchParams }) {
         ) : (
           <div className="bg-white/[0.02] border border-white/10 rounded-3xl p-10 text-center mb-16">
             <Folder size={48} className="mx-auto text-white/20 mb-4" />
-            <h3 className="text-xl font-bold text-white uppercase mb-2">No hay álbumes creados en esta categoría</h3>
-            <p className="text-sm text-white/50 max-w-md mx-auto">
-              Próximamente estaremos publicando las galerías oficiales de las fechas disputadas.
+            <h3 className="text-xl font-bold text-white uppercase mb-2">No se encontraron álbumes</h3>
+            <p className="text-sm text-white/50 max-w-md mx-auto mb-6">
+              No hay álbumes que coincidan con los filtros seleccionados ({currentCategory} - {currentPhotographer}).
             </p>
+            <Link
+              href="/multimedia/fotos"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#36b37e] text-black font-black text-xs uppercase tracking-wider hover:bg-[#2da372] transition-colors"
+            >
+              <span>Restablecer Filtros</span>
+            </Link>
           </div>
         )}
 

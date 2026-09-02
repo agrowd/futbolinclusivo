@@ -22,12 +22,16 @@ export async function GET(request) {
 
     const { searchParams } = new URL(request.url);
     const category = searchParams.get("category");
+    const photographer = searchParams.get("photographer");
     const limit = parseInt(searchParams.get("limit") || "50");
     const page = parseInt(searchParams.get("page") || "1");
 
     const query = {};
     if (category && category !== "all" && category !== "Todos") {
       query.category = category;
+    }
+    if (photographer && photographer !== "all" && photographer !== "Todos") {
+      query.photographer = photographer;
     }
 
     const skip = (page - 1) * limit;
@@ -74,7 +78,7 @@ export async function POST(request) {
     await dbConnect();
 
     const body = await request.json();
-    const { title, category, eventDate, description, coverImage, driveLink, photos, featured } = body;
+    const { title, category, eventDate, description, coverImage, driveLink, photos, featured, photographer } = body;
 
     if (!title || !title.trim()) {
       return NextResponse.json(
@@ -96,6 +100,7 @@ export async function POST(request) {
       title: title.trim(),
       slug,
       category: category || "Superliga AFA",
+      photographer: photographer ? photographer.trim() : "",
       eventDate: eventDate ? new Date(eventDate) : new Date(),
       description: description || "",
       coverImage: albumCover,

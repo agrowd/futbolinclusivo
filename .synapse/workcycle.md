@@ -624,3 +624,17 @@
    - En las tarjetas de `/multimedia/fotos` y en la portada (`/`), se destaca la insignia del fotógrafo acreditado.
    - En `AlbumCreateModal.js`, se actualizó el placeholder e instrucción para que futuros álbumes carguen el arroba directamente.
 3. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (67/67 rutas) y push a GitHub `main`.
+
+## 2026-09-02 — Sesión 49: Filtro de Fotógrafos en Galería y Campo Dedicado en Creador de Álbumes
+
+### Qué se hizo:
+1. **Schema de Álbumes y API**:
+   - Se añadió el campo `photographer` en `Album.js` con índice de búsqueda y se eliminó el índice duplicado en `slug`.
+   - Se actualizó `/api/albums` para aceptar y filtrar por `photographer` en peticiones GET y asignarlo en POST.
+   - Se migraron los 3 álbumes existentes en MongoDB Atlas con su fotógrafo correspondiente (`@sebastianacevedo.ar`, `@karoniniez_ph`, `Dirección de Deporte Social`).
+2. **Selector en Panel de Administración (`AlbumCreateModal.js`)**:
+   - Nuevo selector desplegable con opciones predefinidas (`@karoniniez_ph`, `@sebastianacevedo.ar`, etc.) y campo para fotógrafo personalizado.
+3. **Filtro Distintivo y Badges en la Web (`/multimedia/fotos`)**:
+   - Barra de filtros interactiva con chips de fotógrafos activos que filtra álbumes sin perder la categoría seleccionada.
+   - Badge distintivo flotante con gradiente estilo Instagram en tarjetas de portada, visor lightbox y cabecera de detalle de álbum.
+4. **Validación y Despliegue**: Compilación `npm run build` 100% exitosa (67/67 rutas) y push a GitHub `main`.
