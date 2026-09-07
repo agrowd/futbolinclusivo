@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.10.14 — 2026-09-07
+- feat: Conciliación de asistencias manuales en Día de las Infancias, acreditando inscriptos y registrando 9 casos especiales en MongoDB Atlas.
+
 ## v1.10.13 — 2026-09-02
 - feat: Transformada la página de Comisión Directiva a Staff Andar FC (/institucional/comision y /institucional/staff), con organigrama jerárquico completo, sección dedicada de Ligas y Competencias y fotos de relleno en /public/staff/.
 

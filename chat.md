@@ -1,5 +1,21 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 52: Conciliación de Lista Manual y Casos Especiales en Día de las Infancias (2026-09-07)
+
+### 📌 Contexto
+El usuario subió una fotografía de una hoja manuscrita con nombres y teléfonos tomada manualmente en el acceso del evento del Día de las Infancias (porque la persona del escáner no estaba disponible en ese momento) y solicitó:
+- Cruzar información con los registrados en base de datos.
+- Si el teléfono o nombre coincide, marcarlo como que ingresó (`attended: true`).
+- Si no existen en el sistema, crearlos como "Casos Especiales" con su número de teléfono y marcarlos como ingresados.
+
+### 🛠️ Acciones Realizadas
+1. Se procesó y cruzó cada anotación manuscrita con los 171 registros existentes en MongoDB Atlas.
+2. Se identificaron 8 inscriptos previos (incluyendo correcciones ortográficas: `Sarzi bozo` -> `Joscelyn Sarai Boza Pujay`, `cluney` -> `Luney marilin fonzalida bauman`, `Maica Gimenez` -> `Michael Giménez`, `Renato Gerez` -> `Renata Jerez`, `Emily fonsalida` -> `Emily quimey fonzalida bauman`) y se actualizaron a `attended: true`.
+3. Se dieron de alta 9 nuevos registros como **Casos Especiales** en la base de datos con sus tickets únicos, teléfonos y notas de ingreso en puerta.
+4. Total consolidado: 180 inscriptos / 120 ingresados acreditados.
+
+---
+
 ## ⚽ Sesión 51: Transformación a Staff Andar FC y Organigrama (2026-09-02)
 
 ### 📌 Contexto
