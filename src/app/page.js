@@ -47,6 +47,9 @@ export default async function HomePage() {
       href: `/multimedia/fotos/${album.slug}`,
       category: album.category || "Galería",
       coverImage: album.coverImage || album.photos?.[0]?.url || "/andarfc-logo.png",
+      coverImageAlt:
+        album.coverImageAlt ||
+        `Foto de portada del álbum ${album.title} - Fútbol Inclusivo - Asociación Civil Andar y Andar FC`,
       image: album.coverImage || album.photos?.[0]?.url || "/andarfc-logo.png",
       date: album.eventDate ? (album.eventDate.toISOString ? album.eventDate.toISOString() : String(album.eventDate)) : album.createdAt?.toISOString(),
       eventDate: album.eventDate ? (album.eventDate.toISOString ? album.eventDate.toISOString() : String(album.eventDate)) : null,
@@ -56,6 +59,7 @@ export default async function HomePage() {
         url: p.url,
         publicId: p.publicId,
         caption: p.caption,
+        alt: p.alt || p.caption,
       })),
       photoCount: album.photos?.length || 0,
     }));

@@ -40,6 +40,10 @@ const albumSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    coverImageAlt: {
+      type: String,
+      default: "",
+    },
     driveLink: {
       type: String,
       default: "",
@@ -53,6 +57,7 @@ const albumSchema = new mongoose.Schema(
         url: { type: String, required: true },
         publicId: { type: String, default: null },
         caption: { type: String, default: "" },
+        alt: { type: String, default: "" },
         width: Number,
         height: Number,
         size: Number,

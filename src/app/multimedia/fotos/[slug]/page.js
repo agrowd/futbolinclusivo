@@ -43,8 +43,17 @@ export async function generateMetadata({ params }) {
     description: album.description || `Galería de fotos oficial de ${album.title}.`,
     openGraph: {
       title: album.title,
-      description: album.description || `Galería de fotos oficial de ${album.title}.`,
-      images: album.coverImage ? [album.coverImage] : [],
+      description: album.description || `Galería de fotos oficial de ${album.title} - Torneos de Fútbol Inclusivo organizados por Asociación Civil Andar y Andar FC.`,
+      images: album.coverImage
+        ? [
+            {
+              url: album.coverImage,
+              alt:
+                album.coverImageAlt ||
+                `Portada oficial de ${album.title} - Fútbol Inclusivo - Asociación Civil Andar y Andar FC`,
+            },
+          ]
+        : [],
     },
   };
 }

@@ -209,7 +209,10 @@ export default async function MultimediaFotosPage({ searchParams }) {
                     {album.coverImage ? (
                       <Image
                         src={album.coverImage}
-                        alt={album.title}
+                        alt={
+                          album.coverImageAlt ||
+                          `Foto de portada del álbum ${album.title} - Torneo de Fútbol Inclusivo organizado por Asociación Civil Andar y Andar FC`
+                        }
                         fill
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         className="object-cover group-hover:scale-105 transition-transform duration-500"

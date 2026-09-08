@@ -101,7 +101,16 @@ export default function AlbumViewerClient({ album }) {
           >
             <Image
               src={photo.url}
-              alt={photo.caption || `${album.title} - Foto #${idx + 1}`}
+              alt={
+                photo.alt ||
+                photo.caption ||
+                `Foto #${idx + 1} del álbum ${album.title} - Torneo de Fútbol Inclusivo - Asociación Civil Andar y Andar FC`
+              }
+              title={
+                photo.alt ||
+                photo.caption ||
+                `${album.title} - Foto #${idx + 1}`
+              }
               fill
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
               className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -185,7 +194,16 @@ export default function AlbumViewerClient({ album }) {
             <div className="relative w-full h-full max-h-[80vh] flex items-center justify-center">
               <img
                 src={activePhoto.url}
-                alt={activePhoto.caption || "Foto de Fútbol Inclusivo"}
+                alt={
+                  activePhoto.alt ||
+                  activePhoto.caption ||
+                  `Foto de ${album.title} - Fútbol Inclusivo - Asociación Civil Andar y Andar FC`
+                }
+                title={
+                  activePhoto.alt ||
+                  activePhoto.caption ||
+                  `${album.title} - Foto #${selectedIndex + 1}`
+                }
                 className="max-w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl"
               />
             </div>
@@ -206,11 +224,11 @@ export default function AlbumViewerClient({ album }) {
 
           {/* Bottom Bar / Caption */}
           <div
-            className="text-center z-10 cursor-default"
+            className="text-center z-10 cursor-default max-w-4xl mx-auto px-4"
             onClick={(e) => e.stopPropagation()}
           >
-            <p className="text-xs sm:text-sm text-white/70 font-medium">
-              {activePhoto.caption || `${album.title} — Foto #${selectedIndex + 1}`}
+            <p className="text-xs sm:text-sm text-white/80 font-medium leading-relaxed bg-black/50 backdrop-blur-md px-4 py-2 rounded-xl border border-white/10">
+              {activePhoto.alt || activePhoto.caption || `${album.title} — Foto #${selectedIndex + 1}`}
             </p>
           </div>
         </div>

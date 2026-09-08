@@ -146,6 +146,7 @@ export default function AlbumCreateModal({ isOpen, onClose, onCreated }) {
                   url: uploadData.data.url,
                   publicId: uploadData.data.publicId,
                   caption: `${title} - Foto #${index + 1}`,
+                  alt: `${title} - Foto #${index + 1} - Torneo de Fútbol Inclusivo organizado por Asociación Civil Andar y Andar FC. Cobertura: ${photographer || "Oficial"}.`,
                   width: uploadData.data.width,
                   height: uploadData.data.height,
                   size: uploadData.data.size,
@@ -195,6 +196,7 @@ export default function AlbumCreateModal({ isOpen, onClose, onCreated }) {
         featured,
         photos: uploadedPhotos,
         coverImage: uploadedPhotos.length > 0 ? uploadedPhotos[0].url : "",
+        coverImageAlt: `Foto de portada del álbum ${title} - Torneo de Fútbol Inclusivo organizado por Asociación Civil Andar y Andar FC. Cobertura: ${photographer || "Oficial"}.`,
       };
 
       const res = await fetch("/api/albums", {

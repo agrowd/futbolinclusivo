@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.10.17 — 2026-09-08
+- feat: Generación de textos ALT contextuales y enriquecidos para Google Indexing en todas las fotos de álbumes (216 imágenes), incorporando Andar FC, Asociación Civil Andar, Fútbol Inclusivo, sede, jornada y fotógrafo.
+
 ## v1.10.16 — 2026-09-08
 - feat: Creación de la página /torneos con las 2 pelotas interactivas de competencias (Liga Inclusiva y Super Liga AFA) con enlaces directos a MyGol e integración en el pie de página.
 

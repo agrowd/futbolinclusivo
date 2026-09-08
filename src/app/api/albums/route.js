@@ -95,6 +95,20 @@ export async function POST(request) {
 
     const firstPhotoUrl = Array.isArray(photos) && photos.length > 0 ? photos[0].url : "";
     const albumCover = coverImage || firstPhotoUrl;
+    const resolvedCoverAlt =
+      body.coverImageAlt ||
+      `Foto de portada del álbum ${title.trim()} - Fútbol Inclusivo - Asociación Civil Andar y Andar FC`;
+
+    const processedPhotos = Array.isArray(photos)
+      ? photos.map((p, idx) => ({
+          ...p,
+          caption: p.caption || `${title.trim()} - Foto #${idx + 1}`,
+          alt:
+            p.alt ||
+            p.caption ||
+            `Foto #${idx + 1} de ${title.trim()} - Torneo de Fútbol Inclusivo organizado por Asociación Civil Andar y Andar FC. Competencia deportiva oficial.`,
+        }))
+      : [];
 
     const album = await Album.create({
       title: title.trim(),
@@ -104,9 +118,10 @@ export async function POST(request) {
       eventDate: eventDate ? new Date(eventDate) : new Date(),
       description: description || "",
       coverImage: albumCover,
+      coverImageAlt: resolvedCoverAlt,
       driveLink: driveLink || "",
       featured: Boolean(featured),
-      photos: Array.isArray(photos) ? photos : [],
+      photos: processedPhotos,
       uploadedBy: session.user.email || "admin",
     });
 

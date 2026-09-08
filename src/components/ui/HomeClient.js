@@ -261,7 +261,12 @@ export default function HomeClient({ dynamicNews = [], dynamicAlbums = [] }) {
                           <div className="relative w-full sm:w-48 md:w-56 h-40 sm:h-36 md:h-40 shrink-0 overflow-hidden rounded-lg md:rounded-xl bg-black/40">
                             <Image 
                               src={item.image || item.coverImage || "/hero.jpg"} 
-                              alt={item.title} 
+                              alt={
+                                item.coverImageAlt || 
+                                (isAlbum 
+                                  ? `Foto de portada del álbum ${item.title} - Torneo de Fútbol Inclusivo organizado por Asociación Civil Andar y Andar FC` 
+                                  : item.title)
+                              } 
                               fill 
                               sizes="(max-width: 640px) 100vw, 224px"
                               className="object-cover transition-transform duration-500 group-hover:scale-110" 
