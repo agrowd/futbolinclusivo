@@ -1,5 +1,31 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 54: Creación de /torneos con las 2 Pelotas del Inicio y Enlace a MyGol (2026-09-08)
+
+### 📌 Contexto
+El usuario solicitó:
+- "https://www.futbolinclusivo.org.ar/torneos que te lleve a una pagina donde esten las 2 pelotas del inicio y te lleven al link de mygol"
+
+### 🛠️ Acciones Realizadas
+1. **Creación de la Ruta `/torneos` (`src/app/torneos/page.js` y `TorneosClient.jsx`)**:
+   - Se diseñó la página `/torneos` con Server Component para metadatos SEO y un Client Component con animación dinámica.
+   - Se replicaron las 2 pelotas interactivas de la home (con patrón de gajos de fútbol, gradientes, escudos y animación flotante `bounce-slow`):
+     - **Pelota 1 (Verde)**: "Liga Inclusiva" (Desde 1998) con escudo de Andar FC.
+     - **Pelota 2 (Borravino/Celeste)**: "Super Liga" (AFA & SAT) con escudos oficiales de AFA y SAT.
+   - Ambas pelotas y sus botones "VER TORNEO" están vinculados a MyGol (`https://futbolinclusivo.mygol.es/tournaments`) con `target="_blank" rel="noopener noreferrer"`.
+2. **Características Adicionales en `/torneos`**:
+   - Botón destacado central para el portal general de MyGol.
+   - 3 tarjetas informativas de contenido en vivo (Fixtures y Fechas, Tablas de Posiciones, Resultados Oficiales).
+   - Banner de conversión para inscribir equipos vía WhatsApp (`+54 9 11 2507-9380`) o sumarse a la Escuelita Infantil.
+3. **Navegación e Integración**:
+   - El botón "Ver Torneos" del widget flotante (`FloatingButtons.jsx`) ahora resuelve a esta nueva página.
+   - Agregado el enlace a `/torneos` en el pie de página (`Footer.jsx`).
+   - Registrada en `/admin/pages` para el CMS.
+4. **Validación**:
+   - Build de producción (`npm run build`) validado con 69/69 rutas OK.
+
+---
+
 ## ⚽ Sesión 53: Redirección de Inscripción a Equipos y Escuelita Infantil a WhatsApp (2026-09-08)
 
 ### 📌 Contexto

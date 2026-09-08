@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.10.16 — 2026-09-08
+- feat: Creación de la página /torneos con las 2 pelotas interactivas de competencias (Liga Inclusiva y Super Liga AFA) con enlaces directos a MyGol e integración en el pie de página.
+
 ## v1.10.15 — 2026-09-08
 - feat: Centralización de inscripciones para Equipos y Escuelita Infantil al WhatsApp oficial (+54 9 11 2507-9380), creación de landing dedicada para Escuela Infantil (/programas/escuela) y rediseño de portal dual en /inscripcion.
 

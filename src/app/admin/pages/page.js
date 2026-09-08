@@ -137,6 +137,7 @@ export default function AdminPagesPage() {
                // Navegación principal / Servicios
                { slug: "contacto", name: "Contacto", group: "Navegación", path: "/contacto" },
                { slug: "canchas", name: "Alquiler de Canchas", group: "Servicios", path: "/canchas" },
+               { slug: "torneos", name: "Torneos y Competencias (MyGol)", group: "Servicios", path: "/torneos" },
                { slug: "inscripcion", name: "Inscripciones a Ligas", group: "Servicios", path: "/inscripcion" },
                // Multimedia
                { slug: "multimedia", name: "Multimedia (Hub)", group: "Multimedia", path: "/multimedia" },

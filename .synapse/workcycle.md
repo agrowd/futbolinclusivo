@@ -729,3 +729,24 @@
 5. **Validación**:
    - Compilación exitosa con `next build` (Turbopack): 68/68 rutas generadas con 0 errores.
 
+## 2026-09-08 — Sesión 54: Creación de la Ruta /torneos con Pelotas Interactivas y Enlace a MyGol
+
+### Qué se hizo:
+1. **Creación de la Ruta `/torneos` (`src/app/torneos/page.js` y `TorneosClient.jsx`)**:
+   - Se implementó la página dedicada `/torneos` con Server Component para metadatos SEO y Client Component interactivo (`framer-motion`).
+   - Se replicaron las 2 pelotas interactivas de la portada en formato destacado (con animación flotante suave, patrón de gajos de fútbol y resplandor dinámico):
+     - **Pelota 1: Liga Inclusiva**: Escudo de Andar FC, "Desde 1998", "Fútbol inclusivo para todos" y botón destacado "VER TORNEO".
+     - **Pelota 2: Super Liga AFA**: Escudos oficiales de AFA y SAT, "AFA & SAT", "Máxima categoría del fútbol inclusivo" y botón "VER TORNEO".
+   - Ambas pelotas y sus botones están configurados como enlaces directos a MyGol (`https://futbolinclusivo.mygol.es/tournaments`) con apertura segura en nueva pestaña (`target="_blank" rel="noopener noreferrer"`).
+2. **Secciones Complementarias en `/torneos`**:
+   - Botón central de acceso al portal general de MyGol.
+   - Tarjetas informativas sobre lo que se encuentra en tiempo real en MyGol (Fixtures y Fechas, Tablas de Posiciones, Resultados Oficiales y Goleadores).
+   - Banner inferior de llamada a la acción para "Inscribir Equipo vía WhatsApp" y "Escuelita Infantil".
+3. **Integración Global**:
+   - Enlace añadido en el menú de navegación del pie de página (`src/components/layout/Footer.jsx` -> `Torneos y Fixture (MyGol)`).
+   - Registrada la página en el catálogo de gestión del CMS (`src/app/admin/pages/page.js`).
+   - El widget flotante (`FloatingButtons.jsx`) que ya enlazaba a `/torneos` ahora navega fluidamente sin errores 404.
+4. **Validación y Build**:
+   - Compilación exitosa con `next build` (Turbopack): 69/69 rutas generadas con 0 errores.
+
+
