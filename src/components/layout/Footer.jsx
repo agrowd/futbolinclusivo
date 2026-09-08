@@ -15,7 +15,8 @@ const footerLinks = [
   {
     title: "Programas",
     links: [
-      { href: "/inscripcion", label: "Inscripción a Torneos" },
+      { href: "/inscripcion", label: "Inscripción de Equipos" },
+      { href: "/programas/escuela", label: "Escuelita Infantil" },
       { href: "https://canchas.futbolinclusivo.org.ar/disponibilidad", label: "Alquiler de Canchas", external: true },
       { href: "/novedades", label: "Novedades" },
     ],

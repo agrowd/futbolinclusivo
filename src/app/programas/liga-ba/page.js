@@ -1,7 +1,8 @@
-import { Trophy, Calendar, CheckSquare, FileText, Medal, Info, ChevronRight } from "lucide-react";
+import { Trophy, Calendar, CheckSquare, FileText, Medal, Info, ChevronRight, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import FadeIn from "@/components/ui/FadeIn";
+import { WHATSAPP_INSCRIPTION_TEAM_URL } from "@/lib/whatsapp";
 
 export const metadata = {
   title: "Liga BA - Premium Experience",
@@ -131,9 +132,16 @@ export default function LigaBA() {
           <h2 style={{ fontSize: "2rem", fontWeight: 900, marginBottom: "20px" }}>¿QUERÉS SER PARTE?</h2>
           <p style={{ color: "rgba(255,255,255,0.5)", marginBottom: "40px", fontSize: "1.1rem" }}>Inscribí a tu institución ahora mismo or descargá el Listado de Buena Fe.</p>
           <div style={{ display: "flex", justifyContent: "center", gap: "20px", flexWrap: "wrap" }}>
-            <Link href="/inscripcion" className="btn btn-lg" style={{ background: "var(--color-primary-light)", color: "#fff", fontWeight: 800 }}>
-              INSCRIBIR EQUIPO
-            </Link>
+            <a 
+              href={WHATSAPP_INSCRIPTION_TEAM_URL} 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-lg flex items-center gap-2" 
+              style={{ background: "#25D366", color: "#fff", fontWeight: 800 }}
+            >
+              <MessageCircle size={20} />
+              <span>INSCRIBIR EQUIPO</span>
+            </a>
             <a href="#" className="btn btn-lg" style={{ background: "rgba(255,255,255,0.05)", color: "#fff", border: "1px solid rgba(255,255,255,0.1)" }}>
               LISTADO DE BUENA FE
             </a>

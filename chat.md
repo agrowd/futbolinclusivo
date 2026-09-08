@@ -1,5 +1,30 @@
 # Conversación y Solución — Gestión de Noticias y Rutas Dinámicas (Next.js 16)
 
+## ⚽ Sesión 53: Redirección de Inscripción a Equipos y Escuelita Infantil a WhatsApp (2026-09-08)
+
+### 📌 Contexto
+El usuario solicitó:
+- "Que inscirbir equipo e inscirbirse en la escuelita infantil lleve a este numero de whatsapp +54 9 11 2507-9380"
+
+### 🛠️ Acciones Realizadas
+1. **Centralización de Constantes de WhatsApp (`src/lib/whatsapp.js`)**:
+   - Teléfono oficial: `+54 9 11 2507-9380` (`5491125079380`).
+   - URLs de redirección directa con mensaje pre-redactado:
+     - `WHATSAPP_INSCRIPTION_TEAM_URL`: `https://wa.me/5491125079380?text=¡Hola! Quiero inscribir a mi equipo en Fútbol Inclusivo.`
+     - `WHATSAPP_INSCRIPTION_ESCUELA_URL`: `https://wa.me/5491125079380?text=¡Hola! Quiero inscribirme en la Escuelita de Fútbol Infantil.`
+2. **Rediseño del Portal de Inscripción (`/inscripcion`)**:
+   - Tarjeta 1: "Inscribir Equipo" con botón a WhatsApp oficial.
+   - Tarjeta 2: "Escuelita Infantil" con botón a WhatsApp oficial.
+   - Número oficial visible y clickable. Formulario digital conservado para carga de planteles de buena fe.
+3. **Nueva Página de Escuelita Infantil (`/programas/escuela`)**:
+   - Diseño moderno con paleta oscura, propuesta pedagógica ("Fútbol 3 Tiempos"), presentación del staff docente con fotografías (Roberto Salazar, Santiago Conde, Sebastián Subirá), información de canchas en Moreno y llamados a la acción destacados a WhatsApp.
+4. **Actualización de Enlaces Globales**:
+   - Hero en Home ("INSCRIBIR EQUIPO"), botones flotantes (`FloatingButtons.jsx`), página de ligas (`/programas/ligas`), liga BA (`/programas/liga-ba`), hub de programas (`/programas`) y footer (`Footer.jsx`).
+5. **Validación y Despliegue**:
+   - Build de producción (`npm run build`) validado con 68/68 rutas OK.
+
+---
+
 ## ⚽ Sesión 52: Conciliación de Lista Manual y Casos Especiales en Día de las Infancias (2026-09-07)
 
 ### 📌 Contexto

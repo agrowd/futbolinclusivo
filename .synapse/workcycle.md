@@ -696,3 +696,36 @@
 4. **Métricas Consolidadas**:
    - Total inscriptos: 180 (171 + 9 casos especiales).
    - Total acreditados ingresados: 120 participantes.
+
+## 2026-09-08 — Sesión 53: Centralización de Inscripciones a Equipos y Escuelita Infantil al WhatsApp Oficial (+54 9 11 2507-9380)
+
+### Qué se hizo:
+1. **Definición Centralizada de Contacto (`src/lib/whatsapp.js`)**:
+   - Número oficial: `+54 9 11 2507-9380` (`5491125079380`).
+   - URLs generadas con mensajes pre-cargados:
+     - `WHATSAPP_INSCRIPTION_TEAM_URL`: "¡Hola! Quiero inscribir a mi equipo en Fútbol Inclusivo."
+     - `WHATSAPP_INSCRIPTION_ESCUELA_URL`: "¡Hola! Quiero inscribirme en la Escuelita de Fútbol Infantil."
+2. **Rediseño del Portal de Inscripción (`src/app/inscripcion/page.js`)**:
+   - Transformado en un portal dual con 2 tarjetas de alta conversión:
+     - Tarjeta 1 (Verde): "Inscribir Equipo" con enlace a WhatsApp oficial para torneos y ligas.
+     - Tarjeta 2 (Ámbar): "Escuelita Infantil" con enlace a WhatsApp oficial para niños, niñas y jóvenes.
+     - Aviso de contacto telefónico directo a `+54 9 11 2507-9380`.
+     - Sección secundaria con el formulario digital de buena fe para planteles de instituciones.
+3. **Nueva Landing Dedicada para Escuelita Infantil (`src/app/programas/escuela/page.js`)**:
+   - Reemplazado el placeholder genérico por una página integral:
+     - Hero con llamada a la acción prominente a WhatsApp (`WHATSAPP_INSCRIPTION_ESCUELA_URL`).
+     - Cuadrícula de características clave: Edades (5 a 17 años), Sede Oficial (Predio Andar FC Moreno), Frecuencia semanal y Enfoque en valores.
+     - Metodología "Fútbol 3 Tiempos" (1. Los Acuerdos, 2. El Partido, 3. La Reflexión).
+     - Staff docente de Fútbol Infantil con fotos reales y roles (Roberto Salazar, Santiago Conde, Sebastián Subirá).
+     - Tarjeta de instalaciones y canchas en Moreno con enlace a disponibilidad.
+     - Banner final de contacto directo vía WhatsApp con el número visible.
+4. **Actualización de Enlaces en Todo el Sitio**:
+   - Botón principal del Hero en portada (`HomeClient.js`): "INSCRIBIR EQUIPO" redirige al WhatsApp oficial de equipos.
+   - Botones flotantes (`FloatingButtons.jsx`): Se incorporaron accesos directos para "Inscribir Equipo" y "Escuelita Infantil" apuntando a WhatsApp con `target="_blank"`.
+   - Página de Ligas (`src/app/programas/ligas/page.js`): Botón "¿Querés inscribir a tu institución?" actualizado a WhatsApp.
+   - Página de Liga BA (`src/app/programas/liga-ba/page.js`): Botón "INSCRIBIR EQUIPO" actualizado a WhatsApp.
+   - Página de Programas (`src/app/programas/page.js`): Botón final actualizado a WhatsApp.
+   - Footer (`Footer.jsx`): Incorporado enlace a "Escuelita Infantil".
+5. **Validación**:
+   - Compilación exitosa con `next build` (Turbopack): 68/68 rutas generadas con 0 errores.
+

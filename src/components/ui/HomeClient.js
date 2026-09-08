@@ -16,7 +16,10 @@ import {
   Goal,
   Folder,
   Sparkles,
+  MapPin,
+  MessageCircle,
 } from "lucide-react";
+import { WHATSAPP_INSCRIPTION_TEAM_URL } from "@/lib/whatsapp";
 
 // Standard action buttons from legacy design
 const actionButtons = [
@@ -88,12 +91,15 @@ export default function HomeClient({ dynamicNews = [], dynamicAlbums = [] }) {
               Equiparamos oportunidades y construimos una sociedad más inclusiva a través del deporte más lindo del mundo.
             </motion.p>
             <motion.div variants={itemVariants} className="flex flex-wrap gap-3 md:gap-6">
-              <Link 
-                href="/inscripcion" 
-                className="bg-white text-black font-black px-5 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 rounded-xl md:rounded-2xl transition-all hover:bg-[#36b37e] hover:text-white hover:scale-105 active:scale-95 shadow-2xl uppercase text-xs sm:text-sm tracking-wider border-2 border-white"
+              <a 
+                href={WHATSAPP_INSCRIPTION_TEAM_URL} 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white text-black font-black px-5 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 rounded-xl md:rounded-2xl transition-all hover:bg-[#25D366] hover:text-white hover:border-[#25D366] hover:scale-105 active:scale-95 shadow-2xl uppercase text-xs sm:text-sm tracking-wider border-2 border-white flex items-center gap-2.5"
               >
-                INSCRIBIR EQUIPO
-              </Link>
+                <MessageCircle size={18} className="text-[#25D366] group-hover:text-white" />
+                <span>INSCRIBIR EQUIPO</span>
+              </a>
               <Link 
                 href="/institucional" 
                 className="bg-white/10 text-white font-black px-5 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 rounded-xl md:rounded-2xl border-2 border-white/30 transition-all hover:bg-white/20 active:scale-95 backdrop-blur-xl uppercase text-xs sm:text-sm tracking-wider"

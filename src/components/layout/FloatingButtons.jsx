@@ -2,7 +2,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { MapPin, Trophy, Calendar, X as XIcon, MousePointer } from "lucide-react";
+import { MapPin, Trophy, Calendar, X as XIcon, MousePointer, Users } from "lucide-react";
+import { WHATSAPP_INSCRIPTION_TEAM_URL, WHATSAPP_INSCRIPTION_ESCUELA_URL } from "@/lib/whatsapp";
 
 export default function FloatingButtons() {
   const [isOpen, setIsOpen] = useState(false);
@@ -83,15 +84,26 @@ export default function FloatingButtons() {
       label: "Alquilar Cancha",
       color: "from-blue-500 to-blue-600",
       glow: "shadow-blue-500/50",
-      description: "Reserva tu espacio"
+      description: "Reserva tu espacio",
+      external: true,
     },
     {
-      href: "/inscripcion",
+      href: WHATSAPP_INSCRIPTION_TEAM_URL,
       icon: Trophy,
       label: "Inscribir Equipo",
-      color: "from-green-500 to-green-600", 
+      color: "from-emerald-500 to-green-600", 
       glow: "shadow-green-500/50",
-      description: "Participa ahora"
+      description: "WhatsApp directo",
+      external: true,
+    },
+    {
+      href: WHATSAPP_INSCRIPTION_ESCUELA_URL,
+      icon: Users,
+      label: "Escuelita Infantil",
+      color: "from-amber-500 to-orange-600", 
+      glow: "shadow-amber-500/50",
+      description: "Inscribite por WhatsApp",
+      external: true,
     },
     {
       href: "/torneos",
@@ -99,7 +111,7 @@ export default function FloatingButtons() {
       label: "Ver Torneos",
       color: "from-purple-500 to-purple-600",
       glow: "shadow-purple-500/50", 
-      description: "Calendario completo"
+      description: "Calendario completo",
     }
   ];
 
@@ -178,6 +190,8 @@ export default function FloatingButtons() {
               >
                 <Link
                   href={btn.href}
+                  target={btn.external || btn.href.startsWith("http") ? "_blank" : undefined}
+                  rel={btn.external || btn.href.startsWith("http") ? "noopener noreferrer" : undefined}
                   className={`group relative flex items-center gap-4 bg-gradient-to-r ${btn.color} text-white px-6 py-4 pr-8 rounded-2xl shadow-2xl shadow-${btn.glow} hover:shadow-3xl transition-all duration-300 border border-white/20 backdrop-blur-sm`}
                 >
                   {/* Animated icon container with soccer field pattern */}

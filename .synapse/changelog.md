@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.10.15 — 2026-09-08
+- feat: Centralización de inscripciones para Equipos y Escuelita Infantil al WhatsApp oficial (+54 9 11 2507-9380), creación de landing dedicada para Escuela Infantil (/programas/escuela) y rediseño de portal dual en /inscripcion.
+
 ## v1.10.14 — 2026-09-07
 - feat: Conciliación de asistencias manuales en Día de las Infancias, acreditando inscriptos y registrando 9 casos especiales en MongoDB Atlas.
 

@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { ArrowRight, ChevronRight } from "lucide-react";
+import { ArrowRight, ChevronRight, MessageCircle } from "lucide-react";
 import FadeIn from "@/components/ui/FadeIn";
 import DynamicIcon from "@/components/ui/DynamicIcon";
+import { WHATSAPP_INSCRIPTION_TEAM_URL } from "@/lib/whatsapp";
 
 // Fallbacks nativos si no hay datos en CMS
 const DEFAULT_PROGRAMS = [
@@ -164,16 +165,23 @@ export default function ProgramasPage() {
               {ctaTitle}
             </h2>
             <p style={{ color: "rgba(255,255,255,0.6)", maxWidth: "600px", margin: "0 auto 40px", fontSize: "1.1rem" }}>
-              {ctaDescription}
+              Registrá a tu equipo en la Liga BA o la Liga Nacional directamente a través de nuestro canal oficial de WhatsApp.
             </p>
-            <Link href="/inscripcion" className="btn btn-lg" style={{ 
-              background: "#36b37e", 
-              color: "#fff",
-              fontWeight: 800,
-              padding: "18px 40px"
-            }}>
-              IR AL PORTAL DE INSCRIPCIÓN
-            </Link>
+            <a 
+              href={WHATSAPP_INSCRIPTION_TEAM_URL} 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-lg inline-flex items-center justify-center gap-2" 
+              style={{ 
+                background: "#25D366", 
+                color: "#fff",
+                fontWeight: 800,
+                padding: "18px 40px"
+              }}
+            >
+              <MessageCircle size={22} />
+              <span>INSCRIBIR EQUIPO VÍA WHATSAPP</span>
+            </a>
           </div>
         </div>
       </section>

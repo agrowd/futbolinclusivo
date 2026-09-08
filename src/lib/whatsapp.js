@@ -1,4 +1,17 @@
 /**
+ * Official Registration Contact WhatsApp
+ */
+export const WHATSAPP_REGISTRATION_PHONE = "5491125079380";
+
+export const WHATSAPP_INSCRIPTION_TEAM_URL = `https://wa.me/${WHATSAPP_REGISTRATION_PHONE}?text=${encodeURIComponent(
+  "¡Hola! Quiero inscribir a mi equipo en Fútbol Inclusivo."
+)}`;
+
+export const WHATSAPP_INSCRIPTION_ESCUELA_URL = `https://wa.me/${WHATSAPP_REGISTRATION_PHONE}?text=${encodeURIComponent(
+  "¡Hola! Quiero inscribirme en la Escuelita de Fútbol Infantil."
+)}`;
+
+/**
  * Formats a raw telephone string into an international WhatsApp-compatible number format (549XXXXXXXXXX)
  */
 export function formatWhatsAppPhone(phone) {
