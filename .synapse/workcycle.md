@@ -781,5 +781,58 @@
 5. **Validación**:
    - Compilación exitosa con `next build` (Turbopack): 69/69 rutas generadas con 0 errores.
 
+## 2026-09-15 — Sesión 56: Análisis de Datos y Generación de Reporte de Impacto en PDF para el Día de las Infancias
+
+### Qué se hizo:
+1. **Extracción y Consolidación de Datos**:
+   - Se ejecutó script de inspección en MongoDB Atlas (`scripts/inspect-infancias.mjs`) obteniendo 180 registros individuales del Día de las Infancias.
+   - Se procesó la reconciliación con listas manuales de ingreso en puerta (`scripts/reconcile-infancias-manual-list.mjs`), registrando casos especiales y acreditaciones presenciales.
+2. **Análisis Estadístico Profundo (`scripts/analyze-infancias.mjs`)**:
+   - **Asistencia Total Presencial**: 120 niños/as acreditados de 180 inscriptos (66.67% de presentismo). Estimación total de personas en predio: 198 a 289 personas (incluyendo 78 a 109 adultos responsables).
+   - **Demografía y Rangos Etarios**: Edad promedio de 8.7 años (mediana 8.0 años). Franja dominante: 4 a 9 años (51.7% del total de participantes, con >75% de presentismo).
+   - **Análisis Territorial**: La Reja / Moreno (72.2% presentismo, 65 asistidos), Moreno Centro/Barrios (36 asistidos), Paso del Rey (100% presentismo), Trujui, Merlo, Libertad, Ituzaingó.
+   - **Instituciones y Clubes**: Comunidad Abierta / Particular (94 inscriptos), Granja Andar / Andar FC (50 inscriptos), Club Atlético Altos de la Reja (14 inscriptos, 100% asistencia perfecta ★), PDI (13 inscriptos, 76.9%), Escuelas Públicas y Especiales.
+   - **Inclusión y Salud**: 6 casos identificados con necesidades específicas (TEA/Autismo, Síndrome de West/Epilepsia refractaria, Cardiopatía congénita, Asma bronquial, Alergias severas).
+3. **Generación de Reporte PDF Ejecutivo (`scripts/generate-pdf-report.mjs`)**:
+   - Se diseñó plantilla HTML/CSS institucional responsive con paleta cromática verde Andar (`#166534`), tipografía `Plus Jakarta Sans`, tarjetas KPI, gráfico de dona en SVG, barras de progreso y tablas formateadas.
+   - Se compiló a PDF de 2 páginas exactas (`Reporte_Impacto_Dia_de_las_Infancias.pdf`) usando Microsoft Edge Headless (`--headless --disable-gpu --print-to-pdf`).
+4. **Verificación Visual**:
+   - Capturas de pantalla e inspección OCR confirmando maquetación limpia, 0 desbordes y calidad vectorial completa.
+
+### Decisiones tomadas:
+- D-54: Adoptar Microsoft Edge Headless para la generación de reportes ejecutivos en PDF de alta fidelidad.
+
+### Estado Final:
+- Documento `Reporte_Impacto_Dia_de_las_Infancias.pdf` generado exitosamente en la raíz del proyecto.
+
+## 2026-11-12 — Sesión 57: Diagnóstico de Caída de Dominio `futbolinclusivo.org.ar` y Subdominio `canchas`
+
+### Qué se hizo:
+1. **Diagnóstico DNS Público vs Autoritative DNS (`ns1.vercel-dns.com`)**:
+   - Se verificó que las consultas públicas (`8.8.8.8`) para `futbolinclusivo.org.ar`, `www.futbolinclusivo.org.ar` y `canchas.futbolinclusivo.org.ar` devuelven `NXDOMAIN` (`DNS_ERROR_RCODE_NAME_ERROR`).
+   - Sin embargo, al consultar directamente al servidor autoritativo de Vercel (`ns1.vercel-dns.com`), todos los registros siguen intactos y respondiendo:
+     - `futbolinclusivo.org.ar` -> `64.29.17.1`, `216.198.79.1` (HTTP 308 -> `https://www.futbolinclusivo.org.ar/`)
+     - `canchas.futbolinclusivo.org.ar` -> `64.29.17.65`, `64.29.17.1` (HTTP 307 -> `/dashboard/agenda`)
+2. **Auditoría RDAP Oficial de NIC.ar (`https://rdap.nic.ar/domain/futbolinclusivo.org.ar`)**:
+   - Se identificó la causa raíz exacta: el dominio `futbolinclusivo.org.ar` **venció el 12 de octubre de 2026** (`2026-10-12T18:32:59+00:00`).
+   - Al cumplirse hoy (`2026-11-12`) exactamente 30 días desde el vencimiento sin renovación, NIC.ar cambió el estado del dominio a `"status": ["inactive"]`, suspendiendo la delegación DNS en la zona `.org.ar` (período de 15 días sin servicio DNS antes de la liberación definitiva del dominio).
+   - Se verificó la entidad titular en RDAP (`https://rdap.nic.ar/entity/30688640357`): **ASOCIACION CIVIL ANDAR** (CUIT `30-68864035-7`).
+3. **Documentación**:
+   - Se registró el incidente como `ERR-09` en `.synapse/errores.md` y se redactó el instructivo de renovación urgente en NIC.ar.
+
+## 2026-11-17 — Sesión 58: Aumento de Tamaño en Logos de Partners Globales y Color Permanente en Logo AFA (Footer)
+
+### Qué se hizo:
+1. **Color permanente en el logo de AFA (`src/components/layout/Footer.jsx`)**:
+   - Se agregaron las propiedades `alwaysColor: true` e `isSquare: true` al ítem de **AFA** (`/logo-afa.png`) dentro del array `aliados`.
+   - Cuando `alwaysColor` está activo, el logo se muestra siempre con `filter: "none"` y `opacity: 1` (sin el filtro `grayscale(100%) brightness(0) invert(1)` que convertía el círculo morado en un círculo gris sólido hasta hacer hover).
+2. **Aumento de tamaño de todos los logos de Partners Globales**:
+   - Los logos horizontales (**FIFA Foundation**, **Common Goal**, **UEFA Foundation**) pasaron de `clamp(60px, 8vw, 80px) x clamp(24px, 3vw, 32px)` a **`clamp(110px, 14vw, 150px) x clamp(44px, 6vw, 60px)`**.
+   - El logo circular de **AFA** pasó de estar limitado por `32px` de alto a **`clamp(64px, 9vw, 84px) x clamp(64px, 9vw, 84px)`**.
+   - Se amplió el espaciado (`gap`) entre partners a `clamp(28px, 5vw, 56px)`.
+
+
+
+
 
 

@@ -8,7 +8,7 @@ const aliados = [
   { name: "FIFA Foundation", logo: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/commons/a/aa/FIFA_logo_without_slogan.svg&n=-1" },
   { name: "Common Goal", logo: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/commons/8/84/Logo_Common_Goal.svg&n=-1" },
   { name: "UEFA Foundation", logo: "https://images.weserv.nl/?url=https://upload.wikimedia.org/wikipedia/commons/e/ef/Uefa_logo.svg&n=-1" },
-  { name: "AFA", logo: "/logo-afa.png" }
+  { name: "AFA", logo: "/logo-afa.png", alwaysColor: true, isSquare: true }
 ];
 
 const footerLinks = [
@@ -367,7 +367,7 @@ export default function Footer() {
             style={{
               display: "flex",
               justifyContent: "center",
-              gap: "clamp(16px, 4vw, 32px)",
+              gap: "clamp(28px, 5vw, 56px)",
               flexWrap: "wrap",
               alignItems: "center"
             }}
@@ -377,8 +377,8 @@ export default function Footer() {
                 key={i}
                 style={{
                   position: "relative",
-                  width: "clamp(60px, 8vw, 80px)",
-                  height: "clamp(24px, 3vw, 32px)",
+                  width: a.isSquare ? "clamp(64px, 9vw, 84px)" : "clamp(110px, 14vw, 150px)",
+                  height: a.isSquare ? "clamp(64px, 9vw, 84px)" : "clamp(44px, 6vw, 60px)",
                   cursor: "pointer",
                   transition: "all 0.3s",
                   flexShrink: 0
@@ -396,17 +396,27 @@ export default function Footer() {
                   fill
                   style={{
                     objectFit: "contain",
-                    filter: "grayscale(100%) brightness(0) invert(1)",
-                    opacity: 0.4,
+                    filter: a.alwaysColor ? "none" : "grayscale(100%) brightness(0) invert(1)",
+                    opacity: a.alwaysColor ? 1 : 0.4,
                     transition: "all 0.5s"
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.filter = "grayscale(0%) brightness(1) invert(0)";
-                    e.target.style.opacity = "1";
+                    if (a.alwaysColor) {
+                      e.target.style.filter = "none";
+                      e.target.style.opacity = "1";
+                    } else {
+                      e.target.style.filter = "grayscale(0%) brightness(1) invert(0)";
+                      e.target.style.opacity = "1";
+                    }
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.filter = "grayscale(100%) brightness(0) invert(1)";
-                    e.target.style.opacity = "0.4";
+                    if (a.alwaysColor) {
+                      e.target.style.filter = "none";
+                      e.target.style.opacity = "1";
+                    } else {
+                      e.target.style.filter = "grayscale(100%) brightness(0) invert(1)";
+                      e.target.style.opacity = "0.4";
+                    }
                   }}
                 />
               </div>

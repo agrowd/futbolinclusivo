@@ -886,4 +886,61 @@ El usuario solicitó:
 3. **Persistencia e Historial**:
    - Se actualizaron los archivos del motor Ariadne (`.synapse/changelog.md` y `.synapse/workcycle.md`) registrando la versión `v1.4.4` con la solución a este requerimiento.
 
+---
+
+## ⚽ Sesión 56: Generación de Reporte de Impacto en PDF — Día de las Infancias (2026-09-15)
+
+### 📌 Contexto
+El usuario solicitó recopilar toda la información disponible del Día de las Infancias (edades, cantidad de gente, padres/tutores, niños, asistentes presenciales vs ausentes, origen geográfico, instituciones, condiciones de salud, etc.) y generar un informe completo de impacto en formato PDF de alta calidad.
+
+### 🛠️ Acciones Realizadas
+1. **Inspección e Integración de Datos**:
+   - Extracción de 180 registros guardados en MongoDB Atlas (`scripts/inspect-infancias.mjs`).
+   - Reconciliación con listas de puerta y planillas manuales (`scripts/reconcile-infancias-manual-list.mjs`), acreditando casos especiales sin QR previo.
+2. **Análisis Estadístico Profundo (`scripts/analyze-infancias.mjs`)**:
+   - **Concurrencia Estimada en Predio**: entre 198 y 289 personas (120 niños acreditados + ~78-109 tutores).
+   - **Tasa de Presentismo**: 120 presentes (66.67%) vs 60 ausentes (33.33%).
+   - **Distribución por Edades**: Edad promedio 8.7 años (mediana 8.0 años). Núcleo mayoritario: 4 a 9 años (51.7% del total con >75% de asistencia).
+   - **Geografía e Instituciones**: Alta concentración en La Reja y Moreno (72.2% asistencia), 100% de asistencia en Club Atlético Altos de la Reja (14/14), acompañamiento del Programa PDI, Granja Andar y escuelas especiales.
+   - **Atención Inclusiva de Salud**: Protocolos específicos para niños con TEA/Autismo, Síndrome de West/Epilepsia refractaria, Cardiopatía congénita, Asma y Alergias severas.
+3. **Generación del Documento PDF (`scripts/generate-pdf-report.mjs`)**:
+   - Diseño HTML5/CSS3 editorial con paleta de color Andar, tipografía `Plus Jakarta Sans`, tarjetas KPI, gráfico de dona SVG, barras de progreso y tablas formateadas.
+   - Compilación con Microsoft Edge Headless en PDF vectorial de 2 páginas exactas (`Reporte_Impacto_Dia_de_las_Infancias.pdf`).
+4. **Validación Visual**:
+   - Inspección con `view_file` confirmando maquetación sin cortes ni desbordes, de calidad profesional.
+
+---
+
+## ⚽ Sesión 57: Diagnóstico de Caída de Dominio y Subdominio `canchas` (2026-11-12)
+
+### 📌 Contexto
+El usuario reportó que no funciona el dominio principal `futbolinclusivo.org.ar` ni tampoco el subdominio `canchas.futbolinclusivo.org.ar`, adjuntando capturas del navegador (`DNS_PROBE_FINISHED_NXDOMAIN`) y del panel de Vercel Domains donde todos los dominios `.org.ar` figuran con `Invalid Configuration`.
+
+### 🕵️ Causa Raíz Confirmada (NIC.ar RDAP)
+1. **Vencimiento del Dominio en NIC.ar**: Según el registro oficial de NIC.ar (`https://rdap.nic.ar/domain/futbolinclusivo.org.ar`), el dominio `futbolinclusivo.org.ar` **venció el 12 de octubre de 2026** (`2026-10-12T18:32:59+00:00`).
+2. **Suspensión de Delegación DNS al día 30 (Hoy, 12/11/2026)**: En NIC.ar, tras el vencimiento hay 30 días en los que el sitio sigue funcionando normalmente. Al cumplirse hoy exactamente 30 días sin renovarse, el dominio pasó al estado **`inactive`**, en el cual NIC.ar apaga la delegación hacia los DNS de Vercel (`ns1.vercel-dns.com` y `ns2.vercel-dns.com`) durante 15 días antes de darlo de baja definitivamente.
+3. **Estado de Vercel**: Se comprobó consultando directamente a `ns1.vercel-dns.com` y mediante petición HTTPS directa que tanto la web principal como el sistema de `canchas` siguen 100% operativos en Vercel. El cartel `Invalid Configuration` en Vercel se debe exclusivamente a que NIC.ar desactivó la resolución pública por falta de renovación.
+
+### 🛠️ Solución
+- El titular registrado en NIC.ar (**ASOCIACION CIVIL ANDAR — CUIT `30-68864035-7`**) debe ingresar a **Trámites a Distancia (TAD) / NIC.ar** con Clave Fiscal y **renovar el dominio `futbolinclusivo.org.ar`** antes de que finalice la ventana de 15 días de inactividad. No hace falta tocar nada en Vercel.
+
+---
+
+## ⚽ Sesión 58: Logos de Partners Globales más Grandes y Logo AFA Siempre a Color (2026-11-17)
+
+### 📌 Contexto
+El usuario solicitó en la sección **Partners Globales** del pie de página (`Footer.jsx`):
+1. Que el último logo morado (AFA) se vea siempre así con color (como cuando se posiciona el mouse encima).
+2. Hacer más grandes los logos de todos los partners.
+
+### 🛠️ Acciones Realizadas
+1. **Logo AFA siempre a color**: Se configuró el ítem de `AFA` (`/logo-afa.png`) con `alwaysColor: true` e `isSquare: true` en `src/components/layout/Footer.jsx`, manteniendo `filter: "none"` y `opacity: 1` de forma permanente (tanto en reposo como en hover).
+2. **Aumento de dimensiones de Partners Globales**:
+   - Logos horizontales (FIFA, Common Goal, UEFA): aumentados de `60-80px × 24-32px` a `clamp(110px, 14vw, 150px) × clamp(44px, 6vw, 60px)`.
+   - Logo circular AFA: aumentado de `32px` de alto a `clamp(64px, 9vw, 84px) × clamp(64px, 9vw, 84px)`.
+   - Espaciado (`gap`) aumentado a `clamp(28px, 5vw, 56px)`.
+
+
+
+
 

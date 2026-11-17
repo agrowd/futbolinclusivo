@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.10.18 — 2026-11-17
+- feat: Ampliado el tamaño de todos los logos de Partners Globales en el Footer y configurado el logo circular morado de la AFA para mostrarse siempre a todo color y con opacidad completa.
+
 ## v1.10.17 — 2026-09-08
 - feat: Generación de textos ALT contextuales y enriquecidos para Google Indexing en todas las fotos de álbumes (216 imágenes), incorporando Andar FC, Asociación Civil Andar, Fútbol Inclusivo, sede, jornada y fotógrafo.
 

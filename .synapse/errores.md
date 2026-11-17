@@ -33,3 +33,9 @@
 **Root Cause:** En Next.js 16/15, el objeto `params` en los Route Handlers es ahora una promesa asíncrona. Acceder a `params.id` o desestructurarlo de manera síncrona (`const { id } = params;`) causaba que la variable fuera `undefined`, lo que hacía que `News.findByIdAndDelete(undefined)` retornara `null` y fallara la consulta en base de datos en producción.
 **Solución:** Await el objeto `params` en todos los API dynamic routes (`const { id } = await params;` y `const { slug } = await params;`) antes de interactuar con MongoDB.
 **Estado:** ✅ FIXED
+
+## ERR-09: Caída total de dominio y subdominios (`DNS_PROBE_FINISHED_NXDOMAIN` / Vercel `Invalid Configuration`) (2026-11-12)
+**Síntoma:** `futbolinclusivo.org.ar`, `www.futbolinclusivo.org.ar`, `canchas.futbolinclusivo.org.ar` y `admin.futbolinclusivo.org.ar` no cargan (`DNS_PROBE_FINISHED_NXDOMAIN`) y aparecen con cartel rojo `Invalid Configuration` en Vercel Domains, mientras que `futbolinclusivo.vercel.app` sigue funcionando.
+**Root Cause:** El dominio `futbolinclusivo.org.ar` venció en NIC.ar el `2026-10-12`. Al cumplirse exactamente 30 días del vencimiento el `2026-11-12`, NIC.ar pasó el dominio a estado `"status": ["inactive"]` (etapa de suspensión de delegación DNS de 15 días previa a la caída definitiva), retirando temporalmente la resolución pública de `ns1.vercel-dns.com` y `ns2.vercel-dns.com`.
+**Solución:** Renovar el dominio en NIC.ar ingresando a Trámites a Distancia (TAD) con Clave Fiscal de ARCA/AFIP del titular **ASOCIACION CIVIL ANDAR** (CUIT `30-68864035-7`). No requiere tocar nada en Vercel (los registros A y servidores DNS de Vercel siguen activos y configurados).
+**Estado:** 🟡 PENDING (Requiere renovación en NIC.ar por parte del titular)

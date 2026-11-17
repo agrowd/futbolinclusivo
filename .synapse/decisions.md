@@ -22,4 +22,6 @@
 | D-18 | **Permitir eliminación a editores** | Inconsistencia de seguridad que limitaba el DELETE a `admin` mientras que `editor` ya podía crear/editar noticias y eliminar multimedia. Ahora los editores también eliminan noticias para mejorar consistencia operativa. | 🔒 LOCKED |
 | D-19 | **Uso obligatorio de `await params`** | En Next.js 16/15, `params` es una promesa asíncrona tanto en páginas de servidor como en Route Handlers. Se impone el await obligatorio para evitar lecturas síncronas que den `undefined` o lancen warnings/runtime crashes en producción. | 🔒 LOCKED |
 | D-53 | **Centralización de Inscripciones vía WhatsApp (+54 9 11 2507-9380)** | Redirigir los llamados a la acción de "Inscribir equipo" y "Escuelita infantil" hacia WhatsApp oficial con mensajes predefinidos acelera la conversión directa y simplifica la atención institucional. | 🔒 LOCKED |
+| D-54 | **Generación de Reportes PDF con Edge Headless** | Compilación de plantillas HTML/CSS en PDF mediante Microsoft Edge Headless (`--headless --print-to-pdf`) con `-webkit-print-color-adjust: exact` para garantizar paridad visual vectorial de alta definición, gráficos SVG integrados y compaginación exacta a 2 páginas. | 🔒 LOCKED |
+
 
