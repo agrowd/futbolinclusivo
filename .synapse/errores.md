@@ -38,4 +38,11 @@
 **Síntoma:** `futbolinclusivo.org.ar`, `www.futbolinclusivo.org.ar`, `canchas.futbolinclusivo.org.ar` y `admin.futbolinclusivo.org.ar` no cargan (`DNS_PROBE_FINISHED_NXDOMAIN`) y aparecen con cartel rojo `Invalid Configuration` en Vercel Domains, mientras que `futbolinclusivo.vercel.app` sigue funcionando.
 **Root Cause:** El dominio `futbolinclusivo.org.ar` venció en NIC.ar el `2026-10-12`. Al cumplirse exactamente 30 días del vencimiento el `2026-11-12`, NIC.ar pasó el dominio a estado `"status": ["inactive"]` (etapa de suspensión de delegación DNS de 15 días previa a la caída definitiva), retirando temporalmente la resolución pública de `ns1.vercel-dns.com` y `ns2.vercel-dns.com`.
 **Solución:** Renovar el dominio en NIC.ar ingresando a Trámites a Distancia (TAD) con Clave Fiscal de ARCA/AFIP del titular **ASOCIACION CIVIL ANDAR** (CUIT `30-68864035-7`). No requiere tocar nada en Vercel (los registros A y servidores DNS de Vercel siguen activos y configurados).
-**Estado:** 🟡 PENDING (Requiere renovación en NIC.ar por parte del titular)
+**Estado:** ✅ FIXED
+
+## ERR-10: Commits pusheados a GitHub no disparan deploy en Vercel Hobby (2026-11-17)
+**Síntoma:** Tras hacer `git push origin main`, el código sube a GitHub pero Vercel no inicia el build y la web en producción sigue sirviendo la versión anterior.
+**Root Cause:** El `git config user.email` local estaba en `ai@example.com` (que GitHub asocia al usuario externo `Matahari13`), y los planes **Vercel Hobby** bloquean los deploys automáticos cuando el autor del commit no coincide con el dueño de la cuenta de Vercel/GitHub (`agrowd`).
+**Solución:** Configurar permanentemente en el repositorio local `git config user.name "agrowd"` y `git config user.email "64878267+agrowd@users.noreply.github.com"`. Al reenviar el commit (`44c4729`), Vercel compiló y desplegó inmediatamente en producción.
+**Commit:** `44c4729`
+**Estado:** ✅ FIXED

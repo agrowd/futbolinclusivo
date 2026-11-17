@@ -830,6 +830,9 @@
    - Los logos horizontales (**FIFA Foundation**, **Common Goal**, **UEFA Foundation**) pasaron de `clamp(60px, 8vw, 80px) x clamp(24px, 3vw, 32px)` a **`clamp(110px, 14vw, 150px) x clamp(44px, 6vw, 60px)`**.
    - El logo circular de **AFA** pasó de estar limitado por `32px` de alto a **`clamp(64px, 9vw, 84px) x clamp(64px, 9vw, 84px)`**.
    - Se amplió el espaciado (`gap`) entre partners a `clamp(28px, 5vw, 56px)`.
+3. **Corrección de Autoría de Git para Despliegue en Vercel Hobby (`ERR-10` / `D-55`)**:
+   - Se detectó que el primer push (`9eae673`) tenía como autor `AI Assistant <ai@example.com>`, lo cual hacía que Vercel Hobby ignorara el webhook por no coincidir con el propietario (`agrowd`).
+   - Se configuró `git config user.name "agrowd"` y `git config user.email "64878267+agrowd@users.noreply.github.com"`, se reenvió el commit (`44c4729`) y se verificó mediante inspección del HTML en vivo de producción que los nuevos tamaños (`110px-150px`) y el logo de AFA a color ya están publicados en vivo.
 
 
 

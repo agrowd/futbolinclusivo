@@ -939,6 +939,9 @@ El usuario solicitó en la sección **Partners Globales** del pie de página (`F
    - Logos horizontales (FIFA, Common Goal, UEFA): aumentados de `60-80px × 24-32px` a `clamp(110px, 14vw, 150px) × clamp(44px, 6vw, 60px)`.
    - Logo circular AFA: aumentado de `32px` de alto a `clamp(64px, 9vw, 84px) × clamp(64px, 9vw, 84px)`.
    - Espaciado (`gap`) aumentado a `clamp(28px, 5vw, 56px)`.
+3. **Resolución de Bloqueo de Deploy en Vercel Hobby (`ERR-10`)**:
+   - El usuario reportó que seguía viendo la web igual. Al auditar la API de GitHub y el HTML de producción, se descubrió que el commit inicial (`9eae673`) tenía el autor genérico `AI Assistant <ai@example.com>`, el cual es rechazado por Vercel Hobby por no pertenecer al dueño de la cuenta (`agrowd`).
+   - Se corrigió la identidad local de Git a `agrowd <64878267+agrowd@users.noreply.github.com>`, se actualizó el commit (`44c4729`) y se comprobó que Vercel desplegó inmediatamente los cambios en producción.
 
 
 
