@@ -986,6 +986,27 @@ El usuario solicitó:
 3. **Validación**:
    - `npm run build` ejecutado localmente: 69/69 rutas compiladas de manera exitosa con Turbopack y verificación de presencia de `<title>` en el HTML estático resultante.
 
+---
+
+## ⚽ Sesión 61: Marquesina Superior Exclusiva con Andar FC, AFA y SAT (2026-11-18)
+
+### 📌 Contexto
+El usuario adjuntó una captura de la marquesina superior (`ClubStrip.jsx`) y solicitó:
+- "dejar solo estos 3 arriba" (mostrando Andar FC, AFA y SAT con sus respectivos escudos y separadores).
+
+### 🛠️ Acciones Realizadas
+1. **Actualización de `ClubStrip.jsx`**:
+   - Se depuró la lista de clubes para mantener exclusivamente las 3 entidades centrales:
+     - **Andar FC** (`/andarfc-logo.png`)
+     - **AFA** (`/logo-afa.png`)
+     - **SAT** (`/satlogo.png`)
+   - Se removieron los demás clubes y distintivos genéricos.
+   - Se estructuró un array duplicado simétrico (8 iteraciones por mitad de marquesina) para que la animación `@keyframes marquee` (`translateX(0)` a `translateX(-50%)`) fluya de manera ininterrumpida y suave a 35s en cualquier resolución de pantalla.
+2. **Validación**:
+   - `npm run build` exitoso (69/69 rutas).
+   - Push a GitHub con autor `agrowd` y despliegue automático en Vercel.
+
+
 
 
 

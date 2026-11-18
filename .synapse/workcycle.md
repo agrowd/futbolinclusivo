@@ -865,6 +865,21 @@
 4. **Validación**:
    - Compilación exitosa con Turbopack (69/69 rutas generadas sin errores).
 
+## 2026-11-18 — Sesión 61: Ajuste de Marquesina Superior (Solo Andar FC, AFA y SAT)
+
+### Qué se hizo:
+1. **Filtrado de Logos en Marquesina Superior (`src/components/layout/ClubStrip.jsx`)**:
+   - Siguiendo la indicación del usuario, se dejaron exclusivamente los 3 logos institucionales principales:
+     - **Andar FC** (`/andarfc-logo.png`)
+     - **AFA** (`/logo-afa.png`)
+     - **SAT** (`/satlogo.png`)
+   - Se removieron los demás clubes y badges genéricos.
+   - Se configuró una repetición simétrica de 8 bloques por mitad para garantizar un desplazamiento horizontal continuo (`animate-marquee` de 35s) sin saltos visuales ni vacíos en ninguna resolución.
+2. **Validación**:
+   - Verificación de compilación en Next.js Turbopack.
+   - Despliegue en producción vía GitHub y Vercel.
+
+
 
 
 

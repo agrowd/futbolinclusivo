@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.10.21 — 2026-11-18
+- feat: Marquesina superior (`ClubStrip.jsx`) simplificada para incluir exclusivamente las 3 entidades centrales: Andar FC, AFA y SAT con loop continuo infinito.
+
 ## v1.10.20 — 2026-11-18
 - fix: Configurado <title> dinámico y metadatos SEO globales convirtiendo `layout.js` en Server Component mediante `ClientProviders.jsx`.
 - fix: Auditoría y resolución de incoherencias UI/UX:
