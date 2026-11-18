@@ -943,6 +943,20 @@ El usuario solicitó en la sección **Partners Globales** del pie de página (`F
    - El usuario reportó que seguía viendo la web igual. Al auditar la API de GitHub y el HTML de producción, se descubrió que el commit inicial (`9eae673`) tenía el autor genérico `AI Assistant <ai@example.com>`, el cual es rechazado por Vercel Hobby por no pertenecer al dueño de la cuenta (`agrowd`).
    - Se corrigió la identidad local de Git a `agrowd <64878267+agrowd@users.noreply.github.com>`, se actualizó el commit (`44c4729`) y se comprobó que Vercel desplegó inmediatamente los cambios en producción.
 
+---
+
+## ⚽ Sesión 59: Modificación del Hero a Lenguaje Inclusivo 'TODXS' (2026-11-18)
+
+### 📌 Contexto
+El usuario envió una captura del encabezado principal de la portada solicitando cambiar "TODOS" por "TODXS" ("EL FÚTBOL ES PARA TODXS.").
+
+### 🛠️ Acciones Realizadas
+1. **Actualización de `HomeClient.js`**:
+   - Se actualizó el título en [HomeClient.js](file:///c:/Users/Try%20Hard/Desktop/Nexte/futbolinclusivo-org/src/components/ui/HomeClient.js#L86-L90) reemplazando `PARA TODOS.` por `PARA TODXS.`.
+2. **Registro y Despliegue**:
+   - Se documentó el cambio en `.synapse/` y se realizó commit con la autoría `agrowd` y push a la rama `main` en GitHub.
+
+
 
 
 

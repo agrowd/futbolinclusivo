@@ -85,7 +85,7 @@ export default function HomeClient({ dynamicNews = [], dynamicAlbums = [] }) {
             </motion.div>
             <motion.h1 variants={itemVariants} className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-black mb-4 md:mb-6 leading-[0.9] tracking-tighter">
               EL FÚTBOL ES <br/>
-              <span className="text-[#36b37e] drop-shadow-[0_0_10px_rgba(54,179,126,0.2)]">PARA TODOS.</span>
+              <span className="text-[#36b37e] drop-shadow-[0_0_10px_rgba(54,179,126,0.2)]">PARA TODXS.</span>
             </motion.h1>
             <motion.p variants={itemVariants} className="text-base md:text-xl leading-relaxed text-white/70 mb-6 md:mb-8 max-w-xl">
               Equiparamos oportunidades y construimos una sociedad más inclusiva a través del deporte más lindo del mundo.

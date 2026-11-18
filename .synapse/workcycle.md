@@ -834,6 +834,17 @@
    - Se detectó que el primer push (`9eae673`) tenía como autor `AI Assistant <ai@example.com>`, lo cual hacía que Vercel Hobby ignorara el webhook por no coincidir con el propietario (`agrowd`).
    - Se configuró `git config user.name "agrowd"` y `git config user.email "64878267+agrowd@users.noreply.github.com"`, se reenvió el commit (`44c4729`) y se verificó mediante inspección del HTML en vivo de producción que los nuevos tamaños (`110px-150px`) y el logo de AFA a color ya están publicados en vivo.
 
+## 2026-11-18 — Sesión 59: Actualización del Título Hero a Lenguaje Inclusivo ('TODXS')
+
+### Qué se hizo:
+1. **Actualización de Copy en Portada (`src/components/ui/HomeClient.js`)**:
+   - Se modificó el encabezado principal del Hero:
+     De: `EL FÚTBOL ES PARA TODOS.`
+     A: `EL FÚTBOL ES PARA TODXS.`
+2. **Validación y Despliegue**:
+   - Commit con autor verificado `agrowd` y push a `main` para despliegue automático en Vercel.
+
+
 
 
 

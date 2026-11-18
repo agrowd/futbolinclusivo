@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.10.19 — 2026-11-18
+- feat: Actualizado el slogan principal del Hero en la Home a lenguaje inclusivo: 'EL FÚTBOL ES PARA TODXS.'
+
 ## v1.10.18 — 2026-11-17
 - feat: Ampliado el tamaño de todos los logos de Partners Globales en el Footer y configurado el logo circular morado de la AFA para mostrarse siempre a todo color y con opacidad completa.
 
