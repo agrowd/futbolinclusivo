@@ -24,5 +24,7 @@
 | D-53 | **Centralización de Inscripciones vía WhatsApp (+54 9 11 2507-9380)** | Redirigir los llamados a la acción de "Inscribir equipo" y "Escuelita infantil" hacia WhatsApp oficial con mensajes predefinidos acelera la conversión directa y simplifica la atención institucional. | 🔒 LOCKED |
 | D-54 | **Generación de Reportes PDF con Edge Headless** | Compilación de plantillas HTML/CSS en PDF mediante Microsoft Edge Headless (`--headless --print-to-pdf`) con `-webkit-print-color-adjust: exact` para garantizar paridad visual vectorial de alta definición, gráficos SVG integrados y compaginación exacta a 2 páginas. | 🔒 LOCKED |
 | D-55 | **Autoría Git obligatoria `agrowd <64878267+agrowd@users.noreply.github.com>`** | Vercel Hobby bloquea deploys automáticos si el autor del commit no coincide con el propietario del repositorio en GitHub (`agrowd`). Se fijó en `.git/config` para garantizar que cada push dispare el despliegue en Vercel. | 🔒 LOCKED |
+| D-56 | **Server RootLayout con ClientProviders para Metadata Global** | Se extrajeron los proveedores de sesión y componentes interactivos de layout a `ClientProviders.jsx` para que `src/app/layout.js` sea un Server Component y exporte `metadata` nativo (título dinámico, OpenGraph, íconos y metadataBase), resolviendo la ausencia de `<title>` en el HTML y unificando el formato de pestañas. | 🔒 LOCKED |
+
 
 

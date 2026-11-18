@@ -844,6 +844,28 @@
 2. **Validación y Despliegue**:
    - Commit con autor verificado `agrowd` y push a `main` para despliegue automático en Vercel.
 
+## 2026-11-18 — Sesión 60: Solución al Title de Navegador y Auditoría Integral UI/UX
+
+### Qué se hizo:
+1. **Solución a la Ausencia de `<title>` en Pestaña del Navegador (Causa Raíz)**:
+   - En Next.js App Router, `src/app/layout.js` contenía la directiva `"use client";`, lo que impedía la exportación de `metadata`. En consecuencia, el HTML compilado carecía de `<title>`, provocando que el navegador mostrara la URL (`futbolinclusivo.org.ar` o `futbolinclusivo.vercel.app`).
+   - Se creó `src/components/providers/ClientProviders.jsx` para encapsular los proveedores de cliente (`SessionProvider`, `Header`, `Footer`, `SkipLink`, `FloatingButtons`, `FloatingAdminTools`, `Analytics`).
+   - Se transformó `src/app/layout.js` en un Server Component y se configuró el objeto `metadata` con `metadataBase`, plantilla de título (`%s | Fútbol Inclusivo - Andar FC`), descripción institucional, íconos y OpenGraph completo.
+   - Se añadió `export const metadata` en `src/app/page.js` con el título principal: `Fútbol Inclusivo | Asociación Civil Andar - El Fútbol es para Todxs`.
+2. **Auditoría y Resolución de Incoherencias UI/UX**:
+   - **Marquesina de Clubes (`ClubStrip.jsx`)**: Se reemplazaron los 32 escudos idénticos repetidos de Andar FC por insignias estilizadas y coloreadas de clubes participantes (AFA, SAT, Andar FC, Boca Juniors, River Plate, San Lorenzo, Racing, Independiente, Lanús, Estudiantes LP, Vélez, Huracán, Gimnasia LP, Rosario Central, Newell's, Altos de la Reja, CEF 123).
+   - **Cuenta Regresiva y Estado de Torneo en Home (`HomeClient.js`)**: Se eliminó el bloque obsoleto "Finales 2025 - 6 DE DICIEMBRE" con cuenta regresiva congelada en `00 DÍAS 00 HRS 00 MIN`. Se reemplazó por la tarjeta interactiva oficial "Superliga AFA - Predio Messi Ezeiza" ("En Competencia") con botón a MyGol ("Ver Tablas y Fixture").
+   - **Navegación a Fixtures (`HomeClient.js`)**: Se agregó el botón CTA "Ver Todos en MyGol" en la sección de Partidos Recientes y se actualizó la tarjeta de convocatoria a "Temporada Oficial 2026 - Superliga Inclusiva AFA".
+   - **Popup Intrusivo en Botones Flotantes (`FloatingButtons.jsx`)**: Se eliminó el `scheduleAutoOpen` que desplegaba el menú emergente automáticamente cada 60 segundos sobre el contenido del usuario.
+   - **Título en Ligas (`src/app/programas/ligas/page.js`)**: Se corrigió el placeholder `title: "Ligas - Premium Experience"` por `title: "Ligas y Competencias Oficiales | Fútbol Inclusivo"`.
+   - **Contraste WCAG en Footer (`Footer.jsx`)**: Se mejoró la opacidad del texto de copyright y enlaces secundarios de 30% a 60% para legibilidad accesible.
+   - **Header (`Header.jsx`)**: Se añadió el acceso directo a `/torneos` en el menú desplegable de Programas.
+3. **Decisiones tomadas**:
+   - D-56: Server RootLayout con ClientProviders para exportar Metadata Global y soporte SEO nativo.
+4. **Validación**:
+   - Compilación exitosa con Turbopack (69/69 rutas generadas sin errores).
+
+
 
 
 

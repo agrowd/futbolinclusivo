@@ -5,7 +5,7 @@ import Image from "next/image";
 import { WHATSAPP_INSCRIPTION_TEAM_URL } from "@/lib/whatsapp";
 
 export const metadata = {
-  title: "Ligas - Premium Experience",
+  title: "Ligas y Competencias Oficiales | Fútbol Inclusivo",
   description: "Conocé todas las ligas y torneos de Fútbol Inclusivo: Liga BA, Super Liga AFA y Liga Nacional.",
 };
 

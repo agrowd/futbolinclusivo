@@ -1,0 +1,804 @@
+import fs from 'fs';
+import path from 'path';
+import { execSync } from 'child_process';
+
+const metrics = JSON.parse(fs.readFileSync('scripts/infancias_metrics.json', 'utf8'));
+
+const htmlContent = `<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Reporte de Impacto - Día de las Infancias | Liga de Fútbol Inclusiva</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+    @page {
+      size: A4 portrait;
+      margin: 8mm 12mm 8mm 12mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      color: #1e293b;
+      background-color: #ffffff;
+      line-height: 1.4;
+      font-size: 12px;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    .page {
+      height: 275mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      page-break-after: always;
+      box-sizing: border-box;
+    }
+
+    .page:last-child {
+      page-break-after: avoid;
+    }
+
+    /* Header Styling */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 10px;
+      border-bottom: 3px solid #166534;
+      margin-bottom: 14px;
+    }
+
+    .brand-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #166534;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+    }
+
+    .brand-subtitle {
+      font-size: 11px;
+      font-weight: 600;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .meta-badge {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #15803d;
+      padding: 4px 12px;
+      border-radius: 16px;
+      font-size: 10px;
+      font-weight: 700;
+      text-align: right;
+    }
+
+    /* Hero Banner Card */
+    .hero-banner {
+      background: linear-gradient(135deg, #166534 0%, #15803d 50%, #047857 100%);
+      color: #ffffff;
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 6px -1px rgba(22, 101, 52, 0.15);
+    }
+
+    .hero-title {
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .hero-desc {
+      font-size: 11px;
+      color: #dcfce7;
+      line-height: 1.5;
+    }
+
+    /* KPI Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .kpi-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #166534;
+    }
+
+    .kpi-card.accent::before {
+      background: #f59e0b;
+    }
+
+    .kpi-card.blue::before {
+      background: #2563eb;
+    }
+
+    .kpi-card.purple::before {
+      background: #7c3aed;
+    }
+
+    .kpi-value {
+      font-size: 22px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.1;
+      margin-bottom: 2px;
+    }
+
+    .kpi-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .kpi-sub {
+      font-size: 9.5px;
+      color: #15803d;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    /* Section Header */
+    .section-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border-left: 4px solid #166534;
+      padding-left: 8px;
+    }
+
+    /* Grid Layout for Charts & Content */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px;
+    }
+
+    .card-title {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 8px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    /* Progress Bar Rows */
+    .bar-row {
+      margin-bottom: 7px;
+    }
+
+    .bar-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .bar-track {
+      background: #e2e8f0;
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+      display: flex;
+    }
+
+    .bar-fill {
+      background: #166534;
+      height: 100%;
+      border-radius: 4px;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 10.5px;
+      margin-bottom: 8px;
+    }
+
+    th {
+      background: #f1f5f9;
+      color: #334155;
+      font-weight: 700;
+      text-align: left;
+      padding: 5px 8px;
+      border-bottom: 2px solid #cbd5e1;
+    }
+
+    td {
+      padding: 5px 8px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    tr:nth-child(even) td {
+      background: #f8fafc;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 1.5px 6px;
+      border-radius: 10px;
+      font-size: 9px;
+      font-weight: 700;
+    }
+
+    .badge-green {
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    .badge-amber {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
+    .badge-blue {
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+
+    .badge-purple {
+      background: #f3e8ff;
+      color: #6b21a8;
+    }
+
+    /* Callout Box */
+    .callout {
+      background: #f0fdf4;
+      border-left: 4px solid #166534;
+      padding: 8px 12px;
+      border-radius: 0 6px 6px 0;
+      margin-bottom: 12px;
+    }
+
+    .callout-title {
+      font-weight: 800;
+      color: #166534;
+      font-size: 11px;
+      margin-bottom: 2px;
+    }
+
+    .callout-text {
+      font-size: 10px;
+      color: #1e293b;
+      line-height: 1.4;
+    }
+
+    /* SVG Donut Chart Container */
+    .chart-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      gap: 12px;
+    }
+
+    .chart-legend {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+    }
+
+    /* Footer */
+    .footer {
+      padding-top: 8px;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 9px;
+      color: #64748b;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PAGE 1: EXECUTIVE SUMMARY & DEMOGRAPHICS -->
+  <div class="page">
+    <div>
+      <div class="header">
+        <div>
+          <div class="brand-title">Asociación Civil Andar</div>
+          <div class="brand-subtitle">Liga de Fútbol Inclusiva • Predio Granja Andar</div>
+        </div>
+        <div class="meta-badge">
+          <div>JORNADA DÍA DE LAS INFANCIAS</div>
+          <div style="font-weight: 500; opacity: 0.9;">Reporte Consolidado de Impacto 2026</div>
+        </div>
+      </div>
+
+      <div class="hero-banner">
+        <div class="hero-title">Reporte de Impacto: Día de las Infancias 2026</div>
+        <div class="hero-desc">
+          Evaluación estadística integral de la jornada festiva e inclusiva realizada en el predio de Granja Andar (La Reja, Moreno). El evento reunió a niños, niñas, jóvenes y familias en un entorno accesible de juego, deporte y comunidad.
+        </div>
+      </div>
+
+      <!-- KPI CARDS -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-value">198 - 289</div>
+          <div class="kpi-label">Asistencia Total Est.</div>
+          <div class="kpi-sub">120 Niños + 78-109 Tutores</div>
+        </div>
+
+        <div class="kpi-card accent">
+          <div class="kpi-value">120</div>
+          <div class="kpi-label">Niños/as Acreditados</div>
+          <div class="kpi-sub">66.67% Presentismo</div>
+        </div>
+
+        <div class="kpi-card blue">
+          <div class="kpi-value">120</div>
+          <div class="kpi-label">Grupos Familiares</div>
+          <div class="kpi-sub">1.10 Niños por Tutor</div>
+        </div>
+
+        <div class="kpi-card purple">
+          <div class="kpi-value">8.7 yrs</div>
+          <div class="kpi-label">Edad Promedio</div>
+          <div class="kpi-sub">Mediana: 8.0 años (1 a 18+)</div>
+        </div>
+      </div>
+
+      <!-- SECTION 1: ATTENDANCE & AGE BREAKDOWN -->
+      <div class="section-title">1. Asistencia General y Distribución Etaria</div>
+
+      <div class="grid-2">
+        <!-- Attendance Donut Chart -->
+        <div class="card">
+          <div class="card-title">Balance de Asistencia (Inscriptos vs Presentes)</div>
+          <div class="chart-box">
+            <svg width="110" height="110" viewBox="0 0 42 42">
+              <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#f87171" stroke-width="6.5"></circle>
+              <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#166534" stroke-width="6.5" 
+                      stroke-dasharray="66.67 33.33" stroke-dashoffset="25"></circle>
+              <text x="21" y="22.5" font-family="Plus Jakarta Sans" font-weight="800" font-size="7.5" fill="#166534" text-anchor="middle">66.7%</text>
+            </svg>
+            <div class="chart-legend">
+              <div class="legend-item">
+                <div class="legend-dot" style="background: #166534;"></div>
+                <div>
+                  <div><strong>120 Acreditados</strong></div>
+                  <div style="font-size: 9px; color: #64748b;">Asistieron al evento (66.67%)</div>
+                </div>
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot" style="background: #f87171;"></div>
+                <div>
+                  <div><strong>60 Ausentes</strong></div>
+                  <div style="font-size: 9px; color: #64748b;">No asistieron (33.33%)</div>
+                </div>
+              </div>
+              <div style="font-size: 9px; color: #475569; margin-top: 2px; border-top: 1px solid #f1f5f9; padding-top: 2px;">
+                Total Registros: <strong>180 Inscriptos</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Age Groups Breakdown -->
+        <div class="card">
+          <div class="card-title">Distribución por Rangos Etarios</div>
+          
+          <div class="bar-row">
+            <div class="bar-info">
+              <span>Infancia Intermedia (7 - 9 años)</span>
+              <span>50 niños (27.8%)</span>
+            </div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 27.8%;"></div>
+            </div>
+          </div>
+
+          <div class="bar-row">
+            <div class="bar-info">
+              <span>Infancia Temprana (4 - 6 años)</span>
+              <span>43 niños (23.9%)</span>
+            </div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 23.9%;"></div>
+            </div>
+          </div>
+
+          <div class="bar-row">
+            <div class="bar-info">
+              <span>Pre-adolescencia (10 - 12 años)</span>
+              <span>34 niños (18.9%)</span>
+            </div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 18.9%;"></div>
+            </div>
+          </div>
+
+          <div class="bar-row">
+            <div class="bar-info">
+              <span>Adolescencia (13+ años)</span>
+              <span>26 jóvenes (14.4%)</span>
+            </div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 14.4%;"></div>
+            </div>
+          </div>
+
+          <div class="bar-row">
+            <div class="bar-info">
+              <span>Primera Infancia (0 - 3 años)</span>
+              <span>18 niños (10.0%)</span>
+            </div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 10.0%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <div class="callout-title">💡 Aspecto Destacado de Asistencia y Participación Etaria</div>
+        <div class="callout-text">
+          El núcleo principal de concurrencia estuvo compuesto por niños y niñas de <strong>4 a 9 años</strong> (representando el <strong>51.7% del total de participantes</strong>), alcanzando una tasa de asistencia presencial superior al <strong>75%</strong> en dicho segmento. La franja escolar intermedia demostró la mayor adhesión y respuesta a la convocatoria.
+        </div>
+      </div>
+
+      <!-- TABLE: AGE DETAILS -->
+      <table>
+        <thead>
+          <tr>
+            <th>Rango Etario</th>
+            <th>Inscriptos</th>
+            <th>Acreditados (Asistieron)</th>
+            <th>Ausentes</th>
+            <th>Tasa de Asistencia</th>
+            <th>Perfil / Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Primera Infancia (0 - 3 años)</strong></td>
+            <td>18</td>
+            <td>7</td>
+            <td>11</td>
+            <td>38.9%</td>
+            <td><span class="badge badge-amber">Alta volatilidad por clima/logística</span></td>
+          </tr>
+          <tr>
+            <td><strong>Infancia Temprana (4 - 6 años)</strong></td>
+            <td>43</td>
+            <td>30</td>
+            <td>13</td>
+            <td>69.8%</td>
+            <td><span class="badge badge-green">Excelente concurrencia</span></td>
+          </tr>
+          <tr>
+            <td><strong>Infancia Intermedia (7 - 9 años)</strong></td>
+            <td>50</td>
+            <td>40</td>
+            <td>10</td>
+            <td>80.0%</td>
+            <td><span class="badge badge-green">Máximo volumen de participación</span></td>
+          </tr>
+          <tr>
+            <td><strong>Pre-adolescencia (10 - 12 años)</strong></td>
+            <td>34</td>
+            <td>24</td>
+            <td>10</td>
+            <td>70.6%</td>
+            <td><span class="badge badge-green">Alta fidelidad deportiva</span></td>
+          </tr>
+          <tr>
+            <td><strong>Adolescencia (13+ años)</strong></td>
+            <td>26</td>
+            <td>10</td>
+            <td>16</td>
+            <td>38.5%</td>
+            <td><span class="badge badge-blue">Grupo juvenil de apoyo</span></td>
+          </tr>
+          <tr>
+            <td><strong>Sin especificar / Puerta</strong></td>
+            <td>9</td>
+            <td>9</td>
+            <td>0</td>
+            <td>100.0%</td>
+            <td><span class="badge badge-purple">Planilla de contingencia manual</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer">
+      <div>Asociación Civil Andar • Reporte de Impacto Día de las Infancias</div>
+      <div>Página 1 de 2</div>
+    </div>
+  </div>
+
+  <!-- PAGE 2: GEOGRAPHY, INSTITUTIONS, INCLUSION & RECOMMENDATIONS -->
+  <div class="page">
+    <div>
+      <div class="header">
+        <div>
+          <div class="brand-title">Asociación Civil Andar</div>
+          <div class="brand-subtitle">Liga de Fútbol Inclusiva • Predio Granja Andar</div>
+        </div>
+        <div class="meta-badge">
+          <div>JORNADA DÍA DE LAS INFANCIAS</div>
+          <div style="font-weight: 500; opacity: 0.9;">Análisis Territorial e Inclusión</div>
+        </div>
+      </div>
+
+      <!-- SECTION 2: GEOGRAPHIC & INSTITUTIONAL DISTRIBUTION -->
+      <div class="section-title">2. Distribución Territorial e Institucional</div>
+
+      <div class="grid-2">
+        <!-- Geography Table -->
+        <div class="card">
+          <div class="card-title">Origen Geográfico de las Familias</div>
+          <table>
+            <thead>
+              <tr>
+                <th>Localidad / Zona</th>
+                <th>Reg.</th>
+                <th>Asist.</th>
+                <th>% Presente</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>La Reja / Zona Predio</strong></td>
+                <td>90</td>
+                <td>65</td>
+                <td><span class="badge badge-green">72.2%</span></td>
+              </tr>
+              <tr>
+                <td><strong>Moreno Centro / Barrios</strong></td>
+                <td>55</td>
+                <td>36</td>
+                <td><span class="badge badge-green">65.5%</span></td>
+              </tr>
+              <tr>
+                <td><strong>Paso del Rey</strong></td>
+                <td>6</td>
+                <td>6</td>
+                <td><span class="badge badge-green">100.0%</span></td>
+              </tr>
+              <tr>
+                <td><strong>Trujui / San Cayetano</strong></td>
+                <td>7</td>
+                <td>6</td>
+                <td><span class="badge badge-green">85.7%</span></td>
+              </tr>
+              <tr>
+                <td><strong>Merlo / Libertad / Padua</strong></td>
+                <td>12</td>
+                <td>5</td>
+                <td><span class="badge badge-amber">41.7%</span></td>
+              </tr>
+              <tr>
+                <td><strong>Ituzaingó / F. Álvarez / Otros</strong></td>
+                <td>10</td>
+                <td>2</td>
+                <td><span class="badge badge-amber">20.0%</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Institutional Table -->
+        <div class="card">
+          <div class="card-title">Clubes e Instituciones de Origen</div>
+          <table>
+            <thead>
+              <tr>
+                <th>Institución / Grupo</th>
+                <th>Reg.</th>
+                <th>Asist.</th>
+                <th>% Presente</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Comunidad Abierta / Particular</strong></td>
+                <td>94</td>
+                <td>60</td>
+                <td><span class="badge badge-green">63.8%</span></td>
+              </tr>
+              <tr>
+                <td><strong>Granja Andar / Andar FC</strong></td>
+                <td>50</td>
+                <td>31</td>
+                <td><span class="badge badge-green">62.0%</span></td>
+              </tr>
+              <tr>
+                <td><strong>Club Atl. Altos de la Reja</strong></td>
+                <td>14</td>
+                <td>14</td>
+                <td><span class="badge badge-purple">100.0% ★</span></td>
+              </tr>
+              <tr>
+                <td><strong>Programa Des. Inclusivo (PDI)</strong></td>
+                <td>13</td>
+                <td>10</td>
+                <td><span class="badge badge-green">76.9%</span></td>
+              </tr>
+              <tr>
+                <td><strong>Escuelas Públicas y Esp.</strong></td>
+                <td>9</td>
+                <td>5</td>
+                <td><span class="badge badge-blue">55.6%</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SECTION 3: INCLUSION, ACCESSIBILITY & SPECIAL HEALTH NEEDS -->
+      <div class="section-title">3. Inclusión, Salud y Accesibilidad Adaptada</div>
+
+      <div class="card" style="margin-bottom: 14px;">
+        <div class="card-title">Atención de Necesidades Especiales y Condiciones de Salud Atendidas</div>
+        <p style="font-size: 10px; color: #475569; margin-bottom: 8px;">
+          El evento contó con infraestructura adaptada y acompañamiento personalizado para garantizar la participación segura de todos los niños/as registrados:
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th>Participante</th>
+              <th>Condición / Requerimiento Informado</th>
+              <th>Asistencia</th>
+              <th>Protocolo / Adecuación Aplicada</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Mariano A. M.</strong></td>
+              <td>Autismo / Condición del Espectro Autista (TEA)</td>
+              <td><span class="badge badge-green">Presente</span></td>
+              <td>Entorno con baja estimulación sonora opcional y actividades estructuradas.</td>
+            </tr>
+            <tr>
+              <td><strong>Milena N. M.</strong></td>
+              <td>Epilepsia refractaria / Síndrome de West</td>
+              <td><span class="badge badge-green">Presente</span></td>
+              <td>Supervisión de salud, accesibilidad física en predio y descanso a la sombra.</td>
+            </tr>
+            <tr>
+              <td><strong>Felipe C.</strong></td>
+              <td>Cardiopatía congénita</td>
+              <td><span class="badge badge-green">Presente</span></td>
+              <td>Control de esfuerzo físico moderado en estaciones recreativas.</td>
+            </tr>
+            <tr>
+              <td><strong>Federico L. / Santiago E.</strong></td>
+              <td>Asma bronquial crónica</td>
+              <td><span class="badge badge-green">Presentes</span></td>
+              <td>Asistencia médica de prevención en zona de deportes.</td>
+            </tr>
+            <tr>
+              <td><strong>Aurora M.</strong></td>
+              <td>Alergias severas (Pasto, ácaros y perfumes)</td>
+              <td><span class="badge badge-green">Presente</span></td>
+              <td>Espacios limpios delimitados y prevención de alérgenos directos.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- SECTION 4: LESSONS & RECOMMENDATIONS -->
+      <div class="section-title">4. Conclusiones y Recomendaciones Operativas</div>
+
+      <div class="grid-2">
+        <div class="card" style="background: #f8fafc;">
+          <div class="card-title" style="color: #166534;">✅ Fortalezas Identificadas</div>
+          <ul style="font-size: 10px; color: #334155; padding-left: 14px; line-height: 1.5;">
+            <li><strong>Fidelidad Comunitaria Local:</strong> Alta convocatoria en La Reja (72.2% presentismo) y respuesta perfecta de clubes asociados como Altos de la Reja (100%).</li>
+            <li><strong>Agilidad en Acreditación QR:</strong> El 93.3% del ingreso se procesó de forma digital ágil en puerta mediante escaneo de código QR en WhatsApp.</li>
+            <li><strong>Consenso Familiar:</strong> 100% de autorizaciones de imagen firmadas digitalmente al momento de la inscripción.</li>
+          </ul>
+        </div>
+
+        <div class="card" style="background: #fffbeb; border-color: #fde68a;">
+          <div class="card-title" style="color: #b45309;">📌 Oportunidades de Mejora</div>
+          <ul style="font-size: 10px; color: #78350f; padding-left: 14px; line-height: 1.5;">
+            <li><strong>Reducción de Inasistencia (33.3%):</strong> Implementar recordatorios automatizados por WhatsApp 24hs antes del evento para familias de localidades lejanas (Merlo/Ituzaingó).</li>
+            <li><strong>Refuerzo en Primera Infancia (0-3 años):</strong> Incorporar áreas climatizadas y espacios de lactancia/descanso para aumentar la retención de familias con bebés.</li>
+            <li><strong>Fidelización de Clubes Vecinos:</strong> Replicar el modelo exitoso de articulación con Altos de la Reja hacia otras escuelas públicas del distrito.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- SIGNATURE BLOCK -->
+      <div style="margin-top: 14px; display: flex; justify-content: space-around; text-align: center; font-size: 10px;">
+        <div style="border-top: 1px solid #cbd5e1; width: 180px; padding-top: 4px; font-weight: 700; color: #334155;">
+          Coordinación General
+          <div style="font-size: 9px; font-weight: 400; color: #64748b;">Asociación Civil Andar</div>
+        </div>
+        <div style="border-top: 1px solid #cbd5e1; width: 180px; padding-top: 4px; font-weight: 700; color: #334155;">
+          Área de Deportes e Inclusión
+          <div style="font-size: 9px; font-weight: 400; color: #64748b;">Liga de Fútbol Inclusiva</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>Asociación Civil Andar • Reporte de Impacto Día de las Infancias</div>
+      <div>Página 2 de 2</div>
+    </div>
+  </div>
+
+</body>
+</html>
+`;
+
+const htmlPath = path.resolve('scripts/Reporte_Impacto_Dia_de_las_Infancias.html');
+const pdfPath = path.resolve('Reporte_Impacto_Dia_de_las_Infancias.pdf');
+
+fs.writeFileSync(htmlPath, htmlContent);
+console.log(`HTML generated at ${htmlPath}`);
+
+const edgePath = `"C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"`;
+const cmd = `${edgePath} --headless --disable-gpu --run-all-compositor-stages-before-draw --print-to-pdf="${pdfPath}" --no-pdf-header-footer "file:///${htmlPath.replace(/\\/g, '/')}"`;
+
+console.log('Running Edge PDF compilation...');
+try {
+  execSync(cmd);
+  console.log(`✅ PDF successfully created at: ${pdfPath}`);
+} catch (err) {
+  console.error('Error generating PDF with Edge:', err);
+}

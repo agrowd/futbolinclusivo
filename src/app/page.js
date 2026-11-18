@@ -3,6 +3,12 @@ import News from "@/lib/schemas/News";
 import Album from "@/lib/schemas/Album";
 import HomeClient from "@/components/ui/HomeClient";
 
+export const metadata = {
+  title: "Fútbol Inclusivo | Asociación Civil Andar - El Fútbol es para Todxs",
+  description:
+    "Desde 1998, equiparamos oportunidades y construimos una sociedad más inclusiva a través del deporte más lindo del mundo. Liga de Fútbol Inclusiva y Andar FC.",
+};
+
 export default async function HomePage() {
   await dbConnect();
 

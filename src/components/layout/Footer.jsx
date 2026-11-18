@@ -435,7 +435,7 @@ export default function Footer() {
             flexWrap: "wrap",
             gap: "20px",
             fontSize: "0.85rem",
-            color: "rgba(255,255,255,0.3)",
+            color: "rgba(255,255,255,0.6)",
             flexDirection: "row"
           }}
         >

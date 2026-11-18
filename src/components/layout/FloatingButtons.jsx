@@ -8,73 +8,14 @@ import { WHATSAPP_INSCRIPTION_TEAM_URL, WHATSAPP_INSCRIPTION_ESCUELA_URL } from 
 export default function FloatingButtons() {
   const [isOpen, setIsOpen] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
-  const autoOpenTimerRef = useRef(null);
-  const autoCloseTimerRef = useRef(null);
-  const messageTimerRef = useRef(null);
-
-  // Auto-open every 60 seconds, close after 5 seconds
-  useEffect(() => {
-    const scheduleAutoOpen = () => {
-      autoOpenTimerRef.current = setTimeout(() => {
-        setIsOpen(true);
-        setShowMessage(true);
-        
-        // Hide message after 3 seconds
-        messageTimerRef.current = setTimeout(() => {
-          setShowMessage(false);
-        }, 3000);
-        
-        // Auto-close after 5 seconds
-        autoCloseTimerRef.current = setTimeout(() => {
-          setIsOpen(false);
-          setShowMessage(false);
-        }, 5000);
-        
-        // Schedule next auto-open
-        scheduleAutoOpen();
-      }, 60000);
-    };
-
-    // Start the cycle
-    scheduleAutoOpen();
-
-    return () => {
-      if (autoOpenTimerRef.current) clearTimeout(autoOpenTimerRef.current);
-      if (autoCloseTimerRef.current) clearTimeout(autoCloseTimerRef.current);
-      if (messageTimerRef.current) clearTimeout(messageTimerRef.current);
-    };
-  }, []);
 
   const handleToggle = () => {
-    // Clear auto timers when manually toggled
-    if (autoOpenTimerRef.current) clearTimeout(autoOpenTimerRef.current);
-    if (autoCloseTimerRef.current) clearTimeout(autoCloseTimerRef.current);
-    if (messageTimerRef.current) clearTimeout(messageTimerRef.current);
-    
     setIsOpen(!isOpen);
     setShowMessage(false);
-    
-    // If opening manually, schedule next auto-open after 60 seconds
-    if (!isOpen) {
-      autoOpenTimerRef.current = setTimeout(() => {
-        setIsOpen(true);
-        setShowMessage(true);
-        
-        messageTimerRef.current = setTimeout(() => {
-          setShowMessage(false);
-        }, 3000);
-        
-        autoCloseTimerRef.current = setTimeout(() => {
-          setIsOpen(false);
-          setShowMessage(false);
-        }, 5000);
-      }, 60000);
-    }
   };
 
   const dismissMessage = () => {
     setShowMessage(false);
-    if (messageTimerRef.current) clearTimeout(messageTimerRef.current);
   };
 
   const buttons = [

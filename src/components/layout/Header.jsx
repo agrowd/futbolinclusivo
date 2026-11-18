@@ -31,6 +31,7 @@ const mainNav = [
 ];
 
 const programNav = [
+  { href: "/torneos", label: "FIXTURE Y TABLAS (MYGOL)" },
   { href: "/programas/liga-ba", label: "LIGA BA" },
   { href: "/programas/liga-nacional", label: "LIGA NACIONAL" },
   { href: "/programas/escuela", label: "ESCUELA" },

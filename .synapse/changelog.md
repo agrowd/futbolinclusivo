@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.10.20 — 2026-11-18
+- fix: Configurado <title> dinámico y metadatos SEO globales convirtiendo `layout.js` en Server Component mediante `ClientProviders.jsx`.
+- fix: Auditoría y resolución de incoherencias UI/UX:
+  - Reemplazo de los 32 escudos repetidos de Andar FC en `ClubStrip.jsx` por insignias institucionales y de clubes participantes (AFA, SAT, Andar FC, Boca, River, San Lorenzo, Racing, Independiente, Lanús, Estudiantes, Vélez, Huracán, Gimnasia, Central, Newell's, Altos de la Reja, CEF 123).
+  - Eliminación de la cuenta regresiva congelada ("00 DÍAS 00 HRS 00 MIN - Finales 2025") en la Home, reemplazada por tarjeta activa de la Superliga AFA en Predio Lionel Messi Ezeiza ("En Competencia" con enlace a MyGol).
+  - Incorporación de botón directo "Ver Todos en MyGol" en la sección de Partidos Recientes y actualización de tarjeta de convocatoria a Temporada Oficial 2026.
+  - Eliminación del popup disruptivo con apertura automática cada 60s en `FloatingButtons.jsx`.
+  - Corrección del `<title>` genérico en `/programas/ligas` y mejora de contraste WCAG en el pie de página (`Footer.jsx`).
+  - Incorporación del enlace a `/torneos` en el menú de navegación superior (`Header.jsx`).
+
 ## v1.10.19 — 2026-11-18
 - feat: Actualizado el slogan principal del Hero en la Home a lenguaje inclusivo: 'EL FÚTBOL ES PARA TODXS.'
 

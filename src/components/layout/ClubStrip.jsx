@@ -1,50 +1,60 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 
-// Mock data for clubs - in production this could come from a JSON or API
 const clubs = [
-  { name: "River Plate", logo: "/andarfc-logo.png" },
-  { name: "Boca Juniors", logo: "/andarfc-logo.png" },
-  { name: "Independiente", logo: "/andarfc-logo.png" },
-  { name: "Racing Club", logo: "/andarfc-logo.png" },
-  { name: "San Lorenzo", logo: "/andarfc-logo.png" },
-  { name: "Huracán", logo: "/andarfc-logo.png" },
-  { name: "Estudiantes LP", logo: "/andarfc-logo.png" },
-  { name: "Gimnasia LP", logo: "/andarfc-logo.png" },
-  { name: "Rosario Central", logo: "/andarfc-logo.png" },
-  { name: "Newell's", logo: "/andarfc-logo.png" },
-  { name: "Talleres", logo: "/andarfc-logo.png" },
-  { name: "Belgrano", logo: "/andarfc-logo.png" },
-  { name: "Lanús", logo: "/andarfc-logo.png" },
-  { name: "Banfield", logo: "/andarfc-logo.png" },
-  { name: "Vélez Sarsfield", logo: "/andarfc-logo.png" },
-  { name: "Argentinos Jrs", logo: "/andarfc-logo.png" },
+  { name: "Andar FC", type: "img", src: "/andarfc-logo.png", short: "AND" },
+  { name: "AFA", type: "img", src: "/logo-afa.png", short: "AFA" },
+  { name: "SAT", type: "img", src: "/satlogo.png", short: "SAT" },
+  { name: "Boca Juniors", type: "badge", bg: "#002B7F", color: "#FDB913", short: "CABJ" },
+  { name: "River Plate", type: "badge", bg: "#FFFFFF", color: "#EB1C24", short: "CARP" },
+  { name: "San Lorenzo", type: "badge", bg: "#002A54", color: "#D81A28", short: "CASLA" },
+  { name: "Racing Club", type: "badge", bg: "#6CAEDB", color: "#FFFFFF", short: "RC" },
+  { name: "Independiente", type: "badge", bg: "#E21B23", color: "#FFFFFF", short: "CAI" },
+  { name: "Lanús", type: "badge", bg: "#6A1A24", color: "#FFFFFF", short: "CAL" },
+  { name: "Estudiantes LP", type: "badge", bg: "#E31B23", color: "#FFFFFF", short: "EDLP" },
+  { name: "Vélez Sarsfield", type: "badge", bg: "#003882", color: "#FFFFFF", short: "CAVS" },
+  { name: "Huracán", type: "badge", bg: "#FFFFFF", color: "#E31B23", short: "CAH" },
+  { name: "Gimnasia LP", type: "badge", bg: "#002A54", color: "#FFFFFF", short: "GELP" },
+  { name: "Rosario Central", type: "badge", bg: "#002B7F", color: "#FFD200", short: "CARC" },
+  { name: "Newell's", type: "badge", bg: "#D81A28", color: "#000000", short: "NOB" },
+  { name: "Altos de la Reja", type: "badge", bg: "#166534", color: "#FFFFFF", short: "CAR" },
+  { name: "CEF 123", type: "badge", bg: "#008D4D", color: "#FFFFFF", short: "CEF" },
 ];
 
 export default function ClubStrip() {
-  // Duplicate array for seamless infinite loop
   const allClubs = [...clubs, ...clubs];
 
   return (
-    <div className="w-full bg-[#081119] py-2 overflow-hidden border-b border-white/5 relative z-[200]">
+    <div className="w-full bg-[#050D18] py-2 overflow-hidden border-b border-white/10 relative z-[200]">
       <div
-        className="flex items-center gap-8 w-max animate-marquee"
-        style={{ animationDuration: "40s" }}
+        className="flex items-center gap-10 w-max animate-marquee"
+        style={{ animationDuration: "50s" }}
       >
         {allClubs.map((club, index) => (
-          <div
-            key={index}
-            className="flex-none w-8 h-8 relative flex items-center justify-center"
-          >
-            <img
-              src={club.logo}
-              alt={`Logo de ${club.name}`}
-              className="max-h-full max-w-full object-contain brightness-[0.9] grayscale-[0.2] contrast-[1.1] opacity-60"
-              onError={(e) => {
-                e.target.src = "/logo.png";
-                e.target.className = "max-h-full max-w-full object-contain opacity-20 grayscale";
-              }}
-            />
+          <div key={index} className="flex items-center gap-2.5 shrink-0 opacity-75 hover:opacity-100 transition-opacity">
+            {club.type === "img" ? (
+              <div className="w-6 h-6 relative flex items-center justify-center shrink-0">
+                <Image
+                  src={club.src}
+                  alt={`Logo de ${club.name}`}
+                  width={24}
+                  height={24}
+                  className="max-h-full max-w-full object-contain"
+                />
+              </div>
+            ) : (
+              <span
+                style={{ backgroundColor: club.bg, color: club.color }}
+                className="w-6 h-6 rounded-md flex items-center justify-center text-[9px] font-black tracking-tighter border border-white/20 shrink-0 shadow-sm"
+              >
+                {club.short}
+              </span>
+            )}
+            <span className="text-[11px] font-extrabold uppercase tracking-wider text-white/80">
+              {club.name}
+            </span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#36b37e]/40 ml-2" />
           </div>
         ))}
       </div>

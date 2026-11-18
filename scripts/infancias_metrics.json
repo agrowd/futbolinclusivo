@@ -1,0 +1,1312 @@
+{
+  "totalRecords": 180,
+  "activeRecords": 180,
+  "cancelledRecords": 0,
+  "attended": 120,
+  "notAttended": 60,
+  "attendanceRate": 66.67,
+  "absenteeRate": 33.33,
+  "uniqueFamilyGroupsCount": 120,
+  "uniqueTutorsCount": 115,
+  "uniquePhonesCount": 109,
+  "totalAdultsEstimated": 109,
+  "totalPeopleEstimated": 289,
+  "totalAttendedPeopleEstimated": 198,
+  "avgAge": 8.7,
+  "medianAge": 8,
+  "minAge": 1,
+  "maxAge": 49,
+  "ageGroupMap": {
+    "Primera Infancia (0-3 años)": 18,
+    "Infancia Temprana (4-6 años)": 43,
+    "Infancia Intermedia (7-9 años)": 50,
+    "Pre-adolescencia (10-12 años)": 34,
+    "Adolescencia (13+ años)": 26,
+    "Sin especificar / No informado": 9
+  },
+  "ageRawMap": {
+    "2": 5,
+    "3": 7,
+    "4": 7,
+    "5": 10,
+    "6": 8,
+    "7": 12,
+    "8": 16,
+    "9": 12,
+    "10": 5,
+    "11": 9,
+    "12": 11,
+    "13": 5,
+    "14": 3,
+    "15": 6,
+    "16": 3,
+    "17": 3,
+    "18": 2,
+    "26": 1,
+    "49": 1,
+    "6 años": 6,
+    "10años": 1,
+    "7 años": 5,
+    "6años": 1,
+    "5años": 1,
+    "6 ano": 1,
+    "4 años": 3,
+    "9 años": 3,
+    "3 años": 2,
+    "5 años": 5,
+    "10 años": 2,
+    "11 años": 4,
+    "8 años": 1,
+    "5 meses": 1,
+    "2 años": 2,
+    "9años": 1,
+    "14 años": 1,
+    "12  años": 1,
+    "22años": 1,
+    "1 año": 2,
+    "12 años": 1,
+    "Sin dato": 9
+  },
+  "ageByAttendance": {
+    "5 años": {
+      "total": 17,
+      "attended": 14,
+      "absent": 3
+    },
+    "7 años": {
+      "total": 17,
+      "attended": 15,
+      "absent": 2
+    },
+    "6 años": {
+      "total": 16,
+      "attended": 11,
+      "absent": 5
+    },
+    "10 años": {
+      "total": 8,
+      "attended": 7,
+      "absent": 1
+    },
+    "8 años": {
+      "total": 17,
+      "attended": 12,
+      "absent": 5
+    },
+    "9 años": {
+      "total": 16,
+      "attended": 13,
+      "absent": 3
+    },
+    "12 años": {
+      "total": 13,
+      "attended": 8,
+      "absent": 5
+    },
+    "4 años": {
+      "total": 10,
+      "attended": 5,
+      "absent": 5
+    },
+    "3 años": {
+      "total": 9,
+      "attended": 6,
+      "absent": 3
+    },
+    "2 años": {
+      "total": 7,
+      "attended": 1,
+      "absent": 6
+    },
+    "26 años": {
+      "total": 1,
+      "attended": 0,
+      "absent": 1
+    },
+    "11 años": {
+      "total": 13,
+      "attended": 9,
+      "absent": 4
+    },
+    "17 años": {
+      "total": 3,
+      "attended": 0,
+      "absent": 3
+    },
+    "16 años": {
+      "total": 3,
+      "attended": 2,
+      "absent": 1
+    },
+    "15 años": {
+      "total": 6,
+      "attended": 3,
+      "absent": 3
+    },
+    "14 años": {
+      "total": 4,
+      "attended": 2,
+      "absent": 2
+    },
+    "13 años": {
+      "total": 5,
+      "attended": 3,
+      "absent": 2
+    },
+    "18 años": {
+      "total": 2,
+      "attended": 0,
+      "absent": 2
+    },
+    "22 años": {
+      "total": 1,
+      "attended": 0,
+      "absent": 1
+    },
+    "1 años": {
+      "total": 2,
+      "attended": 0,
+      "absent": 2
+    },
+    "49 años": {
+      "total": 1,
+      "attended": 0,
+      "absent": 1
+    },
+    "Sin dato": {
+      "total": 9,
+      "attended": 9,
+      "absent": 0
+    }
+  },
+  "localityMap": {
+    "La reja": {
+      "total": 42,
+      "attended": 32
+    },
+    "Moreno la reja": {
+      "total": 33,
+      "attended": 25
+    },
+    "Moreno": {
+      "total": 37,
+      "attended": 26
+    },
+    "La reja moreno": {
+      "total": 8,
+      "attended": 4
+    },
+    "Paso del rey": {
+      "total": 4,
+      "attended": 4
+    },
+    "Maximiliano": {
+      "total": 3,
+      "attended": 0
+    },
+    "Ituzaingo": {
+      "total": 1,
+      "attended": 0
+    },
+    "Merlo norte": {
+      "total": 1,
+      "attended": 1
+    },
+    "Ituzaingó": {
+      "total": 2,
+      "attended": 0
+    },
+    "Moreno, puerta de hierro": {
+      "total": 1,
+      "attended": 0
+    },
+    "Moreno, francisco alvarez": {
+      "total": 2,
+      "attended": 0
+    },
+    "Moreno, la reja": {
+      "total": 7,
+      "attended": 4
+    },
+    "Moreno. monsegur": {
+      "total": 4,
+      "attended": 0
+    },
+    "Merlo": {
+      "total": 5,
+      "attended": 2
+    },
+    "Libertad": {
+      "total": 2,
+      "attended": 2
+    },
+    "Padua": {
+      "total": 2,
+      "attended": 0
+    },
+    "Gral rodríguez barrio juan josé": {
+      "total": 1,
+      "attended": 0
+    },
+    "Pfizzer": {
+      "total": 1,
+      "attended": 0
+    },
+    "San calletano": {
+      "total": 2,
+      "attended": 2
+    },
+    "Satelite": {
+      "total": 1,
+      "attended": 1
+    },
+    "Trujui": {
+      "total": 2,
+      "attended": 2
+    },
+    "Parque,moreno": {
+      "total": 2,
+      "attended": 2
+    },
+    "Mireno/sta paula": {
+      "total": 2,
+      "attended": 1
+    },
+    "Moreno. barrio la victoria.": {
+      "total": 1,
+      "attended": 1
+    },
+    "Paso del rey moreno": {
+      "total": 2,
+      "attended": 2
+    },
+    "Cortejarena": {
+      "total": 3,
+      "attended": 3
+    },
+    "Altos de la reja": {
+      "total": 4,
+      "attended": 2
+    },
+    "La reja (moreno)": {
+      "total": 2,
+      "attended": 1
+    },
+    "Moreno barrio cortejarena": {
+      "total": 2,
+      "attended": 2
+    },
+    "Moreno  altos de la reja": {
+      "total": 1,
+      "attended": 1
+    }
+  },
+  "clubMap": {
+    "Andar": {
+      "total": 17,
+      "attended": 12
+    },
+    "andar futbol club": {
+      "total": 1,
+      "attended": 1
+    },
+    "Andar fc": {
+      "total": 7,
+      "attended": 3
+    },
+    "Ninguno / Particular": {
+      "total": 52,
+      "attended": 40
+    },
+    "Escuela NRO  83": {
+      "total": 2,
+      "attended": 2
+    },
+    "Intitucion": {
+      "total": 1,
+      "attended": 0
+    },
+    "Club andar": {
+      "total": 5,
+      "attended": 2
+    },
+    "FC ANDAR": {
+      "total": 1,
+      "attended": 0
+    },
+    "Granja andar": {
+      "total": 5,
+      "attended": 3
+    },
+    "Particular": {
+      "total": 15,
+      "attended": 5
+    },
+    "Andar FC": {
+      "total": 7,
+      "attended": 6
+    },
+    "Ah sí civil andar": {
+      "total": 3,
+      "attended": 0
+    },
+    "Club atlético altos de la reja": {
+      "total": 9,
+      "attended": 9
+    },
+    "Club alto de la reja": {
+      "total": 3,
+      "attended": 3
+    },
+    "Altos de la reja": {
+      "total": 2,
+      "attended": 2
+    },
+    "Club": {
+      "total": 4,
+      "attended": 3
+    },
+    "Asociación civil Andar": {
+      "total": 1,
+      "attended": 0
+    },
+    "PDI": {
+      "total": 11,
+      "attended": 9
+    },
+    "Cree": {
+      "total": 2,
+      "attended": 2
+    },
+    "Pdi": {
+      "total": 2,
+      "attended": 1
+    },
+    "Escuela especial 504": {
+      "total": 2,
+      "attended": 1
+    },
+    "Asociación civil andar": {
+      "total": 3,
+      "attended": 0
+    },
+    "Defensores": {
+      "total": 1,
+      "attended": 0
+    },
+    "Club defensores de moreno": {
+      "total": 1,
+      "attended": 0
+    },
+    "Anfar": {
+      "total": 1,
+      "attended": 0
+    },
+    "Fcandar": {
+      "total": 2,
+      "attended": 2
+    },
+    "Escuela N3": {
+      "total": 2,
+      "attended": 1
+    },
+    "Esc 36": {
+      "total": 2,
+      "attended": 2
+    },
+    "Escuela 83": {
+      "total": 9,
+      "attended": 5
+    },
+    "Escuela N*36": {
+      "total": 1,
+      "attended": 1
+    },
+    "Jardín 932": {
+      "total": 3,
+      "attended": 2
+    },
+    "andar fc": {
+      "total": 1,
+      "attended": 1
+    },
+    "Esb 83": {
+      "total": 1,
+      "attended": 1
+    },
+    "Escuela belgrano": {
+      "total": 1,
+      "attended": 1
+    }
+  },
+  "medicalCasesCount": 171,
+  "medicalCases": [
+    {
+      "childName": "Tiziano aiva",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Bastian julian seregni",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "juanita lucero chavez",
+      "medicalNotes": "no",
+      "attended": true
+    },
+    {
+      "childName": "Benjamin Bautista Huertas Campos",
+      "medicalNotes": "Ninguno",
+      "attended": true
+    },
+    {
+      "childName": "Valentina fariña",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Luna jazmín borda",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Rojas",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Arturo  Caceres",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Elias Nadir Vergara",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Mateo Antonio zapata",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Ciro Lionel zapata",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Rivero valemtin",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Tiziano Romero Taborda",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Sofia Romero Taborda",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Bautista Mateo zamudio",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Mateo Rodríguez",
+      "medicalNotes": "No",
+      "attended": false
+    },
+    {
+      "childName": "Cayetana rivadeneyra",
+      "medicalNotes": "No ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Encinas Bautista",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Encinas luz mía yazmin",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Olivia Schneider",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Thiago Jordán barrios",
+      "medicalNotes": "No",
+      "attended": true
+    },
+    {
+      "childName": "Brianna gutierrez",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Bautista barreto",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Caceres santino",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Micaela Agustina inserroalte",
+      "medicalNotes": "Maximiliano inzaurralde",
+      "attended": false
+    },
+    {
+      "childName": "Barbie luz milagro insaurralde",
+      "medicalNotes": "Nataly erten",
+      "attended": false
+    },
+    {
+      "childName": "Martina Lucía insaral",
+      "medicalNotes": "Maximiliano insaurralde",
+      "attended": false
+    },
+    {
+      "childName": "Federico prueba",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Federico Lucero",
+      "medicalNotes": "Asma",
+      "attended": true
+    },
+    {
+      "childName": "Noah zarate",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Zarate Cataleya",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Emilia Salazar",
+      "medicalNotes": "No posee",
+      "attended": false
+    },
+    {
+      "childName": "Esmwralda Gottardi",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Delfina alegre",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Zoe Abalos",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Benjamin Ezequiel Bravo",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Marlene Vigne",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Dante alderete",
+      "medicalNotes": "No ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Chaparro catalina",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Zahira cisterna",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Mandes rocio",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Paz joaquin",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Avril aithana Heredia",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Dilan Colque",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Diana Colque",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Amber amado",
+      "medicalNotes": "Ningúna",
+      "attended": true
+    },
+    {
+      "childName": "Mia Gladys Peralta",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Lucia Leonela Heredia",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Michael Giménez",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Tiara colque",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Thiago Ian menlik",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Leon Lucero",
+      "medicalNotes": "no",
+      "attended": true
+    },
+    {
+      "childName": "Lautaro obregon",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Miqueas Obregón",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Isabela helena montenegro",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Caná villamayor",
+      "medicalNotes": "Ning",
+      "attended": false
+    },
+    {
+      "childName": "Yasnaia villamayor",
+      "medicalNotes": "Ning",
+      "attended": false
+    },
+    {
+      "childName": "Emma luna",
+      "medicalNotes": "No posee",
+      "attended": false
+    },
+    {
+      "childName": "Bastian diederle",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Martinez Aurora",
+      "medicalNotes": "Al pasto ácaros y perfumes",
+      "attended": true
+    },
+    {
+      "childName": "Godoy Renzo",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Zoratti Benicio",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Aonikenk lazarte",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Isabella Franchesca Alvarado",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Naara Josefina Alvarado",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Santiago Esparza",
+      "medicalNotes": "Asma",
+      "attended": true
+    },
+    {
+      "childName": "Valentina Esparza",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Lisandro Sánchez",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Benjamín Acosta",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Alejandro sebastian gamarra",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Isabella jazmin gamarra",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Felipe Cruz",
+      "medicalNotes": "Cardiopatia",
+      "attended": true
+    },
+    {
+      "childName": "Delfina Barba Franco",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Milena Moltini",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Naihara cardozo",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Keila cardozo",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Jeremías Lionel Ranaldo",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "maia abigail ordoñez carlo",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Thiago nahuel ordoñez carlo",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Valentina velazque",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Emmanuel Guerra",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Mariano alvarez melendez",
+      "medicalNotes": "Autismo",
+      "attended": true
+    },
+    {
+      "childName": "Maximiliano andres Marmion",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Vega iara",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Milena natalia moltini",
+      "medicalNotes": "Epilepcia refractaria sindrome de weest",
+      "attended": true
+    },
+    {
+      "childName": "Esmeralda Gottardi",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Bastian Daniel Amico Torres",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Ismael Rivero",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Dylan Ocampos",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Laira Mirella mega guerrero",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Evelin victoria mega guerrero",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Samid heros mega guerrero",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Bautista Isaac Silvano",
+      "medicalNotes": "No",
+      "attended": false
+    },
+    {
+      "childName": "Ramiro Benjamín barrios",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Ruben Dario Giozza",
+      "medicalNotes": "No posee",
+      "attended": true
+    },
+    {
+      "childName": "Xiomara shaiel giozza",
+      "medicalNotes": "No posee",
+      "attended": true
+    },
+    {
+      "childName": "Octavio Flores",
+      "medicalNotes": "No",
+      "attended": true
+    },
+    {
+      "childName": "Felipe Flores",
+      "medicalNotes": "No",
+      "attended": true
+    },
+    {
+      "childName": "Joscelyn Sarai Boza Pujay",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Tian Udribiu",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Erick isan vargas",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Lara belén vargas",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Milagros aylin Fernández",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Mia aylen Fernández",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Naomi amarilla",
+      "medicalNotes": "Nada",
+      "attended": true
+    },
+    {
+      "childName": "Samira Liliana Heredia",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Aylen peralta",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Ulises yael Peralta",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Benjamín nattanael valenti",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Mateo portela",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Juarez jano",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Brandon juarez",
+      "medicalNotes": "Ninguno",
+      "attended": true
+    },
+    {
+      "childName": "Martiniano correa",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Simón Johan Apaza",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Zafira escobar",
+      "medicalNotes": "Ninguno",
+      "attended": true
+    },
+    {
+      "childName": "Nathanael",
+      "medicalNotes": "Ninguno",
+      "attended": true
+    },
+    {
+      "childName": "Owen juarez",
+      "medicalNotes": "Ninguno",
+      "attended": true
+    },
+    {
+      "childName": "Francesca ledezma",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Emily quimey fonzalida bauman",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Luney marilin fonzalida bauman",
+      "medicalNotes": "Ninguno",
+      "attended": true
+    },
+    {
+      "childName": "Benjamin Escalante",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Mateo cardozo",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Kimberly cardozo",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Jazmin cardozo",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Nahuel cardozo",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Blanca cardozo",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Fabricio tomas ceron",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Dana nicole ceron",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Giozza Bianca Saraí",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Montenegro Gaia Nerea",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Montenegro Gabriel Alexander",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Maximiliano bracho velazquez",
+      "medicalNotes": "No",
+      "attended": true
+    },
+    {
+      "childName": "Maily Sahilyne peralta",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Maily Sahilyne peralta",
+      "medicalNotes": "NINGUNA",
+      "attended": false
+    },
+    {
+      "childName": "Elian giovanni godoy",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Kiara estefania godoy",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Azul Eunice zuppa",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Mario Zuppa",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Elías Grabriel Nuñez Fretes",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Jacqueline maciel",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Theo Mereles",
+      "medicalNotes": "No posee",
+      "attended": true
+    },
+    {
+      "childName": "Angie Cabrera",
+      "medicalNotes": "No posee",
+      "attended": false
+    },
+    {
+      "childName": "Alejo Gael González",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Eitana Abigail González",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Lizzy escobar",
+      "medicalNotes": "Ninguno",
+      "attended": true
+    },
+    {
+      "childName": "Lucas cañete",
+      "medicalNotes": "No",
+      "attended": false
+    },
+    {
+      "childName": "Elias martinez cañete",
+      "medicalNotes": "No",
+      "attended": false
+    },
+    {
+      "childName": "Romana  blanco",
+      "medicalNotes": "No",
+      "attended": false
+    },
+    {
+      "childName": "Flores santino",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Abril Guadalupe Casanova",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Luna franchesca barrios",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Ciro siniego",
+      "medicalNotes": "No",
+      "attended": false
+    },
+    {
+      "childName": "Thiago Barreto",
+      "medicalNotes": "Ninguno",
+      "attended": true
+    },
+    {
+      "childName": "Lucas",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Braian Santacruz",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Thiago Nicolás Villarreal",
+      "medicalNotes": "Ninguno",
+      "attended": true
+    },
+    {
+      "childName": "Máximo gael chavez",
+      "medicalNotes": "Ninguno",
+      "attended": true
+    },
+    {
+      "childName": "Renzo Agustín Chávez",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Quinteros ámbar Danna aneley",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Azul Ortiz",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Tatiana Verónica Ortiz",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Rios Bastian",
+      "medicalNotes": "ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Renata jerez",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Owen Claudio lopez",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Erik penna",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Isaias matias david quinteros",
+      "medicalNotes": "Nada",
+      "attended": true
+    },
+    {
+      "childName": "Luna xiomara roa",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Ulises ever gabriel peña",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Dylan Adrian Moraled",
+      "medicalNotes": "Ninguna",
+      "attended": false
+    },
+    {
+      "childName": "Jazmin Aitana Martinez",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    },
+    {
+      "childName": "Thiago Nicolas martinez",
+      "medicalNotes": "Ninguna",
+      "attended": true
+    }
+  ],
+  "imageConsentYes": 180,
+  "imageConsentNo": 0,
+  "hourlyAttendance": {
+    "14:00 hs": 84,
+    "15:00 hs": 36
+  },
+  "childrenPerFamily": {
+    "1 niño": 75,
+    "2 niños": 33,
+    "3 niños": 9,
+    "4 niños": 3
+  }
+}

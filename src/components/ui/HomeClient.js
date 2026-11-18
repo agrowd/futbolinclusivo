@@ -317,17 +317,30 @@ export default function HomeClient({ dynamicNews = [], dynamicAlbums = [] }) {
                 className="bg-gradient-to-br from-[#004d26] to-[#002D16] rounded-xl md:rounded-2xl p-5 md:p-8 text-center shadow-2xl relative overflow-hidden group border border-white/5"
               >
                 <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-150 duration-700" />
-                <Trophy size={36} className="text-white/20 mx-auto mb-3 md:mb-5" />
-                <h3 className="font-black text-lg md:text-2xl mb-1 md:mb-2 tracking-tight uppercase">Finales 2025</h3>
-                <p className="text-white/60 text-xs font-black tracking-wider uppercase mb-4 md:mb-6">6 DE DICIEMBRE</p>
-                <div className="flex justify-center gap-4 md:gap-6">
-                  {[ {v: "00", l: "DÍAS"}, {v: "00", l: "HRS"}, {v: "00", l: "MIN"} ].map((t, i) => (
-                    <div key={i} className="flex-1">
-                      <div className="text-xl md:text-3xl font-black mb-1">{t.v}</div>
-                      <div className="text-xs font-black opacity-40 tracking-wider uppercase">{t.l}</div>
-                    </div>
-                  ))}
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#36b37e]/20 border border-[#36b37e]/40 text-[#36b37e] text-[10px] font-black uppercase tracking-wider mb-3">
+                  <Trophy size={12} /> TORNEO EN VIVO
                 </div>
+                <h3 className="font-black text-lg md:text-2xl mb-1 md:mb-2 tracking-tight uppercase text-white">Superliga AFA</h3>
+                <p className="text-white/70 text-xs font-black tracking-wider uppercase mb-4">PREDIO MESSI • EZEIZA</p>
+                <div className="bg-white/10 rounded-xl p-3 mb-4 backdrop-blur-sm border border-white/10 text-left">
+                  <div className="flex items-center justify-between text-[11px] font-bold text-white/80 mb-1">
+                    <span>Estado:</span>
+                    <span className="text-[#36b37e] font-black uppercase">En Competencia</span>
+                  </div>
+                  <div className="flex items-center justify-between text-[11px] font-bold text-white/80">
+                    <span>Organizan:</span>
+                    <span className="text-white font-black">AFA • SAT • Andar</span>
+                  </div>
+                </div>
+                <a 
+                  href="https://futbolinclusivo.mygol.es/tournaments"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 w-full bg-[#36b37e] hover:bg-[#2ecc71] text-black font-black py-3 rounded-xl uppercase text-xs tracking-wider transition-all shadow-lg shadow-[#36b37e]/20"
+                >
+                  <span>Ver Tablas y Fixture</span>
+                  <ArrowRight size={14} />
+                </a>
               </motion.div>
 
               <motion.div 
@@ -358,6 +371,16 @@ export default function HomeClient({ dynamicNews = [], dynamicAlbums = [] }) {
                     </div>
                   ))}
                 </div>
+
+                <a
+                  href="https://futbolinclusivo.mygol.es/tournaments"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-4 flex items-center justify-center gap-2 w-full bg-white/5 hover:bg-[#36b37e] text-white hover:text-black font-black py-3 rounded-xl uppercase text-xs tracking-wider transition-all border border-white/10"
+                >
+                  <span>Ver Todos en MyGol</span>
+                  <ArrowRight size={14} />
+                </a>
               </motion.div>
             </div>
           </div>
@@ -613,9 +636,9 @@ export default function HomeClient({ dynamicNews = [], dynamicAlbums = [] }) {
               <div className="flex-1 flex flex-col gap-3 md:gap-4 mb-4 md:mb-6 relative z-10">
                 <p className="text-white text-lg font-black leading-tight uppercase">Sumate a la liga más grande del país.</p>
                 <div className="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20 mt-auto">
-                  <span className="text-[10px] font-black tracking-wider text-[#36b37e] block mb-2 uppercase">Próximas Entradas</span>
-                  <p className="font-black text-xl text-white uppercase">Finales 2025</p>
-                  <p className="text-xs text-white/60 font-bold">6 de Diciembre</p>
+                  <span className="text-[10px] font-black tracking-wider text-[#36b37e] block mb-2 uppercase">Temporada Oficial 2026</span>
+                  <p className="font-black text-xl text-white uppercase">Superliga Inclusiva AFA</p>
+                  <p className="text-xs text-white/60 font-bold">Fechas oficiales en Predio Ezeiza</p>
                 </div>
               </div>
               <Link href="/inscripcion" className="relative z-10 w-full bg-[#36b37e] text-white font-black py-3 md:py-4 rounded-xl text-center hover:shadow-[0_0_40px_rgba(54,179,126,0.6)] uppercase text-sm tracking-wider">INSCRIBITE AHORA</Link>

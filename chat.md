@@ -956,6 +956,37 @@ El usuario envió una captura del encabezado principal de la portada solicitando
 2. **Registro y Despliegue**:
    - Se documentó el cambio en `.synapse/` y se realizó commit con la autoría `agrowd` y push a la rama `main` en GitHub.
 
+---
+
+## ⚽ Sesión 60: Mejora del `<title>` del Navegador y Auditoría Integral de UI/UX (2026-11-18)
+
+### 📌 Contexto
+El usuario solicitó:
+1. "mejora el title porque tiene la url actualmente" (la pestaña del navegador mostraba la URL `futbolinclusivo.org.ar` o `futbolinclusivo.vercel.app` en lugar del nombre del sitio).
+2. "tambien revisa todo el sitio y fijate incoeherencias o errores en el ui ux".
+
+### 🛠️ Acciones Realizadas
+1. **Diagnóstico y Corrección de Metadatos y `<title>` en App Router**:
+   - **Causa Raíz**: `src/app/layout.js` estaba marcado con `"use client";`, lo cual en Next.js App Router prohíbe exportar `metadata`. Además, `src/app/page.js` no exportaba metadatos. El documento HTML generado carecía por completo de la etiqueta `<title>`, forzando al navegador a mostrar la URL actual.
+   - **Solución Arquitectónica (`D-56`)**:
+     - Se creó `src/components/providers/ClientProviders.jsx` que encapsula todos los proveedores y componentes que necesitan contexto de cliente (`SessionProvider`, `Header`, `Footer`, `SkipLink`, `FloatingButtons`, `FloatingAdminTools`, `Analytics`).
+     - Se refactorizó `src/app/layout.js` como **Server Component**, configurando `metadata` con `metadataBase`, plantilla de título (`%s | Fútbol Inclusivo - Andar FC`), descripción SEO, keywords, íconos y tarjetas de Twitter / OpenGraph.
+     - Se agregó en `src/app/page.js` la exportación de `metadata` con el título:
+       `Fútbol Inclusivo | Asociación Civil Andar - El Fútbol es para Todxs`.
+     - Se corrigió el título en `src/app/programas/ligas/page.js` de `"Ligas - Premium Experience"` a `"Ligas y Competencias Oficiales | Fútbol Inclusivo"`.
+
+2. **Auditoría Integral de UI/UX y Resoluciones**:
+   - **Incoherencia 1: Marquesina de Clubes (`ClubStrip.jsx`)**: El componente repetía 32 veces el mismo logo verde de Andar FC. Se rediseñó para mostrar escudos institucionales y de clubes participantes reales (AFA, SAT, Andar FC, Boca Juniors, River Plate, San Lorenzo, Racing Club, Independiente, Lanús, Estudiantes LP, Vélez Sarsfield, Huracán, Gimnasia LP, Rosario Central, Newell's Old Boys, Altos de la Reja, CEF 123) con colores oficiales y contraste nítido.
+   - **Incoherencia 2: Cuenta Regresiva Congelada y Fechas Vencidas (`HomeClient.js`)**: En la sección de Competencia figuraba una tarjeta "Finales 2025 - 6 DE DICIEMBRE" con un temporizador estático en `00 DÍAS 00 HRS 00 MIN`. Se reemplazó por la tarjeta interactiva de la **Superliga AFA en Predio Lionel Messi (Ezeiza)**, marcando estado "En Competencia" y botón directo "Ver Tablas y Fixture" conectado a MyGol.
+   - **Incoherencia 3: Falta de Enlaces a Fixture en Partidos Recientes (`HomeClient.js`)**: La sección mostraba resultados pero ningún llamado a la acción para consultar la tabla o el fixture completo. Se añadió un botón "Ver Todos en MyGol" y se actualizó la tarjeta de convocatoria a la "Temporada Oficial 2026".
+   - **Incoherencia 4: Popup de Auto-Apertura Intrusivo (`FloatingButtons.jsx`)**: El widget flotante tenía programado un `setTimeout` de 60 segundos que abría el menú emergente de forma no solicitada por el usuario tapando la pantalla. Se eliminó este temporizador automático manteniendo el botón desplegable accesible por clic voluntario.
+   - **Incoherencia 5: Accesibilidad WCAG en Pie de Página (`Footer.jsx`)**: Los textos inferiores de copyright y políticas tenían un contraste excesivamente tenue (`rgba(255,255,255,0.3)`). Se elevó a `rgba(255,255,255,0.6)` cumpliendo los criterios de contraste WCAG AA.
+   - **Incoherencia 6: Navegación del Header (`Header.jsx`)**: Se incorporó el enlace directo a `/torneos` dentro del submenú de "Programas".
+
+3. **Validación**:
+   - `npm run build` ejecutado localmente: 69/69 rutas compiladas de manera exitosa con Turbopack y verificación de presencia de `<title>` en el HTML estático resultante.
+
+
 
 
 
